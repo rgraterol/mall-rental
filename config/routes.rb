@@ -1,8 +1,12 @@
 Myapp::Application.routes.draw do
 
-  devise_for :users
-  # You can have the root of your site routed with "root"
-  root to: 'dashboards#dashboard_1'
+  devise_for :users, controllers: { sessions: "users/sessions" }
+
+  devise_scope :user do
+    root to: "users/sessions#new"
+  end
+
+    # You can have the root of your site routed with "root"
 
   # All routes
   get "dashboards/dashboard_1"

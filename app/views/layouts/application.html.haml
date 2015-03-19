@@ -11,9 +11,9 @@
     / Main javascript files
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
-  %body
+  %body.skin-3
     / Skin configuration box
-    = render 'layouts/skinconfig'
+    -#= render 'layouts/skinconfig'
     / Wrapper
     #wrapper{:class => "#{params[:controller]}.#{params[:action]}"}
       / Navigation
