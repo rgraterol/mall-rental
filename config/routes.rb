@@ -8,6 +8,7 @@ Myapp::Application.routes.draw do
     get 'users/new', to: 'users/registrations#new_user'
     post 'users/create_user',
         to: 'users/registrations#create_user'
+    get 'user/show', to: 'users/registrations#show'
   end
 
 

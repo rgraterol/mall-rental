@@ -1,0 +1,299 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+es:
+  date:
+    abbr_day_names:
+    - dom
+    - lun
+    - mar
+    - mié
+    - jue
+    - vie
+    - sáb
+    abbr_month_names:
+    -
+    - ene
+    - feb
+    - mar
+    - abr
+    - may
+    - jun
+    - jul
+    - ago
+    - sep
+    - oct
+    - nov
+    - dic
+    day_names:
+    - domingo
+    - lunes
+    - martes
+    - miércoles
+    - jueves
+    - viernes
+    - sábado
+    formats:
+      default: ! '%d/%m/%Y'
+      long: ! '%d de %B de %Y'
+      short: ! '%d de %b'
+    month_names:
+    -
+    - Enero
+    - Febrero
+    - Marzo
+    - Abril
+    - Mayo
+    - Junio
+    - Julio
+    - Agosto
+    - Septiembre
+    - Octubre
+    - Noviembre
+    - Diciembre
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: alrededor de 1 hora
+        other: alrededor de %{count} horas
+      about_x_months:
+        one: alrededor de 1 mes
+        other: alrededor de %{count} meses
+      about_x_years:
+        one: alrededor de 1 año
+        other: alrededor de %{count} años
+      almost_x_years:
+        one: casi 1 año
+        other: casi %{count} años
+      half_a_minute: medio minuto
+      less_than_x_minutes:
+        one: menos de 1 minuto
+        other: menos de %{count} minutos
+      less_than_x_seconds:
+        one: menos de 1 segundo
+        other: menos de %{count} segundos
+      over_x_years:
+        one: más de 1 año
+        other: más de %{count} años
+      x_days:
+        one: 1 día
+        other: ! '%{count} días'
+      x_minutes:
+        one: 1 minuto
+        other: ! '%{count} minutos'
+      x_months:
+        one: 1 mes
+        other: ! '%{count} meses'
+      x_seconds:
+        one: 1 segundo
+        other: ! '%{count} segundos'
+    prompts:
+      day: Día
+      hour: Hora
+      minute: Minutos
+      month: Mes
+      second: Segundos
+      year: Año
+  activerecord:
+    errors:
+      format: ! '%{attribute} %{message}'
+      messages:
+        accepted: debe ser aceptado
+        blank: no puede estar en blanco
+        confirmation: no coincide con la confirmación
+        empty: no puede estar vacío
+        equal_to: debe ser igual a %{count}
+        even: debe ser par
+        exclusion: está reservado
+        greater_than: debe ser mayor que %{count}
+        greater_than_or_equal_to: debe ser mayor que o igual a %{count}
+        inclusion: no está incluido en la lista
+        invalid: no es válido
+        less_than: debe ser menor que %{count}
+        less_than_or_equal_to: debe ser menor que o igual a %{count}
+        not_a_number: no es un número
+        not_an_integer: debe ser un entero
+        odd: debe ser impar
+        record_invalid: ! 'La validación falló: %{errors}'
+        taken: Email ya esta en uso
+        too_long: es demasiado largo (%{count} caracteres máximo)
+        too_short: es demasiado corto (%{count} caracteres mínimo)
+        wrong_length: no tiene la longitud correcta (%{count} caracteres exactos)
+      template:
+        body: ! 'Se encontraron problemas con los siguientes campos:'
+        header:
+          one: No se pudo guardar este/a %{model} porque se encontró 1 error
+          other: No se pudo guardar este/a %{model} porque se encontraron %{count} errores
+  helpers:
+    select:
+      prompt: Por favor seleccione
+    submit:
+      create: Crear %{model}
+      submit: Guardar %{model}
+      update: Actualizar %{model}
+  number:
+    currency:
+      format:
+        delimiter: .
+        format: ! '%n %u'
+        precision: 2
+        separator: ! ','
+        significant: false
+        strip_insignificant_zeros: false
+        unit: €
+    format:
+      delimiter: .
+      precision: 3
+      separator: ! ','
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: ! '%n %u'
+        units:
+          billion: mil millones
+          million: millón
+          quadrillion: mil billones
+          thousand: mil
+          trillion: billón
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 1
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: ! '%n %u'
+        units:
+          byte:
+            one: Byte
+            other: Bytes
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+    percentage:
+      format:
+        delimiter: ''
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: ! ', y '
+      two_words_connector: ! ' y '
+      words_connector: ! ', '
+  time:
+    am: am
+    formats:
+      default: ! '%A, %d de %B de %Y %H:%M:%S %z'
+      long: ! '%d de %B de %Y %H:%M'
+      short: ! '%d de %b %H:%M'
+    pm: pm
+
+  show: 'Mostrar'
+  edit: 'Editar'
+  destroy: 'Eliminar'
+  new: 'Nuevo'
+  add: 'Agregar'
+  are_you_sure: '¿Estas seguro?'
+  config: 'Configuración'
+  exit: 'Salir'
+  back: 'Atrás'
+  devise:
+    confirmations:
+      confirmed: "Tu Dirección de Correo ha sido confirmada exitosamente."
+      send_instructions: "Usted recibirá un correo electrónico con instrucciones sobre cómo confirmar su dirección de correo electrónico en unos minutos. Revise su carpeta de SPAM si no lo ha visto."
+      send_paranoid_instructions: "Si existe su dirección de correo electrónico en nuestra base de datos, usted recibirá un correo electrónico con instrucciones sobre cómo confirmar su dirección de correo electrónico en unos minutos."
+    failure:
+      already_authenticated: "Ya has iniciado sesión."
+      inactive: "Su cuenta todavia no ha sido activada."
+      invalid: "Combinación de Email y Password Invalida."
+      locked: "Su cuenta esta bloqueada."
+      last_attempt: "Usted tiene un(1) intento más antes de que su cuenta sea bloqueada."
+      not_found_in_database: "Dirección de Correo o Contraseña Invalida"
+      timeout: "Su sesión ha expirado, inicie sesión nuevamente para continuar"
+      unauthenticated: "Necesita iniciar sesión para continuar."
+      unconfirmed: "Debes confirmar tu dirección de correo para continuar."
+    mailer:
+      confirmation_instructions:
+        subject: "CONEX-ET - Confirmación de Correo"
+      reset_password_instructions:
+        subject: "CONEX-ET - Recuperación de Contraseña"
+      unlock_instructions:
+        subject: "CONEX-ET - Desbloqueo de cuenta"
+    omniauth_callbacks:
+      failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
+      success: "Successfully authenticated from %{kind} account."
+    passwords:
+      no_token: "No se puede acceder a esta página sin proceder de un correo electrónico de restablecimiento de contraseña. Si viene de un correo electrónico de restablecimiento de contraseña, por favor asegúrese de que usted utilizó la URL completa proporcionada."
+      send_instructions: "Usted recibirá un correo electrónico con instrucciones sobre cómo restablecer la contraseña en unos pocos minutos."
+      send_paranoid_instructions: "Si existe su dirección de correo electrónico en nuestra base de datos, recibirá un enlace de recuperación de contraseña a su dirección de correo electrónico en unos pocos minutos."
+      updated: "Su contraseña ha sido cambiada exitosamente. Ahora usted esta logueado en CONEX-ET."
+      updated_not_active: "Su contraseña ha sido cambiada exitosamente."
+    registrations:
+      destroyed: "Adios! Su cuenta ha sido cancelada exitosamente. Esperamos volver a verte pronto por CONEX-ET."
+      signed_up: "Bienvenido! Te has registrado exitosamente."
+      signed_up_but_inactive: "Te has registrado con éxito. Sin embargo, no hemos podido iniciar sesión porque tu cuenta aún no está activada."
+      signed_up_but_locked: "Te has registrado con éxito. Sin embargo, no hemos podido iniciar sesión porque su cuenta está bloqueada."
+      signed_up_but_unconfirmed: "Un mensaje con un enlace de confirmación ha sido enviado a su correo electrónico. Por favor siga el enlace para activar su cuenta."
+      update_needs_confirmation: "Ha actualizado su cuenta con éxito, pero tenemos que verificar su nueva dirección de correo electrónico. Por favor, consultar su correo electrónico y siga el vínculo de confirmación para confirmar su nueva dirección de correo electrónico."
+      updated: "Tu contraseña ha sido actualizada exitosamente."
+    sessions:
+      signed_in: "Has iniciado sesión."
+      signed_out: "Has cerrado sesión exitosamente."
+      already_signed_out: "Has cerrado sesión exitosamente"
+    unlocks:
+      send_instructions: "Usted recibirá un correo electrónico con instrucciones sobre cómo desbloquear su cuenta en unos pocos minutos."
+      send_paranoid_instructions: "Si existe la cuenta, usted recibirá un correo electrónico con instrucciones sobre cómo desbloquearlo en pocos minutos."
+      unlocked: "Su cuenta ha sido desbloqueada con éxito. Por favor, inicia sesión para continuar."
+  errors:
+    messages:
+      carrierwave_processing_error: "No es posible redimencionar imagen"
+      carrierwave_integrity_error: "No es una imagen."
+      carrierwave_download_error: "No puede descargarse imagen."
+      extension_white_list_error: "No es permitida la carga de archivos %{extension}, tipos permitidos: %{allowed_types}"
+      extension_black_list_error: "No es permitida la carga de archivos %{extension}, tipos prohibidos:%{prohibited_types}"
+      already_confirmed: "Ya has confirmado tu cuenta, prueba a iniciar sesión"
+      confirmation_period_expired: "necesita ser confirmado dentro de %{period}, por favor solicite uno nuevo."
+      expired: "ha expirado, por favor solicite uno nuevo."
+      not_found: "no encontrado."
+      not_locked: "no ha sido bloqueado."
+      not_saved:
+        #one: "1 error prohibio este %{resource} de ser guardado:"
+        #other: "%{count} errores prohibieron este %{resource} de ser guardado:"
+        one: "Error:"
+        other: "Error:"
+  survey:
+    tipo_servicio_medicos:
+      certificado_medico: "Certificado Médico"
+      certificado_psicologico: "Certificado Psicológico"
+      consulta_medica: "Consulta Médica"
+      examen_especializado: "Exámen Especializado"
+      otro: "Otro.."
+  will_paginate:
+    previous_label: "&#8592; Página anterior"
+    next_label: "Página siguiente &#8594;"
+    page_gap: "&VER;"

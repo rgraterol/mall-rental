@@ -4,4 +4,7 @@ class User < ActiveRecord::Base
   devise  :registerable, :recoverable,
           :rememberable, :trackable, :validatable, :session_limitable
   devise :database_authenticatable,:authentication_keys => [:username]
+
+  validates :username, presence: {message: 'es obligatorio'},
+            uniqueness: {message: 'ya en uso.'}
 end
