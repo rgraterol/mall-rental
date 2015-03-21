@@ -1,0 +1,27 @@
+.loginColumns.animated.fadeInDown
+  .row
+    .col-md-6
+      -#%h2.font-bold Bienvenido a MallRental
+
+      = image_tag('la_vela.jpg', width: 250, height: 250)
+    .col-md-6
+      .ibox-content
+        = form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'm-t'}) do |f|
+          .form-group
+            = f.text_field :username, placeholder: 'Usuario', class:'form-control', required: ''
+          .form-group
+            = f.password_field :password, autocomplete: "off", placeholder: "Contraseña", class: 'form-control', required: ''
+          = f.submit 'Entrar', class: 'btn btn-warning block full-width m-b'
+          -#%button.btn.btn-primary.block.full-width.m-b{:type => "submit"} Login
+          %a{:href => "#"}
+            %small Olvido su contraseña?
+          -#%p.text-muted.text-center
+          -#  %small Do not have an account?
+          -#%a.btn.btn-sm.btn-white.btn-block{:href => "register.html"} Create an account
+        %p.m-t
+          %small MallRental esta basado en Bootstrap 3 © 2015
+  %hr/
+  .row
+    .col-md-6
+      Copyright Ricardo Xavier Graterol
+      %small © 2015

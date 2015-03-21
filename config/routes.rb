@@ -1,10 +1,15 @@
 Myapp::Application.routes.draw do
 
-  devise_for :users, controllers: { sessions: "users/sessions" }
+  root to: 'static#index'
+
+  devise_for :users
 
   devise_scope :user do
-    root to: "users/sessions#new"
+    get 'users/new', to: 'users/registrations#new_user'
+    post 'users/create_user',
+        to: 'users/registrations#create_user'
   end
+
 
     # You can have the root of your site routed with "root"
 
