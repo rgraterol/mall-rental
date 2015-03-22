@@ -6,7 +6,7 @@ gem 'bootstrap-sass', '3.3.0.0'
 gem 'font-awesome-rails', '4.3.0.0'
 
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+gem 'pg'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -49,7 +49,11 @@ group :development do
   #revisar en çonfig/environments/development.rb
   #correo en http://127.0.0.1:1080
   gem 'mailcatcher'
+
+  gem 'sqlite3'
 end
+
+gem 'carrierwave'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

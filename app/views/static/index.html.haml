@@ -1,5 +1,7 @@
 - if user_signed_in?
-  %h2
-    Diga Wapay
+  .wrapper.wrapper-content.animated.fadeInRight
+    .row
+      .col-lg-12.text-center
+        = image_tag('mall_rental_logo2.png', style: 'margin-top:200px')
 - else
   = render partial: 'log_in'

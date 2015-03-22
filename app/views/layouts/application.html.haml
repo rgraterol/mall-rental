@@ -24,6 +24,7 @@
         #page-wrapper{:class => "gray-bg #{@extra_class}"}
           / Page wrapper
           = render 'layouts/topnavbar'
+          = render 'layouts/flash_message'
           / Main view
           = yield
           / Footer
@@ -51,6 +52,7 @@
       = csrf_meta_tags
     %body.gray-bg
       / Main view
+      = render 'layouts/flash_message'
       = yield
       / Include javascript per-controller - vendor plugins
       = javascript_include_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.js")

@@ -4,7 +4,8 @@
       %li.nav-header
         .dropdown.profile-element
           %span
-            %img.img-circle{:alt => "image", :src => "#{image_url 'building-avatar.gif'}", height: 50}
+            = image_tag current_user.avatar.url || 'building-avatar.gif', height: 50, class:'img-circle'
+            -#%img.img-circle{:alt => "image", :src => "#{image_url 'building-avatar.gif'}", height: 50}
           %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
             %span.clear
               %span.block.m-t-xs
@@ -15,11 +16,8 @@
                 %b.caret
           %ul.dropdown-menu.animated.fadeInRight.m-t-xs
             %li
-              %a{:href => ""} Profile
-            %li
-              %a{:href => ""} Contacts
-            %li
-              %a{:href => ""} Mailbox
+              = link_to  profile_path do
+                Perfil
             %li.divider
             %li
               = link_to destroy_user_session_path, method: :delete do
@@ -32,6 +30,7 @@
           %span.nav-label Usuarios
           %span.fa.arrow
         %ul{:class => "nav nav-second-level #{is_active_controller('users/registrations')}"}
+          %li{class: is_active_action('index')}= link_to 'Visualizar Usuarios', users_index_path
           %li{class: is_active_action('new_user')}= link_to 'Registrar Usuario', users_new_path
 
       -#%li{:class => is_active_controller('dashboards')}

@@ -1,5 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-
+  before_action :set_user, only: [:show, :update_user, :edit_user]
   @@password = ""
 
   def new_user
@@ -33,9 +33,39 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @@password = ""
   end
 
+  def index
+    unless user_signed_in?
+      redirect_to root_url and return
+    end
+  end
+
+  def edit_user
+    unless user_signed_in?
+      redirect_to root_url and return
+    end
+  end
+
+  def update_user
+    if user_signed_in?
+      respond_to do |format|
+        if @user.update(user_params)
+          format.html { redirect_to user_show_path(@user), notice: 'Usuario actualizado satisfactoriamente.' }
+          format.json { render :show, status: :ok, location: @user }
+        else
+          format.html { render :edit_user }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+  end
+
   private
 
-  def user_params
-    params.require(:user).permit(:username, :password,  :email)#, rol_ids: [])
-  end
+    def set_user
+      @user = User.find_by(id: ActionController::Parameters.new(id: params[:id]).permit(:id)[:id])
+    end
+
+    def user_params
+      params.require(:user).permit(:username, :email)#, rol_ids: [])
+    end
 end

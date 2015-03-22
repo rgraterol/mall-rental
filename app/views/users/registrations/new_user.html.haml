@@ -6,6 +6,8 @@
       %li
         = link_to 'Inicio', root_url
       %li
+        = link_to 'Usuarios Registrados', users_index_path
+      %li
         Registro de Usuario
 
 .wrapper.wrapper-content
@@ -16,7 +18,7 @@
           %h3
             Registro de Nuevo Usuario
         .ibox-content
-          = form_for(@user, as: resource_name, url: {action: :create_user}, html: {class:"form-horizontal m-t-md", id: "form_registro_funcionario"}) do |f|
+          = form_for(@user, as: resource_name, url: {action: :create_user}, html: {class:"form-horizontal m-t-md", id: "form_registro_user"}) do |f|
             = devise_error_messages!
             .form-group
               = f.label :username, "Login: ", class: 'col-sm-2 control-label'
@@ -26,6 +28,8 @@
               = f.label :password, "Contraseña: ", class: 'col-sm-2 control-label'
               .col-sm-10
                 = f.password_field :password, autocomplete: "off", class: 'form-control'
+                %span.help-block.m-b-none
+                  La contraseña debe tener un mínimo de 8 caracteres.
             .form-group
               = f.label :password_confirmation, "Confirme Contraseña: ", class: 'col-sm-2 control-label'
               .col-sm-10

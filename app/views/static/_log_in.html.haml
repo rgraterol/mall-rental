@@ -1,9 +1,10 @@
 .loginColumns.animated.fadeInDown
   .row
-    .col-md-6
+    .col-md-6.text-center
+      %br
+      %br
       -#%h2.font-bold Bienvenido a MallRental
-
-      = image_tag('la_vela.jpg', width: 250, height: 250)
+      = image_tag('mall_rental_logo2.png', width: 250)
     .col-md-6
       .ibox-content
         = form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'm-t'}) do |f|
@@ -11,6 +12,10 @@
             = f.text_field :username, placeholder: 'Usuario', class:'form-control', required: ''
           .form-group
             = f.password_field :password, autocomplete: "off", placeholder: "Contraseña", class: 'form-control', required: ''
+          .form-group
+            - if devise_mapping.rememberable?
+              = f.check_box :remember_me
+              = f.label :remember_me, 'Mantener Conectado'
           = f.submit 'Entrar', class: 'btn btn-warning block full-width m-b'
           -#%button.btn.btn-primary.block.full-width.m-b{:type => "submit"} Login
           %a{:href => "#"}

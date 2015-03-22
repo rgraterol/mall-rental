@@ -17,11 +17,11 @@ es:
       session_limited: 'Se ha iniciado sesión con su cuenta en otro explorador. Por favor, inicie sesión para continuar en este explorador.'
     mailer:
       confirmation_instructions:
-        subject: "CONEX-ET - Confirmación de Correo"
+        subject: "MallRental - Confirmación de Correo"
       reset_password_instructions:
-        subject: "CONEX-ET - Recuperación de Contraseña"
+        subject: "MallRental - Recuperación de Contraseña"
       unlock_instructions:
-        subject: "CONEX-ET - Desbloqueo de cuenta"
+        subject: "MallRental - Desbloqueo de cuenta"
     omniauth_callbacks:
       failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
       success: "Successfully authenticated from %{kind} account."
@@ -34,7 +34,7 @@ es:
       updated_not_active: "Su contraseña ha sido cambiada exitosamente."
     registrations:
       destroyed: "Adios! Su cuenta ha sido cancelada exitosamente. Esperamos
-      volver a verte pronto por CONEX-ET."
+      volver a verte pronto por MallRental."
       signed_up: "Bienvenido! Su registro se realizó correctamente."
       signed_up_but_inactive: "Su registro se realizó correctamente Sin embargo, su cuenta aún no está activada."
       signed_up_but_locked: "Su registro se realizó correctamente. Sin embargo, su cuenta está bloqueada."

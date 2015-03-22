@@ -36,6 +36,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       ##UNIQUE SESSION
       t.string :unique_session_id, :limit => 20
 
+      t.string :avatar
+
 
       t.timestamps
     end
