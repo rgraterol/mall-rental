@@ -1,0 +1,40 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Perfil
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Perfil
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-md-3.text-center
+              = image_tag current_user.avatar.url || 'building-avatar.gif', class: 'img-circle', height: 200
+            .col-md-8.col-md-offset-1
+              %h3
+                Datos del Usuario
+              %br
+              %p
+                %strong
+                  Nombre de Usuario:
+                = current_user.username
+              %br
+              %p
+                %strong
+                  Email:
+                = current_user.email
+              %br
+              .row
+                .col-sm-3
+                  = link_to profile_edit_path, class: 'btn btn-mall btn-block' do
+                    Editar Perfil
+                .col-sm-3
+                  = link_to edit_user_registration_path, class: 'btn btn-warning btn-block' do
+                    Cambiar Contraseña
+
+

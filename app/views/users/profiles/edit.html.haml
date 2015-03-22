@@ -1,0 +1,45 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Editar Perfil
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Usuarios Registrados', users_index_path
+      %li
+        Editar Perfil
+
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-content
+          = form_for(current_user, url:  profile_update_path, html: { method: :post, class:"form-horizontal m-t-md", id: "form_edit_user"}) do |f|
+            = devise_error_messages!
+            .form-group
+              = f.label :username, "Login: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :username, autofocus: true, class: 'form-control'
+            .form-group
+              = f.label :email, "Correo Electrónico: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.email_field :email, class: "form-control"
+            .form-group
+              = f.label :avatar, 'Avatar: ', class: 'col-sm-2 control-label'
+              .col-sm-10
+                .fileinput.fileinput-new{"data-provides" => "fileinput"}
+                  .fileinput-new.thumbnail{:style => "width: 200px; height: 150px;"}
+                    -#%img{:alt => "...", "data-src" => "holder.js/100%x100%"}/
+                    = image_tag current_user.avatar.url || 'building-avatar.gif', "data-src" => "holder.js/100%x100%"
+                  .fileinput-preview.fileinput-exists.thumbnail{:style => "max-width: 200px; max-height: 150px;"}
+                  %div
+                    %span.btn.btn-mall.btn-file
+                      %span.fileinput-new Seleccionar Imagen
+                      %span.fileinput-exists Cambiar
+                      = f.file_field :avatar
+                      -#%input{:name => "...", :type => "file"}/
+                    %a.btn.btn-mall.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"} Quitar
+            .form-group
+              .col-sm-3.col-sm-offset-9
+                = f.submit "Actualizar", class: "btn btn-warning btn-block"

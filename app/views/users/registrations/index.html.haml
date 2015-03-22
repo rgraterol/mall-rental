@@ -1,0 +1,51 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Usuarios Registrados
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Usuarios Registrados
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-sm-3
+              = link_to 'Nuevo Usuario', users_new_path, class: 'btn btn-mall btn-block'
+          %br
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover.dataTables-example
+                %thead
+                  %tr
+                    %th Avatar
+                    %th Email
+                    %th Username
+                    %th Nombre Local
+                    %th RIF
+                    %th Acciones
+                %tbody
+                  - User.all.each do |user|
+                    %tr
+                      %td.text-center= image_tag user.avatar.url || 'building-avatar.gif', class: 'img-circle', height: 50, width: 70
+                      %td= user.email
+                      %td= user.username
+                      %td
+                      %td
+                      %td
+                        = link_to user_edit_user_path(user) do
+                          %i.fa.fa-pencil
+                          Editar
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        = link_to registration_path(resource_name), data: { confirm: "Seguro que desea eliminar al usuario #{user.username}?" }, method: :delete do
+                          %i.fa.fa-trash
+                          Eliminar
+
+
+

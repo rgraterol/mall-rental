@@ -1,0 +1,43 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Nuevo Usuario
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Usuarios Registrados', users_index_path
+      %li
+        = link_to 'Registro de Nuevo Usuario', users_new_path
+      %li
+        Nuevo Usuario
+
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            Registro de Usuario
+        .ibox-content
+          %p#notice= notice
+          %h4
+            %strong Username:
+            = @user.username
+          %h4
+            %strong Contraseña:
+            = @pass
+          %h4
+            %strong Correo Electrónico:
+            = @user.email
+          -#%h3
+          -#  %strong Roles:
+          -#
+          -#  - @funcionario.rols.each do |rol|
+          -#    = rol.nombre + " - "
+          %br/
+          .row
+            .col-md-12
+              .alert.alert-danger.alert-dismissable.alerts-fix
+                %strong
+                  NOTA: La contraseña solo podra ser visualizada unicamente al momento del registro.
