@@ -1,0 +1,20 @@
+﻿!!!
+%html
+  %head
+    %title MallRental — 404 Not Found
+    %meta{ charset: 'UTF-8' }/
+    = stylesheet_link_tag stylesheet_path('error')
+
+  %body
+    .middle-box.text-center.animated.fadeInDown
+      %h1 404
+      %h3.font-bold Page Not Found
+      .error-desc
+        Sorry, but the page you are looking for has note been found. Try checking the URL for error, then hit the refresh button on your browser or try found something else in our app.
+        -#%form.form-inline.m-t{:role => "form"}
+        -#  .form-group
+        -#    %input.form-control{:placeholder => "Search for page", :type => "text"}/
+        -#  %button.btn.btn-primary{:type => "submit"} Search
+
+
+

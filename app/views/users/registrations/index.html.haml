@@ -23,17 +23,17 @@
                 %thead
                   %tr
                     %th Avatar
-                    %th Email
                     %th Username
+                    %th Email
                     %th Nombre Local
                     %th RIF
                     %th Acciones
                 %tbody
                   - User.all.each do |user|
                     %tr
-                      %td.text-center= image_tag user.avatar.url || 'building-avatar.gif', class: 'img-circle', height: 50, width: 70
-                      %td= user.email
+                      %td.text-center= image_tag user.avatar.url || 'building-avatar.gif', class: 'img-circle', height: 50
                       %td= user.username
+                      %td= user.email
                       %td
                       %td
                       %td
