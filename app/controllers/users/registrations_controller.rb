@@ -1,5 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-  before_action :set_user, only: [:show, :update_user, :edit_user]
+  before_action :set_user, only: [:show, :update_user, :edit_user, :delete_user]
   @@password = ""
 
   def new_user
@@ -59,6 +59,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  def delete_user
+    if user_signed_in?
+      if @user.destroy
+        redirect_to users_index_path, alert: 'Usuario eliminado satisfactoriamente.' and return
+      end
+    end
+  end
+
   private
 
     def set_user
@@ -66,6 +74,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
 
     def user_params
-      params.require(:user).permit(:username, :email)#, rol_ids: [])
+      params.require(:user).permit(:username, :email, :password)#, rol_ids: [])
     end
 end

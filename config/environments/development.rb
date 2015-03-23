@@ -31,8 +31,8 @@ Myapp::Application.configure do
   Myapp::Application.configure do
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
-        address: "smtp.live.com",
-        port: 465,
+        address: "smtp-mail.outlook.com",
+        port: 587,
         domain: "www.conex-et.com",
         authentication: "plain",
         user_name: "mallrental@hotmail.com",

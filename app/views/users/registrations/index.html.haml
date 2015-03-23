@@ -43,7 +43,7 @@
                         &nbsp;
                         &nbsp;
                         &nbsp;
-                        = link_to registration_path(resource_name), data: { confirm: "Seguro que desea eliminar al usuario #{user.username}?" }, method: :delete do
+                        = link_to user_delete_user_path(user), data: { confirm: "Seguro que desea eliminar al usuario #{user.username}?" }, method: :delete do
                           %i.fa.fa-trash
                           Eliminar
 

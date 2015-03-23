@@ -37,6 +37,11 @@ GEM
     bootstrap-sass (3.3.0.0)
       sass (~> 3.2)
     builder (3.1.4)
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
     coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -89,6 +94,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.8.2)
     orm_adapter (0.5.0)
+    pg (0.18.1)
     polyglot (0.3.3)
     rack (1.5.2)
     rack-protection (1.5.3)
@@ -165,6 +171,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-sass (= 3.3.0.0)
+  carrierwave
   coffee-rails (~> 4.0.0)
   devise
   devise_security_extension
@@ -173,6 +180,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   mailcatcher
+  pg
   rails (= 4.0.2)
   sass-rails (~> 4.0.0)
   sdoc

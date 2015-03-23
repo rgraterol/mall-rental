@@ -239,11 +239,11 @@ es:
       unconfirmed: "Debes confirmar tu dirección de correo para continuar."
     mailer:
       confirmation_instructions:
-        subject: "CONEX-ET - Confirmación de Correo"
+        subject: "Confirmación de Correo"
       reset_password_instructions:
-        subject: "CONEX-ET - Recuperación de Contraseña"
+        subject: "Recuperación de Contraseña"
       unlock_instructions:
-        subject: "CONEX-ET - Desbloqueo de cuenta"
+        subject: "Desbloqueo de cuenta"
     omniauth_callbacks:
       failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
       success: "Successfully authenticated from %{kind} account."
@@ -251,10 +251,10 @@ es:
       no_token: "No se puede acceder a esta página sin proceder de un correo electrónico de restablecimiento de contraseña. Si viene de un correo electrónico de restablecimiento de contraseña, por favor asegúrese de que usted utilizó la URL completa proporcionada."
       send_instructions: "Usted recibirá un correo electrónico con instrucciones sobre cómo restablecer la contraseña en unos pocos minutos."
       send_paranoid_instructions: "Si existe su dirección de correo electrónico en nuestra base de datos, recibirá un enlace de recuperación de contraseña a su dirección de correo electrónico en unos pocos minutos."
-      updated: "Su contraseña ha sido cambiada exitosamente. Ahora usted esta logueado en CONEX-ET."
+      updated: "Su contraseña ha sido cambiada exitosamente. Ahora usted esta logueado."
       updated_not_active: "Su contraseña ha sido cambiada exitosamente."
     registrations:
-      destroyed: "Adios! Su cuenta ha sido cancelada exitosamente. Esperamos volver a verte pronto por CONEX-ET."
+      destroyed: "Adios! Su cuenta ha sido cancelada exitosamente. Esperamos volver a verte pronto."
       signed_up: "Bienvenido! Te has registrado exitosamente."
       signed_up_but_inactive: "Te has registrado con éxito. Sin embargo, no hemos podido iniciar sesión porque tu cuenta aún no está activada."
       signed_up_but_locked: "Te has registrado con éxito. Sin embargo, no hemos podido iniciar sesión porque su cuenta está bloqueada."

@@ -24,6 +24,10 @@
                 Cerrar Sesión
         .logo-element
           VL
+      %li{class: is_active_controller('users/profiles')}
+        = link_to profile_path do
+          %i.fa.fa-user
+          %span.nav-label Perfil
       %li{class: is_active_controller('users/registrations')}
         %a{:href => ""}
           %i.fa.fa-th-large
