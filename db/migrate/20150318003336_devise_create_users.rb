@@ -38,6 +38,10 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
       t.string :avatar
 
+      t.boolean :locked, default: false
+
+      t.references :role, index: true
+
 
       t.timestamps
     end

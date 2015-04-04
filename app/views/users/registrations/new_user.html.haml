@@ -38,15 +38,15 @@
               = f.label :email, "Correo Electrónico: ", class: 'col-sm-2 control-label'
               .col-sm-10
                 = f.email_field :email, class: "form-control"
-            -#.form-group
-            -#  = label_tag "Roles: ", "Roles: ", class: 'col-sm-2 control-label'
-            -#  .col-sm-10
-            -#    %table
-            -#      %tbody
-            -#      = f.collection_check_boxes :rol_ids, Rol.all, :id, :nombre do |r|
-            -#        %tr
-            -#          %td= r.label
-            -#          %td= r.check_box
+            .form-group
+              = f.label :role, "Roles: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                %table
+                  %tbody
+                  = f.collection_radio_buttons :role_id, Role.all_valids, :id, :name do |r|
+                    %tr
+                      %td= r.label
+                      %td= r.radio_button
             .form-group
               .col-sm-3.col-sm-offset-9
                 = f.submit "Guardar", class: "btn btn-warning btn-block"

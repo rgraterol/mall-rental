@@ -1,0 +1,18 @@
+.loginColumns.animated.fadeInDown
+  .row
+    .col-md-6.text-center
+      %br
+      %br
+      = image_tag('mall_rental_logo2.png', width: 250)
+    .col-md-6
+      .ibox-content
+        %h2 Cambie su contraseña
+        = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: 'm-t' }) do |f|
+          = devise_error_messages!
+          = f.hidden_field :reset_password_token
+          .form-group
+            = f.password_field :password, autofocus: true, autocomplete: "off", placeholder: 'Nueva Contraseña', class: 'form-control'
+          .form-group
+            = f.password_field :password_confirmation, autocomplete: "off", placeholder: 'Confirme la nueva contraseña', class: 'form-control'
+          = f.submit "Cambiar mi contraseña", class: 'btn btn-warning block full-width m-b'
+        = render "users/shared/links"

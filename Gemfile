@@ -53,16 +53,9 @@ group :development do
   gem 'sqlite3'
 end
 
+#Carga de Imagenes
 gem 'carrierwave'
+gem 'rmagick'
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.1.2'
+gem 'cancan'
 
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]

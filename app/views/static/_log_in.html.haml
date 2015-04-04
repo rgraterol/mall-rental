@@ -18,8 +18,10 @@
               = f.label :remember_me, 'Mantener Conectado'
           = f.submit 'Entrar', class: 'btn btn-warning block full-width m-b'
           -#%button.btn.btn-primary.block.full-width.m-b{:type => "submit"} Login
-          %a{:href => "#"}
-            %small Olvido su contraseña?
+          = link_to new_user_password_path, class: 'small' do
+            ¿Olvido su contraseña?
+          -#%a{:href => "#"}
+          -#  %small Olvido su contraseña?
           -#%p.text-muted.text-center
           -#  %small Do not have an account?
           -#%a.btn.btn-sm.btn-white.btn-block{:href => "register.html"} Create an account

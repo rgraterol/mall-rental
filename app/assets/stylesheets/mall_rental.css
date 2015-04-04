@@ -3,8 +3,8 @@
 }
 
 .btn-mall {
-    background-color: #514155;
-    border-color: #514155;
+    background-color: #6C606F;
+    border-color: #6C606F;
     color: white;
 }
 
@@ -29,4 +29,8 @@
     color: #a94442 !important;
     background-color: #f2dede;
     border-color: #ebccd1;
+}
+
+.verticalLine {
+    border-left: thick solid #ff0000;
 }

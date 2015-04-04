@@ -7,6 +7,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       redirect_to root_url and return
     end
     @user ||= User.new
+    authorize! :new, User
   end
 
   def create_user
@@ -26,23 +27,27 @@ class Users::RegistrationsController < Devise::RegistrationsController
     else
       redirect_to root_url and return
     end
+    authorize! :create, User
   end
 
   def show
     @pass = @@password
     @@password = ""
+    authorize! :show, User
   end
 
   def index
     unless user_signed_in?
       redirect_to root_url and return
     end
+    authorize! :show, User
   end
 
   def edit_user
     unless user_signed_in?
       redirect_to root_url and return
     end
+    authorize! :update, User
   end
 
   def update_user
@@ -57,6 +62,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         end
       end
     end
+    authorize! :update, User
   end
 
   def delete_user
@@ -65,6 +71,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         redirect_to users_index_path, alert: 'Usuario eliminado satisfactoriamente.' and return
       end
     end
+    authorize! :update, User
   end
 
   private
@@ -74,6 +81,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
 
     def user_params
-      params.require(:user).permit(:username, :email, :password)#, rol_ids: [])
+      params.require(:user).permit(:username, :email, :password, :locked, :role_id)#, rol_ids: [])
     end
 end

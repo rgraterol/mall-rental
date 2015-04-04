@@ -32,6 +32,19 @@
               .col-sm-10
                 = f.email_field :email, class: "form-control"
             .form-group
+              = f.label :locked, 'Bloqueado:', class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.check_box :locked
+            .form-group
+              = f.label :role, "Roles: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                %table
+                  %tbody
+                  = f.collection_radio_buttons :role_id, Role.all_valids, :id, :name do |r|
+                    %tr
+                      %td= r.label
+                      %td= r.radio_button
+            .form-group
               .col-sm-3.col-sm-offset-9
                 = f.submit "Actualizar", class: "btn btn-warning btn-block"
 

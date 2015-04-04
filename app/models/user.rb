@@ -8,6 +8,9 @@ class User < ActiveRecord::Base
 
   mount_uploader :avatar, AvatarUploader
 
+
+  belongs_to :role
+
   validates :username, presence: {message: 'es obligatorio'},
             uniqueness: {message: 'ya en uso.'}
 end
