@@ -11,18 +11,13 @@
       <driver-ref>sqlite.xerial</driver-ref>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://127.0.0.1/mall_rental_test</jdbc-url>
-      <user-name>postgres</user-name>
-      <user-password>df9bdf98df99df9edf9fdf9c</user-password>
       <libraries />
     </data-source>
     <data-source source="LOCAL" name="Rails base-app: production" uuid="ee3f6f83-ef2a-47f4-a5d1-e83a39333b80">
       <driver-ref>sqlite.xerial</driver-ref>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://127.0.0.1/mall_rental_production</jdbc-url>
-      <user-name>postgres</user-name>
-      <user-password>df9bdf98df99df9edf9fdf9c</user-password>
       <libraries />
     </data-source>
   </component>
 </project>
-

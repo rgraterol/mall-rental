@@ -42,7 +42,7 @@
                       %td= user.mall.nombre rescue nil
                       %td= user.role.name_type
                       %td
-                        = link_to user_edit_user_path(user) do
+                        = link_to edit_mall_user_path(user) do
                           %i.fa.fa-pencil
                           Editar
                         &nbsp;

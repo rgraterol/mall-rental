@@ -15,5 +15,5 @@
 //= require slimscroll/jquery.slimscroll.min.js
 //= require inspinia.js
 //= require jasny/jasny-bootstrap.min
-//= require user
+//= require_tree .
 
