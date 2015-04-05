@@ -1,0 +1,27 @@
+<h1 class="title-file">Gestion de Cambio de Moneda</h1>
+<hr>
+<%= link_to 'Nuevo Cambio moneda', new_cambio_moneda_path %>
+<br><br>
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Cambio ML x USD</th>
+      <th colspan="3">Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cambio_monedas.each do |cambio_moneda| %>
+      <tr>
+        <td><%= cambio_moneda.fecha %></td>
+        <td><%= cambio_moneda.cambio_ml_x_usd %></td>
+        <td><%= link_to 'Ver', cambio_moneda %></td>
+        <td><%= link_to 'Editar', edit_cambio_moneda_path(cambio_moneda) %></td>
+        <td><%= link_to 'Eliminar', cambio_moneda, method: :delete, data: { confirm: '¿Está seguro de eliminar?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

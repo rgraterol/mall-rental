@@ -16,7 +16,32 @@ Myapp::Application.routes.draw do
     get 'profile', to: 'users/profiles#profile'
     get 'profile/edit', to: 'users/profiles#edit'
     post 'profile/update', to: 'users/profiles#update'
+
+  end
+
+  scope module: 'users' do
+    resources :mall_users
   end
 
   resources :roles
+
+  resources :nivel_malls
+
+  resources :malls
+
+  resources :pais
+
+  resources :tipo_canon_alquilers
+
+  resources :cambio_monedas
+
+  resources :canon_alquilers
+
+  resources :actividad_economicas
+
+  resources :calendario_no_laborables
+
+  resources :locals
+
+  get 'locals/:id/localsmall' => 'locals#localsmall'
 end

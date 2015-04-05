@@ -25,17 +25,21 @@
                     %th Avatar
                     %th Username
                     %th Email
-                    %th Nombre Local
-                    %th RIF
+                    %th Nombre
+                    %th Teléfono Celular
+                    %th Mall
+                    %th Rol
                     %th Acciones
                 %tbody
-                  - User.all.each do |user|
+                  - User.where.not(username: 'mall_admin').each do |user|
                     %tr
                       %td.text-center= image_tag user.avatar.url || 'building-avatar.gif', class: 'img-circle', height: 50
                       %td= user.username
                       %td= user.email
-                      %td
-                      %td
+                      %td= user.name
+                      %td= user.cellphone
+                      %td= user.mall.nombre rescue nil
+                      %td= user.role.name_type
                       %td
                         = link_to user_edit_user_path(user) do
                           %i.fa.fa-pencil

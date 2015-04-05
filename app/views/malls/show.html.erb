@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nombre:</strong>
+  <%= @mall.nombre %>
+</p>
+
+<p>
+  <strong>Abreviado:</strong>
+  <%= @mall.abreviado %>
+</p>
+
+<p>
+  <strong>Rif:</strong>
+  <%= @mall.rif %>
+</p>
+
+<p>
+  <strong>Direccion Fiscal:</strong>
+  <%= @mall.direccion_fiscal %>
+</p>
+
+<p>
+  <strong>Telefono:</strong>
+  <%= @mall.telefono %>
+</p>
+
+<p>
+  <strong>Pais:</strong>
+  <%= @mall.pai.nombre %>
+</p>
+
+<%= link_to 'Editar', edit_mall_path(@mall) %> |
+<%= link_to 'Regresar', malls_path %>

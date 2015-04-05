@@ -1,0 +1,41 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+    <h2>
+      Paises Registrados
+    </h2>
+    <ol class="breadcrumb">
+      <li><%= link_to 'Inicio', 'http://localhost:3000/' %></li>
+      <li>
+        Paises Registrados
+      </li>
+    </ol>
+  </div>
+</div>
+
+<%= link_to 'Nuevo Pais', new_pai_path %>
+<br><br>
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Idioma</th>
+      <th>Moneda</th>
+      <th colspan="2">Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pais.each do |pai| %>
+      <tr>
+        <td><%= pai.nombre %></td>
+        <td><%= pai.idioma.nombre %></td>
+        <td><%= pai.moneda.nombre %></td>
+        <td><%= link_to 'Editar', edit_pai_path(pai) %></td>
+        <td><%= link_to 'Eliminar', pai, method: :delete, data: { confirm: '¿Esta seguro de Eliminar?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+

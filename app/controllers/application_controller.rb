@@ -29,4 +29,12 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def set_user
+      @user = User.find_by(id: ActionController::Parameters.new(id: params[:id]).permit(:id)[:id])
+    end
+
+    def user_params
+      params.require(:user).permit(:name, :username, :email, :password, :locked, :mall_id, :cellphone, :role_id)#, rol_ids: [])
+    end
+
 end

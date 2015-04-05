@@ -11,7 +11,103 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150329153502) do
+ActiveRecord::Schema.define(version: 20150402202322) do
+
+  create_table "actividad_economicas", force: true do |t|
+    t.string   "nombre"
+    t.integer  "mall_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "actividad_economicas", ["mall_id"], name: "index_actividad_economicas_on_mall_id"
+
+  create_table "calendario_no_laborables", force: true do |t|
+    t.date     "fecha"
+    t.string   "motivo"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "cambio_monedas", force: true do |t|
+    t.date     "fecha"
+    t.decimal  "cambio_ml_x_usd"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "canon_alquilers", force: true do |t|
+    t.date     "fecha"
+    t.decimal  "canon_fijo_ml"
+    t.decimal  "canon_fijo_usd"
+    t.decimal  "porc_canon_ventas"
+    t.integer  "monto_minimo_ventas"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "idiomas", force: true do |t|
+    t.string   "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "locals", force: true do |t|
+    t.string   "foto"
+    t.string   "nro_local"
+    t.string   "direccion"
+    t.string   "ubicacion_pasillo"
+    t.decimal  "area"
+    t.boolean  "propiedad_mall"
+    t.integer  "tipo_local_id"
+    t.integer  "nivel_mall_id"
+    t.integer  "mall_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "locals", ["mall_id"], name: "index_locals_on_mall_id"
+  add_index "locals", ["nivel_mall_id"], name: "index_locals_on_nivel_mall_id"
+  add_index "locals", ["tipo_local_id"], name: "index_locals_on_tipo_local_id"
+
+  create_table "malls", force: true do |t|
+    t.string   "nombre"
+    t.string   "abreviado"
+    t.string   "rif"
+    t.string   "direccion_fiscal"
+    t.string   "telefono"
+    t.integer  "pai_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "malls", ["pai_id"], name: "index_malls_on_pai_id"
+
+  create_table "monedas", force: true do |t|
+    t.string   "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "nivel_malls", force: true do |t|
+    t.string   "nombre"
+    t.integer  "mall_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "nivel_malls", ["mall_id"], name: "index_nivel_malls_on_mall_id"
+
+  create_table "pais", force: true do |t|
+    t.string   "nombre"
+    t.integer  "idioma_id"
+    t.integer  "moneda_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pais", ["idioma_id"], name: "index_pais_on_idioma_id"
+  add_index "pais", ["moneda_id"], name: "index_pais_on_moneda_id"
 
   create_table "permissions", force: true do |t|
     t.string   "subject_class", limit: 60, default: ""
@@ -30,6 +126,19 @@ ActiveRecord::Schema.define(version: 20150329153502) do
 
   create_table "roles", force: true do |t|
     t.string   "name",       limit: 50, default: "", null: false
+    t.integer  "role_type",             default: 0,  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tipo_canon_alquilers", force: true do |t|
+    t.string   "tipo"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tipo_locals", force: true do |t|
+    t.string   "tipo"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -47,7 +156,10 @@ ActiveRecord::Schema.define(version: 20150329153502) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "unique_session_id",      limit: 20
+    t.string   "name"
+    t.string   "cellphone"
     t.string   "avatar"
+    t.integer  "mall_id"
     t.boolean  "locked",                            default: false
     t.integer  "role_id"
     t.datetime "created_at"

@@ -1,0 +1,54 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+    <h2>
+      Ver Local
+    </h2>
+    <ol class="breadcrumb">
+      <li><%= link_to 'Inicio', 'http://localhost:3000/' %></li>
+      <li><%= link_to 'Locales Registrados', '/locals' %></li>
+      <li>
+        Ver Local
+      </li>
+    </ol>
+  </div>
+</div>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Foto:</strong>
+  <%= @local.foto %>
+</p>
+
+<p>
+  <strong>Nro de Local:</strong>
+  <%= @local.nro_local %>
+</p>
+
+<p>
+  <strong>Direccion:</strong>
+  <%= @local.direccion %>
+</p>
+<p>
+  <strong>Ubicación Nivel:</strong>
+  <%= @local.nivel_mall.nombre %>
+</p>
+<p>
+  <strong>Pasillo:</strong>
+  <%= @local.ubicacion_pasillo %>
+</p>
+<p>
+  <strong>Área:</strong>
+  <%= @local.area %>
+</p>
+<p>
+  <strong>Tipo de Local:</strong>
+  <%= @local.tipo_local.tipo %>
+</p>
+<p>
+  <strong>Propiedad del Mall:</strong>
+  <%= @local.propiedad_mall %>
+</p>
+
+<%= link_to 'Editar', edit_local_path(@local) %> |
+<%= link_to 'Regresar', locals_path %>

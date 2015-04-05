@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+<h1>Datos de Cambio de Moneda</h1>
+<p>
+  <strong>Fecha:</strong>
+  <%= @cambio_moneda.fecha %>
+</p>
+
+<p>
+  <strong>Cambio ml x usd:</strong>
+  <%= @cambio_moneda.cambio_ml_x_usd %>
+</p>
+
+<%= link_to 'Editar', edit_cambio_moneda_path(@cambio_moneda) %> |
+<%= link_to 'Regresar', cambio_monedas_path %>

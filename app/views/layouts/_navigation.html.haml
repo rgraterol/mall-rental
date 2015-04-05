@@ -10,9 +10,9 @@
             %span.clear
               %span.block.m-t-xs
                 %strong.font-bold
-                  = current_user.username
+                  = current_user.name || current_user.username
               %span.text-muted.text-xs.block
-                C.C. La Vela
+                = current_user.mall.nombre rescue 'Mall Rental'
                 %b.caret
           %ul.dropdown-menu.animated.fadeInRight.m-t-xs
             %li
@@ -48,6 +48,14 @@
               %li{class: is_active_action('index')}= link_to 'Visualizar Roles', roles_path
             - if can? :new, Role
               %li{class: is_active_action('new')}= link_to 'Nuevo Rol', new_role_path
+      - if can? :index, :mall_user
+        %li{class: is_active_controller('users/mall_users')}
+          %a{:href => ""}
+            %i.fa.fa-users
+            %span.nav-label Usuarios Mall
+            %span.fa.arrow
+          %ul{:class => "nav nav-second-level #{is_active_controller('users/mall_users')}"}
+            %li{class: is_active_action('index')}= link_to 'Usuarios Mall', mall_users_path
 
       -#%li{:class => is_active_controller('dashboards')}
       -#  %a{:href => ""}

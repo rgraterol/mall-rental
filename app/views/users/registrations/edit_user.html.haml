@@ -24,13 +24,25 @@
           = form_for(@user, url:  users_update_user_path(id: @user), html: { method: :post, class:"form-horizontal m-t-md", id: "form_edit_user"}) do |f|
             = devise_error_messages!
             .form-group
+              = f.label :name, 'Nombre: ', class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :name, autofocus: true, class: 'form-control'
+            .form-group
               = f.label :username, "Login: ", class: 'col-sm-2 control-label'
               .col-sm-10
-                = f.text_field :username, autofocus: true, class: 'form-control'
+                = f.text_field :username, class: 'form-control'
             .form-group
               = f.label :email, "Correo Electrónico: ", class: 'col-sm-2 control-label'
               .col-sm-10
                 = f.email_field :email, class: "form-control"
+            .form-group
+              = f.label :cellphone, 'Teléfonos: ', class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :cellphone, autofocus: false, class: 'form-control'
+            .form-group
+              = f.label :mall_id, 'Mall: ', class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.select :mall_id, options_from_collection_for_select(Mall.all, :id, :nombre, selected: f.object.mall.present? ? f.object.mall.id : nil), { include_blank: false }, {class: 'form-control'}
             .form-group
               = f.label :locked, 'Bloqueado:', class: 'col-sm-2 control-label'
               .col-sm-10
@@ -40,7 +52,7 @@
               .col-sm-10
                 %table
                   %tbody
-                  = f.collection_radio_buttons :role_id, Role.all_valids, :id, :name do |r|
+                  = f.collection_radio_buttons :role_id, Role.all_valids, :id, :name_type do |r|
                     %tr
                       %td= r.label
                       %td= r.radio_button

@@ -1,0 +1,34 @@
+<h1 class="title-file">Gestion de Canon de Alquileres</h1>
+<hr>
+<%= link_to 'Nuevo', new_canon_alquiler_path %>
+<br><br>
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Canon Fijo ml</th>
+      <th>Canon Fijo usd</th>
+      <th>Porc Canon Ventas</th>
+      <th>Monto Minimo Ventas</th>
+      <th>Local</th>
+      <th colspan="3">Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @canon_alquilers.each do |canon_alquiler| %>
+      <tr>
+        <td><%= canon_alquiler.fecha %></td>
+        <td><%= canon_alquiler.canon_fijo_ml %></td>
+        <td><%= canon_alquiler.canon_fijo_usd %></td>
+        <td><%= canon_alquiler.porc_canon_ventas %></td>
+        <td><%= canon_alquiler.monto_minimo_ventas %></td>
+        <td><%= link_to 'Ver', canon_alquiler %></td>
+        <td><%= link_to 'Editar', edit_canon_alquiler_path(canon_alquiler) %></td>
+        <td><%= link_to 'Eliminar', canon_alquiler, method: :delete, data: { confirm: '¿Está seguro de Eliminar?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
