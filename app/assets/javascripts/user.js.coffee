@@ -97,3 +97,7 @@ jQuery(document).ready ->
           identical:
             field: 'user[password]'
             message: 'Las contraseñas no coinciden'
+
+  $('#table_inquilinos_index').dataTable
+    'dom': 'T<"clear">lfrtip'
+    'tableTools': 'sSwfPath': '../assets/dataTables/swf/copy_csv_xls_pdf.swf'

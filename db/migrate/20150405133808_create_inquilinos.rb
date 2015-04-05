@@ -8,6 +8,10 @@ class CreateInquilinos < ActiveRecord::Migration
       t.date :fecha_fin
       t.string :representante_legal
       t.string :archivo_contrato
+      t.string :tipo_canon_alquiler
+
+      t.references :local, index: true
+      t.references :actividad_economica, index: true
 
       t.timestamps
     end

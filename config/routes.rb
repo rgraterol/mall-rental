@@ -44,4 +44,6 @@ Myapp::Application.routes.draw do
   resources :locals
 
   get 'locals/:id/localsmall' => 'locals#localsmall'
+
+  resources :inquilinos
 end

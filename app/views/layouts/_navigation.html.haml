@@ -50,13 +50,14 @@
               %li{class: is_active_action('new')}= link_to 'Nuevo Rol', new_role_path
       - if can? :index, :mall_user
         %li{class: is_active_controller('users/mall_users')}
-          %a{:href => ""}
+          = link_to mall_users_path do
             %i.fa.fa-users
             %span.nav-label Usuarios Mall
-            %span.fa.arrow
-          %ul{:class => "nav nav-second-level #{is_active_controller('users/mall_users')}"}
-            %li{class: is_active_action('index')}= link_to 'Usuarios Mall', mall_users_path
-
+      - if can? :index, Inquilino
+        %li{class: is_active_controller('inquilinos')}
+          = link_to inquilinos_path do
+            %i.fa.fa-money
+            %span.nav-label Inquilinos
       -#%li{:class => is_active_controller('dashboards')}
       -#  %a{:href => ""}
       -#    %i.fa.fa-th-large

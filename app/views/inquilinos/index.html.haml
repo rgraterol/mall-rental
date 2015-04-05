@@ -1,0 +1,50 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      = current_user.mall.nombre
+      \- Inquilinos
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Inquilinos
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-sm-3
+              = link_to 'Nuevo Inquilino', new_inquilino_path, class: 'btn btn-mall btn-block'
+          %br
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover#table_inquilinos_index
+                %thead
+                  %tr
+                    %th Nombre
+                    %th RIF
+                    %th Nro.
+                    %th Nivel de Ubicación
+                    %th Pasillo
+                    %th Teléfonos
+                    %th Área
+                    %th Actividad Económica
+                    %th Tipo de Canon
+                    %th Fecha de Inicio
+                    %th Fecha Fin
+                    %th Acciones
+                %tbody
+                  - Inquilino.all.each do |inquilino|
+                    %tr
+                      %td= inquilino.nombre
+                      %td= inquilino.rif
+                      %td= inquilino.local.nro_local
+                      %td= inquilino.local.nivel_mall.nombre
+                      %td= inquilino.local.ubicacion_pasillo
+                      %td= inquilino.telefono
+                      %td= inquilino.actividad_economica.nombre
+                      %td= inquilino.tipo_canon_alquiler
+                      %td= inquilino.fecha_inicio
+                      %td= inquilino.fecha_fin

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150402202322) do
+ActiveRecord::Schema.define(version: 20150405153456) do
 
   create_table "actividad_economicas", force: true do |t|
     t.string   "nombre"
@@ -51,6 +51,24 @@ ActiveRecord::Schema.define(version: 20150402202322) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "inquilinos", force: true do |t|
+    t.string   "nombre"
+    t.string   "rif"
+    t.string   "telefono"
+    t.date     "fecha_inicio"
+    t.date     "fecha_fin"
+    t.string   "representante_legal"
+    t.string   "archivo_contrato"
+    t.string   "tipo_canon_alquiler"
+    t.integer  "local_id"
+    t.integer  "actividad_economica_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "inquilinos", ["actividad_economica_id"], name: "index_inquilinos_on_actividad_economica_id"
+  add_index "inquilinos", ["local_id"], name: "index_inquilinos_on_local_id"
 
   create_table "locals", force: true do |t|
     t.string   "foto"
@@ -97,6 +115,22 @@ ActiveRecord::Schema.define(version: 20150402202322) do
   end
 
   add_index "nivel_malls", ["mall_id"], name: "index_nivel_malls_on_mall_id"
+
+  create_table "pago_alquilers", force: true do |t|
+    t.date     "fecha"
+    t.string   "monto_canon_fijo_ml"
+    t.string   "decimal"
+    t.decimal  "monto_canon_fijo_usd"
+    t.decimal  "monto_porc_ventas_ml"
+    t.decimal  "monto_porc_ventas_usd"
+    t.integer  "mes_alquiler"
+    t.integer  "ano_alquiler"
+    t.integer  "inquilino_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pago_alquilers", ["inquilino_id"], name: "index_pago_alquilers_on_inquilino_id"
 
   create_table "pais", force: true do |t|
     t.string   "nombre"
@@ -169,5 +203,16 @@ ActiveRecord::Schema.define(version: 20150402202322) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["role_id"], name: "index_users_on_role_id"
+
+  create_table "ventas", force: true do |t|
+    t.datetime "fecha"
+    t.decimal  "monto_ml"
+    t.decimal  "monto_usd"
+    t.integer  "inquilino_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ventas", ["inquilino_id"], name: "index_ventas_on_inquilino_id"
 
 end
