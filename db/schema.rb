@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150405153456) do
+ActiveRecord::Schema.define(version: 20150408000250) do
 
   create_table "actividad_economicas", force: true do |t|
     t.string   "nombre"
@@ -21,6 +21,24 @@ ActiveRecord::Schema.define(version: 20150405153456) do
   end
 
   add_index "actividad_economicas", ["mall_id"], name: "index_actividad_economicas_on_mall_id"
+
+  create_table "arrendatarios", force: true do |t|
+    t.string   "nombre"
+    t.string   "rif"
+    t.string   "direccion"
+    t.string   "telefono"
+    t.string   "nombre_rl"
+    t.string   "cedula_rl"
+    t.string   "email_rl"
+    t.string   "telefono_rl"
+    t.integer  "actividad_economica_id"
+    t.integer  "local_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "arrendatarios", ["actividad_economica_id"], name: "index_arrendatarios_on_actividad_economica_id"
+  add_index "arrendatarios", ["local_id"], name: "index_arrendatarios_on_local_id"
 
   create_table "calendario_no_laborables", force: true do |t|
     t.date     "fecha"
@@ -46,29 +64,27 @@ ActiveRecord::Schema.define(version: 20150405153456) do
     t.datetime "updated_at"
   end
 
+  create_table "contrato_alquilers", force: true do |t|
+    t.string   "nro_contrato"
+    t.date     "fecha_inicio"
+    t.date     "fecha_fin"
+    t.string   "archivo_contrato"
+    t.decimal  "canon_fijo_ml"
+    t.decimal  "canon_fijo_usd"
+    t.decimal  "porc_canon_ventas"
+    t.decimal  "monto_minimo_ventas"
+    t.boolean  "estado_contrato"
+    t.string   "tipo_canon_alquiler"
+    t.integer  "arrendatario_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "idiomas", force: true do |t|
     t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "inquilinos", force: true do |t|
-    t.string   "nombre"
-    t.string   "rif"
-    t.string   "telefono"
-    t.date     "fecha_inicio"
-    t.date     "fecha_fin"
-    t.string   "representante_legal"
-    t.string   "archivo_contrato"
-    t.string   "tipo_canon_alquiler"
-    t.integer  "local_id"
-    t.integer  "actividad_economica_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "inquilinos", ["actividad_economica_id"], name: "index_inquilinos_on_actividad_economica_id"
-  add_index "inquilinos", ["local_id"], name: "index_inquilinos_on_local_id"
 
   create_table "locals", force: true do |t|
     t.string   "foto"
@@ -125,12 +141,12 @@ ActiveRecord::Schema.define(version: 20150405153456) do
     t.decimal  "monto_porc_ventas_usd"
     t.integer  "mes_alquiler"
     t.integer  "ano_alquiler"
-    t.integer  "inquilino_id"
+    t.integer  "contrato_alquiler_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "pago_alquilers", ["inquilino_id"], name: "index_pago_alquilers_on_inquilino_id"
+  add_index "pago_alquilers", ["contrato_alquiler_id"], name: "index_pago_alquilers_on_contrato_alquiler_id"
 
   create_table "pais", force: true do |t|
     t.string   "nombre"
@@ -208,11 +224,11 @@ ActiveRecord::Schema.define(version: 20150405153456) do
     t.datetime "fecha"
     t.decimal  "monto_ml"
     t.decimal  "monto_usd"
-    t.integer  "inquilino_id"
+    t.integer  "arrendatario_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "ventas", ["inquilino_id"], name: "index_ventas_on_inquilino_id"
+  add_index "ventas", ["arrendatario_id"], name: "index_ventas_on_arrendatario_id"
 
 end

@@ -45,5 +45,5 @@ Myapp::Application.routes.draw do
 
   get 'locals/:id/localsmall' => 'locals#localsmall'
 
-  resources :inquilinos
+  resources :arrendatarios
 end

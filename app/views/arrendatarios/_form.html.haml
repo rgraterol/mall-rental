@@ -1,0 +1,48 @@
+= form_for @arrendatario, html: {class: 'form-horizontal'} do |f|
+  .form-group
+    = f.label :nombre, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :nombre, class: 'form-control'
+  .form-group
+    = f.label :fecha_inicio, class: 'col-sm-2 control-label' do
+      Fecha de Inicio del Contrato:
+    .col-sm-3.form-inline
+      = f.date_select :fecha_inicio, {}, { class: 'form-control'}
+    = f.label :fecha_fin, class: 'col-sm-2 control-label' do
+      Fecha de Fin del Contrato:
+    .col-sm-4.form-inline
+      = f.date_select :fecha_fin, {}, { class: 'form-control'}
+  .form-group
+    = f.label :representante_legal, class: 'col-sm-2 control-label' do
+      Representante Legal:
+    .col-sm-10
+      = f.text_field :representante_legal, class: 'form-control'
+  .form-group
+    = f.label :telefono, class: 'col-sm-2 control-label' do
+      Teléfonos:
+    .col-sm-10
+      = f.text_field :telefono, class: 'form-control'
+  .form-group
+    = f.label :actividad_economica_id, class: 'col-sm-2 control-label' do
+      Actividad Económica:
+    .col-sm-10
+      = f.select :actividad_economica_id, options_from_collection_for_select(ActividadEconomica.all, :id, :nombre), {include_blank: 'Seleccione una Actividad Económica'}, {class: 'form-control'}
+  .form-group
+    = f.label :tipo_canon_alquiler, class: 'col-sm-2 control-label' do
+      Tipo Canon Alquiler:
+    .col-sm-10
+      = f.select :tipo_canon_alquiler, Inquilino.tipo_canon_alquilers.keys.to_a.map { |x| [x.humanize.titleize, x]}, {include_blank: 'Seleccione un Tipo de Canon de Alquiler'}, {class: 'form-control'}
+  .form-group
+    = f.label :archivo_contrato, class: 'col-sm-2 control-label' do
+      Archivo Digital del Contrato:
+    .col-sm-10
+      = render 'users/shared/file_input',f: f, modelo_campo: @inquilino.archivo_contrato, campo: :archivo_contrato
+  .form-group
+    .col-sm-3.col-sm-offset-9
+      = f.submit 'Guardar', class: 'btn btn-mall btn-block', data: {disable_with: 'Guardar'}
+  -#.form-group
+  -#  = f.label :direccion, class: 'col-sm-2 control-label' do
+  -#    Dirección:
+  -#  .col-sm-10
+  -#    = f.text_area :direccion, class: 'form-control', height:8
+

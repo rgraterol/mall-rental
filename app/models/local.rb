@@ -20,7 +20,7 @@ class Local < ActiveRecord::Base
   belongs_to :mall
   belongs_to :nivel_mall
   belongs_to :tipo_local
-  has_many :inquilinos
+  has_many :arrendatarios
   validates :tipo_local_id, :nro_local, :direccion, :area, :propiedad_mall, presence: true
   validates :area, numericality: true
   validates :nro_local, :ubicacion_pasillo, uniqueness: true

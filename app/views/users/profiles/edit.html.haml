@@ -36,18 +36,7 @@
             .form-group
               = f.label :avatar, 'Avatar: ', class: 'col-sm-2 control-label'
               .col-sm-10
-                .fileinput.fileinput-new{"data-provides" => "fileinput"}
-                  .fileinput-new.thumbnail{:style => "width: 200px; height: 150px;"}
-                    -#%img{:alt => "...", "data-src" => "holder.js/100%x100%"}/
-                    = image_tag current_user.avatar.url || 'building-avatar.gif', "data-src" => "holder.js/100%x100%"
-                  .fileinput-preview.fileinput-exists.thumbnail{:style => "max-width: 200px; max-height: 150px;"}
-                  %div
-                    %span.btn.btn-mall.btn-file
-                      %span.fileinput-new Seleccionar Imagen
-                      %span.fileinput-exists Cambiar
-                      = f.file_field :avatar
-                      -#%input{:name => "...", :type => "file"}/
-                    %a.btn.btn-mall.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"} Quitar
+                = render 'users/shared/file_input', f: f, campo: :avatar, modelo_campo: current_user.avatar
             .form-group
               .col-sm-3.col-sm-offset-9
                 = f.submit "Actualizar", class: "btn btn-warning btn-block"

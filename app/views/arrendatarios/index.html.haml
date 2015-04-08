@@ -2,12 +2,12 @@
   .col-lg-10
     %h2
       = current_user.mall.nombre
-      \- Inquilinos
+      \- Arrendatarios
     %ol.breadcrumb
       %li
         = link_to 'Inicio', root_url
       %li
-        Inquilinos
+        Arrendatarios
 
 .wrapper.wrapper-content.animated.fadeInRight
   .row
@@ -16,7 +16,7 @@
         .ibox-content
           .row
             .col-sm-3
-              = link_to 'Nuevo Inquilino', new_inquilino_path, class: 'btn btn-mall btn-block'
+              = link_to 'Nuevo Arrendatario', new_arrendatario_path, class: 'btn btn-mall btn-block'
           %br
           .row
             .col-md-12
@@ -36,7 +36,7 @@
                     %th Fecha Fin
                     %th Acciones
                 %tbody
-                  - Inquilino.all.each do |inquilino|
+                  - @arrendatarios.each do |inquilino|
                     %tr
                       %td= inquilino.nombre
                       %td= inquilino.rif

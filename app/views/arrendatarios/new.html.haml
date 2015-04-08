@@ -1,0 +1,25 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      = current_user.mall.nombre
+      \-
+      Nuevo Arrendatario
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Arrendatarios', arrendatarios_path
+      %li
+        Registro de Arrendatario
+
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            = current_user.mall.nombre
+            \-
+            Nuevo Arrendatario
+        .ibox-content
+          -#= render 'form'

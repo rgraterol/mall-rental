@@ -15,7 +15,10 @@
 #  current_sign_in_ip     :string(255)
 #  last_sign_in_ip        :string(255)
 #  unique_session_id      :string(20)
+#  name                   :string(255)
+#  cellphone              :string(255)
 #  avatar                 :string(255)
+#  mall_id                :integer
 #  locked                 :boolean          default(FALSE)
 #  role_id                :integer
 #  created_at             :datetime

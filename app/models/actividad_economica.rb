@@ -11,6 +11,6 @@
 
 class ActividadEconomica < ActiveRecord::Base
   belongs_to :mall
-  has_many :inquilinos
+  has_many :arrendatarios
   validates :nombre, presence: true, uniqueness: true
 end

@@ -53,11 +53,11 @@
           = link_to mall_users_path do
             %i.fa.fa-users
             %span.nav-label Usuarios Mall
-      - if can? :index, Inquilino
-        %li{class: is_active_controller('inquilinos')}
-          = link_to inquilinos_path do
+      - if can? :index, Arrendatario
+        %li{class: is_active_controller('arrendatarios')}
+          = link_to arrendatarios_path do
             %i.fa.fa-money
-            %span.nav-label Inquilinos
+            %span.nav-label Arrendatarios
       -#%li{:class => is_active_controller('dashboards')}
       -#  %a{:href => ""}
       -#    %i.fa.fa-th-large

@@ -10,7 +10,7 @@ class CreatePagoAlquilers < ActiveRecord::Migration
       t.integer :mes_alquiler
       t.integer :ano_alquiler
 
-      t.references :inquilino, index: true
+      t.references :contrato_alquiler, index: true
 
       t.timestamps
     end
