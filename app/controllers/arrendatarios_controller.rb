@@ -2,6 +2,9 @@ class ArrendatariosController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
 
+  respond_to :html
+
+
   def index
     @arrendatarios = Arrendatario.all
     # if @arrendatarios.blank?
@@ -14,7 +17,9 @@ class ArrendatariosController < ApplicationController
   end
 
   def create
-
+    @arrendatario = Arrendatario.new arrendatario_params
+    @arrendatario.save!
+    respond_with(@arrendatario)
   end
 
   def edit
@@ -29,12 +34,16 @@ class ArrendatariosController < ApplicationController
 
   end
 
+  def show
+
+  end
+
   private
     def set_inquilino
 
     end
 
-    def inquilino_params
-
+    def arrendatario_params
+      params.require(:arrendatario).permit(:local_id, :nombre, :rif, :direccion, :telefono, :actividad_economica_id, :nombre_rl, :cedula_rl, :email_rl, :telefono_rl)
     end
 end

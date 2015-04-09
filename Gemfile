@@ -59,5 +59,5 @@ end
 gem 'carrierwave'
 gem 'rmagick'
 
-gem 'cancan'
+gem 'cancancan', '~> 1.10'
 

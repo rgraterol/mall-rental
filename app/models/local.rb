@@ -24,4 +24,8 @@ class Local < ActiveRecord::Base
   validates :tipo_local_id, :nro_local, :direccion, :area, :propiedad_mall, presence: true
   validates :area, numericality: true
   validates :nro_local, :ubicacion_pasillo, uniqueness: true
+
+  def self.valid_locals(user)
+    return Local.joins(:mall).where(malls: {id: user.mall_id})
+  end
 end

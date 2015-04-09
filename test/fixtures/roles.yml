@@ -4,6 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  name       :string(50)       default(""), not null
+#  role_type  :integer          default(0), not null
 #  created_at :datetime
 #  updated_at :datetime
 #

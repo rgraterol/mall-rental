@@ -12,14 +12,5 @@
       %li
         Registro de Arrendatario
 
-.wrapper.wrapper-content
-  .row.animated.fadeInRight
-    .col-md-12
-      .ibox.float-e-margins
-        .ibox-title
-          %h3
-            = current_user.mall.nombre
-            \-
-            Nuevo Arrendatario
-        .ibox-content
-          -#= render 'form'
+.wrapper.wrapper-content.animated.fadeInRight
+  = render 'form'
