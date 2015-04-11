@@ -36,7 +36,7 @@ class ArrendatariosController < ApplicationController
   def update
     respond_to do |format|
       if @arrendatario.update(arrendatario_params)
-        format.html { redirect_to arrendatarios_path, notice: 'Arrendatario actualizado existosamente.' }
+        format.html { redirect_to arrendatarios_path, notice: 'Arrendatario actualizado exitosamente.' }
         format.json { render :index, status: :created, location: @arrendatario }
       else
         format.html { render :edit }

@@ -20,7 +20,7 @@ class Mall < ActiveRecord::Base
   has_many :users
   has_many :roles, through: :users
   has_many :locals
-  has_many :arrendatarios, through: :locals
+  has_many :arrendatarios
 
   validates :nombre, :abreviado, :rif, :direccion_fiscal, :telefono, presence: true
   validates :rif, uniqueness: true
