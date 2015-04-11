@@ -1,3 +1,5 @@
+#= require bootstrapValidator/bootstrapValidator.js
+#= require jasny/jasny-bootstrap.min
 jQuery(document).ready ->
 
   $('#form_registro_local').bootstrapValidator

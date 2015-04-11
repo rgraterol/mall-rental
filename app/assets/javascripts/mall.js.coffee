@@ -1,3 +1,5 @@
+#= require bootstrapValidator/bootstrapValidator.js
+
 jQuery(document).ready ->
 
   $('#form_registro_mall').bootstrapValidator

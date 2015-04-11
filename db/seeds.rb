@@ -23,8 +23,8 @@ n_uno = NivelMall.create!(nombre: 'Nivel Uno')
 n_dos = NivelMall.create!(nombre: 'Nivel Dos')
 n_tres = NivelMall.create!(nombre: 'Nivel Tres')
 
-Local.create!([{nro_local: 'A-01', direccion: 'C.C. La Vela - Margarita', ubicacion_pasillo: 'A-01', area: 20, propiedad_mall: true, mall: cc_vela, tipo_local: comercial, nivel_mall: n_uno},
-               {nro_local: 'A-02', direccion: 'C.C. La Vela - Margarita', ubicacion_pasillo: 'A-02', area: 20, propiedad_mall: true, mall: cc_vela, tipo_local: comercial, nivel_mall: n_uno},
-               {nro_local: 'A-03', direccion: 'C.C. La Vela - Margarita', ubicacion_pasillo: 'A-03', area: 20, propiedad_mall: true, mall: cc_vela, tipo_local: comercial, nivel_mall: n_uno},
-               {nro_local: 'A-04', direccion: 'C.C. La Vela - Margarita', ubicacion_pasillo: 'A-04', area: 20, propiedad_mall: true, mall: cc_vela, tipo_local: comercial, nivel_mall: n_uno},
-               {nro_local: 'A-05', direccion: 'C.C. La Vela - Margarita', ubicacion_pasillo: 'A-05', area: 20, propiedad_mall: true, mall: cc_vela, tipo_local: comercial, nivel_mall: n_uno},])
+Local.create!([{nro_local: 'A-01', ubicacion_pasillo: 'A-01', area: 20, propiedad_mall: true, mall: cc_vela, tipo_local: comercial, nivel_mall: n_uno},
+               {nro_local: 'A-02',  ubicacion_pasillo: 'A-02', area: 20, propiedad_mall: true, mall: cc_vela, tipo_local: comercial, nivel_mall: n_uno},
+               {nro_local: 'A-03',  ubicacion_pasillo: 'A-03', area: 20, propiedad_mall: true, mall: cc_vela, tipo_local: comercial, nivel_mall: n_uno},
+               {nro_local: 'A-04',  ubicacion_pasillo: 'A-04', area: 20, propiedad_mall: true, mall: cc_vela, tipo_local: comercial, nivel_mall: n_uno},
+               {nro_local: 'A-05',  ubicacion_pasillo: 'A-05', area: 20, propiedad_mall: true, mall: cc_vela, tipo_local: comercial, nivel_mall: n_uno},])

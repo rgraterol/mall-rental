@@ -13,7 +13,3 @@
 //= require peity/jquery.peity.min.js
 //= require slimscroll/jquery.slimscroll.min.js
 //= require inspinia.js
-//= require user
-//= require mall
-//= require local
-

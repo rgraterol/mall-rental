@@ -13,9 +13,10 @@
     .col-lg-12
       .ibox.float-e-margins
         .ibox-content
-          .row
-            .col-sm-3
-              = link_to 'Nuevo Mall', new_mall_path, class: 'btn btn-mall btn-block'
+          - if can? :new, Mall
+            .row
+              .col-sm-3
+                = link_to 'Nuevo Mall', new_mall_path, class: 'btn btn-mall btn-block'
           %br
           .row
             .col-md-12
