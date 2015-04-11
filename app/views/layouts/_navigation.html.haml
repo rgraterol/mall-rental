@@ -10,9 +10,9 @@
             %span.clear
               %span.block.m-t-xs
                 %strong.font-bold
-                  = current_user.username
+                  = current_user.name || current_user.username
               %span.text-muted.text-xs.block
-                C.C. La Vela
+                = current_user.mall.nombre rescue 'Mall Rental'
                 %b.caret
           %ul.dropdown-menu.animated.fadeInRight.m-t-xs
             %li
@@ -48,16 +48,20 @@
               %li{class: is_active_action('index')}= link_to 'Visualizar Roles', roles_path
             - if can? :new, Role
               %li{class: is_active_action('new')}= link_to 'Nuevo Rol', new_role_path
-        - if can? :manage, Mall
-          %li{class: is_active_controller('malls')}
-            %a{:href => ""}
-              %i.fa.fa-th-large
-              %span.nav-label Usuarios
-              %span.fa.arrow
-            %ul{:class => "nav nav-second-level #{is_active_controller('users/registrations')}"}
-              %li{class: is_active_action('index')}= link_to 'Visualizar Usuarios', users_index_path
-              %li{class: is_active_action('new_user')}= link_to 'Registrar Usuario', users_new_path
-
+      - if can? :index, :mall_user
+        %li{class: is_active_controller('users/mall_users')}
+          = link_to mall_users_path do
+            %i.fa.fa-users
+            %span.nav-label Usuarios Mall
+      - if can? :index, Arrendatario
+        %li{class: is_active_controller('arrendatarios')}
+          = link_to arrendatarios_path do
+            %i.fa.fa-money
+            %span.nav-label Arrendatarios
+      %li
+        = link_to locals_path do
+          %i.fa.fa-building-o
+          %span.nav-label Locales
       -#%li{:class => is_active_controller('dashboards')}
       -#  %a{:href => ""}
       -#    %i.fa.fa-th-large

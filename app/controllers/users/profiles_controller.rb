@@ -22,7 +22,7 @@ class Users::ProfilesController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:username, :email, :avatar)#, rol_ids: [])
+      params.require(:user).permit(:username, :email, :avatar, :name, :cellphone)
     end
 
 end

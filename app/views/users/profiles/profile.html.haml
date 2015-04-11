@@ -21,6 +21,11 @@
               %br
               %p
                 %strong
+                  Nombre:
+                = current_user.name
+              %br
+              %p
+                %strong
                   Nombre de Usuario:
                 = current_user.username
               %br
@@ -28,6 +33,16 @@
                 %strong
                   Email:
                 = current_user.email
+              %br
+              %p
+                %strong
+                  Teléfonos:
+                = current_user.cellphone
+              %br
+              %p
+                %strong
+                  Rol:
+                = current_user.role.name_type
               %br
               .row
                 .col-sm-3

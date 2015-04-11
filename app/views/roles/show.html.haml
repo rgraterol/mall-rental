@@ -16,6 +16,8 @@
         .ibox-content
           %h2.text-center
             = @role.name
+          %h3.text-center
+            = @role.role_type.humanize.titleize
           %br/
           %table.table.table-striped
             %thead

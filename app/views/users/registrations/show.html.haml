@@ -22,6 +22,9 @@
         .ibox-content
           %p#notice= notice
           %h4
+            %strong Nombre:
+            = @user.name
+          %h4
             %strong Username:
             = @user.username
           %h4
@@ -30,6 +33,15 @@
           %h4
             %strong Correo Electrónico:
             = @user.email
+          %h4
+            %strong Teléfonos:
+            = @user.cellphone
+          %h4
+            %strong Mall:
+            = @user.mall.nombre rescue nil
+          %h4
+            %strong Rol:
+            = @user.role.name_type rescue 'NULL'
           -#%h3
           -#  %strong Roles:
           -#

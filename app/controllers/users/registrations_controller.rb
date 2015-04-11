@@ -74,13 +74,4 @@ class Users::RegistrationsController < Devise::RegistrationsController
     authorize! :update, User
   end
 
-  private
-
-    def set_user
-      @user = User.find_by(id: ActionController::Parameters.new(id: params[:id]).permit(:id)[:id])
-    end
-
-    def user_params
-      params.require(:user).permit(:username, :email, :password, :locked, :role_id)#, rol_ids: [])
-    end
 end

@@ -18,6 +18,10 @@ Myapp::Application.routes.draw do
     post 'profile/update', to: 'users/profiles#update'
   end
 
+  scope module: 'users' do
+    resources :mall_users
+  end
+
   resources :roles
 
   resources :locals
@@ -35,5 +39,14 @@ Myapp::Application.routes.draw do
   get 'nivel_malls/index/:mall_id' => 'nivel_malls#index', as: :nivel_malls_index
 
   get 'nivel_malls/new/:mall_id' => 'nivel_malls#new'
+  
+  resources :tipo_canon_alquilers
 
+  resources :cambio_monedas
+  
+  resources :actividad_economicas
+
+  resources :calendario_no_laborables
+
+  resources :arrendatarios
 end

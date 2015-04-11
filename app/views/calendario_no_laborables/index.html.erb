@@ -1,0 +1,27 @@
+<h1>Lista de Calendario No Laborables</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Motivo</th>
+      <th colspan="3">Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @calendario_no_laborables.each do |calendario_no_laborable| %>
+      <tr>
+        <td><%= calendario_no_laborable.fecha %></td>
+        <td><%= calendario_no_laborable.motivo %></td>
+        <td><%= link_to 'Ver', calendario_no_laborable %></td>
+        <td><%= link_to 'Editar', edit_calendario_no_laborable_path(calendario_no_laborable) %></td>
+        <td><%= link_to 'Eliminar', calendario_no_laborable, method: :delete, data: { confirm: '¿Está seguro?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Nuevo Calendario No Laborable', new_calendario_no_laborable_path %>

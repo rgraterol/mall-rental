@@ -1,0 +1,71 @@
+<div class="wrapper wrapper-content">
+  <div class="row animated fadeInRight">
+    <div class="col-md-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h3>
+            Registro de Nuevo Mall
+          </h3>
+        </div>
+        <div class="ibox-content">
+          <%= form_for(@mall,  :html => { :class => "form-horizontal" } ) do |f| %>
+              <% if @mall.errors.any? %>
+                <div id="error_explanation">
+                  <h2><%= pluralize(@mall.errors.count, "error") %> prohibited this mall from being saved:</h2>
+
+                  <ul>
+                  <% @mall.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                  </ul>
+                </div>
+              <% end %>
+
+              <div class="form-group">
+                <%= f.label :'Nombre', class: 'col-sm-2 control-label' %><br>
+                <div class="col-sm-10">
+                  <%= f.text_field :nombre, class: 'form-control' %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :'Abreviado', class: 'col-sm-2 control-label' %><br>
+                <div class="col-sm-10">
+                  <%= f.text_field :abreviado, class: 'form-control' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :'RIF', class: 'col-sm-2 control-label', for: 'rif' %><br>
+                <div class="col-sm-10">
+                  <%= f.text_field :rif, class: 'form-control' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :'Direccion Fiscal', class: 'col-sm-2 control-label', for: 'direccion_fiscal' %><br>
+                <div class="col-sm-10">
+                  <%= f.text_field :direccion_fiscal, class: 'form-control' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :'Telefono', class: 'col-sm-2 control-label', for: 'telefono' %><br>
+                <div class="col-sm-10">
+                  <%= f.text_field :telefono, class: 'form-control' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :'Pais', class: 'col-sm-2 control-label', for: 'mall_pai_id' %><br>
+                <div class="col-sm-10">
+                  <%= f.collection_select(:pai_id, Pai.all, :id, :nombre) %>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-3 col-sm-offset-9">
+                  <%= f.submit 'Guardar', :class => 'btn btn-warning btn-block' %>
+                </div>
+              </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

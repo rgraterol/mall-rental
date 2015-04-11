@@ -7,7 +7,10 @@
         .form-group
     %ul.nav.navbar-top-links.navbar-right
       %li
-        %span.m-r-sm.text-muted.welcome-message MallRental
+        %span.m-r-sm.text-muted.welcome-message
+          = current_user.role.name
+          \-
+          = current_user.mall.nombre rescue 'MallRental'
       %li
         = link_to destroy_user_session_path, method: :delete do
           %i.fa.fa-sign-out

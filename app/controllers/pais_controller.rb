@@ -4,7 +4,7 @@ class PaisController < ApplicationController
   # GET /pais
   # GET /pais.json
   def index
-    @paises = Pai.all
+    @pais = Pai.all
   end
 
   # GET /pais/1

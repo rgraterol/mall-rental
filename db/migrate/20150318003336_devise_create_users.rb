@@ -36,7 +36,10 @@ class DeviseCreateUsers < ActiveRecord::Migration
       ##UNIQUE SESSION
       t.string :unique_session_id, :limit => 20
 
+      t.string :name
+      t.string :cellphone
       t.string :avatar
+      t.references :mall
 
       t.boolean :locked, default: false
 

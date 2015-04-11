@@ -1,0 +1,64 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      = current_user.mall.nombre
+      \- Arrendatarios
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Arrendatarios
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-sm-3
+              = link_to 'Nuevo Arrendatario', new_arrendatario_path, class: 'btn btn-mall btn-block'
+          %br
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover#table_inquilinos_index
+                %thead
+                  %tr
+                    %th.text-center{colspan: 3}
+                      Local
+                    %th.text-center{colspan: 3}
+                      Arrendatario
+                    %th.text-center{colspan: 3}
+                      Contrato Alquiler
+                  %tr
+                    %th Local
+                    %th Nivel de Ubicación
+                    %th Área
+                    %th Nombre
+                    %th RIF
+                    %th Actividad Económica
+                    %th Tipo de Canon
+                    %th Fecha de Inicio
+                    %th Fecha Fin
+                    %th Acciones
+                %tbody
+                  - @arrendatarios.each do |arrendatario|
+                    %tr
+                      %td= arrendatario.local.nro_local
+                      %td= arrendatario.local.nivel_mall.nombre
+                      %td= arrendatario.local.area
+                      %td= arrendatario.nombre
+                      %td= arrendatario.rif
+                      %td= arrendatario.actividad_economica.nombre
+                      %td
+                      %td
+                      %td
+                      %td
+                        = link_to arrendatario do
+                          Ver
+                        = link_to edit_arrendatario_path(arrendatario) do
+                          Editar
+                        = link_to arrendatario, method: :delete, data: { confirm: '¿Esta seguro de eliminar el arrendatario?' } , remote: true do
+                          Eliminar
+                      -#%td= arrendatario.tipo_canon_alquiler
+                      -#%td= arrendatario.fecha_inicio
+                      -#%td= arrendatario.fecha_fin

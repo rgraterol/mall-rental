@@ -8,13 +8,11 @@
 //= require jquery/jquery-2.1.1.js
 //= require jquery_ujs
 //= require bootstrap-sprockets
-//= require bootstrapValidator/bootstrapValidator
 //= require metisMenu/jquery.metisMenu.js
 //= require pace/pace.min.js
 //= require peity/jquery.peity.min.js
 //= require slimscroll/jquery.slimscroll.min.js
 //= require inspinia.js
-//= require jasny/jasny-bootstrap.min
 //= require user
 //= require mall
 //= require local

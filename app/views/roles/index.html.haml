@@ -19,7 +19,7 @@
           %br
           .row
             .col-md-12
-              %table.table.table-striped.table-bordered.table-hover.dataTables-example
+              %table.table.table-striped.table-bordered.table-hover
                 %thead
                   %tr
                     %th Nombre
@@ -29,7 +29,7 @@
                   - @roles.each do |role|
                     %tr
                       %td= role.name
-                      %td
+                      %td= role.role_type_humanized
                       %td
                         = link_to role do
                           Ver

@@ -1,0 +1,33 @@
+<%= form_for(@canon_alquiler) do |f| %>
+  <% if @canon_alquiler.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@canon_alquiler.errors.count, "error") %> prohibited this canon_alquiler from being saved:</h2>
+
+      <ul>
+      <% @canon_alquiler.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :Fecha %><br>
+    <%= f.date_select :fecha %>
+  </div>
+  <div class="field">
+    <%= f.label :'Canon Fijo ML' %><br>
+    <%= f.text_field :canon_fijo_ml %>
+  </div>
+  <div class="field">
+    <%= f.label :'Porcentaje Canon Ventas' %><br>
+    <%= f.text_field :porc_canon_ventas %>
+  </div>
+  <div class="field">
+    <%= f.label :'Monto Minimo Ventas' %><br>
+    <%= f.number_field :monto_minimo_ventas %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Guardar', :class => 'btn btn-primary' %>
+  </div>
+<% end %>
