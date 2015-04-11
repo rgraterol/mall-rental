@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nombre:</strong>
+  <%= @pai.nombre %>
+</p>
+<p>
+  <strong>Idioma:</strong>
+  <%= @pai.idioma.nombre %>
+</p>
+<p>
+  <strong>Moneda:</strong>
+  <%= @pai.moneda.nombre %>
+</p>
+
+<%= link_to 'Regresar', pais_path %>
+

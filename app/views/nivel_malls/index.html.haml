@@ -1,0 +1,56 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Malls Registrados
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Malls Registrados', malls_path
+      %li
+        Niveles del Mall Registrados
+
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-sm-3
+              = link_to "Nuevo Nivel Mall", { controller: "nivel_malls", action: "new", mall_id: @mall }, class: "btn btn-mall btn-block"
+          %br
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover.dataTables-example
+                %thead
+                  %tr
+                    %th Nombre
+                    %th Acciones
+                %tbody
+                  - @nivel_malls.all.each do |nivel|
+                    %tr
+                      %td= nivel.nombre
+                      %td
+                        = link_to edit_nivel_mall_path(nivel) do
+                          %i.fa.fa-pencil
+                          Editar
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+
+                        = link_to nivel, data: { confirm: "Seguro que desea eliminar el Nivel Mall ?" }, method: :delete do
+                          %i.fa.fa-trash
+                          Eliminar
+                          %br

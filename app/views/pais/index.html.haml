@@ -1,0 +1,46 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Paises Registrados
+
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Paises Registrados
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-sm-3
+              = link_to "Nuevo Pais", { controller: "pais", action: "new" }, class: "btn btn-mall btn-block"
+          %hr
+          %br
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover.dataTables-example
+                %thead
+                  %tr
+                    %th Nombre
+                    %th Idioma
+                    %th Moneda
+                    %th Acciones
+                %tbody
+                  - @paises.all.each do |pais|
+                    %tr
+                      %td= pais.nombre
+                      %td= pais.idioma.nombre
+                      %td= pais.moneda.nombre
+                      %td
+                        = link_to edit_pai_path(pais) do
+                          %i.fa.fa-pencil
+                          Editar
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        = link_to pais, data: { confirm: "Seguro que desea eliminar el Pais ?" }, method: :delete do
+                          %i.fa.fa-trash
+                          Eliminar

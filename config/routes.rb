@@ -19,4 +19,21 @@ Myapp::Application.routes.draw do
   end
 
   resources :roles
+
+  resources :locals
+
+  resources :malls
+
+  resources :nivel_malls
+
+  resources :pais
+
+  get 'locals/index/:mall_id' => 'locals#index', as: :local_index
+
+  get 'locals/new/:mall_id' => 'locals#new'
+
+  get 'nivel_malls/index/:mall_id' => 'nivel_malls#index', as: :nivel_malls_index
+
+  get 'nivel_malls/new/:mall_id' => 'nivel_malls#new'
+
 end

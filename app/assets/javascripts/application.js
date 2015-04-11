@@ -16,4 +16,6 @@
 //= require inspinia.js
 //= require jasny/jasny-bootstrap.min
 //= require user
+//= require mall
+//= require local
 

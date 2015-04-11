@@ -1,0 +1,36 @@
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            Editar Mall
+        .ibox-content
+          = form_for(@mall, url: {action: :update}, html: {class:"form-horizontal m-t-md", id: "form_edit_mall"}) do |f|
+            .form-group
+              = f.label :nombre, "Nombre: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :nombre, autofocus: true, class: 'form-control', required: ''
+            .form-group
+              = f.label :abreviado, "Abreviado: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :abreviado, autofocus: true, class: 'form-control', required: ''
+            .form-group
+              = f.label :rif, "RIF: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :rif, autofocus: true, class: 'form-control', required: ''
+            .form-group
+              = f.label :direccion_fiscal, "Direccion Fiscal: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :direccion_fiscal, autofocus: true, class: 'form-control', required: ''
+            .form-group
+              = f.label :telefono, "Teléfono: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :telefono, autofocus: true, class: 'form-control', required: ''
+            .form-group
+              = f.label :pai_id, "Pais: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.collection_select(:pai_id, Pai.all, :id, :nombre)
+            .form-group
+              .col-sm-3.col-sm-offset-9
+                = f.submit "Guardar", class: "btn btn-warning btn-block"
