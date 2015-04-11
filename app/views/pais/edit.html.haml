@@ -1,0 +1,49 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Editar País
+
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Paises Registrados', pais_path
+      %li
+        Editar País
+
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            Editando País
+        .ibox-content
+          = form_for(@pai, url: {action: :update}, html: {class:"form-horizontal m-t-md", id: "form_update_pais"}) do |f|
+            - if @pai.errors.any?
+              #error_explanation
+                %h2
+                  = pluralize(@pai.errors.count, "error")
+                  prohibited this local from being saved:
+
+                %ul
+                  - @pai.errors.full_messages.each do |message|
+                    %li
+                      = message
+            .form-group
+              = f.label :nombre, "Nombre del País: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :nombre, autofocus: true, class: 'form-control'
+            .form-group
+              = f.label :idioma_id, "Idioma: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.collection_select(:idioma_id, Idioma.all, :id, :nombre)
+            .form-group
+              = f.label :moneda, "Moneda: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.collection_select(:moneda_id, Moneda.all, :id, :nombre)
+            .form-group
+              .col-sm-3.col-sm-offset-9
+                = f.submit "Actualizar", class: "btn btn-warning btn-block"
+
+

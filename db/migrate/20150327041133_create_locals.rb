@@ -3,7 +3,6 @@ class CreateLocals < ActiveRecord::Migration
     create_table :locals do |t|
       t.string :foto
       t.string :nro_local
-      t.string :direccion
       t.string :ubicacion_pasillo
       t.decimal :area
       t.boolean :propiedad_mall

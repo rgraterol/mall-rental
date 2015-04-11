@@ -1,0 +1,49 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Nuevo Mall
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Malls Registrados', malls_path
+      %li
+        Registro de Mall
+
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            Registro de Nuevo Mall
+        .ibox-content
+          = form_for(@mall, url: {action: :create}, html: {class:"form-horizontal m-t-md", id: "form_registro_mall"}) do |f|
+            = devise_error_messages!
+            .form-group
+              = f.label :nombre, "Nombre: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :nombre, autofocus: true, class: 'form-control', required: ''
+            .form-group
+              = f.label :abreviado, "Abreviado: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :abreviado, autofocus: true, class: 'form-control', required: ''
+            .form-group
+              = f.label :rif, "RIF: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :rif, autofocus: true, class: 'form-control', required: ''
+            .form-group
+              = f.label :direccion_fiscal, "Direccion Fiscal: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :direccion_fiscal, autofocus: true, class: 'form-control', required: ''
+            .form-group
+              = f.label :telefono, "Teléfono: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :telefono, autofocus: true, class: 'form-control', required: ''
+            .form-group
+              = f.label :pai_id, "Pais: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.collection_select(:pai_id, Pai.all, :id, :nombre)
+            .form-group
+              .col-sm-3.col-sm-offset-9
+                = f.submit "Guardar", class: "btn btn-warning btn-block"

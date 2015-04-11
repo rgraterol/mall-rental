@@ -1,14 +1,12 @@
-development:
-  adapter: sqlite3
-  database: db/development.sqlite3
+default: &default
+  adapter: postgresql
   pool: 5
   timeout: 5000
-
-default: &default
-   host: localhost
-   adapter: postgresql
-   username: postgres
-   password: 123456
+  username: postgres
+  password: 1q2w3e4r5t
+development:
+  <<: *default
+  database: mall_rental_ricardo
 
 test:
   <<: *default

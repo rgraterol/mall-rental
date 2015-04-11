@@ -6,7 +6,6 @@ class CreateMalls < ActiveRecord::Migration
       t.string :rif
       t.string :direccion_fiscal
       t.string :telefono
-
       t.belongs_to :pai,index:true
 
       t.timestamps

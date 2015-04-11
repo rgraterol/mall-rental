@@ -1,4 +1,7 @@
 class MallsController < ApplicationController
+  before_action :authenticate_user!
+  load_and_authorize_resource
+
   before_action :set_mall, only: [:show, :edit, :update, :destroy]
 
   # GET /malls
@@ -25,10 +28,9 @@ class MallsController < ApplicationController
   # POST /malls.json
   def create
     @mall = Mall.new(mall_params)
-
     respond_to do |format|
       if @mall.save
-        format.html { redirect_to :action => 'index', notice: 'Mall fue creado exitosammente.' }
+        format.html { redirect_to @mall, notice: 'Mall fue creado exitosammente.' }
         format.json { render :index, status: :created, location: @mall }
       else
         format.html { render :new }

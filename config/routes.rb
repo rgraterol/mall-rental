@@ -16,7 +16,6 @@ Myapp::Application.routes.draw do
     get 'profile', to: 'users/profiles#profile'
     get 'profile/edit', to: 'users/profiles#edit'
     post 'profile/update', to: 'users/profiles#update'
-
   end
 
   scope module: 'users' do
@@ -25,25 +24,29 @@ Myapp::Application.routes.draw do
 
   resources :roles
 
-  resources :nivel_malls
+  resources :locals
 
   resources :malls
 
+  resources :nivel_malls
+
   resources :pais
 
+  get 'locals/index/:mall_id' => 'locals#index', as: :local_index
+
+  get 'locals/new/:mall_id' => 'locals#new'
+
+  get 'nivel_malls/index/:mall_id' => 'nivel_malls#index', as: :nivel_malls_index
+
+  get 'nivel_malls/new/:mall_id' => 'nivel_malls#new'
+  
   resources :tipo_canon_alquilers
 
   resources :cambio_monedas
-
-  resources :canon_alquilers
-
+  
   resources :actividad_economicas
 
   resources :calendario_no_laborables
-
-  resources :locals
-
-  get 'locals/:id/localsmall' => 'locals#localsmall'
 
   resources :arrendatarios
 end

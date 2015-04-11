@@ -28,7 +28,7 @@ class PaisController < ApplicationController
 
     respond_to do |format|
       if @pai.save
-        format.html { redirect_to :action => "index", notice: 'Pais creado existosamente.' }
+        format.html { redirect_to pais_path, notice: 'Pais creado existosamente.' }
         format.json { render :index, status: :created, location: @pai }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class PaisController < ApplicationController
   def update
     respond_to do |format|
       if @pai.update(pai_params)
-        format.html { redirect_to :action => "index", notice: 'Pais actualizado exitosamente.' }
+        format.html { redirect_to pais_path, notice: 'Pais actualizado exitosamente.' }
         format.json { render :index, status: :ok, location: @pai }
       else
         format.html { render :edit }

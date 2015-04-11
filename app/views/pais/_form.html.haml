@@ -1,0 +1,35 @@
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            Registro de Nuevo Local
+        .ibox-content
+          = form_for(@pais, url: {action: :create}, html: {class:"form-horizontal m-t-md", id: "form_registro_pais"}) do |f|
+
+            - if @pais.errors.any?
+              #error_explanation
+                %h2
+                  = pluralize(@pais.errors.count, "error")
+                  prohibited this local from being saved:
+
+                %ul
+                  - @local.errors.full_messages.each do |message|
+                    %li
+                      = message
+            .form-group
+              = f.label :nombre, "Nombre del País: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :nombre, autofocus: true, class: 'form-control'
+            .form-group
+              = f.label :idioma_id, "Idioma: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.collection_select(:idioma_id, Idioma.all, :id, :nombre)
+            .form-group
+              = f.label :moneda, "Moneda: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.collection_select(:moneda_id, Moneda.all, :id, :nombre)
+            .form-group
+              .col-sm-3.col-sm-offset-9
+                = f.submit "Guardar", class: "btn btn-warning btn-block"

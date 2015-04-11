@@ -11,74 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150408000250) do
+ActiveRecord::Schema.define(version: 20150402202322) do
 
-  create_table "actividad_economicas", force: true do |t|
-    t.string   "nombre"
-    t.integer  "mall_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "actividad_economicas", ["mall_id"], name: "index_actividad_economicas_on_mall_id"
-
-  create_table "arrendatarios", force: true do |t|
-    t.string   "nombre"
-    t.string   "rif"
-    t.string   "direccion"
-    t.string   "telefono"
-    t.string   "nombre_rl"
-    t.string   "cedula_rl"
-    t.string   "email_rl"
-    t.string   "telefono_rl"
-    t.integer  "actividad_economica_id"
-    t.integer  "local_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "arrendatarios", ["actividad_economica_id"], name: "index_arrendatarios_on_actividad_economica_id"
-  add_index "arrendatarios", ["local_id"], name: "index_arrendatarios_on_local_id"
-
-  create_table "calendario_no_laborables", force: true do |t|
-    t.date     "fecha"
-    t.string   "motivo"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "cambio_monedas", force: true do |t|
-    t.date     "fecha"
-    t.decimal  "cambio_ml_x_usd"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "canon_alquilers", force: true do |t|
-    t.date     "fecha"
-    t.decimal  "canon_fijo_ml"
-    t.decimal  "canon_fijo_usd"
-    t.decimal  "porc_canon_ventas"
-    t.integer  "monto_minimo_ventas"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "contrato_alquilers", force: true do |t|
-    t.string   "nro_contrato"
-    t.date     "fecha_inicio"
-    t.date     "fecha_fin"
-    t.string   "archivo_contrato"
-    t.decimal  "canon_fijo_ml"
-    t.decimal  "canon_fijo_usd"
-    t.decimal  "porc_canon_ventas"
-    t.decimal  "monto_minimo_ventas"
-    t.boolean  "estado_contrato"
-    t.string   "tipo_canon_alquiler"
-    t.integer  "arrendatario_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "idiomas", force: true do |t|
     t.string   "nombre"
@@ -100,9 +36,9 @@ ActiveRecord::Schema.define(version: 20150408000250) do
     t.datetime "updated_at"
   end
 
-  add_index "locals", ["mall_id"], name: "index_locals_on_mall_id"
-  add_index "locals", ["nivel_mall_id"], name: "index_locals_on_nivel_mall_id"
-  add_index "locals", ["tipo_local_id"], name: "index_locals_on_tipo_local_id"
+  add_index "locals", ["mall_id"], name: "index_locals_on_mall_id", using: :btree
+  add_index "locals", ["nivel_mall_id"], name: "index_locals_on_nivel_mall_id", using: :btree
+  add_index "locals", ["tipo_local_id"], name: "index_locals_on_tipo_local_id", using: :btree
 
   create_table "malls", force: true do |t|
     t.string   "nombre"
@@ -115,7 +51,7 @@ ActiveRecord::Schema.define(version: 20150408000250) do
     t.datetime "updated_at"
   end
 
-  add_index "malls", ["pai_id"], name: "index_malls_on_pai_id"
+  add_index "malls", ["pai_id"], name: "index_malls_on_pai_id", using: :btree
 
   create_table "monedas", force: true do |t|
     t.string   "nombre"
@@ -130,23 +66,7 @@ ActiveRecord::Schema.define(version: 20150408000250) do
     t.datetime "updated_at"
   end
 
-  add_index "nivel_malls", ["mall_id"], name: "index_nivel_malls_on_mall_id"
-
-  create_table "pago_alquilers", force: true do |t|
-    t.date     "fecha"
-    t.string   "monto_canon_fijo_ml"
-    t.string   "decimal"
-    t.decimal  "monto_canon_fijo_usd"
-    t.decimal  "monto_porc_ventas_ml"
-    t.decimal  "monto_porc_ventas_usd"
-    t.integer  "mes_alquiler"
-    t.integer  "ano_alquiler"
-    t.integer  "contrato_alquiler_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "pago_alquilers", ["contrato_alquiler_id"], name: "index_pago_alquilers_on_contrato_alquiler_id"
+  add_index "nivel_malls", ["mall_id"], name: "index_nivel_malls_on_mall_id", using: :btree
 
   create_table "pais", force: true do |t|
     t.string   "nombre"
@@ -156,8 +76,8 @@ ActiveRecord::Schema.define(version: 20150408000250) do
     t.datetime "updated_at"
   end
 
-  add_index "pais", ["idioma_id"], name: "index_pais_on_idioma_id"
-  add_index "pais", ["moneda_id"], name: "index_pais_on_moneda_id"
+  add_index "pais", ["idioma_id"], name: "index_pais_on_idioma_id", using: :btree
+  add_index "pais", ["moneda_id"], name: "index_pais_on_moneda_id", using: :btree
 
   create_table "permissions", force: true do |t|
     t.string   "subject_class", limit: 60, default: ""
@@ -172,17 +92,21 @@ ActiveRecord::Schema.define(version: 20150408000250) do
     t.integer "permission_id"
   end
 
-  add_index "permissions_roles", ["permission_id", "role_id"], name: "index_permissions_roles_on_permission_id_and_role_id"
+  add_index "permissions_roles", ["permission_id", "role_id"], name: "index_permissions_roles_on_permission_id_and_role_id", using: :btree
 
-  create_table "roles", force: true do |t|
-    t.string   "name",       limit: 50, default: "", null: false
-    t.integer  "role_type",             default: 0,  null: false
+  create_table "role_users", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "tipo_canon_alquilers", force: true do |t|
-    t.string   "tipo"
+  create_table "roles", force: true do |t|
+    t.string   "name",       limit: 50, default: "", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "rols", force: true do |t|
+    t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -206,29 +130,15 @@ ActiveRecord::Schema.define(version: 20150408000250) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "unique_session_id",      limit: 20
-    t.string   "name"
-    t.string   "cellphone"
     t.string   "avatar"
-    t.integer  "mall_id"
     t.boolean  "locked",                            default: false
     t.integer  "role_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  add_index "users", ["role_id"], name: "index_users_on_role_id"
-
-  create_table "ventas", force: true do |t|
-    t.datetime "fecha"
-    t.decimal  "monto_ml"
-    t.decimal  "monto_usd"
-    t.integer  "arrendatario_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "ventas", ["arrendatario_id"], name: "index_ventas_on_arrendatario_id"
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
 
 end

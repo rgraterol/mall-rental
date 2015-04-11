@@ -57,7 +57,7 @@ end
 
 #Carga de Imagenes
 gem 'carrierwave'
-gem 'rmagick'
+#gem 'rmagick'
 
 gem 'cancancan', '~> 1.10'
 
