@@ -53,7 +53,7 @@
             .form-group
               = f.label :mall_id, 'Mall: ', class: 'col-sm-2 control-label'
               .col-sm-10
-                = f.select :mall_id, options_from_collection_for_select(Mall.all, :id, :nombre), {include_blank: 'Seleccione un Mall' }, {class: 'form-control'}
+                = f.select :mall_id, options_from_collection_for_select(Mall.malls_without_admin, :id, :nombre), {include_blank: 'Seleccione un Mall' }, {class: 'form-control'}
             %br
             .form-group
               = f.label :role, "Roles: ", class: 'col-sm-2 control-label'

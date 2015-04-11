@@ -23,6 +23,18 @@ class Role < ActiveRecord::Base
     Role.where.not(role_type: Role.role_types[:administrador_sistema])
   end
 
+  def self.administrador_sistemas
+    Role.where(role_type: Role.role_types[:administrador_cliente])
+  end
+
+  def self.cliente_malls
+    Role.where(role_type: Role.role_types[:cliente_mall])
+  end
+
+  def self.cliente_tiendas
+    Role.where(role_type: Role.role_types[:cliente_tienda])
+  end
+
   def name_type
     self.name + ' - ' + self.role_type_humanized
   end

@@ -26,7 +26,7 @@
               %h2
                 Funciones del Sistema
       - controlador_aux = ""
-      = f.collection_check_boxes :permission_ids, Permission.all_valids, :id, :name_action_class do |r|
+      = f.collection_check_boxes :permission_ids, Permission.administrador_sistemas, :id, :name_action_class do |r|
         - if r.object.subject_class != controlador_aux
           %hr
           .row
