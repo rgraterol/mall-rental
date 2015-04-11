@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41809d4f-23a1-4805-95cc-f724577231ca" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20150405151038_create_venta.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/development.sqlite3" afterPath="$PROJECT_DIR$/db/development.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/base-app.iml" afterPath="$PROJECT_DIR$/.idea/base-app.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/development.log" afterPath="$PROJECT_DIR$/log/development.log" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -119,7 +119,7 @@
       <file leaf-file-name="new.html.haml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/users/mall_users/new.html.haml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8196721" vertical-offset="0" max-vertical-offset="1242">
+            <state vertical-scroll-proportion="0.74626863" vertical-offset="0" max-vertical-offset="1242">
               <caret line="25" column="22" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
               <folding />
             </state>
@@ -129,8 +129,8 @@
       <file leaf-file-name="application.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/application.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="144" max-vertical-offset="414">
-              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="198" max-vertical-offset="450">
+              <caret line="11" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -446,6 +446,169 @@
       <recent name="$PROJECT_DIR$/app/assets/html" />
     </key>
   </component>
+  <component name="RestoreUpdateTree">
+    <UpdateInfo date="Moments ago" ActionInfo="_Update">
+      <UpdatedFiles>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated from server" />
+          <option name="myStatusName" value="Changed on server" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CHANGED_ON_SERVER" />
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Updated" />
+            <option name="myStatusName" value="Changed" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="UPDATED" />
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/.generators</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/.rakeTasks</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/dataSources.ids</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/dataSources.local.xml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/dataSources.xml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/Gemfile</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/Gemfile.lock</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/javascripts/application.js</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/locals_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/malls_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/nivel_malls_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/controllers/pais_controller.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/models/local.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/uploaders/avatar_uploader.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/locals/show.html.erb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/static/index.html.haml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/config/database.yml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/config/routes.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/db/development.sqlite3</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/db/migrate/20150327041133_create_locals.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/db/migrate/20150328003104_create_malls.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/db/schema.rb</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/log/development.log</PATH>
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Created" />
+            <option name="myStatusName" value="Created" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="CREATED" />
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/javascripts/local.js.coffee</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/assets/javascripts/mall.js.coffee</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/locals/edit.html.haml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/locals/index.html.haml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/locals/localsmall.html.haml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/locals/new.html.haml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/malls/_form.html.haml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/malls/edit.html.haml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/malls/index.html.haml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/malls/new.html.haml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/nivel_malls/edit.html.haml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/nivel_malls/index.html.haml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/nivel_malls/new.html.haml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/pais/_form.html.haml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/pais/edit.html.haml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/pais/index.html.haml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/app/views/pais/new.html.haml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/uploads/foto_1.jpg</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/uploads/foto_3.jpg</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/uploads/local/foto/1/f2c6a34b5d28b91e7f45a57edba334eb.jpg</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/uploads/local/foto/11/hqdefault.jpg</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/uploads/local/foto/14/Img_02024.JPG</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/uploads/local/foto/15/2300.jpg</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/uploads/local/foto/3/f2c6a34b5d28b91e7f45a57edba334eb.jpg</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/uploads/local/foto/4/396207_10150519014774881_657405922_n.jpg</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/uploads/tmp/1428374259-1232-3722/hqdefault.jpg</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/public/uploads/user/avatar/1/dibujos-para-colorear-de-dora-la-exploradora-y-sus-amigos-para-imprimir_1778222.jpg</PATH>
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Deleted" />
+            <option name="myStatusName" value="Deleted" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="true" />
+            <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/db/production.sqlite3</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/db/test.sqlite3</PATH>
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Restored" />
+            <option name="myStatusName" value="Will be restored" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="RESTORED" />
+          </FILE-GROUP>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Modified" />
+          <option name="myStatusName" value="Modified" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MODIFIED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Skipped" />
+          <option name="myStatusName" value="Skipped" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SKIPPED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with conflicts" />
+          <option name="myStatusName" value="Will be merged with conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_CONFLICTS" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with tree conflicts" />
+          <option name="myStatusName" value="Merged with tree conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with property conflicts" />
+          <option name="myStatusName" value="Will be merged with property conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged" />
+          <option name="myStatusName" value="Will be merged" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Not in repository" />
+          <option name="myStatusName" value="Not in repository" />
+          <option name="mySupportsDeletion" value="true" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UNKNOWN" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally added" />
+          <option name="myStatusName" value="Locally added" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_ADDED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally removed" />
+          <option name="myStatusName" value="Locally removed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_REMOVED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Switched" />
+          <option name="myStatusName" value="Switched" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SWITCHED" />
+        </FILE-GROUP>
+      </UpdatedFiles>
+    </UpdateInfo>
+  </component>
   <component name="RunManager" selected="Rails.Development: base-app">
     <configuration default="true" type="RakeRunConfigurationType" factoryName="Rake">
       <module name="" />
@@ -697,7 +860,13 @@
       <option name="project" value="LOCAL" />
       <updated>1428756932163</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="[FIX] JAVASCRIPT SERIO">
+      <created>1428768933501</created>
+      <option name="number" value="00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1428768933501</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -711,13 +880,13 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3847716" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32994923" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32994923" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30736393" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3847716" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3847716" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1235,8 +1404,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/application.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="414">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="198" max-vertical-offset="450">
+          <caret line="11" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="22" />
           <folding />
         </state>
       </provider>
@@ -1259,7 +1428,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/users/mall_users/new.html.haml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8196721" vertical-offset="0" max-vertical-offset="1242">
+        <state vertical-scroll-proportion="0.74626863" vertical-offset="0" max-vertical-offset="1242">
           <caret line="25" column="22" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
           <folding />
         </state>
