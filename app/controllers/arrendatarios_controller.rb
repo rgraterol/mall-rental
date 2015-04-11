@@ -1,5 +1,6 @@
 class ArrendatariosController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_arrendatario, only: [:edit, :show, :update, :destroy]
   load_and_authorize_resource
 
   respond_to :html
@@ -7,9 +8,9 @@ class ArrendatariosController < ApplicationController
 
   def index
     @arrendatarios = Arrendatario.all
-    # if @arrendatarios.blank?
-    #   redirect_to new_arrendatario_path
-    # end
+    if @arrendatarios.blank?
+      redirect_to new_arrendatario_path
+    end
   end
 
   def new
@@ -18,29 +19,29 @@ class ArrendatariosController < ApplicationController
 
   def create
     @arrendatario = Arrendatario.new arrendatario_params
-    @arrendatario.save!
+    @arrendatario.save
     respond_with(@arrendatario)
   end
 
   def edit
-
   end
 
   def update
-
+    @arrendatario.update(arrendatario_params)
+    respond_with(@arrendatario)
   end
 
   def destroy
-
+    @arrendatario.destroy
+    respond_with(@arrendatario)
   end
 
   def show
-
   end
 
   private
-    def set_inquilino
-
+    def set_arrendatario
+      @arrendatario = current_user.mall.arrendatarios.find_by(id: params[:id])
     end
 
     def arrendatario_params

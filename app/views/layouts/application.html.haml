@@ -18,6 +18,7 @@
       -#= render 'layouts/skinconfig'
       / Wrapper
       #wrapper{:class => "#{params[:controller]}.#{params[:action]}"}
+        - puts params[:controller]
         / Navigation
         = render 'layouts/navigation'
         / Page wraper

@@ -41,7 +41,7 @@
             = @user.mall.nombre rescue nil
           %h4
             %strong Rol:
-            = @user.role.name_type
+            = @user.role.name_type rescue 'NULL'
           -#%h3
           -#  %strong Roles:
           -#

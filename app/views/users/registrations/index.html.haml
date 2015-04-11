@@ -38,8 +38,8 @@
                       %td= user.email
                       %td= user.name
                       %td= user.cellphone
-                      %td= user.mall.nombre rescue nil
-                      %td= user.role.name_type
+                      %td= user.mall.nombre rescue 'NULL'
+                      %td= user.role.name_type rescue 'NULL'
                       %td
                         = link_to user_edit_user_path(user) do
                           %i.fa.fa-pencil

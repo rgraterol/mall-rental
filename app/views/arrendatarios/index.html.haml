@@ -53,6 +53,12 @@
                       %td
                       %td
                       %td
+                        = link_to arrendatario do
+                          Ver
+                        = link_to edit_arrendatario_path(arrendatario) do
+                          Editar
+                        = link_to arrendatario, method: :delete, data: { confirm: '¿Esta seguro de eliminar el arrendatario?' } , remote: true do
+                          Eliminar
                       -#%td= arrendatario.tipo_canon_alquiler
                       -#%td= arrendatario.fecha_inicio
                       -#%td= arrendatario.fecha_fin
