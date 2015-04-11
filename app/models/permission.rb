@@ -19,6 +19,6 @@ class Permission < ActiveRecord::Base
   end
 
   def self.all_valids
-    Permission.where.not(subject_class: 'Role')
+    Permission.where.not(subject_class: ['Role', 'User'])
   end
 end

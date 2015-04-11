@@ -1,12 +1,12 @@
 default: &default
-  adapter: postgresql
-  pool: 5
-  timeout: 5000
-  username: postgres
-  password: 1q2w3e4r5t
+   host: localhost
+   adapter: postgresql
+   username: postgres
+   password: 123456
+
 development:
   <<: *default
-  database: mall_rental_ricardo
+  database: mall_rental_development
 
 test:
   <<: *default

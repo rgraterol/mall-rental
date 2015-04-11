@@ -31,12 +31,12 @@
       - if can? :manage, User
         %li{class: is_active_controller('users/registrations')}
           %a{:href => ""}
-            %i.fa.fa-th-large
-            %span.nav-label Usuarios
+            %i.fa.fa-database
+            %span.nav-label Mall Admins
             %span.fa.arrow
           %ul{:class => "nav nav-second-level #{is_active_controller('users/registrations')}"}
-            %li{class: is_active_action('index')}= link_to 'Visualizar Usuarios', users_index_path
-            %li{class: is_active_action('new_user')}= link_to 'Registrar Usuario', users_new_path
+            %li{class: is_active_action('index')}= link_to 'Visualizar Mall Admins', users_index_path
+            %li{class: is_active_action('new_user')}= link_to 'Nuevo Mall Admin', users_new_path
       - if can? :index, Role
         %li{class: is_active_controller('roles')}
           %a{:href => ""}

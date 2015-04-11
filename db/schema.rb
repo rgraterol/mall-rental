@@ -224,8 +224,8 @@ ActiveRecord::Schema.define(version: 20150408000250) do
 
   create_table "ventas", force: true do |t|
     t.datetime "fecha"
-    t.decimal  "monto_ml"
-    t.decimal  "monto_usd"
+    t.decimal  "monto_ml",        precision: 8, scale: 2
+    t.decimal  "monto_usd",       precision: 8, scale: 2
     t.integer  "arrendatario_id"
     t.datetime "created_at"
     t.datetime "updated_at"

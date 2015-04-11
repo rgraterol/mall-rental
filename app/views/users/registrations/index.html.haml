@@ -1,12 +1,12 @@
 .row.wrapper.border-bottom.white-bg.page-heading
   .col-lg-10
     %h2
-      Usuarios Registrados
+      Administradores Mall
     %ol.breadcrumb
       %li
         = link_to 'Inicio', root_url
       %li
-        Usuarios Registrados
+        Administradores Mall
 
 .wrapper.wrapper-content.animated.fadeInRight
   .row
@@ -15,7 +15,7 @@
         .ibox-content
           .row
             .col-sm-3
-              = link_to 'Nuevo Usuario', users_new_path, class: 'btn btn-mall btn-block'
+              = link_to 'Nuevo Mall Admin', users_new_path, class: 'btn btn-mall btn-block'
           %br
           .row
             .col-md-12
@@ -31,7 +31,7 @@
                     %th Rol
                     %th Acciones
                 %tbody
-                  - User.where.not(username: 'mall_admin').each do |user|
+                  - User.mall_admins.each do |user|
                     %tr
                       %td.text-center= image_tag user.avatar.url || 'building-avatar.gif', class: 'img-circle', height: 50
                       %td= user.username

@@ -42,4 +42,8 @@ class User < ActiveRecord::Base
   validates :username, presence: {message: 'es obligatorio'},
             uniqueness: {message: 'ya en uso.'}
 
+  def self.mall_admins
+    User.joins(:role).where(roles: {role_type: Role.role_types[:administrador_cliente]})
+  end
+
 end

@@ -17,10 +17,10 @@ class Role < ActiveRecord::Base
 
   validates :name, presence: true
 
-  enum role_type: [:administrador_sistema, :administrador_cliente, :cliente_mall, :cliente_inquilino]
+  enum role_type: [:administrador_sistema, :administrador_cliente, :cliente_mall, :cliente_tienda]
 
   def self.all_valids
-    Role.where.not(id: 1)
+    Role.where.not(role_type: Role.role_types[:administrador_sistema])
   end
 
   def name_type
@@ -32,7 +32,7 @@ class Role < ActiveRecord::Base
   end
 
   def self.valid_role_types
-    %w[administrador_cliente cliente_mall cliente_inquilino]
+    %w[administrador_cliente cliente_mall cliente_tienda]
   end
 
 end

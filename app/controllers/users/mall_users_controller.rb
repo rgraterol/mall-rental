@@ -6,7 +6,7 @@ class Users::MallUsersController < ApplicationController
   @@password = ""
 
   def index
-    @mall_users = User.joins(:role).where(mall_id: current_user.mall.id, roles: {role_type: [Role.role_types[:cliente_mall],Role.role_types[:cliente_inquilino] ]})
+    @mall_users = User.joins(:role).where(mall_id: current_user.mall.id, roles: {role_type: Role.role_types[:cliente_mall]})
   end
 
   def new
@@ -35,7 +35,7 @@ class Users::MallUsersController < ApplicationController
   end
 
   def destroy
-    if @user.mall.id == current_user.mall.id && (@user.role.cliente_mall? || @user.role.cliente_sistema?)
+    if @user.mall.id == current_user.mall.id && (@user.role.cliente_mall?)
       if @user.destroy
         redirect_to mall_users_path, alert: 'Usuario eliminado satisfactoriamente.' and return
       end
@@ -48,7 +48,7 @@ class Users::MallUsersController < ApplicationController
   end
 
   def update
-    if @user.mall.id == current_user.mall.id && (@user.role.cliente_mall? || @user.role.cliente_inquilino?)
+    if @user.mall.id == current_user.mall.id && @user.role.cliente_mall?
       respond_to do |format|
         if @user.update(user_params)
           format.html { redirect_to mall_user_path(@user), notice: 'El usuario mall ha sido actualizado.' }
