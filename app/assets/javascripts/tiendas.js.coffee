@@ -3,8 +3,11 @@ jQuery(document).ready ($) ->
   $('#add_actividad_economica_select').hide()
   $('#validacion_nombre_actividad').hide()
   $('#validacion_nombre_en_uso_actividad').hide()
+  $('#loading_actividad_economica').hide()
 
   $('#select_actividad_economica_tienda').change ->
+    $('#validacion_nombre_en_uso_actividad').hide()
+    $('#validacion_nombre_actividad').hide()
     if $(this).val() == 'nueva_actividad_economica'
       $('#add_actividad_economica_select').show()
     else
@@ -14,6 +17,7 @@ jQuery(document).ready ($) ->
     if $('#nueva_actividad_economica').val() == ''
       $('#validacion_nombre_actividad').show()
     else
+      $('#loading_actividad_economica').show()
       $.ajax
         type: "POST"
         url: "/dynamic_add_actividad/actividad"
@@ -30,3 +34,7 @@ jQuery(document).ready ($) ->
           $('#nueva_actividad_economica').val('')
         error: (data)->
           $('#validacion_nombre_en_uso_actividad').show()
+        complete: ->
+          $('#loading_actividad_economica').hide()
+
+  $('#select_canon_alquiler').change ->

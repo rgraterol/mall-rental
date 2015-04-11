@@ -18,8 +18,10 @@
           .form-group
             = f.label :arrendatario_id, class: 'col-sm-2 control-label' do
               Arrendatario:
-            .col-sm-10
+            .col-sm-7
               = f.select :arrendatario_id, options_from_collection_for_select(Arrendatario.valid_arrendatarios(current_user), :id, :nombre, selected: f.object.arrendatario_id || nil), {include_blank: 'Seleccione un Arrendatario'}, {class: 'form-control'}
+            .col-sm-3
+              = link_to 'Nuevo Arrendatario', new_arrendatario_path, class: 'btn btn-warning'
           .form-group
             = f.label :actividad_economica_id, class: 'col-sm-2 control-label' do
               Actividad Económica:
@@ -27,7 +29,7 @@
               = f.select :actividad_economica_id, content_tag(:option,'Nueva Actividad Económica...',:value=>"nueva_actividad_economica") + options_from_collection_for_select(ActividadEconomica.all, :id, :nombre, selected: f.object.actividad_economica_id || nil), {include_blank: 'Seleccione una Actividad Económica'}, {class: 'form-control', id: 'select_actividad_economica_tienda'}
           %div#add_actividad_economica_select
             .form-group
-              = label_tag :nueva_actividad_economica, class: 'col-sm-4 control-label' do
+              = label_tag :nueva_actividad_economica, class: 'col-sm-3 control-label' do
                 Nueva Actividad Económica:
               .col-sm-6
                 = text_field_tag :nueva_actividad_economica, nil, class: 'form-control'
@@ -36,8 +38,56 @@
                 %span.help-block.text-danger#validacion_nombre_en_uso_actividad
                   Actividad Económica ya existente.
               .col-sm-2
-                %a.btn.btn-mall.btn-block#agregar_actividad_economica_tienda{href:'#'}
+                %a.btn.btn-mall#agregar_actividad_economica_tienda{href:'#'}
                   Agregar
+              .col-sm-1
+                %span.fa-stack
+                  %i#loading_actividad_economica.fa.fa-2x.fa-spinner.fa-spin
+    .col-lg-6
+      .ibox.float-e-margins
+        .ibox-content.border-bottom.form-horizontal
+          = f.fields_for :contrato_alquiler do |c|
+            .form-group
+              = c.label :tipo_canon_alquiler, class: 'col-sm-3 control-label' do
+                Tipo Canon Alquiler:
+              .col-sm-9
+                = c.select :tipo_canon_alquiler, ContratoAlquiler.tipo_canon_alquilers.keys.to_a.map { |x| [x.humanize.titleize, x]}, {include_blank: 'Seleccione un Tipo de Canon de Alquiler'}, {class: 'form-control', id: 'select_canon_alquiler'}
+            .form-group
+              = c.label :fecha_inicio, class: 'col-sm-3 control-label' do
+                Fecha Inicio del Contrato:
+              .col-sm-9.form-inline
+                = c.date_select :fecha_inicio, {}, class: 'form-control'
+            .form-group
+              = c.label :fecha_fin, class: 'col-sm-3 control-label' do
+                Fecha Fin del Contrato:
+              .col-sm-9.form-inline
+                = c.date_select :fecha_fin, {}, class: 'form-control'
+            %div#canon_fijo
+              .form-group
+                = c.label :canon_fijo_ml, class: 'col-sm-3 control-label' do
+                  Canón Fijo en Bs.:
+                .col-sm-9
+                  = c.text_field :canon_fijo_ml, class: 'form-control', disabled: true
+              .form-group
+                = c.label :canon_fijo_usd, class: 'col-sm-3 control-label' do
+                  Canón Fijo en $:
+                .col-sm-9
+                  = c.text_field :canon_fijo_usd, class: 'form-control', disabled: true
+            %div#canon_porcentaje
+              .form-group
+                = c.label :porc_canon_ventas, class: 'col-sm-3 control-label' do
+                  \% de Canon por Ventas:
+                .col-sm-9
+                  = c.text_field :porc_canon_ventas, class: 'form-control', disabled: true
+              .form-group
+                = c.label :monto_minimo_ventas, class: 'col-sm-2 control-label' do
+                  Monto Mínimo de Ventas Mensual:
+                .col-sm-10
+                  = c.text_field :monto_minimo_ventas, class: 'form-control', disabled: true
+
+            .form-group
+
+
 
 
 

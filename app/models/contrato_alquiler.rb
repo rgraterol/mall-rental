@@ -4,7 +4,7 @@
 #
 #  id                  :integer          not null, primary key
 #  nro_contrato        :string(255)
-#  fecha_inicio        :date
+#  .form-group        :date
 #  fecha_fin           :date
 #  archivo_contrato    :string(255)
 #  canon_fijo_ml       :decimal(, )
@@ -20,4 +20,6 @@
 
 class ContratoAlquiler < ActiveRecord::Base
   belongs_to :tienda
+
+  enum tipo_canon_alquiler: [:canon_fijo, :canon_fijo_y_porcentaje_ventas, :porcentaje_de_ventas]
 end
