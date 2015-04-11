@@ -1,7 +1,9 @@
 jQuery(document).ready ($) ->
+
   $('#add_actividad_economica_select').hide()
   $('#validacion_nombre_actividad').hide()
   $('#validacion_nombre_en_uso_actividad').hide()
+
   $('#select_actividad_economica_tienda').change ->
     if $(this).val() == 'nueva_actividad_economica'
       $('#add_actividad_economica_select').show()
@@ -24,7 +26,6 @@ jQuery(document).ready ($) ->
           .append($('<option>', { value : data.id })
             .text(data.nombre));
           $("#select_actividad_economica_tienda").val(data.id);
-        complete: (data) ->
           $('#add_actividad_economica_select').hide()
           $('#nueva_actividad_economica').val('')
         error: (data)->
