@@ -67,6 +67,16 @@
           = link_to malls_path do
             %i.fa.fa-building-o
             %span.nav-label Malls
+      - if can? :index, Tienda
+        %li{class: is_active_controller('tiendas')}
+          %a{href: '#'}
+            %i.fa.fa-credit-card
+            %span.nav-label Tiendas
+            %span.fa.arrow
+          %ul{:class => "nav nav-second-level #{is_active_controller('tiendas')}"}
+            %li{class: is_active_action('index')}= link_to 'Visualizar Tiendas', tiendas_path
+            - if can? :new, Tienda
+              %li{class: is_active_action('new')}= link_to 'Nueva Tienda', new_tienda_path
       -#%li{:class => is_active_controller('dashboards')}
       -#  %a{:href => ""}
       -#    %i.fa.fa-th-large

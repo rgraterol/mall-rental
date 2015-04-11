@@ -5,7 +5,6 @@
 #  id                :integer          not null, primary key
 #  foto              :string(255)
 #  nro_local         :string(255)
-#  direccion         :string(255)
 #  ubicacion_pasillo :string(255)
 #  area              :decimal(, )
 #  propiedad_mall    :boolean

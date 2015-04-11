@@ -5,7 +5,7 @@ class CreateVentas < ActiveRecord::Migration
       t.decimal :monto_ml, precision: 8, scale: 2
       t.decimal :monto_usd, precision: 8, scale: 2
 
-      t.references :arrendatario, index: true
+      t.references :tienda, index: true
 
       t.timestamps
     end

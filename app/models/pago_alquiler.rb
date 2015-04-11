@@ -11,7 +11,7 @@
 #  monto_porc_ventas_usd :decimal(, )
 #  mes_alquiler          :integer
 #  ano_alquiler          :integer
-#  inquilino_id          :integer
+#  contrato_alquiler_id  :integer
 #  created_at            :datetime
 #  updated_at            :datetime
 #

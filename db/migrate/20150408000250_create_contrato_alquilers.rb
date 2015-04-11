@@ -12,7 +12,7 @@ class CreateContratoAlquilers < ActiveRecord::Migration
       t.boolean :estado_contrato
       t.string :tipo_canon_alquiler
 
-      t.references :arrendatario
+      t.references :tienda, index: true
 
       t.timestamps
     end

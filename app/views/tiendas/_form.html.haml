@@ -1,0 +1,61 @@
+= form_for @tienda do |f|
+  = render 'shared/error_messages', object: f.object, model: 'Tienda'
+
+  .row
+    .col-lg-6
+      .ibox.float-e-margins
+        .ibox-content.border-bottom.form-horizontal
+          .form-group
+            = f.label :nombre, class: 'col-sm-2 control-label' do
+              Nombre:
+            .col-sm-10
+              = f.text_field :nombre, class: 'form-control'
+          .form-group
+            = f.label :local_id, class: 'col-sm-2 control-label' do
+              Nro. Local:
+            .col-sm-10
+              = f.select :local_id, options_from_collection_for_select(Local.valid_locals(current_user), :id, :nro_local, selected: f.object.local_id || nil), {include_blank: 'Seleccione un Local'}, {class: 'form-control'}
+          .form-group
+            = f.label :arrendatario_id, class: 'col-sm-2 control-label' do
+              Arrendatario:
+            .col-sm-10
+              = f.select :arrendatario_id, options_from_collection_for_select(Arrendatario.valid_arrendatarios(current_user), :id, :nombre, selected: f.object.arrendatario_id || nil), {include_blank: 'Seleccione un Arrendatario'}, {class: 'form-control'}
+          .form-group
+            = f.label :actividad_economica_id, class: 'col-sm-2 control-label' do
+              Actividad Económica:
+            .col-sm-10
+              = f.select :actividad_economica_id, content_tag(:option,'Nueva Actividad Económica...',:value=>"nueva_actividad_economica") + options_from_collection_for_select(ActividadEconomica.all, :id, :nombre, selected: f.object.actividad_economica_id || nil), {include_blank: 'Seleccione una Actividad Económica'}, {class: 'form-control', id: 'select_actividad_economica_tienda'}
+          %div#add_actividad_economica_select
+            .form-group
+              = label_tag :nueva_actividad_economica, class: 'col-sm-4 control-label' do
+                Nueva Actividad Económica:
+              .col-sm-6
+                = text_field_tag :nueva_actividad_economica, nil, class: 'form-control'
+                %span.help-block.text-danger#validacion_nombre_actividad
+                  Nombre no puede estar en blanco
+                %span.help-block.text-danger#validacion_nombre_en_uso_actividad
+                  Actividad económica ya existente
+              .col-sm-2
+                %a.btn.btn-mall.btn-block#agregar_actividad_economica_tienda{href:'#'}
+                  Agregar
+
+
+
+
+-#<%= form_for(@tienda) do |f| %>
+-#  <% if @tienda.errors.any? %>
+-#    <div id="error_explanation">
+-#      <h2><%= pluralize(@tienda.errors.count, "error") %> prohibited this tienda from being saved:</h2>
+-#
+-#      <ul>
+-#      <% @tienda.errors.full_messages.each do |message| %>
+-#        <li><%= message %></li>
+-#      <% end %>
+-#      </ul>
+-#    </div>
+-#  <% end %>
+-#
+-#  <div class="actions">
+-#    <%= f.submit %>
+-#  </div>
+-#<% end %>

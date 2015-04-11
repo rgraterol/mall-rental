@@ -49,4 +49,10 @@ Myapp::Application.routes.draw do
   resources :calendario_no_laborables
 
   resources :arrendatarios
+
+  resources :tiendas
+
+  scope module: 'dynamic' do
+    post 'dynamic_add_actividad/actividad'
+  end
 end
