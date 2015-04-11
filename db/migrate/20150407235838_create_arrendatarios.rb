@@ -9,8 +9,7 @@ class CreateArrendatarios < ActiveRecord::Migration
       t.string :cedula_rl
       t.string :email_rl
       t.string :telefono_rl
-      t.references :actividad_economica, index: true
-      t.references :local, index: true
+      t.references :mall, index: true
       t.timestamps
     end
   end

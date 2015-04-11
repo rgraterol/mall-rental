@@ -18,17 +18,31 @@ class ArrendatariosController < ApplicationController
   end
 
   def create
-    @arrendatario = Arrendatario.new arrendatario_params
-    @arrendatario.save
-    respond_with(@arrendatario)
+    @arrendatario = Arrendatario.new arrendatario_params.merge(mall_id: current_user.mall_id)
+    respond_to do |format|
+      if @arrendatario.save
+        format.html { redirect_to arrendatarios_path, notice: 'Arrendatario creado existosamente.' }
+        format.json { render :index, status: :created, location: @arrendatario }
+      else
+        format.html { render :new }
+        format.json { render json: @arrendatario.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def edit
   end
 
   def update
-    @arrendatario.update(arrendatario_params)
-    respond_with(@arrendatario)
+    respond_to do |format|
+      if @arrendatario.update(arrendatario_params)
+        format.html { redirect_to arrendatarios_path, notice: 'Arrendatario actualizado existosamente.' }
+        format.json { render :index, status: :created, location: @arrendatario }
+      else
+        format.html { render :edit }
+        format.json { render json: @arrendatario.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
@@ -45,6 +59,6 @@ class ArrendatariosController < ApplicationController
     end
 
     def arrendatario_params
-      params.require(:arrendatario).permit(:local_id, :nombre, :rif, :direccion, :telefono, :actividad_economica_id, :nombre_rl, :cedula_rl, :email_rl, :telefono_rl)
+      params.require(:arrendatario).permit(:nombre, :rif, :direccion, :telefono, :nombre_rl, :cedula_rl, :email_rl, :telefono_rl)
     end
 end

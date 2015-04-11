@@ -7,9 +7,29 @@
 #= require jquery-ui/jquery-ui.min.js
 
 jQuery(document).ready ->
+
   $('#table_inquilinos_index').dataTable
     'dom': 'T<"clear">lfrtip'
-    'tableTools': 'sSwfPath': '../assets/dataTables/swf/copy_csv_xls_pdf.swf'
+    'tableTools':
+      'sSwfPath': '../assets/dataTables/swf/copy_csv_xls_pdf.swf'
+      "aButtons": [
+        {
+          "sExtends":     "copy",
+          "sButtonText": "Copiar"
+        },
+        {
+          "sExtends":     "csv",
+          "sButtonText": "Excel"
+        },
+        {
+          "sExtends":     "pdf",
+          "sButtonText": "PDF"
+        },
+        {
+          "sExtends":     "print",
+          "sButtonText": "Imprimir"
+        },
+        ]
     "language": {
       "sProcessing":    "Procesando...",
       "sLengthMenu":    "Mostrar _MENU_ Registros",

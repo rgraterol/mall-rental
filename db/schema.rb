@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150408000250) do
+ActiveRecord::Schema.define(version: 20150411193050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,14 +34,12 @@ ActiveRecord::Schema.define(version: 20150408000250) do
     t.string   "cedula_rl"
     t.string   "email_rl"
     t.string   "telefono_rl"
-    t.integer  "actividad_economica_id"
-    t.integer  "local_id"
+    t.integer  "mall_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "arrendatarios", ["actividad_economica_id"], name: "index_arrendatarios_on_actividad_economica_id", using: :btree
-  add_index "arrendatarios", ["local_id"], name: "index_arrendatarios_on_local_id", using: :btree
+  add_index "arrendatarios", ["mall_id"], name: "index_arrendatarios_on_mall_id", using: :btree
 
   create_table "calendario_no_laborables", force: true do |t|
     t.date     "fecha"
@@ -182,6 +180,23 @@ ActiveRecord::Schema.define(version: 20150408000250) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "tiendas", force: true do |t|
+    t.string   "nombre"
+    t.date     "fecha_apertura"
+    t.date     "fecha_cierre"
+    t.boolean  "abierta"
+    t.date     "fecha_fin_contrato_actual"
+    t.integer  "local_id"
+    t.integer  "actividad_economica_id"
+    t.integer  "arrendatario_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tiendas", ["actividad_economica_id"], name: "index_tiendas_on_actividad_economica_id", using: :btree
+  add_index "tiendas", ["arrendatario_id"], name: "index_tiendas_on_arrendatario_id", using: :btree
+  add_index "tiendas", ["local_id"], name: "index_tiendas_on_local_id", using: :btree
 
   create_table "tipo_canon_alquilers", force: true do |t|
     t.string   "tipo"

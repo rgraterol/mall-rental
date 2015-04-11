@@ -28,4 +28,8 @@ class Local < ActiveRecord::Base
   #                           :message => "Solo se permite números enteros."
   
   mount_uploader :foto, AvatarUploader
+
+  def self.valid_locals(user)
+    return Local.joins(:mall).where(malls: {id: user.mall_id})
+  end
 end
