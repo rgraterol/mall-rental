@@ -18,7 +18,6 @@
         .ibox-title
           %h3
             = current_user.mall.nombre
-            \ -
             Registro de Nuevo Usuario
         .ibox-content
           = form_for(@mall_user, url: {action: :create}, html: {class:"form-horizontal m-t-md", id: "form_registro_usuario_mall"}) do |f|
