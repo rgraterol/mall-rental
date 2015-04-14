@@ -1,0 +1,58 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      = current_user.mall.nombre
+      \-
+      = @user.tienda.nombre
+      \- Nuevo Usuario
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to "#{@user.tienda.nombre}Usuarios", user_tiendas_path
+      %li
+        = link_to "Registro de Usuario #{@user.tienda.nombre}", new_user_tienda_path
+      %li
+        Nuevo Usuario
+
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            = current_user.mall.nombre
+            \- Usuario
+        .ibox-content
+          %p#notice= notice
+          %h4
+            %strong Nombre:
+            = @user.name
+          %h4
+            %strong Username:
+            = @user.username
+          %h4
+            %strong Contraseña:
+            = @pass
+          %h4
+            %strong Correo Electrónico:
+            = @user.email
+          %h4
+            %strong Teléfonos:
+            = @user.cellphone
+          %h4
+            %strong Mall:
+            = @user.mall.nombre rescue nil
+          %h4
+            %strong Rol:
+            = @user.role.name_type
+          %br/
+          .row
+            .col-md-12
+              .alert.alert-danger.alert-dismissable.alerts-fix
+                %strong
+                  NOTA: La contraseña solo podra ser visualizada unicamente al momento del registro.
+          .row
+            .col-sm-3
+              = link_to user_tiendas_path, class: 'btn btn-warning btn-block' do
+                Regresar

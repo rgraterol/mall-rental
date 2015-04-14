@@ -20,6 +20,7 @@ Myapp::Application.routes.draw do
 
   scope module: 'users' do
     resources :mall_users
+    resources :user_tiendas
   end
 
   resources :roles

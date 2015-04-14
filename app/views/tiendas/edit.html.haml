@@ -1,0 +1,23 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      = current_user.mall.nombre
+      \-
+      Edición de Tienda
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to "Tiendas #{current_user.mall.nombre}", tiendas_path
+      %li
+        Edición de Tienda
+
+
+.wrapper.wrapper-content.animated.fadeInRight
+  = render 'form'
+  -#.row
+  -#  .col-sm-3
+  -#    = link_to @tienda, class: 'btn btn-default btn-block' do
+  -#      Ver
+  -#      %i.fa.fa-search
+

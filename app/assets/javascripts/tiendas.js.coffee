@@ -1,4 +1,47 @@
+#= require jasny/jasny-bootstrap.min
+#= require dataTables/jquery.dataTables.js
+#= require dataTables/dataTables.bootstrap.js
+#= require dataTables/dataTables.responsive.js
+#= require dataTables/dataTables.tableTools.min.js
+#= require jqGrid/i18n/grid.locale-el.js
+#= require jqGrid/jquery.jqGrid.min.js
+#= require jquery-ui/jquery-ui.min.js
+#= require bootstrapValidator/bootstrapValidator
+
 jQuery(document).ready ($) ->
+
+  $('#form_tiendas').bootstrapValidator
+    feedbackIcons:
+      valid: 'fa fa-check ',
+      invalid: 'fa fa-times',
+      validating: 'fa fa-refresh'
+    live: 'submitted'
+    fields:
+      "tienda[local_id]":
+        validators:
+          notEmpty:
+            message: "Local es Obligatorio"
+      "tienda[arrendatario_id]":
+        validators:
+          notEmpty:
+            message: "Arrendatario es Obligatorio"
+      "tienda[actividad_economica_id]":
+        validators:
+          notEmpty:
+            message: "Actividad Económica es Obligatoria"
+      tipo_canon_alquiler_required:
+        selector: '.tipo_canon_alquiler_required'
+        validators:
+          notEmpty:
+            message: "Tipo Canon Alquiler es Obligatorio"
+      numeric_contrato_alquiler:
+        selector: '.numeric_contrato_alquiler'
+        validators:
+          numeric:
+            message: 'Debe ser un valor numerico, decimales separados por punto'
+
+
+
 
   $('#add_actividad_economica_select').hide()
   $('#validacion_nombre_actividad').hide()
@@ -38,3 +81,71 @@ jQuery(document).ready ($) ->
           $('#loading_actividad_economica').hide()
 
   $('#select_canon_alquiler').change ->
+    if $(this).val() == 'canon_fijo'
+      $('#canon_fijo').show()
+      $('#canon_fijo').find(':input').prop('disabled', false);
+      $('#canon_porcentaje').hide()
+      $('#canon_porcentaje').find(':input').prop('disabled', true);
+    else if $(this).val() == 'canon_fijo_y_porcentaje_ventas'
+      $('#canon_fijo').show()
+      $('#canon_fijo').find(':input').prop('disabled', false);
+      $('#canon_porcentaje').show()
+      $('#canon_porcentaje').find(':input').prop('disabled', false);
+    else if $(this).val() == 'porcentaje_de_ventas'
+      $('#canon_fijo').hide()
+      $('#canon_fijo').find(':input').prop('disabled', true);
+      $('#canon_porcentaje').show()
+      $('#canon_porcentaje').find(':input').prop('disabled', false);
+    else
+      $('#canon_fijo').hide()
+      $('#canon_fijo').find(':input').prop('disabled', true);
+      $('#canon_porcentaje').hide()
+      $('#canon_porcentaje').find(':input').prop('disabled', true);
+
+
+  $('#table_tiendas_index').dataTable
+    'dom': 'T<"clear">lfrtip'
+    'tableTools':
+      'sSwfPath': '../assets/dataTables/swf/copy_csv_xls_pdf.swf'
+      "aButtons": [
+        {
+          "sExtends":     "copy",
+          "sButtonText": "Copiar"
+        },
+        {
+          "sExtends":     "csv",
+          "sButtonText": "Excel"
+        },
+        {
+          "sExtends":     "pdf",
+          "sButtonText": "PDF"
+        },
+        {
+          "sExtends":     "print",
+          "sButtonText": "Imprimir"
+        },
+      ]
+    "language": {
+      "sProcessing":    "Procesando...",
+      "sLengthMenu":    "Mostrar _MENU_ Registros",
+      "sZeroRecords":   "No se encontraron resultados",
+      "sEmptyTable":    "Ningún dato disponible en esta tabla",
+      "sInfo":          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+      "sInfoEmpty":     "Mostrando registros del 0 al 0 de un total de 0 registros",
+      "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
+      "sInfoPostFix":   "",
+      "sSearch":        "Buscar: ",
+      "sUrl":           "",
+      "sInfoThousands":  ",",
+      "sLoadingRecords": "Cargando...",
+      "oPaginate": {
+        "sFirst":    "Primero",
+        "sLast":    "Último",
+        "sNext":    "Siguiente",
+        "sPrevious": "Anterior"
+      },
+      "oAria": {
+        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+      }
+    }

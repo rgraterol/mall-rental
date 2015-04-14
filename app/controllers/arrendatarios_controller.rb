@@ -7,7 +7,7 @@ class ArrendatariosController < ApplicationController
 
 
   def index
-    @arrendatarios = Arrendatario.all
+    @arrendatarios = current_user.mall.arrendatarios
     if @arrendatarios.blank?
       redirect_to new_arrendatario_path
     end

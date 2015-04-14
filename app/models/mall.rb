@@ -14,13 +14,15 @@
 #
 
 class Mall < ActiveRecord::Base
-  has_many :nivel_malls
+  has_many :nivel_malls, dependent: :destroy
   belongs_to :pai
-  has_many :actividad_economicas
+  has_many :actividad_economicas, dependent: :destroy
   has_many :users
   has_many :roles, through: :users
-  has_many :locals
-  has_many :arrendatarios
+  has_many :locals, dependent: :destroy
+  has_many :arrendatarios, dependent: :destroy
+  has_many :tiendas, through: :arrendatarios, dependent: :destroy
+  has_many :user_tiendas, through: :tiendas, dependent: :destroy
 
   validates :nombre, :abreviado, :rif, :direccion_fiscal, :telefono, presence: true
   validates :rif, uniqueness: true

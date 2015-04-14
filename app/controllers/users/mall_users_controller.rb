@@ -11,6 +11,9 @@ class Users::MallUsersController < ApplicationController
 
   def new
     @mall_user ||= User.new
+    if @roles.blank?
+      redirect_to new_role_path, alert: 'No existen roles para clientes mall.'
+    end
   end
 
   def create
@@ -66,7 +69,7 @@ class Users::MallUsersController < ApplicationController
 
   private
     def mall_user_params
-      params.require(:user).permit(:name, :username, :email, :password, :cellphone, :role_id)
+      params.require(:user).permit(:name, :username, :email, :password, :cellphone, :role_id, :locked)
     end
 
     def self.permission

@@ -1,0 +1,74 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      = current_user.mall.nombre
+      \- Tiendas
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Tiendas
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-sm-3
+              = link_to 'Nueva Tienda', new_tienda_path, class: 'btn btn-mall btn-block '
+          %br
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover#table_tiendas_index
+                %thead
+                  %tr
+                    %th.text-center{colspan: 3}
+                      Tienda
+                    %th.text-center{colspan: 3}
+                      Local
+                    %th.text-center{colspan: 2}
+                      Arrendatario
+                    %th.text-center{colspan: 3}
+                      Contrato de Alquiler
+                  %tr
+                    %th Nombre
+                    %th Fecha de Apertura
+                    %th Actividad Económica
+                    %th Local
+                    %th Nivel de Ubicación
+                    %th Área
+                    %th Nombre
+                    %th RIF
+                    %th Tipo de Canon
+                    %th Fecha Inicio
+                    %th Fecha Fin
+                    %th Vencido
+                    %th Acciones
+                    %th Usuarios
+                    %th Contratos
+                %tbody
+                  - @tiendas.each do |tienda|
+                    %tr
+                      %td= tienda.nombre
+                      %td= tienda.fecha_apertura
+                      %td= tienda.actividad_economica.nombre
+                      %td= tienda.local.nro_local
+                      %td= tienda.local.nivel_mall.nombre
+                      %td= tienda.local.area
+                      %td= tienda.arrendatario.nombre
+                      %td= tienda.arrendatario.rif
+                      %td= tienda.contrato_alquilers.last.tipo_canon_alquiler.humanize.titleize
+                      %td= tienda.contrato_alquilers.last.fecha_inicio
+                      %td= tienda.contrato_alquilers.last.fecha_fin
+                      %td= tienda.vencido?
+                      %td
+                        = link_to edit_tienda_path(tienda) do
+                          %i.fa.fa-edit
+                        &nbsp;
+                        &nbsp;
+                        = link_to tienda, method: :delete, data: { confirm: "Seguro de que desea eliminar la tienda #{tienda.nombre}" }do
+                          %i.fa.fa-trash
+                      %td
+                        = link_to user_tiendas_path(tienda: tienda.nombre, id: tienda.id) do
+                          Usuarios
+                      %td

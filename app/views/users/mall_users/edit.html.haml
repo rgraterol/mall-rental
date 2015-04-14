@@ -41,10 +41,6 @@
               .col-sm-10
                 = f.text_field :cellphone, autofocus: false, class: 'form-control'
             .form-group
-              = f.label :mall_id, 'Mall: ', class: 'col-sm-2 control-label'
-              .col-sm-10
-                = f.select :mall_id, options_from_collection_for_select(Mall.all, :id, :nombre, selected: f.object.mall.present? ? f.object.mall.id : nil), { include_blank: false }, {class: 'form-control'}
-            .form-group
               = f.label :locked, 'Bloqueado:', class: 'col-sm-2 control-label'
               .col-sm-10
                 = f.check_box :locked

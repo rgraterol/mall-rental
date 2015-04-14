@@ -1,0 +1,59 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      = current_user.mall.nombre
+      \- Usuarios
+      = @tienda.nombre
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Usuarios
+        = @tienda.nombre
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          %h2
+            = @tienda.nombre
+          %br
+          %br
+          .row
+            .col-sm-3
+              = link_to "Nuevo Usuario #{@tienda.nombre}", new_user_tienda_path(tienda: @tienda.nombre, id: @tienda.id), class: 'btn btn-mall'
+          %br
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover
+                %thead
+                  %tr
+                    %th Avatar
+                    %th Username
+                    %th Email
+                    %th Nombre
+                    %th Teléfono Celular
+                    %th Tienda
+                    %th Rol
+                    %th Acciones
+                %tbody
+                  - @tienda.users.each do |user|
+                    %tr
+                      %td.text-center= image_tag user.avatar.url || 'building-avatar.gif', class: 'img-circle', height: 50
+                      %td= user.username
+                      %td= user.email
+                      %td= user.name
+                      %td= user.cellphone
+                      %td= user.tienda.nombre rescue nil
+                      %td= user.role.name_type rescue nil
+                      %td
+                        = link_to edit_user_tienda_path(user) do
+                          %i.fa.fa-pencil
+                          Editar
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        = link_to user_tienda_path(user), data: { confirm: "Seguro que desea eliminar al usuario #{user.username}?" }, method: :delete do
+                          %i.fa.fa-trash
+                          Eliminar

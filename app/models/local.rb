@@ -19,7 +19,7 @@ class Local < ActiveRecord::Base
   belongs_to :mall
   belongs_to :nivel_mall
   belongs_to :tipo_local
-  has_many :arrendatarios
+  has_one :tienda, dependent: :destroy
   validates :tipo_local_id, :nro_local, :area, presence: true
   validates :area, numericality: true
   # validates :nro_local, uniqueness: true, numericality: true

@@ -14,6 +14,14 @@ class ApplicationController < ActionController::Base
     redirect_to root_path
   end
 
+  before_action do
+    if user_signed_in? && current_user.tienda.present? && current_user.tienda.contrato_alquilers.last.fecha_fin < Date.today
+      flash[:alert] =  'Usted posee el contrato de alquiler vencido, por favor dirigirse a administración para actualizar su contrato'
+      flash[:notice] = nil
+      sign_out current_user
+    end
+  end
+
   protected
     def self.permission
       self.name.gsub('Controller','').singularize.split('::').last.constantize.name rescue nil

@@ -40,6 +40,9 @@ class User < ActiveRecord::Base
   belongs_to :role
   belongs_to :mall
 
+  has_one :user_tienda, dependent: :destroy
+  has_one :tienda, through: :user_tienda
+
   validates :username, presence: {message: 'es obligatorio'},
             uniqueness: {message: 'ya en uso.'}
 

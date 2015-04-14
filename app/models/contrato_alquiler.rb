@@ -19,7 +19,22 @@
 #
 
 class ContratoAlquiler < ActiveRecord::Base
+  before_update :clean_canon_alquiler
   belongs_to :tienda
 
+  validates :tipo_canon_alquiler, :archivo_contrato, presence: true
+
+  mount_uploader :archivo_contrato, AvatarUploader
+
   enum tipo_canon_alquiler: [:canon_fijo, :canon_fijo_y_porcentaje_ventas, :porcentaje_de_ventas]
+
+  def clean_canon_alquiler
+    if self.tipo_canon_alquiler == "canon_fijo"
+      self.porc_canon_ventas = nil
+      self.monto_minimo_ventas = nil
+    elsif self.tipo_canon_alquiler == "porcentaje_de_ventas"
+      self.canon_fijo_ml = nil
+      self.canon_fijo_usd = nil
+    end
+  end
 end

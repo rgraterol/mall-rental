@@ -1,15 +1,15 @@
-= form_for @tienda do |f|
+= form_for @tienda, html: {id: 'form_tiendas'} do |f|
   = render 'shared/error_messages', object: f.object, model: 'Tienda'
 
   .row
     .col-lg-6
       .ibox.float-e-margins
         .ibox-content.border-bottom.form-horizontal
-          .form-group
-            = f.label :nombre, class: 'col-sm-2 control-label' do
-              Nombre:
-            .col-sm-10
-              = f.text_field :nombre, class: 'form-control'
+          -#.form-group
+          -#  = f.label :nombre, class: 'col-sm-2 control-label' do
+          -#    Nombre:
+          -#  .col-sm-10
+          -#    = f.text_field :nombre, class: 'form-control'
           .form-group
             = f.label :local_id, class: 'col-sm-2 control-label' do
               Nro. Local:
@@ -46,12 +46,12 @@
     .col-lg-6
       .ibox.float-e-margins
         .ibox-content.border-bottom.form-horizontal
-          = f.fields_for :contrato_alquiler do |c|
+          = f.fields_for :contrato_alquilers, @contrato_alquiler do |c|
             .form-group
               = c.label :tipo_canon_alquiler, class: 'col-sm-3 control-label' do
                 Tipo Canon Alquiler:
               .col-sm-9
-                = c.select :tipo_canon_alquiler, ContratoAlquiler.tipo_canon_alquilers.keys.to_a.map { |x| [x.humanize.titleize, x]}, {include_blank: 'Seleccione un Tipo de Canon de Alquiler'}, {class: 'form-control', id: 'select_canon_alquiler'}
+                = c.select :tipo_canon_alquiler, ContratoAlquiler.tipo_canon_alquilers.keys.to_a.map { |x| [x.humanize.titleize, x]}, {selected: c.object.tipo_canon_alquiler || nil, include_blank: 'Seleccione un Tipo de Canon de Alquiler'}, {class: 'form-control tipo_canon_alquiler_required', id: 'select_canon_alquiler'}
             .form-group
               = c.label :fecha_inicio, class: 'col-sm-3 control-label' do
                 Fecha Inicio del Contrato:
@@ -62,30 +62,44 @@
                 Fecha Fin del Contrato:
               .col-sm-9.form-inline
                 = c.date_select :fecha_fin, {}, class: 'form-control'
-            %div#canon_fijo
+            %div#canon_fijo{style: (c.object.tipo_canon_alquiler == 'canon_fijo_y_porcentaje_ventas' || c.object.tipo_canon_alquiler == 'canon_fijo') ? '' : 'display:none'}
               .form-group
                 = c.label :canon_fijo_ml, class: 'col-sm-3 control-label' do
                   Canón Fijo en Bs.:
                 .col-sm-9
-                  = c.text_field :canon_fijo_ml, class: 'form-control', disabled: true
+                  = c.text_field :canon_fijo_ml, class: 'form-control numeric_contrato_alquiler'
               .form-group
-                = c.label :canon_fijo_usd, class: 'col-sm-3 control-label' do
+                = c.label :canon_fijo_usd, class: 'col-sm-3 control-label ' do
                   Canón Fijo en $:
                 .col-sm-9
-                  = c.text_field :canon_fijo_usd, class: 'form-control', disabled: true
-            %div#canon_porcentaje
+                  = c.text_field :canon_fijo_usd, class: 'form-control numeric_contrato_alquiler'
+            %div#canon_porcentaje{style: (c.object.tipo_canon_alquiler == 'canon_fijo_y_porcentaje_ventas' || c.object.tipo_canon_alquiler == 'porcentaje_de_ventas') ? '' : 'display:none'}
               .form-group
                 = c.label :porc_canon_ventas, class: 'col-sm-3 control-label' do
                   \% de Canon por Ventas:
                 .col-sm-9
-                  = c.text_field :porc_canon_ventas, class: 'form-control', disabled: true
+                  = c.text_field :porc_canon_ventas, class: 'form-control numeric_contrato_alquiler'
               .form-group
-                = c.label :monto_minimo_ventas, class: 'col-sm-2 control-label' do
+                = c.label :monto_minimo_ventas, class: 'col-sm-3 control-label' do
                   Monto Mínimo de Ventas Mensual:
-                .col-sm-10
-                  = c.text_field :monto_minimo_ventas, class: 'form-control', disabled: true
-
+                .col-sm-9
+                  = c.text_field :monto_minimo_ventas, class: 'form-control numeric_contrato_alquiler'
             .form-group
+              = c.label :archivo_contrato, class: 'col-sm-3 control-label' do
+                Archivo Digital del Contrato:
+              .col-sm-9
+                = render 'shared/file_upload_generic', f: c , field: :archivo_contrato, name_file: c.object.archivo_contrato || nil
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content.border-bottom.form-horizontal
+          .form-group
+            .col-sm-3
+              = link_to tiendas_path, class: 'btn btn-warning btn-block' do
+                Regresar
+            .col-sm-3.col-sm-offset-6
+              = f.submit 'Guardar', class: 'btn btn-mall btn-block', disable_with: 'Guardar'
+
 
 
 

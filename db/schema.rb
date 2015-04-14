@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150411193050) do
+ActiveRecord::Schema.define(version: 20150413231523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,11 +75,13 @@ ActiveRecord::Schema.define(version: 20150411193050) do
     t.decimal  "porc_canon_ventas"
     t.decimal  "monto_minimo_ventas"
     t.boolean  "estado_contrato"
-    t.string   "tipo_canon_alquiler"
-    t.integer  "arrendatario_id"
+    t.integer  "tipo_canon_alquiler"
+    t.integer  "tienda_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "contrato_alquilers", ["tienda_id"], name: "index_contrato_alquilers_on_tienda_id", using: :btree
 
   create_table "idiomas", force: true do |t|
     t.string   "nombre"
@@ -210,6 +212,16 @@ ActiveRecord::Schema.define(version: 20150411193050) do
     t.datetime "updated_at"
   end
 
+  create_table "user_tiendas", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "tienda_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_tiendas", ["tienda_id"], name: "index_user_tiendas_on_tienda_id", using: :btree
+  add_index "user_tiendas", ["user_id"], name: "index_user_tiendas_on_user_id", using: :btree
+
   create_table "users", force: true do |t|
     t.string   "username",                          default: "",    null: false
     t.string   "encrypted_password",                default: "",    null: false
@@ -239,13 +251,13 @@ ActiveRecord::Schema.define(version: 20150411193050) do
 
   create_table "ventas", force: true do |t|
     t.datetime "fecha"
-    t.decimal  "monto_ml",        precision: 8, scale: 2
-    t.decimal  "monto_usd",       precision: 8, scale: 2
-    t.integer  "arrendatario_id"
+    t.decimal  "monto_ml",   precision: 8, scale: 2
+    t.decimal  "monto_usd",  precision: 8, scale: 2
+    t.integer  "tienda_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "ventas", ["arrendatario_id"], name: "index_ventas_on_arrendatario_id", using: :btree
+  add_index "ventas", ["tienda_id"], name: "index_ventas_on_tienda_id", using: :btree
 
 end
