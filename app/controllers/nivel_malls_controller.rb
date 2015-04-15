@@ -1,5 +1,6 @@
 class NivelMallsController < ApplicationController
   before_action :set_nivel_mall, only: [:show, :edit, :update, :destroy]
+  respond_to :html, :js
 
   # GET /nivel_malls
   # GET /nivel_malls.json
@@ -61,6 +62,13 @@ class NivelMallsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to nivel_malls_index_path(@mall_id), notice: 'Nivel mall se elimino correctamente.' }
       format.json { head :no_content }
+    end
+  end
+
+  def test_ajax
+    render :layout => nil
+    respond_to do |format|
+      format.json { render :index, status: :ok, location: 1 }
     end
   end
 

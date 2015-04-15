@@ -1,5 +1,41 @@
-<h1>Nueva Actividad Econ&oacute;mica</h1>
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      - current_user.mall
+      Nueva Actividad Económica
 
-<%= render 'form' %>
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Actividades Económicas Registradas', actividad_economicas_path
+      %li
+        Registro de Actividad Económica
 
-<%= link_to 'Regresar', actividad_economicas_path %>
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            Registro de Nueva Actividad Económica
+        .ibox-content
+          = form_for(@actividad_economica, url: {action: :create}, html: {class:"form-horizontal m-t-md", id: "form_registro_actividad_economica"}) do |f|
+            - if @actividad_economica.errors.any?
+              #error_explanation
+                %h2
+                  = pluralize(@actividad_economica.errors.count, "error")
+                  prohibited this local from being saved:
+
+                %ul
+                  - @actividad_economica.errors.full_messages.each do |message|
+                    %li
+                      = message
+            .form-group
+              = f.label :nombre, "Nombre: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :nombre, autofocus: true, class: 'form-control', required: 'true'
+            = f.hidden_field :mall_id, :value => current_user.mall.id
+            .form-group
+              .col-sm-3.col-sm-offset-9
+                = f.submit "Guardar", class: "btn btn-warning btn-block"

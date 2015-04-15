@@ -3,15 +3,19 @@ class LocalsController < ApplicationController
   load_and_authorize_resource
 
   before_action :set_local, only: [:show, :edit, :update, :destroy]
+  helper_method :valid_locals
 
   # GET /locals
   # GET /locals.json
   def index
-    #raise params.inspect
-    @mall = Mall.find(params[:mall_id])
-    @locals = Local.where(mall_id: params[:mall_id])
+    @locals = Local.where(mall_id: current_user.mall.id)
     @local1 = Local.new
     @local2 = Local.new
+
+    if @locals.blank?
+      redirect_to controller: 'locals', action: 'new'
+    end
+
   end
 
   # GET /locals/1
@@ -23,7 +27,7 @@ class LocalsController < ApplicationController
   # GET /locals/new
   def new
     @local = Local.new
-    @mall = Mall.find(params[:mall_id])
+    @mall = current_user.mall
   end
 
 
@@ -39,7 +43,7 @@ class LocalsController < ApplicationController
     respond_to do |format|
       if @local.save
        # format.html { redirect_to locals_path(mall_id: local_params[:mall_id]), notice: 'Local fue creado satisfactoriamente.' }
-        format.html { redirect_to local_index_path(local_params[:mall_id]), notice: 'Local fue creado satisfactoriamente.' }
+        format.html { redirect_to local_index_path, notice: 'Local fue creado satisfactoriamente.' }
         format.json { render :index, status: :created, location: @local }
       else
         format.html { render :new }
@@ -53,7 +57,7 @@ class LocalsController < ApplicationController
   def update
     respond_to do |format|
       if @local.update(local_params)
-        format.html { redirect_to local_index_path(@local.mall_id), notice: 'Local fue actualizado satisfactoriamente.' }
+        format.html { redirect_to local_index_path, notice: 'Local fue actualizado satisfactoriamente.' }
         format.json { render :index, status: :ok, location: @local }
       else
         format.html { render :edit }
@@ -73,6 +77,10 @@ class LocalsController < ApplicationController
     end
   end
 
+  def valid_locals
+    @locals = Local.where(mall_id: current_user.mall.id)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_local
@@ -83,4 +91,6 @@ class LocalsController < ApplicationController
     def local_params
       params.require(:local).permit(:foto, :nro_local, :ubicacion_pasillo, :area, :propiedad_mall, :tipo_local_id, :nivel_mall_id, :mall_id)
     end
+
+
 end

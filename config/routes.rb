@@ -33,13 +33,19 @@ Myapp::Application.routes.draw do
 
   resources :pais
 
-  get 'locals/index/:mall_id' => 'locals#index', as: :local_index
+  get 'locals' => 'locals#index', as: :local_index
 
-  get 'locals/new/:mall_id' => 'locals#new'
+  get 'locals/new' => 'locals#new'
 
   get 'nivel_malls/index/:mall_id' => 'nivel_malls#index', as: :nivel_malls_index
 
   get 'nivel_malls/new/:mall_id' => 'nivel_malls#new'
+
+  get 'nivel_malls/test_ajax' => 'nivel_malls#test_ajax'
+
+  get 'actividad_economicas' => 'actividad_economicas#index', as: :actividad_economicas
+
+  get 'actividad_ecnonomica' => 'actividad_economicas#show'
   
   resources :tipo_canon_alquilers
 
@@ -52,6 +58,8 @@ Myapp::Application.routes.draw do
   resources :arrendatarios
 
   resources :tiendas
+
+  resources :ventas
 
   scope module: 'dynamic' do
     post 'dynamic_add_actividad/actividad'

@@ -1,7 +1,7 @@
 .row.wrapper.border-bottom.white-bg.page-heading
   .col-lg-10
     %h2
-      Niveles del Malls Registrados
+      Malls Registrados
     %ol.breadcrumb
       %li
         = link_to 'Inicio', root_url
@@ -61,5 +61,3 @@
                         = link_to mall, data: { confirm: "Seguro que desea eliminar el Mall ?" }, method: :delete do
                           %i.fa.fa-trash
                           Eliminar
-                          %br
-                        = link_to " Ver Locales", { controller: "locals", action: "index", mall_id: mall['id'] }
