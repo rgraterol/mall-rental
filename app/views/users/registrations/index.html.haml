@@ -1,0 +1,55 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Administradores Mall
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Administradores Mall
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-sm-3
+              = link_to 'Nuevo Mall Admin', users_new_path, class: 'btn btn-mall btn-block'
+          %br
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover.dataTables-example
+                %thead
+                  %tr
+                    %th Avatar
+                    %th Username
+                    %th Email
+                    %th Nombre
+                    %th Teléfono Celular
+                    %th Mall
+                    %th Rol
+                    %th Acciones
+                %tbody
+                  - User.mall_admins.each do |user|
+                    %tr
+                      %td.text-center= image_tag user.avatar.url || 'building-avatar.gif', class: 'img-circle', height: 50
+                      %td= user.username
+                      %td= user.email
+                      %td= user.name
+                      %td= user.cellphone
+                      %td= user.mall.nombre rescue 'NULL'
+                      %td= user.role.name_type rescue 'NULL'
+                      %td
+                        = link_to user_edit_user_path(user) do
+                          %i.fa.fa-pencil
+                          Editar
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        = link_to user_delete_user_path(user), data: { confirm: "Seguro que desea eliminar al usuario #{user.username}?" }, method: :delete do
+                          %i.fa.fa-trash
+                          Eliminar
+
+
+

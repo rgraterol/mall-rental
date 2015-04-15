@@ -1,0 +1,64 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Nuevo Usuario Mall -
+      = current_user.mall.nombre
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Usuarios Mall', mall_users_path
+      %li
+        Registro de Usuario Mall
+
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            = current_user.mall.nombre
+            Registro de Nuevo Usuario
+        .ibox-content
+          = form_for(@mall_user, url: {action: :create}, html: {class:"form-horizontal m-t-md", id: "form_registro_usuario_mall"}) do |f|
+            = devise_error_messages!
+            = render 'shared/error_messages', object: @mall_user, model: 'Usuario Mall'
+            .form-group
+              = f.label :name, 'Nombre: ', class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :name, autofocus: true, class: 'form-control'
+            .form-group
+              = f.label :username, "Login: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :username, autofocus: false, class: 'form-control'
+            .form-group
+              = f.label :password, "Contraseña: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.password_field :password, autocomplete: "off", class: 'form-control'
+                %span.help-block.m-b-none
+                  La contraseña debe tener un mínimo de 8 caracteres.
+            .form-group
+              = f.label :password_confirmation, "Confirme Contraseña: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.password_field :password_confirmation, autocomplete: "off", class: 'form-control'
+            .form-group
+              = f.label :email, "Correo Electrónico: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.email_field :email, class: "form-control"
+            .form-group
+              = f.label :cellphone, 'Teléfonos: ', class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :cellphone, autofocus: false, class: 'form-control'
+            .form-group
+              = f.label :role, "Roles: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                %table
+                  %tbody
+                  = f.collection_radio_buttons :role_id, @roles, :id, :name do |r|
+                    %tr
+                      %td= r.label
+                      &nbsp;
+                      %td= r.radio_button
+            .form-group
+              .col-sm-3.col-sm-offset-9
+                = f.submit "Guardar", class: "btn btn-warning btn-block"

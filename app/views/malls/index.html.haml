@@ -1,0 +1,65 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Niveles del Malls Registrados
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Malls Registrados
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          - if can? :new, Mall
+            .row
+              .col-sm-3
+                = link_to 'Nuevo Mall', new_mall_path, class: 'btn btn-mall btn-block'
+          %br
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover.dataTables-example
+                %thead
+                  %tr
+                    %th Nombre
+                    %th Abreviado
+                    %th Rif
+                    %th Dirección Fiscal
+                    %th Teléfono
+                    %th País
+                    %th Acciones
+                %tbody
+                  - @malls.all.each do |mall|
+                    %tr
+                      %td= mall.nombre
+                      %td= mall.abreviado
+                      %td= mall.rif
+                      %td= mall.direccion_fiscal
+                      %td= mall.telefono
+                      %td= mall.pai.nombre
+                      %td
+                        = link_to edit_mall_path(mall) do
+                          %i.fa.fa-pencil
+                          Editar
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+
+                        = link_to mall, data: { confirm: "Seguro que desea eliminar el Mall ?" }, method: :delete do
+                          %i.fa.fa-trash
+                          Eliminar
+                          %br
+                        = link_to " Ver Locales", { controller: "locals", action: "index", mall_id: mall['id'] }

@@ -1,0 +1,77 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Editar Local:
+      = @local.mall.nombre
+
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Locales Registrados', locals_path
+      %li
+        Editar Local
+
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            Editar un Local
+        .ibox-content
+          = form_for(@local, url: {action: :update}, html: {class:"form-horizontal m-t-md", id: "form_edit_local"}) do |f|
+            - if @local.errors.any?
+              #error_explanation
+                %h2
+                  = pluralize(@local.errors.count, "error")
+                  prohibited this local from being saved:
+
+                %ul
+                  - @local.errors.full_messages.each do |message|
+                    %li
+                      = message
+            .form-group
+              = f.label :nro_local, "Nro Local: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :nro_local, autofocus: true, class: 'form-control'
+            .form-group
+              = f.label :nivel_mall_id, "Ubicacion - Nivel: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.collection_select(:nivel_mall_id, NivelMall.all, :id, :nombre)
+            .form-group
+              = f.label :ubicacion_pasillo, "Pasillo: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :ubicacion_pasillo, class: 'form-control'
+            .form-group
+              = f.label :area, "Area (m2)", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :area, class: "form-control"
+            .form-group
+              = f.label :tipo_local_id, "Tipo de Local: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.collection_select(:tipo_local_id, TipoLocal.all, :id, :tipo)
+            .form-group
+              = f.label :foto, 'Foto: ', class: 'col-sm-2 control-label'
+              .col-sm-10
+                .fileinput.fileinput-new{"data-provides" => "fileinput"}
+                  .fileinput-new.thumbnail{:style => "width: 200px; height: 150px;"}
+                    -#%img{:alt => "...", "data-src" => "holder.js/100%x100%"}/
+                    = image_tag @local.foto.url || 'building-avatar.gif', "data-src" => "holder.js/100%x100%"
+                  .fileinput-preview.fileinput-exists.thumbnail{:style => "max-width: 200px; max-height: 150px;"}
+                  %div
+                    %span.btn.btn-mall.btn-file
+                      %span.fileinput-new Seleccionar Imagen
+                      %span.fileinput-exists Cambiar
+                      = f.file_field :foto
+                    -#%input{:name => "...", :type => "file"}/
+                    %a.btn.btn-mall.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"} Quitar
+            .form-group
+              .col-sm-10.col-sm-offset-2
+                = f.check_box :propiedad_mall, label: "Es propiedad del Mall", default: false
+                = f.label :'Es propiedad del Mall', class: 'control-label'
+                %br
+            = f.hidden_field :mall_id, :value => @local.mall.id
+            .form-group
+              .col-sm-3.col-sm-offset-9
+                = f.submit "Actualizar", class: "btn btn-warning btn-block"

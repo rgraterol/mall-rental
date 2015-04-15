@@ -1,0 +1,19 @@
+﻿!!!
+%html
+  %head
+    %title MallRental — 404 Not Found
+    %meta{ charset: 'UTF-8' }/
+    = stylesheet_link_tag stylesheet_path('error')
+
+  %body
+    .middle-box.text-center.animated.fadeInDown
+      %h1 500
+      %h3.font-bold Internal Server Error
+      .error-desc
+        The server encountered something unexpected that didn't allow it to complete the request. We apologize.
+        %br/
+        You can go back to main page:
+        %br/
+        %a.btn.btn-primary.m-t{:href => url_for :controller => 'dashboards', :action => 'dashboard_1'} Dashboard
+
+

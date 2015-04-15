@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+<h1>Datos de Actividad Econ&oacute;mica</h1>
+<p>
+  <strong>Nombre:</strong>
+  <%= @actividad_economica.nombre %>
+</p>
+
+<%= link_to 'Editar', edit_actividad_economica_path(@actividad_economica) %> |
+<%= link_to 'Regresar', actividad_economicas_path %>

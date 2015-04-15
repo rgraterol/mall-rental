@@ -1,0 +1,13 @@
+-flash.each do |message_type , message|
+  .row.flashing_mall_rental
+    .col-lg-12
+      -unless message_type == 'recaptcha_error'
+        %div{class: "alert alert-#{message_type} alert-dismissable"}
+          %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} ×
+          %strong
+            =message
+
+:javascript
+  setTimeout(function() {
+      $('.flashing_mall_rental').fadeOut(1000);
+  }, 6000);

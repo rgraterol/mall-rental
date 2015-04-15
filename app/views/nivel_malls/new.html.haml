@@ -1,0 +1,44 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Nuevo Nivel:
+      = @mall.nombre
+
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Malls Registrados', malls_path
+      %li
+        = link_to 'Niveles Mall Registrados', nivel_malls_index_path(@mall)
+      %li
+        Registro de Nivel Mall
+
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            Registro de Nuevo Nivel Mall
+        .ibox-content
+          = form_for(@nivel_mall, url: {action: :create}, html: {class:"form-horizontal m-t-md", id: "form_registro_nivel_mall"}) do |f|
+            - if @nivel_mall.errors.any?
+              #error_explanation
+                %h2
+                  = pluralize(@nivel_mall.errors.count, "error")
+                  prohibited this local from being saved:
+
+                %ul
+                  - @nivel_mall.errors.full_messages.each do |message|
+                    %li
+                      = message
+            .form-group
+              = f.label :nombre, "Nombre: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :nombre, autofocus: true, class: 'form-control'
+
+            = f.hidden_field :mall_id, :value => @mall.id
+            .form-group
+              .col-sm-3.col-sm-offset-9
+                = f.submit "Guardar", class: "btn btn-warning btn-block"

@@ -1,0 +1,36 @@
+.form-control:focus, .single-line:focus {
+    border-color: #5D3A9B;
+}
+
+.btn-mall {
+    background-color: #6C606F;
+    border-color: #6C606F;
+    color: white;
+}
+
+.btn-mall:hover, .btn-mall:focus, .btn-mall:active, .btn-mall.active {
+    background-color: #3e2c42;
+    border-color: #3e2c42;
+    color: white;
+}
+
+.row.flashing_mall_rental{
+    margin-left: -30px;
+    margin-right: -30px;
+}
+
+.alert-notice {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.alert-alert{
+    color: #a94442 !important;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.verticalLine {
+    border-left: thick solid #ff0000;
+}

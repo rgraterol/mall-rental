@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @calendario_no_laborable.fecha %>
+</p>
+
+<p>
+  <strong>Motivo:</strong>
+  <%= @calendario_no_laborable.motivo %>
+</p>
+
+<%= link_to 'Editar', edit_calendario_no_laborable_path(@calendario_no_laborable) %> |
+<%= link_to 'Regresar', calendario_no_laborables_path %>

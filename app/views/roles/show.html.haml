@@ -1,0 +1,48 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Rol
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Roles', roles_path
+      %li
+        Rol
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          %h2.text-center
+            = @role.name
+          %h3.text-center
+            = @role.role_type.humanize.titleize
+          %br/
+          %table.table.table-striped
+            %thead
+              %tr
+                %th.text-center{colspan: 3}
+                  Funciones
+              %tr
+                %th Nombre
+                %th Acción
+                %th Controlador Asociado
+            %tbody
+            - @role.permissions.each do |f|
+              %tr
+                %td= f.name
+                %td= f.action
+                %td= f.subject_class
+          %br/
+          %br/
+          .row
+            .col-sm-3.col-sm-offset-1
+              - if can? :index, Role
+                = link_to roles_path, class: "btn btn-warning btn-block" do
+                  Volver
+            .col-sm-3.col-sm-offset-4
+              - if can? :edit, Role
+                = link_to edit_role_path(@role), class: "btn btn-mall btn-block" do
+                  Editar
+

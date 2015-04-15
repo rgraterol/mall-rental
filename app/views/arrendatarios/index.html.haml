@@ -1,0 +1,53 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      = current_user.mall.nombre
+      \- Arrendatarios
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Arrendatarios
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-sm-3
+              = link_to 'Nuevo Arrendatario', new_arrendatario_path, class: 'btn btn-mall btn-block'
+          %br
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover#table_inquilinos_index
+                %thead
+                  %tr
+                    %th Nombre
+                    %th RIF
+                    %th Teléfonos
+                    %th Representante Legal
+                    %th Email
+                    %th Acciones
+                %tbody
+                  - @arrendatarios.each do |arrendatario|
+                    %tr
+                      %td= arrendatario.nombre
+                      %td= arrendatario.rif
+                      %td= arrendatario.telefono
+                      %td= arrendatario.nombre_rl
+                      %td= arrendatario.email_rl
+                      %td
+                        = link_to arrendatario do
+                          %i.fa.fa-search
+                        &nbsp;
+                        &nbsp;
+                        = link_to edit_arrendatario_path(arrendatario) do
+                          %i.fa.fa-edit
+                        &nbsp;
+                        &nbsp;
+                        = link_to arrendatario_path(arrendatario), method: :delete, data: { confirm: '¿Esta seguro de eliminar el arrendatario?' }  do
+                          %i.fa.fa-trash
+                      -#%td= arrendatario.tipo_canon_alquiler
+                      -#%td= arrendatario.fecha_inicio
+                      -#%td= arrendatario.fecha_fin

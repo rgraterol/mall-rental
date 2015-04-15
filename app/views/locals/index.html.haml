@@ -1,0 +1,78 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Locales Registrados
+      = @mall.present? ? ' del '+@mall.nombre : nil
+
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Malls Registrados', malls_path
+      %li
+        Locales Registrados
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-sm-3
+              = link_to "Nuevo Local", { controller: "locals", action: "new", mall_id: @mall }, class: "btn btn-mall btn-block"
+          %hr
+          .row
+            .col-md-4.col-sm-offset-1
+              = form_for(@local1, :html => { :class => "form-horizontal" } ) do |f|
+                = f.label :'Ubicacion - Nivel', class: ' control-label', for: 'local_nivel_mall_id'
+                = f.collection_select(:nivel_mall_id, NivelMall.all, :id, :nombre, :onchange => 'llamar_funcion()')
+            .col-md-5
+              = form_for(@local2,  :html => { :class => "form-horizontal" } ) do |m|
+                = m.label :'Tipo de Local', class: 'control-label', for: 'local_tipo_local_id'
+                = m.collection_select(:tipo_local_id, TipoLocal.all, :id, :tipo, :onchange => 'funcion_llamar()')
+          %br
+          %br
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover.dataTables-example
+                %thead
+                  %tr
+                    %th Foto
+                    %th Nro. Local
+                    %th Nivel Ubicación
+                    %th Pasillo
+                    %th Área
+                    %th Tipo Local
+                    %th Propiedad Mall
+                    %th Acciones
+                %tbody
+                  - @locals.all.each do |local|
+                    %tr
+                      %td= image_tag local.foto.url || 'building-avatar.gif', class: 'img-circle', height: 80
+                      %td= local.nro_local
+                      %td= local.nivel_mall.nombre
+                      %td= local.ubicacion_pasillo
+                      %td= local.area
+                      %td= local.tipo_local.tipo
+                      - if local.propiedad_mall
+                        - @propiedad = 'Si'
+                      - else
+                        - @propiedad = 'No'
+                      %td= @propiedad
+                      %td
+                        = link_to edit_local_path(local) do
+                          %i.fa.fa-pencil
+                          Editar
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        = link_to local, data: { confirm: "Seguro que desea eliminar el Local ?" }, method: :delete do
+                          %i.fa.fa-trash
+                          Eliminar

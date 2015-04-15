@@ -1,0 +1,17 @@
+.loginColumns.animated.fadeInDown
+  .row
+    .col-md-6.text-center
+      %br
+      %br
+      = image_tag('mall_rental_logo2.png', width: 250)
+    .col-md-6
+      .ibox-content
+        %h2
+          ¿Olvido su Contraseña?
+        = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: 'm-t' }) do |f|
+          = devise_error_messages!
+          .form-group
+            = f.email_field :email, autofocus: true, placeholder: 'Correo Electronico', class:'form-control', required: ''
+          = f.submit "Recuperar Contraseña", class: 'btn btn-warning block full-width m-b'
+          = render "users/shared/links"
+

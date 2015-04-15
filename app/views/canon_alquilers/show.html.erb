@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @canon_alquiler.fecha %>
+</p>
+
+<p>
+  <strong>Canon Fijo ML:</strong>
+  <%= @canon_alquiler.canon_fijo_ml %>
+</p>
+
+<p>
+  <strong>Canon Fijo USD:</strong>
+  <%= @canon_alquiler.canon_fijo_usd %>
+</p>
+
+<p>
+  <strong>Porcentaje Canon Ventas:</strong>
+  <%= @canon_alquiler.porc_canon_ventas %>
+</p>
+
+<p>
+  <strong>Monto Minimo Ventas:</strong>
+  <%= @canon_alquiler.monto_minimo_ventas %>
+</p>
+
+
+<%= link_to 'Editar', edit_canon_alquiler_path(@canon_alquiler) %> |
+<%= link_to 'Regresar', canon_alquilers_path %>
