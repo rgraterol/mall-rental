@@ -20,6 +20,7 @@ Myapp::Application.routes.draw do
 
   scope module: 'users' do
     resources :mall_users
+    resources :user_tiendas
   end
 
   resources :roles
@@ -49,4 +50,10 @@ Myapp::Application.routes.draw do
   resources :calendario_no_laborables
 
   resources :arrendatarios
+
+  resources :tiendas
+
+  scope module: 'dynamic' do
+    post 'dynamic_add_actividad/actividad'
+  end
 end

@@ -9,6 +9,7 @@
 #  updated_at :datetime
 #
 
+
 class Role < ActiveRecord::Base
 
   has_many :users
@@ -21,6 +22,18 @@ class Role < ActiveRecord::Base
 
   def self.all_valids
     Role.where.not(role_type: Role.role_types[:administrador_sistema])
+  end
+
+  def self.administrador_sistemas
+    Role.where(role_type: Role.role_types[:administrador_cliente])
+  end
+
+  def self.cliente_malls
+    Role.where(role_type: Role.role_types[:cliente_mall])
+  end
+
+  def self.cliente_tiendas
+    Role.where(role_type: Role.role_types[:cliente_tienda])
   end
 
   def name_type

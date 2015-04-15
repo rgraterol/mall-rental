@@ -50,9 +50,10 @@
               .col-sm-10
                 %table
                   %tbody
-                  = f.collection_radio_buttons :role_id, Role.all_valids, :id, :name_type do |r|
+                  = f.collection_radio_buttons :role_id, Role.all_valids, :id, :name do |r|
                     %tr
                       %td= r.label
+                      &nbsp;
                       %td= r.radio_button
             .form-group
               .col-sm-3.col-sm-offset-9

@@ -1,0 +1,20 @@
+.fileinput.fileinput-new.input-group{"data-provides" => "fileinput"}
+  .form-control{"data-trigger" => "fileinput"}
+    %i.fa.fa-upload.fileinput-exists.pull-left
+    -if name_file.present?
+      %i.fa.fa-upload.fileinput-new.pull-left
+    %span.fileinput-filename
+      = name_file.present? ? name_file.to_s.split('/').last : ""
+  %span.input-group-addon.btn.btn-default.btn-file
+
+    - if name_file.present?
+      %span.fileinput-exists Cambiar
+      %span.fileinput-new Cambiar
+    - else
+      %span.fileinput-new Subir Documento
+      %span.fileinput-exists Cambiar
+    = f.file_field field, class: 'document_required'
+  %a.fa.fa-times.input-group-addon.btn.btn-default.fileinput-exists{"data-dismiss" => "fileinput", :href => "#", :style => "float: none"}
+  -if name_file.present?
+    %a.fa.fa-times.input-group-addon.btn.btn-default.fileinput-new{"data-dismiss" => "fileinput", :href => "#", :style => "float: none"}
+

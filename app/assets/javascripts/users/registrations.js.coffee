@@ -35,6 +35,11 @@ jQuery(document).ready ->
         validators:
           notEmpty:
             message: 'Debe ingresar el correo eléctronico del usuario.'
+      "email_confirmation":
+        validators:
+          identical:
+            field: 'user[email]'
+            message: 'Las correos deben ser identicos'
       "user[cellphone]":
         validators:
           notEmpty:

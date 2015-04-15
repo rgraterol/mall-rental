@@ -45,6 +45,7 @@ class Users::MallUsersController < ApplicationController
   end
 
   def edit
+
   end
 
   def update
@@ -66,7 +67,7 @@ class Users::MallUsersController < ApplicationController
 
   private
     def mall_user_params
-      params.require(:user).permit(:name, :username, :email, :password, :cellphone, :role_id)
+      params.require(:user).permit(:name, :username, :email, :password, :cellphone, :role_id, :locked)
     end
 
     def self.permission
@@ -75,5 +76,8 @@ class Users::MallUsersController < ApplicationController
 
     def set_roles
       @roles = Role.where(role_type: Role.role_types[:cliente_mall])
+      if @roles.blank?
+        redirect_to new_role_path, alert: 'No existen roles para Clientes Mall.' and return
+      end
     end
 end

@@ -10,9 +10,9 @@ class CreateContratoAlquilers < ActiveRecord::Migration
       t.decimal :porc_canon_ventas
       t.decimal :monto_minimo_ventas
       t.boolean :estado_contrato
-      t.string :tipo_canon_alquiler
+      t.integer :tipo_canon_alquiler
 
-      t.references :arrendatario
+      t.references :tienda, index: true
 
       t.timestamps
     end

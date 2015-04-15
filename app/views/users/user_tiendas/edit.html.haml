@@ -1,0 +1,64 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      = current_user.mall.nombre
+      \ -
+      = @user.tienda.nombre
+      \-
+      Editar Usuario
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Tiendas', tiendas_path
+      %li
+        = link_to "#{@user.tienda.nombre} Usuarios", user_tiendas_path(tienda: @user.tienda.nombre, id: @user.tienda.id)
+      %li
+        Editar Usuario
+
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            = @user.mall.nombre
+            \-
+            = @user.tienda.nombre
+            \-
+            = @user.username
+          = form_for(@user, url: {action: :update}, html: {class:"form-horizontal m-t-md", id: "form_edit_usuario_mall"}) do |f|
+            = devise_error_messages!
+            .form-group
+              = f.label :name, 'Nombre: ', class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :name, autofocus: true, class: 'form-control'
+            .form-group
+              = f.label :username, "Login: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :username, class: 'form-control'
+            .form-group
+              = f.label :email, "Correo Electrónico: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.email_field :email, class: "form-control"
+            .form-group
+              = f.label :cellphone, 'Teléfonos: ', class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :cellphone, autofocus: false, class: 'form-control'
+            .form-group
+              = f.label :locked, 'Bloqueado:', class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.check_box :locked
+            .form-group
+              = f.label :role, "Roles: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                %table
+                  %tbody
+                  = f.collection_radio_buttons :role_id, @roles, :id, :name do |r|
+                    %tr
+                      %td= r.label
+                      &nbsp;
+                      %td= r.radio_button
+            .form-group
+              .col-sm-3.col-sm-offset-9
+                = f.submit "Actualizar", class: "btn btn-warning btn-block"
