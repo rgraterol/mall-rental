@@ -1,0 +1,45 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Actividades Economicas del
+      = current_user.mall.nombre
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Actividades Económicas Registradas
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          - if can? :new, ActividadEconomica
+            .row
+              .col-sm-3
+                = link_to 'Nueva Actividad Economica', new_actividad_economica_path, class: 'btn btn-mall btn-block'
+          %br
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover.dataTables-example
+                %thead
+                  %tr
+                    %th Nombre
+                    - if can? :edit, ActividadEconomica
+                      %th.col-lg-3.col-md-3.col-xs-5
+                        Acciones
+                %tbody
+                  - @actividad_economicas.all.each do |actividad|
+                    %tr
+                      %td= actividad.nombre
+                      - if can? :edit, ActividadEconomica
+                        %td
+                          - if can? :edit, ActividadEconomica
+                            = link_to edit_actividad_economica_path(actividad) do
+                              %i.fa.fa-pencil
+                              Editar
+                          &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                          - if can? :delete, ActividadEconomica
+                            = link_to actividad, data: { confirm: "Seguro que desea eliminar la actividad economica ?" }, method: :delete do
+                              %i.fa.fa-trash
+                              Eliminar
