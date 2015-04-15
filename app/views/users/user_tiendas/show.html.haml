@@ -9,6 +9,8 @@
       %li
         = link_to 'Inicio', root_url
       %li
+        = link_to 'Tiendas', tiendas_path
+      %li
         = link_to "#{@user.tienda.nombre}Usuarios", user_tiendas_path
       %li
         = link_to "Registro de Usuario #{@user.tienda.nombre}", new_user_tienda_path

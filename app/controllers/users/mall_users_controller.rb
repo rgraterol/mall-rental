@@ -11,9 +11,6 @@ class Users::MallUsersController < ApplicationController
 
   def new
     @mall_user ||= User.new
-    if @roles.blank?
-      redirect_to new_role_path, alert: 'No existen roles para clientes mall.'
-    end
   end
 
   def create
@@ -48,6 +45,7 @@ class Users::MallUsersController < ApplicationController
   end
 
   def edit
+
   end
 
   def update
@@ -78,5 +76,8 @@ class Users::MallUsersController < ApplicationController
 
     def set_roles
       @roles = Role.where(role_type: Role.role_types[:cliente_mall])
+      if @roles.blank?
+        redirect_to new_role_path, alert: 'No existen roles para Clientes Mall.' and return
+      end
     end
 end

@@ -12,9 +12,6 @@ class Users::UserTiendasController < ApplicationController
   def new
     @tienda = current_user.mall.tiendas.find_by(id: params[:id])
     @user = @tienda.users.build
-    if @roles.blank?
-      redirect_to new_role_path, alert: 'No existen roles para clientes tienda.'
-    end
   end
 
   def create
@@ -51,6 +48,7 @@ class Users::UserTiendasController < ApplicationController
   end
 
   def edit
+
   end
 
   def update
@@ -77,5 +75,8 @@ class Users::UserTiendasController < ApplicationController
 
     def set_roles
       @roles = Role.cliente_tiendas
+      if @roles.blank?
+        redirect_to new_role_path, alert: 'No existen Roles para Clientes Tienda.' and return
+      end
     end
 end

@@ -5,11 +5,11 @@
     .col-lg-6
       .ibox.float-e-margins
         .ibox-content.border-bottom.form-horizontal
-          -#.form-group
-          -#  = f.label :nombre, class: 'col-sm-2 control-label' do
-          -#    Nombre:
-          -#  .col-sm-10
-          -#    = f.text_field :nombre, class: 'form-control'
+          .form-group
+            = f.label :nombre, class: 'col-sm-2 control-label' do
+              Nombre:
+            .col-sm-10
+              = f.text_field :nombre, class: 'form-control'
           .form-group
             = f.label :local_id, class: 'col-sm-2 control-label' do
               Nro. Local:
@@ -21,7 +21,8 @@
             .col-sm-7
               = f.select :arrendatario_id, options_from_collection_for_select(Arrendatario.valid_arrendatarios(current_user), :id, :nombre, selected: f.object.arrendatario_id || nil), {include_blank: 'Seleccione un Arrendatario'}, {class: 'form-control'}
             .col-sm-3
-              = link_to 'Nuevo Arrendatario', new_arrendatario_path, class: 'btn btn-warning'
+              .btn.btn-warning.disabled
+                Nuevo Arrendatario
           .form-group
             = f.label :actividad_economica_id, class: 'col-sm-2 control-label' do
               Actividad Económica:

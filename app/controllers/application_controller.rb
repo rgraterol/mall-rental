@@ -16,8 +16,7 @@ class ApplicationController < ActionController::Base
 
   before_action do
     if user_signed_in? && current_user.tienda.present? && current_user.tienda.contrato_alquilers.last.fecha_fin < Date.today
-      flash[:alert] =  'Usted posee el contrato de alquiler vencido, por favor dirigirse a administración para actualizar su contrato'
-      flash[:notice] = nil
+      flash[:notice] = 'Usted posee el contrato de alquiler vencido, por favor dirigirse a administración para actualizar su contrato'
       sign_out current_user
     end
   end

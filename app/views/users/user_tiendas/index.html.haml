@@ -8,6 +8,8 @@
       %li
         = link_to 'Inicio', root_url
       %li
+        = link_to 'Tiendas', tiendas_path
+      %li
         Usuarios
         = @tienda.nombre
 
@@ -57,3 +59,9 @@
                         = link_to user_tienda_path(user), data: { confirm: "Seguro que desea eliminar al usuario #{user.username}?" }, method: :delete do
                           %i.fa.fa-trash
                           Eliminar
+          %br
+          %br
+          .row
+            .col-sm-3
+              = link_to tiendas_path, class: 'btn btn-warning btn-block' do
+                Volver a Tiendas

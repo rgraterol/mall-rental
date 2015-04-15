@@ -8,6 +8,8 @@
       %li
         = link_to 'Inicio', root_url
       %li
+        = link_to 'Tiendas', tiendas_path
+      %li
         = link_to "#{@tienda.nombre} Usuarios", user_tiendas_path(tienda: @tienda.nombre, id: @tienda.id)
       %li
         Registro de Usuario
@@ -63,6 +65,7 @@
                   = f.collection_radio_buttons :role_id, @roles, :id, :name do |r|
                     %tr
                       %td= r.label
+                      &nbsp;
                       %td= r.radio_button
             .form-group
               .col-sm-3.col-sm-offset-9

@@ -56,6 +56,11 @@ jQuery(document).ready ($) ->
     else
       $('#add_actividad_economica_select').hide()
 
+
+  $('#tienda_arrendatario_id').change ->
+    if $('#tienda_nombre').val() == '' && $(this).val() != ''
+      $('#tienda_nombre').val($('#tienda_arrendatario_id option:selected').text())
+
   $('#agregar_actividad_economica_tienda').click ->
     if $('#nueva_actividad_economica').val() == ''
       $('#validacion_nombre_actividad').show()
