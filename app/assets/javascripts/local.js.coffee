@@ -1,5 +1,6 @@
 #= require bootstrapValidator/bootstrapValidator.js
 #= require jasny/jasny-bootstrap.min
+
 jQuery(document).ready ->
 
   $('#form_registro_local').bootstrapValidator
@@ -13,8 +14,6 @@ jQuery(document).ready ->
         validators:
           notEmpty:
             message: 'Debe ingresar un N° de Local'
-          integer:
-            message: 'Este valor debe ser solo número entero'
       "local[area]":
         validators:
           notEmpty:
@@ -31,9 +30,29 @@ jQuery(document).ready ->
         validators:
           notEmpty:
             message: 'Debe ingresar un N° de Local'
-          integer:
-            message: 'Este valor debe ser solo número entero'
       "local[area]":
         validators:
           notEmpty:
             message: 'Debe ingresar el Área del Local'
+
+  $("#local_nivel_mall_id").append("<option value='999'>Nuevo...</option>")
+  $("#local_nivel_mall_id").on "change", ->
+    if (this.value) == '999'
+      $(".group-show").css "display","none"
+      $(".group-oculto").css "display","block"
+  $("#icon-deshacer-new-nivel").on "click", ->
+    $(".group-show").css "display","block"
+    $(".group-oculto").css "display","none"
+  $("#icon-save-new-nivel").on "click", ->
+    if confirm("Esta seguro de guardar el nuevo Nivel Mall")
+
+      $.ajax(url: "/nivel_malls/test_ajax").done (html) ->
+        alert(html)
+
+      $(document).on "ajax:error", "form", (evt, xhr, status, error) ->
+        errors = xhr.responseJSON.error
+        alert(errors)
+      alert("guardar")
+
+
+

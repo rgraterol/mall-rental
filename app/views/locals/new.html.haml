@@ -10,7 +10,7 @@
       %li
         = link_to 'Malls Registrados', malls_path
       %li
-        = link_to 'Locales Registrados', local_index_path(@mall)
+        = link_to 'Locales Registrados', local_index_path
       %li
         Registro de Local
 
@@ -34,13 +34,26 @@
                     %li
                       = message
             .form-group
-              = f.label :nro_local, "Nro Local: ", class: 'col-sm-2 control-label', type: 'number'
+              = f.label :mall, "Mall: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :mall, :value => current_user.mall.nombre, autofocus: true, class: 'form-control',  readonly: 'readonly'
+            .form-group
+              = f.label :nro_local, "Nro Local: ", class: 'col-sm-2 control-label'
               .col-sm-10
                 = f.text_field :nro_local, autofocus: true, class: 'form-control'
             .form-group
               = f.label :nivel_mall_id, "Ubicacion - Nivel: ", class: 'col-sm-2 control-label'
               .col-sm-10
-                = f.collection_select(:nivel_mall_id, NivelMall.all, :id, :nombre)
+                .group-show
+                  = f.collection_select(:nivel_mall_id, NivelMall.all, :id, :nombre )
+                .group-oculto
+                  = text_field_tag :nivel_mall_new,'', autofocus: true, size: 30, placeholder: 'Escriba el nombre del nuevo nivel'
+                  %span.glyphicon.glyphicon-floppy-disk#icon-save-new-nivel
+                  %span.glyphicon.glyphicon-remove#icon-deshacer-new-nivel
+            .form-group.oculto
+              = label :nivel_mall_new, "Ubicacion - Nivel Nuevo: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = text_field_tag :nivel_mall_new,'', autofocus: true, class: 'form-control'
             .form-group
               = f.label :ubicacion_pasillo, "Pasillo: ", class: 'col-sm-2 control-label'
               .col-sm-10
@@ -59,8 +72,8 @@
                 .fileinput.fileinput-new{"data-provides" => "fileinput"}
                   .fileinput-new.thumbnail{:style => "width: 200px; height: 150px;"}
                     -#%img{:alt => "...", "data-src" => "holder.js/100%x100%"}/
-                    = image_tag @local.foto.url || 'building-avatar.gif', "data-src" => "holder.js/100%x100%"
-                  .fileinput-preview.fileinput-exists.thumbnail{:style => "max-width: 200px; max-height: 150px;"}
+                    = image_tag 'building-avatar.gif', "data-src" => "holder.js/100%x100%"
+                  .fileinput-preview.fileinput-exists.thumbnail{:style => "max-width: 100px; max-height: 80px;"}
                   %div
                     %span.btn.btn-mall.btn-file
                       %span.fileinput-new Seleccionar Imagen

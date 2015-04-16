@@ -58,6 +58,11 @@
           = link_to arrendatarios_path do
             %i.fa.fa-money
             %span.nav-label Arrendatarios
+      - if can? :index, Local
+        %li
+          = link_to local_index_path do
+            %i.fa.fa-building-o
+            %span.nav-label Locales
       - if can? :index, Mall
         %li{class: is_active_controller('malls')}
           = link_to malls_path do

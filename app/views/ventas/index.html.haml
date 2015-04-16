@@ -1,0 +1,43 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Ventas Diarias de la tienda
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Ventas Diarias de la tienda
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-md-2
+              = form_tag(@lapso_year, :html => { :class => "form-horizontal" } ) do |f|
+                = select_year(Date.today, :start_year => Time.now.year, :end_year => Time.now.year - 5, :field_name => 'lapso_year')
+            .col-md-2
+              = form_tag(@lapso_month, :html => { :class => "form-horizontal" } ) do |f|
+                = select_month(Date.today, use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'select_month', :prefix => 'ventas')
+            .col-md-4
+              .form-group
+                = label_tag :tienda do
+                  Tienda:
+                = text_field_tag :tienda
+            .col-md-4
+              .form-group
+                = label_tag :nro_local do
+                  Nro. de Local:
+                = text_field_tag :nro_local
+          .row
+            .col-md-4.col-sm-offset-4
+              .form-group
+                = label_tag :total_ventas do
+                  Total Ventas:
+                = text_field_tag :total_ventas
+            .col-md-4
+              .form-group
+                = label_tag :canon_alquiler do
+                  Canon Alquiler:
+                = text_field_tag :canon_alquiler 

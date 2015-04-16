@@ -15,6 +15,7 @@ class ArrendatariosController < ApplicationController
 
   def new
     @arrendatario = Arrendatario.new
+    @locals = Local.where(mall_id: current_user.mall.id)
   end
 
   def create

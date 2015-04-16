@@ -32,6 +32,10 @@
                     %li
                       = message
             .form-group
+              = f.label :mall, "Mall: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :mall, :value => @local.mall.nombre, autofocus: true, class: 'form-control',  readonly: 'readonly'
+            .form-group
               = f.label :nro_local, "Nro Local: ", class: 'col-sm-2 control-label'
               .col-sm-10
                 = f.text_field :nro_local, autofocus: true, class: 'form-control'

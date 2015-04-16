@@ -1,14 +1,14 @@
 = form_for @arrendatario do |f|
   = render 'shared/error_messages', object: f.object, model: 'Arrendatario'
-  -#.row
-  -#  .col-lg-12
-  -#    .ibox.float-e-margins
-  -#      .ibox-content.form-horizontal
-  -#        .form-group
-  -#          = f.label :local_id, class: 'col-sm-2 control-label' do
-  -#            Local:
-  -#          .col-sm-10
-  -#            = f.select :local_id, options_from_collection_for_select(Local.valid_locals(current_user), :id, :nro_local, selected: f.object.local_id || nil), {include_blank: 'Seleccione un Local'}, {class: 'form-control'}
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content.form-horizontal
+          .form-group
+            = f.label :local_id, class: 'col-sm-2 control-label' do
+              Local:
+            .col-sm-10
+              = f.select :local_id, options_from_collection_for_select(@locals, :id, :nro_local, selected: f.object.local_id || nil), {include_blank: 'Seleccione un Local'}, {class: 'form-control'}
   .row
     .col-lg-6
       .ibox.float-e-margins
@@ -41,6 +41,11 @@
           -#    Actividad Económica:
           -#  .col-sm-10
           -#    = f.select :actividad_economica_id, options_from_collection_for_select(ActividadEconomica.all, :id, :nombre, selected: f.object.actividad_economica_id || nil), {include_blank: 'Seleccione una Actividad Económica'}, {class: 'form-control'}
+          .form-group
+            = f.label :actividad_economica_id, class: 'col-sm-2 control-label' do
+              Actividad Económica:
+            .col-sm-10
+              = f.select :actividad_economica_id, options_from_collection_for_select(ActividadEconomica.where(mall_id: current_user.mall.id), :id, :nombre, selected: f.object.actividad_economica_id || nil), {include_blank: 'Seleccione una Actividad Económica'}, {class: 'form-control'}
     .col-lg-6
       .ibox.float-e-margins
         .ibox-title

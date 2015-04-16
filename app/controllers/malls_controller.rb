@@ -30,7 +30,7 @@ class MallsController < ApplicationController
     @mall = Mall.new(mall_params)
     respond_to do |format|
       if @mall.save
-        format.html { redirect_to @mall, notice: 'Mall fue creado exitosammente.' }
+        format.html { redirect_to malls_path, notice: 'Mall fue creado exitosammente.' }
         format.json { render :index, status: :created, location: @mall }
       else
         format.html { render :new }
@@ -44,7 +44,7 @@ class MallsController < ApplicationController
   def update
     respond_to do |format|
       if @mall.update(mall_params)
-        format.html { redirect_to :action => "index", notice: 'Mall actualizado correctamente.' }
+        format.html { redirect_to malls_path, notice: 'Mall actualizado correctamente.' }
         format.json { render :index, status: :ok, location: @mall }
       else
         format.html { render :edit }

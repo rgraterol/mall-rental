@@ -44,4 +44,5 @@ class ApplicationController < ActionController::Base
       params.require(:user).permit(:name, :username, :email, :password, :locked, :mall_id, :cellphone, :role_id)#, rol_ids: [])
     end
 
+
 end
