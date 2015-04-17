@@ -5,6 +5,6 @@
 jQuery(document).ready ($) ->
   current_mes = $("#ventas_select_month option:selected").val()
 
-  $("#ventas_select_month").each(
-      alert(this.val())
-  )
+#  $("#ventas_select_month").each(
+#      alert($(this).val())
+#  )

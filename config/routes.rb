@@ -61,6 +61,8 @@ Myapp::Application.routes.draw do
 
   resources :ventas
 
+  resources :contrato_alquilers, except: [:edit, :update]
+
   scope module: 'dynamic' do
     post 'dynamic_add_actividad/actividad'
   end

@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nro contrato:</strong>
+  <%= @contrato_alquiler.nro_contrato %>
+</p>
+
+<p>
+  <strong>Fecha inicio:</strong>
+  <%= @contrato_alquiler.fecha_inicio %>
+</p>
+
+<p>
+  <strong>Fecha fin:</strong>
+  <%= @contrato_alquiler.fecha_fin %>
+</p>
+
+<p>
+  <strong>Archivo contrato:</strong>
+  <%= @contrato_alquiler.archivo_contrato %>
+</p>
+
+<p>
+  <strong>Canon fijo ml:</strong>
+  <%= @contrato_alquiler.canon_fijo_ml %>
+</p>
+
+<p>
+  <strong>Canon fijo usd:</strong>
+  <%= @contrato_alquiler.canon_fijo_usd %>
+</p>
+
+<p>
+  <strong>Porc canon ventas:</strong>
+  <%= @contrato_alquiler.porc_canon_ventas %>
+</p>
+
+<p>
+  <strong>Estado contrato:</strong>
+  <%= @contrato_alquiler.estado_contrato %>
+</p>
+
+<p>
+  <strong>Tipo canon alquiler:</strong>
+  <%= @contrato_alquiler.tipo_canon_alquiler %>
+</p>
+
+<p>
+  <strong>Tienda:</strong>
+  <%= @contrato_alquiler.tienda %>
+</p>
+
+<%= link_to 'Edit', edit_contrato_alquiler_path(@contrato_alquiler) %> |
+<%= link_to 'Back', contrato_alquilers_path %>

@@ -27,8 +27,9 @@
             = @user.tienda.nombre
             \-
             = @user.username
-          = form_for(@user, url: {action: :update}, html: {class:"form-horizontal m-t-md", id: "form_edit_usuario_mall"}) do |f|
+          = form_for(@user, url: {action: :update, params: {id: @user.tienda.id}}, html: {class:"form-horizontal m-t-md", id: "form_edit_usuario_mall"}) do |f|
             = devise_error_messages!
+            = hidden_field_tag :us, @user.id
             .form-group
               = f.label :name, 'Nombre: ', class: 'col-sm-2 control-label'
               .col-sm-10

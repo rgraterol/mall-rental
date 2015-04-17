@@ -34,14 +34,12 @@ ActiveRecord::Schema.define(version: 20150413231523) do
     t.string   "cedula_rl"
     t.string   "email_rl"
     t.string   "telefono_rl"
-    t.integer  "actividad_economica_id"
-    t.integer  "local_id"
+    t.integer  "mall_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "arrendatarios", ["actividad_economica_id"], name: "index_arrendatarios_on_actividad_economica_id", using: :btree
-  add_index "arrendatarios", ["local_id"], name: "index_arrendatarios_on_local_id", using: :btree
+  add_index "arrendatarios", ["mall_id"], name: "index_arrendatarios_on_mall_id", using: :btree
 
   create_table "calendario_no_laborables", force: true do |t|
     t.date     "fecha"
@@ -77,11 +75,13 @@ ActiveRecord::Schema.define(version: 20150413231523) do
     t.decimal  "porc_canon_ventas"
     t.decimal  "monto_minimo_ventas"
     t.boolean  "estado_contrato"
-    t.string   "tipo_canon_alquiler"
-    t.integer  "arrendatario_id"
+    t.integer  "tipo_canon_alquiler"
+    t.integer  "tienda_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "contrato_alquilers", ["tienda_id"], name: "index_contrato_alquilers_on_tienda_id", using: :btree
 
   create_table "idiomas", force: true do |t|
     t.string   "nombre"
@@ -251,13 +251,13 @@ ActiveRecord::Schema.define(version: 20150413231523) do
 
   create_table "ventas", force: true do |t|
     t.datetime "fecha"
-    t.decimal  "monto_ml"
-    t.decimal  "monto_usd"
-    t.integer  "arrendatario_id"
+    t.decimal  "monto_ml",   precision: 8, scale: 2
+    t.decimal  "monto_usd",  precision: 8, scale: 2
+    t.integer  "tienda_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "ventas", ["arrendatario_id"], name: "index_ventas_on_arrendatario_id", using: :btree
+  add_index "ventas", ["tienda_id"], name: "index_ventas_on_tienda_id", using: :btree
 
 end

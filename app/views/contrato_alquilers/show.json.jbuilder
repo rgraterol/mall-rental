@@ -1,0 +1,1 @@
+json.extract! @contrato_alquiler, :id, :nro_contrato, :fecha_inicio, :fecha_fin, :archivo_contrato, :canon_fijo_ml, :canon_fijo_usd, :porc_canon_ventas, :estado_contrato, :tipo_canon_alquiler, :tienda_id, :created_at, :updated_at

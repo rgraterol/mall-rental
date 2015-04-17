@@ -1,12 +1,13 @@
 class Users::UserTiendasController < ApplicationController
   before_action :authenticate_user!
   authorize_resource class: 'UserTienda'
+  before_action :set_tienda, only: [:index, :new, :create, :destroy, :show, :edit, :update]
   before_action :set_user, only: [:destroy, :show, :edit, :update]
   before_action :set_roles, only: [:new, :edit]
   @@password = ""
 
   def index
-    @tienda = current_user.mall.tiendas.find_by(id: params[:id])
+
   end
 
   def new
@@ -15,8 +16,7 @@ class Users::UserTiendasController < ApplicationController
   end
 
   def create
-    @tienda = current_user.mall.tiendas.find_by(id: user_tienda_params[:tienda])
-    @user = @tienda.users.build(user_tienda_params.except(:tienda).merge(mall_id: @tienda.mall.id))
+    @user = @tienda.users.build(user_tienda_params.merge(mall_id: @tienda.mall.id))
     @@password = user_tienda_params[:password]
     respond_to do |format|
       if @user.save
@@ -37,13 +37,12 @@ class Users::UserTiendasController < ApplicationController
   end
 
   def destroy
-    tienda = @user.tienda
     if @user.mall.id == current_user.mall.id && (@user.role.cliente_tienda?)
       if @user.destroy
-        redirect_to user_tiendas_path(tienda: tienda.nombre, id: tienda.id), alert: "Usuario eliminado satisfactoriamente." and return
+        redirect_to user_tiendas_path(tienda: @tienda.nombre, id: tienda.id), alert: "Usuario eliminado satisfactoriamente." and return
       end
     else
-      redirect_to user_tiendas_path(tienda: tienda.nombre, id: tienda.id), alert: 'No Autorizado' and return
+      redirect_to user_tiendas_path(tienda: @tienda.nombre, id: tienda.id), alert: 'No Autorizado' and return
     end
   end
 
@@ -69,8 +68,17 @@ class Users::UserTiendasController < ApplicationController
   end
 
   private
+
+    def set_user
+      @user = @tienda.users.find_by(id: ActionController::Parameters.new(us: params[:us]).permit(:us)[:us])
+    end
+
     def user_tienda_params
       params.require(:user).permit(:name, :username, :email, :password, :cellphone, :role_id, :tienda, :locked)
+    end
+
+    def set_tienda
+      @tienda = current_user.mall.tiendas.find_by(id: ActionController::Parameters.new(id: params[:id]).permit(:id)[:id])
     end
 
     def set_roles

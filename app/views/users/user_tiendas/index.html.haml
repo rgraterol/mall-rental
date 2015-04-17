@@ -50,13 +50,13 @@
                       %td= user.tienda.nombre rescue nil
                       %td= user.role.name_type rescue nil
                       %td
-                        = link_to edit_user_tienda_path(user) do
+                        = link_to edit_user_tienda_path(id: @tienda.id, us: user.id) do
                           %i.fa.fa-pencil
                           Editar
                         &nbsp;
                         &nbsp;
                         &nbsp;
-                        = link_to user_tienda_path(user), data: { confirm: "Seguro que desea eliminar al usuario #{user.username}?" }, method: :delete do
+                        = link_to user_tienda_path(id: @tienda.id, us: user), data: { confirm: "Seguro que desea eliminar al usuario #{user.username}?" }, method: :delete do
                           %i.fa.fa-trash
                           Eliminar
           %br
