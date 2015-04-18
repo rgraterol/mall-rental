@@ -1,0 +1,33 @@
+= provide(:title, "#{@tienda.mall.nombre } - #{@tienda.nombre} - Contratos Alquiler")
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      = current_user.mall.nombre
+      \- Edicion Contrato de Alquiler Número:
+      = @contrato_alquiler.nro_contrato
+      \-
+      = @tienda.nombre
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Tiendas', tiendas_path
+      %li
+        = link_to "#{@tienda.nombre} Contratos Alquiler", contrato_alquilers_path(tienda: @tienda.nombre, id: @tienda.id)
+      %li
+        Edición de Contrato
+        = @tienda.nombre
+
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            = current_user.mall.nombre
+            \-
+            = @tienda.nombre
+            \-
+            Edición de Contrato de Alquiler
+        = render 'form'
+

@@ -1,0 +1,17 @@
+.panel.panel-danger
+  .panel-heading
+    %h3
+      Contrato Actual Número:
+      = @tienda.contrato_alquilers.last.nro_contrato
+      Vencido
+  .panel-body
+    Su Contrato Actual esta Vencido, puede:
+    = link_to "Renovar este Contrato", edit_contrato_alquiler_path(tienda: @tienda.nombre, id: @tienda.id, ca: @tienda.contrato_alquilers.last.id), class: 'btn btn-warning'
+    ó
+    = link_to "Registrar un Nuevo Contrato", new_contrato_alquiler_path(tienda: @tienda.nombre, id: @tienda.id), class: 'btn btn-mall'
+    %br
+    %br
+    %p.text-danger
+      %strong Fecha Fin del Contrato:
+      = @tienda.contrato_alquilers.last.fecha_fin_fix
+    = render 'datos_contrato'

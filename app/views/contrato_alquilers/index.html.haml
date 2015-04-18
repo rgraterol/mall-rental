@@ -1,0 +1,75 @@
+= provide(:title, "#{@tienda.mall.nombre } - #{@tienda.nombre} - Contratos Alquiler")
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      = current_user.mall.nombre
+      \- Contratos de Alquiler
+      = @tienda.nombre
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Tiendas', tiendas_path
+      %li
+        Contratos de Alquiler
+        = @tienda.nombre
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          %h2
+            = @tienda.nombre
+          -#%br
+          -#%br
+          -#.row
+          -#  .col-sm-3
+          -#    = link_to "Renovar Contrato - #{@tienda.nombre}", new_contrato_alquiler_path(tienda: @tienda.nombre, id: @tienda.id), class: 'btn btn-mall'
+          %br
+          .row
+            .col-sm-12
+              - if @tienda.contrato_alquilers.last.fecha_fin > Date.today
+                = render 'contrato_alquilers/contrato_vigente'
+              - else
+                = render 'contrato_alquilers/contrato_vencido'
+          .row
+            .col-md-12
+              %h3
+                Histórico de Contratos -
+                = @tienda.nombre
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover
+                %thead
+                  %tr
+                    %th Número contrato
+                    %th Fecha de inicio
+                    %th Fecha fin
+                    %th Tipo de Canón de Alquiler
+                    %th Monto Canón Fijo en Bs.
+                    %th Monto Canón Fijo en $.
+                    %th % Canón por Ventas
+                    %th Monto Mínimo Ventas Mensual
+                    %th Estado contrato
+                    %th Archivo contrato
+                    %th Acciones
+                %tbody
+                  - @contrato_alquilers.each do |contrato_alquiler|
+                    %tr
+                      %td= contrato_alquiler.nro_contrato
+                      %td= contrato_alquiler.fecha_inicio_fix
+                      %td= contrato_alquiler.fecha_fin_fix
+                      %td= contrato_alquiler.tipo_canon_alquiler.humanize.capitalize
+                      %td= contrato_alquiler.canon_fijo_ml
+                      %td= contrato_alquiler.canon_fijo_usd
+                      %td= contrato_alquiler.porc_canon_ventas
+                      %td= contrato_alquiler.monto_minimo_ventas
+                      %td= contrato_alquiler.estado_contrato
+                      %td
+                        - if contrato_alquiler.archivo_contrato_pdf?
+                          = link_to contrato_alquiler.archivo_contrato.url.split('/').last, contrato_alquiler.archivo_contrato.url
+                        - else
+                          = link_to (image_tag contrato_alquiler.archivo_contrato.url,heigth: 1000, width: 80), contrato_alquiler.archivo_contrato.url
+                      %td
+                        = link_to  contrato_alquiler_path(id: @tienda.id, ca: contrato_alquiler.id), method: :delete, data: { confirm: "¿Esta seguro que desea eliminar el contrato nro: #{contrato_alquiler.nro_contrato} de la tienda #{@tienda.nombre}?" } do
+                          %i.fa.fa-trash

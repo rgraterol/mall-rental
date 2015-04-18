@@ -1,0 +1,42 @@
+%p
+  %strong Fecha Inicio del Contrato:
+  = @tienda.contrato_alquilers.last.fecha_inicio_fix
+  %p
+    %strong Número de Contrato:
+    = @tienda.contrato_alquilers.last.nro_contrato
+  %p
+    %strong Tipo de Canon de Alquiler:
+    = @tienda.contrato_alquilers.last.tipo_canon_alquiler.humanize.titleize
+  - if @tienda.contrato_alquilers.last.tipo_canon_alquiler == 'canon_fijo'
+    %p
+      %strong Monto Canón Fijo en Bs.:
+      = @tienda.contrato_alquilers.last.canon_fijo_ml
+    %p
+      %strong Monto Canón Fijo en $:
+      = @tienda.contrato_alquilers.last.canon_fijo_usd
+  - elsif @tienda.contrato_alquilers.last.tipo_canon_alquiler == 'porcentaje_ventas'
+    %p
+      %strong Porcentaje Canón por Ventas:
+      = @tienda.contrato_alquilers.last.porc_canon_ventas
+    %p
+      %strong Monto Mínimo Ventas Mensual:
+      = @tienda.contrato_alquilers.last.monto_minimo_ventas
+  - else
+    %p
+      %strong Monto Canón Fijo en Bs:
+      = @tienda.contrato_alquilers.last.canon_fijo_ml
+    %p
+      %strong Monto Canón Fijo en $:
+      = @tienda.contrato_alquilers.last.canon_fijo_usd
+    %p
+      %strong Porcentaje Canón por Ventas:
+      = @tienda.contrato_alquilers.last.porc_canon_ventas
+    %p
+      %strong Monto Mínimo Ventas Mensual:
+      = @tienda.contrato_alquilers.last.monto_minimo_ventas
+  %p
+    %strong Archivo Contrato;
+    - if @tienda.contrato_alquilers.last.archivo_contrato_pdf?
+      = link_to @tienda.contrato_alquilers.last.archivo_contrato.url.split('/').last, @tienda.contrato_alquilers.last.archivo_contrato.url
+    - else
+      = link_to (image_tag @tienda.contrato_alquilers.last.archivo_contrato.url,heigth: 1000, width: 200), @tienda.contrato_alquilers.last.archivo_contrato.url

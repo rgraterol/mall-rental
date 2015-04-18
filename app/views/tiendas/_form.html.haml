@@ -68,23 +68,23 @@
                 = c.label :canon_fijo_ml, class: 'col-sm-3 control-label' do
                   Canón Fijo en Bs.:
                 .col-sm-9
-                  = c.text_field :canon_fijo_ml, class: 'form-control numeric_contrato_alquiler'
+                  = c.text_field :canon_fijo_ml, class: 'form-control numeric_contrato_alquiler canon_fijo_ml'
               .form-group
                 = c.label :canon_fijo_usd, class: 'col-sm-3 control-label ' do
                   Canón Fijo en $:
                 .col-sm-9
-                  = c.text_field :canon_fijo_usd, class: 'form-control numeric_contrato_alquiler'
+                  = c.text_field :canon_fijo_usd, class: 'form-control numeric_contrato_alquiler canon_fijo_usd'
             %div#canon_porcentaje{style: (c.object.tipo_canon_alquiler == 'canon_fijo_y_porcentaje_ventas' || c.object.tipo_canon_alquiler == 'porcentaje_de_ventas') ? '' : 'display:none'}
               .form-group
                 = c.label :porc_canon_ventas, class: 'col-sm-3 control-label' do
                   \% de Canon por Ventas:
                 .col-sm-9
-                  = c.text_field :porc_canon_ventas, class: 'form-control numeric_contrato_alquiler'
+                  = c.text_field :porc_canon_ventas, class: 'form-control numeric_contrato_alquiler porc_canon_ventas'
               .form-group
                 = c.label :monto_minimo_ventas, class: 'col-sm-3 control-label' do
                   Monto Mínimo de Ventas Mensual:
                 .col-sm-9
-                  = c.text_field :monto_minimo_ventas, class: 'form-control numeric_contrato_alquiler'
+                  = c.text_field :monto_minimo_ventas, class: 'form-control numeric_contrato_alquiler monto_minimo_ventas'
             .form-group
               = c.label :archivo_contrato, class: 'col-sm-3 control-label' do
                 Archivo Digital del Contrato:

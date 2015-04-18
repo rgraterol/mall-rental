@@ -39,6 +39,50 @@ jQuery(document).ready ($) ->
         validators:
           numeric:
             message: 'Debe ser un valor numerico, decimales separados por punto'
+      canon_fijo_ml:
+        selector: '.canon_fijo_ml'
+        validators:
+          callback:
+            message: 'Canón Fijo en Bs. obligatorio para tipo Canón Fijo'
+            callback: (value, validator, $field) ->
+              canon = $('#select_canon_alquiler').val()
+              if (canon == 'canon_fijo' or canon == 'canon_fijo_y_porcentaje_ventas') and value == ''
+                false
+              else
+                true
+      canon_fijo_usd:
+        selector: '.canon_fijo_usd'
+        validators:
+          callback:
+            message: 'Canón Fijo en $. obligatorio para tipo Canón Fijo'
+            callback: (value, validator, $field) ->
+              canon = $('#select_canon_alquiler').val()
+              if (canon == 'canon_fijo' or canon == 'canon_fijo_y_porcentaje_ventas') and value == ''
+                false
+              else
+                true
+      porc_canon_ventas:
+        selector: '.porc_canon_ventas'
+        validators:
+          callback:
+            message: '% Canón por Ventas obligatorio para tipo de canón Porcentaje de Ventas'
+            callback: (value, validator, $field) ->
+              canon = $('#select_canon_alquiler').val()
+              if (canon == 'porcentaje_de_ventas' or canon == 'canon_fijo_y_porcentaje_ventas') and value == ''
+                false
+              else
+                true
+      monto_minimo_ventas:
+        selector: '.monto_minimo_ventas'
+        validators:
+          callback:
+            message: 'Monto Mínimo de Ventas Mensual obligatorio para tipo de canón Porcentaje de Ventas'
+            callback: (value, validator, $field) ->
+              canon = $('#select_canon_alquiler').val()
+              if (canon == 'porcentaje_de_ventas' or canon == 'canon_fijo_y_porcentaje_ventas') and value == ''
+                false
+              else
+                true
 
 
 

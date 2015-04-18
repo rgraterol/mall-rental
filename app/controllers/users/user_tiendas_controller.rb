@@ -39,10 +39,10 @@ class Users::UserTiendasController < ApplicationController
   def destroy
     if @user.mall.id == current_user.mall.id && (@user.role.cliente_tienda?)
       if @user.destroy
-        redirect_to user_tiendas_path(tienda: @tienda.nombre, id: tienda.id), alert: "Usuario eliminado satisfactoriamente." and return
+        redirect_to user_tiendas_path(tienda: @tienda.nombre, id: @tienda.id), alert: "Usuario eliminado satisfactoriamente." and return
       end
     else
-      redirect_to user_tiendas_path(tienda: @tienda.nombre, id: tienda.id), alert: 'No Autorizado' and return
+      redirect_to user_tiendas_path(tienda: @tienda.nombre, id: @tienda.id), alert: 'No Autorizado' and return
     end
   end
 

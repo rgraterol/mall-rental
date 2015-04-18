@@ -19,8 +19,10 @@
 #
 
 class ContratoAlquiler < ActiveRecord::Base
+  before_create :set_nro_contrato
   before_update :clean_canon_alquiler
   belongs_to :tienda
+  has_one :mall, through: :tienda
 
   validates :tipo_canon_alquiler, :archivo_contrato, presence: true
 
@@ -38,11 +40,20 @@ class ContratoAlquiler < ActiveRecord::Base
     end
   end
 
+  def set_nro_contrato
+    self.nro_contrato = NumerosControl.get_nro_contrato
+  end
+
   def fecha_inicio_fix
     self.fecha_inicio.strftime("%d/%m/%Y")
   end
 
   def fecha_fin_fix
     self.fecha_fin.strftime("%d/%m/%Y")
+  end
+
+  def archivo_contrato_pdf?
+    return true if self.archivo_contrato.url.split('.').last == 'pdf'
+    return false
   end
 end

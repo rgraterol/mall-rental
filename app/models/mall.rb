@@ -23,6 +23,7 @@ class Mall < ActiveRecord::Base
   has_many :arrendatarios, dependent: :destroy
   has_many :tiendas, through: :arrendatarios, dependent: :destroy
   has_many :user_tiendas, through: :tiendas, dependent: :destroy
+  has_many :contrato_alquilers, through: :tiendas, dependent: :destroy
 
   validates :nombre, :abreviado, :rif, :direccion_fiscal, :telefono, presence: true
   validates :rif, uniqueness: true

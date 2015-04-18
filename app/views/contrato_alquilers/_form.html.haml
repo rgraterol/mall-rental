@@ -1,0 +1,52 @@
+= form_for @contrato_alquiler, html: {class: 'form-horizontal m-t-md', id: 'contrato_alquiler_form'} do |f|
+  = render 'shared/error_messages', object: f.object, model: 'Usuario Mall'
+  = hidden_field_tag :id, @tienda.id
+  = hidden_field_tag :aux, @tienda.id
+  = hidden_field_tag :ca, @contrato_alquiler.id
+  .form-group
+    = f.label :fecha_inicio, class: 'col-sm-2 control-label' do
+      Fecha Inicio del Contrato:
+    .col-sm-10.form-inline
+      = f.date_select :fecha_inicio,{}, class: 'form-control'
+  .form-group
+    = f.label :fecha_fin, class: 'col-sm-2 control-label' do
+      Fecha Fin del Contrato:
+    .col-sm-10.form-inline
+      = f.date_select :fecha_fin, {}, class: 'form-control'
+  .form-group
+    = f.label :archivo_contrato, class: 'col-sm-2 control-label' do
+      Contrato de Alquiler Digitalizado:
+    .col-sm-10
+      = render 'shared/file_upload_generic', f: f, field: :archivo_contrato, name_file: f.object.archivo_contrato || nil
+  .form-group
+    = f.label :tipo_canon_alquiler, class: 'col-sm-2   control-label' do
+      Tipo Canon Alquiler:
+    .col-sm-10
+      = f.select :tipo_canon_alquiler, ContratoAlquiler.tipo_canon_alquilers.keys.to_a.map { |x| [x.humanize.titleize, x]}, {selected: f.object.tipo_canon_alquiler || nil, include_blank: 'Seleccione un Tipo de Canon de Alquiler'}, {class: 'form-control tipo_canon_alquiler_required', id: 'select_canon_alquiler'}
+  %div#canon_fijo{style: (f.object.tipo_canon_alquiler == 'canon_fijo_y_porcentaje_ventas' || f.object.tipo_canon_alquiler == 'canon_fijo') ? '' : 'display:none'}
+    .form-group
+      = f.label :canon_fijo_ml, class: 'col-sm-2 control-label' do
+        Canón Fijo en Bs.:
+      .col-sm-10
+        = f.text_field :canon_fijo_ml, class: 'form-control numeric_contrato_alquiler'
+    .form-group
+      = f.label :canon_fijo_usd, class: 'col-sm-2 control-label ' do
+        Canón Fijo en $:
+      .col-sm-10
+        = f.text_field :canon_fijo_usd, class: 'form-control numeric_contrato_alquiler'
+  %div#canon_porcentaje{style: (f.object.tipo_canon_alquiler == 'canon_fijo_y_porcentaje_ventas' || f.object.tipo_canon_alquiler == 'porcentaje_de_ventas') ? '' : 'display:none'}
+    .form-group
+      = f.label :porc_canon_ventas, class: 'col-sm-2 control-label' do
+        \% de Canon por Ventas:
+      .col-sm-10
+        = f.text_field :porc_canon_ventas, class: 'form-control numeric_contrato_alquiler'
+    .form-group
+      = f.label :monto_minimo_ventas, class: 'col-sm-2 control-label' do
+        Monto Mínimo de Ventas Mensual:
+      .col-sm-10
+        = f.text_field :monto_minimo_ventas, class: 'form-control numeric_contrato_alquiler'
+  .form-group
+    .col-sm-3
+      = link_to 'Atras', contrato_alquilers_path(tienda: @tienda.nombre, id: @tienda.id), class: 'btn btn-warning btn-block'
+    .col-sm-3.col-sm-offset-6
+      = f.submit 'Guardar', class: 'btn btn-mall btn-block'
