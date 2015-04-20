@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable,:authentication_keys => [:username]
 
-  mount_uploader :avatar, AvatarUploader
+  #mount_uploader :avatar, AvatarUploader
 
 
   belongs_to :role

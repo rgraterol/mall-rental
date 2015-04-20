@@ -65,3 +65,5 @@ gem 'cancancan', '~> 1.10'
 
 gem "jquery-fileupload-rails"
 
+
+gem 'coffee-script-source', '1.8.0'

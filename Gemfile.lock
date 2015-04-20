@@ -43,11 +43,6 @@ GEM
       sass (~> 3.2)
     builder (3.2.2)
     cancancan (1.10.1)
-    carrierwave (0.10.0)
-      activemodel (>= 3.2.0)
-      activesupport (>= 3.2.0)
-      json (>= 1.7)
-      mime-types (>= 1.16)
     coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -55,7 +50,7 @@ GEM
     coffee-script (2.4.1)
       coffee-script-source
       execjs
-    coffee-script-source (1.9.1)
+    coffee-script-source (1.8.0)
     daemons (1.2.2)
     debug_inspector (0.0.2)
     devise (3.4.1)
@@ -186,8 +181,8 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-sass (= 3.3.0.0)
   cancancan (~> 1.10)
-  carrierwave
   coffee-rails (~> 4.0.0)
+  coffee-script-source (= 1.8.0)
   devise
   devise_security_extension
   font-awesome-rails (= 4.3.0.0)

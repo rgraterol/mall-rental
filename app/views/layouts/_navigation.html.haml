@@ -4,7 +4,7 @@
       %li.nav-header
         .dropdown.profile-element
           %span
-            = image_tag current_user.avatar.url || 'building-avatar.gif', height: 50, class:'img-circle'
+            -#= image_tag current_user.avatar.url || 'building-avatar.gif', height: 50, class:'img-circle'
             -#%img.img-circle{:alt => "image", :src => "#{image_url 'building-avatar.gif'}", height: 50}
           %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
             %span.clear
@@ -68,6 +68,11 @@
           = link_to malls_path do
             %i.fa.fa-building-o
             %span.nav-label Malls
+      - if can? :index, Venta
+        %li{class: is_active_controller('ventas')}
+          = link_to ventas_mall_tiendas_path do
+            %i.fa.fa-building-o
+            %span.nav-label Ventas
       - if can? :index, Tienda
         %li{class: is_active_controller('tiendas')}
           %a{href: '#'}

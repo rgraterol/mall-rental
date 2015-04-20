@@ -45,7 +45,7 @@ Myapp::Application.routes.draw do
 
   get 'actividad_economicas' => 'actividad_economicas#index', as: :actividad_economicas
 
-  get 'actividad_ecnonomica' => 'actividad_economicas#show'
+  get 'actividad_economica' => 'actividad_economicas#show'
   
   resources :tipo_canon_alquilers
 
@@ -63,7 +63,18 @@ Myapp::Application.routes.draw do
 
   resources :contrato_alquilers
 
+  get 'auditoria_ventas' => 'ventas#auditoria', as: :auditoria_ventas
+
+  get 'ventas_tiendas/:tienda_id' => 'ventas#index', as: :ventas_tienda
+
+  get 'ventas_mes_tiendas' => 'ventas#index', as: :ventas_mes_tienda
+
+  get 'ventas_mall_tiendas' => 'ventas#mall_tiendas', as: :ventas_mall_tiendas
+
   scope module: 'dynamic' do
     post 'dynamic_add_actividad/actividad'
+    post 'dynamic_venta_diaria/venta'
+    post 'dynamic_venta_diaria/guardar_ventas'
+    post 'dynamic_venta_auditoria/auditoria'
   end
 end

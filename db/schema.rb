@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20150418015805) do
+=======
+ActiveRecord::Schema.define(version: 20150418183937) do
+>>>>>>> modulo ventas de tiendas y malls
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -262,6 +266,7 @@ ActiveRecord::Schema.define(version: 20150418015805) do
     t.integer  "tienda_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "editable",                           default: false
   end
 
   add_index "ventas", ["tienda_id"], name: "index_ventas_on_tienda_id", using: :btree

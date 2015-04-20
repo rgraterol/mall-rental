@@ -2,7 +2,6 @@
 #= require jasny/jasny-bootstrap.min
 
 jQuery(document).ready ->
-
   $('#form_registro_local').bootstrapValidator
     feedbackIcons:
       valid: 'fa fa-check ',
@@ -45,13 +44,6 @@ jQuery(document).ready ->
     $(".group-oculto").css "display","none"
   $("#icon-save-new-nivel").on "click", ->
     if confirm("Esta seguro de guardar el nuevo Nivel Mall")
-
-      $.ajax(url: "/nivel_malls/test_ajax").done (html) ->
-        alert(html)
-
-      $(document).on "ajax:error", "form", (evt, xhr, status, error) ->
-        errors = xhr.responseJSON.error
-        alert(errors)
       alert("guardar")
 
 

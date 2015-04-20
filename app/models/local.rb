@@ -22,7 +22,7 @@ class Local < ActiveRecord::Base
   has_one :tienda, dependent: :destroy
   validates :tipo_local_id, :nro_local, :area, presence: true
   validates :area, numericality: true
-  mount_uploader :foto, AvatarUploader
+  #mount_uploader :foto, AvatarUploader
 
   def self.valid_locals(user)
     return Local.joins(:mall).where(malls: {id: user.mall_id})
