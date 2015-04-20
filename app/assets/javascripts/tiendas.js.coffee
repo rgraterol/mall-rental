@@ -34,14 +34,11 @@ jQuery(document).ready ($) ->
         validators:
           notEmpty:
             message: "Tipo Canon Alquiler es Obligatorio"
-      numeric_contrato_alquiler:
-        selector: '.numeric_contrato_alquiler'
-        validators:
-          numeric:
-            message: 'Debe ser un valor numerico, decimales separados por punto'
       canon_fijo_ml:
         selector: '.canon_fijo_ml'
         validators:
+          numeric:
+            message: 'Debe ser un valor numerico, decimales separados por punto'
           callback:
             message: 'Canón Fijo en Bs. obligatorio para tipo Canón Fijo'
             callback: (value, validator, $field) ->
@@ -53,6 +50,8 @@ jQuery(document).ready ($) ->
       canon_fijo_usd:
         selector: '.canon_fijo_usd'
         validators:
+          numeric:
+              message: 'Debe ser un valor numerico, decimales separados por punto'
           callback:
             message: 'Canón Fijo en $. obligatorio para tipo Canón Fijo'
             callback: (value, validator, $field) ->
@@ -64,6 +63,8 @@ jQuery(document).ready ($) ->
       porc_canon_ventas:
         selector: '.porc_canon_ventas'
         validators:
+          numeric:
+            message: 'Debe ser un valor numerico, decimales separados por punto'
           callback:
             message: '% Canón por Ventas obligatorio para tipo de canón Porcentaje de Ventas'
             callback: (value, validator, $field) ->
@@ -75,6 +76,8 @@ jQuery(document).ready ($) ->
       monto_minimo_ventas:
         selector: '.monto_minimo_ventas'
         validators:
+          numeric:
+            message: 'Debe ser un valor numerico, decimales separados por punto'
           callback:
             message: 'Monto Mínimo de Ventas Mensual obligatorio para tipo de canón Porcentaje de Ventas'
             callback: (value, validator, $field) ->
