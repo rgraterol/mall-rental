@@ -24,9 +24,10 @@ class ContratoAlquiler < ActiveRecord::Base
   belongs_to :tienda
   has_one :mall, through: :tienda
 
-  validates :tipo_canon_alquiler, :archivo_contrato, presence: true
+  #TODO Validaciones
+  # validates :tipo_canon_alquiler, :archivo_contrato, presence: true
 
- # mount_uploader :archivo_contrato, FileUploader
+  mount_uploader :archivo_contrato, FileUploader
 
   enum tipo_canon_alquiler: [:canon_fijo, :canon_fijo_y_porcentaje_ventas, :porcentaje_de_ventas]
 

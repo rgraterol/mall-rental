@@ -16,7 +16,14 @@
         .ibox-content
           .row
             .col-sm-3
-              = link_to 'Nueva Tienda', new_tienda_path, class: 'btn btn-mall btn-block '
+              = link_to new_tienda_path, class: 'btn btn-mall btn-block ' do
+                Nueva Tienda
+                %i.fa.fa-plus
+          .row
+            .col-sm-3
+              = link_to notificar_usuarios_mall_path, class: 'btn btn-warning btn-block' do
+                Notificar Contratos Vencidos
+                %i.fa.fa-envelope
           %br
           .row
             .col-md-12

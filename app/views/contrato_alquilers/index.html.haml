@@ -28,7 +28,7 @@
           %br
           .row
             .col-sm-12
-              - if @tienda.contrato_alquilers.last.fecha_fin > Date.today
+              - if @tienda.contrato_alquilers.last.fecha_fin >= Date.today
                 = render 'contrato_alquilers/contrato_vigente'
               - else
                 = render 'contrato_alquilers/contrato_vencido'

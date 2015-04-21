@@ -4,7 +4,7 @@ class PasswordMailer < ActionMailer::Base
   def send_password(user, password)
     @user = user
     @password = password
-    @host = 'http://localhost:3000'
+    @host = 'http://mall-rental.us.to'
     mail(to: user.email, subject: 'Registro de Usuario MailRental')
   end
 end

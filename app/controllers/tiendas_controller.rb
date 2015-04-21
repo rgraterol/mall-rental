@@ -52,9 +52,10 @@ class TiendasController < ApplicationController
     end
   end
 
+
   private
     def set_tienda
-      @tienda = current_user.mall.tiendas.find_by(id: params[:id])
+      @tienda = current_user.mall.tiendas.find_by(id: params_id)
     end
 
     def tienda_params

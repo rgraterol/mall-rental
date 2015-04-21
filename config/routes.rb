@@ -77,4 +77,7 @@ Myapp::Application.routes.draw do
     post 'dynamic_venta_diaria/guardar_ventas'
     post 'dynamic_venta_auditoria/auditoria'
   end
+
+  #CONTROLADOR DE NOTIFICACIONES MAILERS
+  get 'notificar_usuarios_mall', to: 'mail_notifications#mf_notify_tiendas_mall'
 end
