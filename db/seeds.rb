@@ -27,7 +27,6 @@ n_uno = NivelMall.create!(nombre: 'Nivel Uno')
 n_dos = NivelMall.create!(nombre: 'Nivel Dos')
 n_tres = NivelMall.create!(nombre: 'Nivel Tres')
 
-<<<<<<< HEAD
 Local.create!([{nro_local: 'A-01', ubicacion_pasillo: 'A-01', area: 20, propiedad_mall: true, mall: cc_vela, tipo_local: comercial, nivel_mall: n_uno},
                {nro_local: 'A-02', ubicacion_pasillo: 'A-02', area: 20, propiedad_mall: true, mall: cc_vela, tipo_local: comercial, nivel_mall: n_uno},
                {nro_local: 'A-03', ubicacion_pasillo: 'A-03', area: 20, propiedad_mall: true, mall: cc_vela, tipo_local: comercial, nivel_mall: n_uno},
@@ -35,7 +34,7 @@ Local.create!([{nro_local: 'A-01', ubicacion_pasillo: 'A-01', area: 20, propieda
                {nro_local: 'A-05', ubicacion_pasillo: 'A-05', area: 20, propiedad_mall: true, mall: cc_vela, tipo_local: comercial, nivel_mall: n_uno},])
 
 NumerosControl.create!(nro_contrato: 1)
-=======
+
 #Local.create!([{nro_local: 'A-01', ubicacion_pasillo: 'A-01', area: 20, propiedad_mall: true, mall: cc_vela, tipo_local: comercial, nivel_mall: n_uno},
 #              {nro_local: 'A-02', ubicacion_pasillo: 'A-02', area: 20, propiedad_mall: true, mall: cc_vela, tipo_local: comercial, nivel_mall: n_uno},
 #               {nro_local: 'A-03', ubicacion_pasillo: 'A-03', area: 20, propiedad_mall: true, mall: cc_vela, tipo_local: comercial, nivel_mall: n_uno},
@@ -58,4 +57,3 @@ contrato_alquiler1 = ContratoAlquiler.create!(nro_contrato: '001', fecha_inicio:
                                               estado_contrato: true, tipo_canon_alquiler: tipo_canon1, tienda: tienda1)
 
 ventas1 = Venta.create!(fecha: '2015-02-01',monto_ml: 1000, monto_usd: 10, tienda: tienda1)
->>>>>>> modulo ventas de tiendas y malls
