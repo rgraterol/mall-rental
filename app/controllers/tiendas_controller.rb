@@ -52,6 +52,15 @@ class TiendasController < ApplicationController
     end
   end
 
+  def mf_dynamic_filter
+    @tiendas = Tienda.joins(:contrato_alquilers, :actividad_economica, :nivel_mall).by_nivel_mall(params[:nivel_mall_id]).by_actividad_economica(params[:actividad_economica_id]).by_vencimiento(params[:vencido])
+    if @tiendas.blank?
+      render partial: 'tiendas_filter_nil'
+    else
+      render partial: 'table_tiendas_filter'
+    end
+  end
+
 
   private
     def set_tienda

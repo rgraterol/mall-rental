@@ -29,10 +29,10 @@ actividad_eco3 = ActividadEconomica.create!(nombre: 'Restaurant', mall: cc_vela)
 comercial = TipoLocal.create!(tipo: 'Comercial')
 empresarial =  TipoLocal.create!(tipo: 'Empresarial')
 
-n_sotano = NivelMall.create!(nombre: 'Sotano')
-n_uno = NivelMall.create!(nombre: 'Nivel Uno')
-n_dos = NivelMall.create!(nombre: 'Nivel Dos')
-n_tres = NivelMall.create!(nombre: 'Nivel Tres')
+n_sotano = NivelMall.create!(nombre: 'Sotano', mall: cc_vela)
+n_uno = NivelMall.create!(nombre: 'Nivel Uno', mall: cc_vela)
+n_dos = NivelMall.create!(nombre: 'Nivel Dos', mall: cc_vela)
+n_tres = NivelMall.create!(nombre: 'Nivel Tres', mall: cc_vela)
 
 Local.create!([{nro_local: 'A-01', ubicacion_pasillo: 'A-01', area: 20, propiedad_mall: true, mall: cc_vela, tipo_local: comercial, nivel_mall: n_uno},
                {nro_local: 'A-02', ubicacion_pasillo: 'A-02', area: 20, propiedad_mall: true, mall: cc_vela, tipo_local: comercial, nivel_mall: n_uno},

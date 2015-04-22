@@ -26,6 +26,8 @@ gem 'coffee-rails', '~> 4.0.0'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 
+gem 'jquery-turbolinks'
+
 gem 'haml'
 
 # devise for authentication
@@ -59,7 +61,7 @@ end
 
 #Carga de Imagenes
 gem 'carrierwave'
-#gem 'rmagick', '~> 2.13.4'
+gem 'rmagick', '~> 2.13.4'
 
 gem 'cancancan', '~> 1.10'
 

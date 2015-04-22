@@ -58,6 +58,7 @@ Myapp::Application.routes.draw do
   resources :arrendatarios
 
   resources :tiendas
+  post 'tiendas/mf_dynamic_filter'
 
   resources :ventas
 
