@@ -10,6 +10,8 @@
 
 jQuery(document).ready ($) ->
 
+  table_index_datatable()
+
   $('#form_tiendas').bootstrapValidator
     feedbackIcons:
       valid: 'fa fa-check ',
@@ -170,9 +172,9 @@ jQuery(document).ready ($) ->
         html.empty()
         html.append(data)
         $('#loading_table_index').hide()
+        table_index_datatable()
       complete: ->
         $('#loading_table_index').hide()
-
 
   $('.canon_fijo_ml').keyup ->
     $.ajax
@@ -184,50 +186,50 @@ jQuery(document).ready ($) ->
       success: (data) ->
         $('.canon_fijo_usd').val(data)
 
-  $(document).on "page:update", ->
-    $('#table_tiendas_index').dataTable
-      'dom': 'T<"clear">lfrtip'
-      'tableTools':
-        'sSwfPath': '../assets/dataTables/swf/copy_csv_xls_pdf.swf'
-        "aButtons": [
-          {
-            "sExtends":     "copy",
-            "sButtonText": "Copiar"
-          },
-          {
-            "sExtends":     "csv",
-            "sButtonText": "Excel"
-          },
-          {
-            "sExtends":     "pdf",
-            "sButtonText": "PDF"
-          },
-          {
-            "sExtends":     "print",
-            "sButtonText": "Imprimir"
-          },
-        ]
-      "language": {
-        "sProcessing":    "Procesando...",
-        "sLengthMenu":    "Mostrar _MENU_ Registros",
-        "sZeroRecords":   "No se encontraron resultados",
-        "sEmptyTable":    "Ningún dato disponible en esta tabla",
-        "sInfo":          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-        "sInfoEmpty":     "Mostrando registros del 0 al 0 de un total de 0 registros",
-        "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
-        "sInfoPostFix":   "",
-        "sSearch":        "Buscar: ",
-        "sUrl":           "",
-        "sInfoThousands":  ",",
-        "sLoadingRecords": "Cargando...",
-        "oPaginate": {
-          "sFirst":    "Primero",
-          "sLast":    "Último",
-          "sNext":    "Siguiente",
-          "sPrevious": "Anterior"
+table_index_datatable =  ->
+  $('#table_tiendas_index').dataTable
+    'dom': 'T<"clear">lfrtip'
+    'tableTools':
+      'sSwfPath': '../assets/dataTables/swf/copy_csv_xls_pdf.swf'
+      "aButtons": [
+        {
+          "sExtends":     "copy",
+          "sButtonText": "Copiar"
         },
-        "oAria": {
-          "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-          "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-        }
+        {
+          "sExtends":     "csv",
+          "sButtonText": "Excel"
+        },
+        {
+          "sExtends":     "pdf",
+          "sButtonText": "PDF"
+        },
+        {
+          "sExtends":     "print",
+          "sButtonText": "Imprimir"
+        },
+      ]
+    "language": {
+      "sProcessing":    "Procesando...",
+      "sLengthMenu":    "Mostrar _MENU_ Registros",
+      "sZeroRecords":   "No se encontraron resultados",
+      "sEmptyTable":    "Ningún dato disponible en esta tabla",
+      "sInfo":          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+      "sInfoEmpty":     "Mostrando registros del 0 al 0 de un total de 0 registros",
+      "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
+      "sInfoPostFix":   "",
+      "sSearch":        "Buscar: ",
+      "sUrl":           "",
+      "sInfoThousands":  ",",
+      "sLoadingRecords": "Cargando...",
+      "oPaginate": {
+        "sFirst":    "Primero",
+        "sLast":    "Último",
+        "sNext":    "Siguiente",
+        "sPrevious": "Anterior"
+      },
+      "oAria": {
+        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
       }
+    }

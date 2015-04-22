@@ -6,7 +6,6 @@
 //
 //
 //= require jquery/jquery-2.1.1.js
-//= require jquery.turbolinks
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require metisMenu/jquery.metisMenu.js
@@ -18,4 +17,3 @@
 //= require mall.js
 //= require actividad_economica.js
 //= require ventas.js
-//= require turbolinks

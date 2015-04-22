@@ -1,13 +1,3 @@
-admin_role = Role.create!(name: 'Super Usuario MallRental', permissions: Permission.where(name: 'manage'), role_type: Role.role_types[:administrador_sistema])
-
-super_user_mall = Role.create!(name: 'Super Usuario Mall', permissions: Permission.where(name: 'manage', subject_class: ['mall_user']), role_type: Role.role_types[:administrador_cliente])
-administrador_mall = Role.create!(name: 'Administrador Mall', permissions: Permission.where(name: 'manage', subject_class: ['ActividadEconomica', 'NivelMall', 'CalendarioNoLaborable', 'CambioMoneda', 'Local', 'Arrendatario', 'Tienda', 'ContratoAlquiler', 'UserTienda']), role_type: Role.role_types[:cliente_mall])
-propietario_mall = Role.create!(name: 'Propietario Mall', role_type: Role.role_types[:cliente_mall])
-gestor_alquileres = Role.create!(name: 'Gestor de Alquileres', role_type: Role.role_types[:cliente_mall])
-gerente_tienda = Role.create!(name: 'Gerente de Tienda', role_type: Role.role_types[:cliente_tienda])
-administrador_tienda = Role.create!(name: 'Administrador de Tienda', role_type: Role.role_types[:cliente_tienda])
-propietario_tienda = Role.create!(name: 'Propietario de Tienda', role_type: Role.role_types[:cliente_tienda])
-
 bs = Moneda.create!(nombre: 'Bolívares')
 dolar = Moneda.create!(nombre: 'Dolares')
 euro = Moneda.create!(nombre: 'Euros')
@@ -20,7 +10,7 @@ españa = Pai.create!(nombre: 'España', moneda: euro)
 
 cc_vela = Mall.create!(nombre: 'C.C La Vela', abreviado: 'cc_vela', rif: 'V-98735638-1', direccion_fiscal: 'Porlamar - Margarita', telefono: '0285-8965425', pai: venezuela)
 
-User.create!(name: 'Super Administrador', username: 'mall_admin', password: '12345678', email: 'surf.airwaves@hotmail.com', cellphone: '0414-2312322', role: admin_role, mall: cc_vela)
+
 
 #ActividadEconomica.create!([{nombre: 'Zapateria', mall: cc_vela}, {nombre: 'Boutique', mall: cc_vela}, {nombre: 'Restaurant', mall: cc_vela}])
 
@@ -66,3 +56,4 @@ arrendatario1 = Arrendatario.create!(nombre: 'Carlos Torres', rif: 'V-16351478-4
 #                                               estado_contrato: true, tipo_canon_alquiler: tipo_canon1, tienda: tienda1)
 #
 # ventas1 = Venta.create!(fecha: '2015-02-01',monto_ml: 1000, monto_usd: 10, tienda: tienda1)
+puts "#--- DEVELOPMENT DATA SEEDED ----#"

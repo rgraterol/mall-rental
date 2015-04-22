@@ -85,4 +85,7 @@ Myapp::Application.routes.draw do
 
   #CONTROLADOR DE NOTIFICACIONES MAILERS
   get 'notificar_usuarios_mall', to: 'mail_notifications#mf_notify_tiendas_mall'
+
+  #ESTADISTICAS
+  get 'estadisticas/intermensuales_ventas_alquiler', to: 'estadisticas#mf_intermensuales_vxa'
 end

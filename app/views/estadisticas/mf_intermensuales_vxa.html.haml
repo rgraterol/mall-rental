@@ -1,0 +1,17 @@
+= provide(:title, "#{current_user.mall.nombre } - Estadísticas")
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      = current_user.mall.nombre
+      \- Estadísticas Intermensuales de Ventas e Ingresos por Alquiler
+      %i.fa.fa-bar-chart
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Estadísticas Intermensuales de Ventas e Ingresos por Alquiler
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
