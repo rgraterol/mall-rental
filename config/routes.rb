@@ -71,11 +71,14 @@ Myapp::Application.routes.draw do
 
   get 'ventas_mall_tiendas' => 'ventas#mall_tiendas', as: :ventas_mall_tiendas
 
+  get 'ventas_mensuales_mall' => 'ventas#mensuales', as: :ventas_mensuales_mall
+
   scope module: 'dynamic' do
     post 'dynamic_add_actividad/actividad'
     post 'dynamic_venta_diaria/venta'
     post 'dynamic_venta_diaria/guardar_ventas'
     post 'dynamic_venta_auditoria/auditoria'
+    post 'dynamic_ventas_mes/ventas'
   end
 
   #CONTROLADOR DE NOTIFICACIONES MAILERS

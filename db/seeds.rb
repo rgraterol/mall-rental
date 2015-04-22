@@ -8,7 +8,6 @@ gerente_tienda = Role.create!(name: 'Gerente de Tienda', role_type: Role.role_ty
 administrador_tienda = Role.create!(name: 'Administrador de Tienda', role_type: Role.role_types[:cliente_tienda])
 propietario_tienda = Role.create!(name: 'Propietario de Tienda', role_type: Role.role_types[:cliente_tienda])
 
-
 bs = Moneda.create!(nombre: 'Bolívares')
 dolar = Moneda.create!(nombre: 'Dolares')
 euro = Moneda.create!(nombre: 'Euros')
@@ -56,12 +55,12 @@ arrendatario1 = Arrendatario.create!(nombre: 'Carlos Torres', rif: 'V-16351478-4
                                     nombre_rl: 'Juan Perez', cedula_rl: '123456', email_rl: 'carlos@gmail.com', telefono_rl: '65654',
                                     mall: cc_vela)
 
-tienda1 = Tienda.create!(nombre: 'Lery Shop',fecha_apertura: '2015-01-10',fecha_fin_contrato_actual: '2015-10-01',
-                         actividad_economica: actividad_eco1,local: local1, arrendatario: arrendatario1)
+# tienda1 = Tienda.create!(nombre: 'Lery Shop',fecha_apertura: '2015-01-10',fecha_fin_contrato_actual: '2015-10-01',
+#                          actividad_economica: actividad_eco1,local: local1, arrendatario: arrendatario1)
 
 # tipo_canon1 = TipoCanonAlquiler.create!(tipo: 'Canon fijo')
-
-contrato_alquiler1 = ContratoAlquiler.create!(nro_contrato: '001', fecha_inicio: '2014-12-12', fecha_fin: '2015-12-12',
-                                              estado_contrato: true, tipo_canon_alquiler: ContratoAlquiler.tipo_canon_alquilers[:canon_fijo], tienda: tienda1)
-
-ventas1 = Venta.create!(fecha: '2015-02-01',monto_ml: 1000, monto_usd: 10, tienda: tienda1)
+#
+# contrato_alquiler1 = ContratoAlquiler.create!(nro_contrato: '001', fecha_inicio: '2014-12-12', fecha_fin: '2015-12-12',
+#                                               estado_contrato: true, tipo_canon_alquiler: tipo_canon1, tienda: tienda1)
+#
+# ventas1 = Venta.create!(fecha: '2015-02-01',monto_ml: 1000, monto_usd: 10, tienda: tienda1)
