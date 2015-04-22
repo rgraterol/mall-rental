@@ -25,7 +25,7 @@ module Dynamic
           @obj = {
               'id' => @ventas_dia.first.id,
               'fecha' => @ventas_dia.first.fecha.strftime("%d/%m/%Y"),
-              'monto' =>  '%.2f' %@ventas_dia.first.monto_ml,
+              'monto' =>  ActionController::Base.helpers.number_to_currency(@ventas_dia.first.monto_ml, separator: ',', delimiter: '.', format: "%n %u", unit: ""),
               'editable' => @ventas_dia.first.editable,
           }
         else
@@ -39,7 +39,7 @@ module Dynamic
         @ventas_mes.push(@obj)
       end
       @suma = Venta.where('extract(year from fecha) = ? AND extract(month from fecha ) = ? AND tienda_id = ?', @year,@month,@tienda_id).sum(:monto_ml)
-      @suma = '%.2f' %@suma
+      @suma = ActionController::Base.helpers.number_to_currency(@suma, separator: ',', delimiter: '.', format: "%n %u", unit: "")
       render json: [ventas: @ventas_mes, result: true, suma: @suma, tienda_id: @tienda_id]
     end
     def guardar_ventas

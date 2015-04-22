@@ -43,7 +43,7 @@
                 %tbody
                   - @tienda.users.each do |user|
                     %tr
-                      %td.text-center= image_tag user.avatar.url || 'building-avatar.gif', class: 'img-circle', height: 50
+                      -#%td.text-center= image_tag user.avatar.url || 'building-avatar.gif', class: 'img-circle', height: 50
                       %td= user.username
                       %td= user.email
                       %td= user.name

@@ -6,6 +6,7 @@
 jQuery(document).ready ($) ->
   $(".actualizar_ventas").change()
   $(".actualizar_auditoria_ventas").change()
+  $(".actualizar_ventas_mes").change()
   ###now = new Date()
   anio_hoy = now.getFullYear()
   mes_hoy = now.getMonth().to_s
@@ -132,6 +133,39 @@ $(".actualizar_auditoria_ventas").on "change", ->
   #$('#validacion_nombre_en_uso_actividad').show()
     complete: ->
       a=1
-#$('# loading_actividad_economica').hide()
+$(".actualizar_ventas_mes").on "change", ->
+  $.ajax
+    type: "POST"
+    url: "/dynamic_ventas_mes/ventas"
+    dataType: "JSON"
+    data:
+      year: $("#date_lapso_year").val()
+    success: (data) ->
+      console.log(data[0]['ventas'][0].ventas)
+
+      $("#tbody-ventas-mall").empty()
+      $("#tbody-ventas-mall").append("<tr><th>Enero</th><td>"+data[0]['ventas'][0].ventas+"</td><td>"+data[0]['ventas'][0].canon_fijo+"</td><td>"+data[0]['ventas'][0].canon_x_ventas+"</td><td>"+data[0]['ventas'][0].total_mes_canon+"</td></tr>")
+      $("#tbody-ventas-mall").append("<tr><th>Febrero</th><td>"+data[0]['ventas'][1].ventas+"</td><td>"+data[0]['ventas'][1].canon_fijo+"</td><td>"+data[0]['ventas'][1].canon_x_ventas+"</td><td>"+data[0]['ventas'][1].total_mes_canon+"</td></tr>")
+      $("#tbody-ventas-mall").append("<tr><th>Marzo</th><td>"+data[0]['ventas'][2].ventas+"</td><td>"+data[0]['ventas'][2].canon_fijo+"</td><td>"+data[0]['ventas'][2].canon_x_ventas+"</td><td>"+data[0]['ventas'][2].total_mes_canon+"</td></tr>")
+      $("#tbody-ventas-mall").append("<tr><th>Abril</th><td>"+data[0]['ventas'][3].ventas+"</td><td>"+data[0]['ventas'][3].canon_fijo+"</td><td>"+data[0]['ventas'][3].canon_x_ventas+"</td><td>"+data[0]['ventas'][3].total_mes_canon+"</td></tr>")
+      $("#tbody-ventas-mall").append("<tr><th>Mayo</th><td>"+data[0]['ventas'][4].ventas+"</td><td>"+data[0]['ventas'][4].canon_fijo+"</td><td>"+data[0]['ventas'][4].canon_x_ventas+"</td><td>"+data[0]['ventas'][4].total_mes_canon+"</td></tr>")
+      $("#tbody-ventas-mall").append("<tr><th>Junio</th><td>"+data[0]['ventas'][5].ventas+"</td><td>"+data[0]['ventas'][5].canon_fijo+"</td><td>"+data[0]['ventas'][5].canon_x_ventas+"</td><td>"+data[0]['ventas'][5].total_mes_canon+"</td></tr>")
+      $("#tbody-ventas-mall").append("<tr><th>Julio</th><td>"+data[0]['ventas'][6].ventas+"</td><td>"+data[0]['ventas'][6].canon_fijo+"</td><td>"+data[0]['ventas'][6].canon_x_ventas+"</td><td>"+data[0]['ventas'][6].total_mes_canon+"</td></tr>")
+      $("#tbody-ventas-mall").append("<tr><th>Agosto</th><td>"+data[0]['ventas'][7].ventas+"</td><td>"+data[0]['ventas'][7].canon_fijo+"</td><td>"+data[0]['ventas'][7].canon_x_ventas+"</td><td>"+data[0]['ventas'][7].total_mes_canon+"</td></tr>")
+      $("#tbody-ventas-mall").append("<tr><th>Septiembre</th><td>"+data[0]['ventas'][8].ventas+"</td><td>"+data[0]['ventas'][8].canon_fijo+"</td><td>"+data[0]['ventas'][8].canon_x_ventas+"</td><td>"+data[0]['ventas'][8].total_mes_canon+"</td></tr>")
+      $("#tbody-ventas-mall").append("<tr><th>Octubre</th><td>"+data[0]['ventas'][9].ventas+"</td><td>"+data[0]['ventas'][9].canon_fijo+"</td><td>"+data[0]['ventas'][9].canon_x_ventas+"</td><td>"+data[0]['ventas'][9].total_mes_canon+"</td></tr>")
+      $("#tbody-ventas-mall").append("<tr><th>Noviembre</th><td>"+data[0]['ventas'][10].ventas+"</td><td>"+data[0]['ventas'][10].canon_fijo+"</td><td>"+data[0]['ventas'][10].canon_x_ventas+"</td><td>"+data[0]['ventas'][10].total_mes_canon+"</td></tr>")
+      $("#tbody-ventas-mall").append("<tr><th>Diciembre</th><td>"+data[0]['ventas'][11].ventas+"</td><td>"+data[0]['ventas'][11].canon_fijo+"</td><td>"+data[0]['ventas'][11].canon_x_ventas+"</td><td>"+data[0]['ventas'][11].total_mes_canon+"</td></tr>")
+      $("#suma_total").text(data[0]['suma_total'])
+      $("#total_canon_fijo").text(data[0]['total_canon_fijo'])
+      $("#total_canon_x_ventas").text(data[0]['total_canon_x_ventas'])
+      $("#total_canons").text(data[0]['total_canons'])
+
+    error: (data)->
+      console.log(data)
+  #$('#validacion_nombre_en_uso_actividad').show()
+    complete: ->
+      a=1
+
 
 

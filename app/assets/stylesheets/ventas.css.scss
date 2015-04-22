@@ -5,3 +5,8 @@
 .editar_monto_venta{
   width: 50%;
 }
+
+#tbody-ventas-mall td, #tfoot-ventas-mall td{
+  text-align: right;
+  padding-right: 30px
+}

@@ -29,6 +29,12 @@ class VentasController < ApplicationController
     @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
   end
 
+  def  mensuales
+    @mall = current_user.mall
+    #@tiendas = current_user.mall.tiendas
+    @ventas = Venta.all
+  end
+
 
 =begin
   def mes
