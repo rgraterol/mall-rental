@@ -22,6 +22,7 @@ class ContratoAlquiler < ActiveRecord::Base
   before_create :set_nro_contrato
   before_update :clean_canon_alquiler
   belongs_to :tienda
+  has_many :ventas, through: :tienda
   has_one :mall, through: :tienda
 
   #TODO Validaciones

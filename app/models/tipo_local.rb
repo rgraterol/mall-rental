@@ -10,5 +10,7 @@
 
 class TipoLocal < ActiveRecord::Base
   has_many :locals
+  has_many :tiendas, through: :locals
+  has_one :mall, through: :locals
   validates :tipo, inclusion: { in: ['Comercial','Empresarial']}
 end

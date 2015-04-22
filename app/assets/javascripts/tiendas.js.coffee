@@ -194,23 +194,23 @@ table_index_datatable =  ->
       "aButtons": [
         {
           "sExtends":     "copy",
-          "sButtonText": "Copiar"
+          "sButtonText": 'Copiar &nbsp; <i class="fa fa-files-o"></i>'
         },
         {
           "sExtends":     "csv",
-          "sButtonText": "Excel"
+          "sButtonText": 'Excel &nbsp; <i class="fa fa-file-excel-o"></i>'
         },
         {
           "sExtends":     "pdf",
-          "sButtonText": "PDF"
+          "sButtonText": 'PDF &nbsp; <i class="fa fa-file-pdf-o"></i>'
         },
         {
           "sExtends":     "print",
-          "sButtonText": "Imprimir"
+          "sButtonText": 'Imprimir &nbsp; <i class="fa fa-print"></i>'
         },
       ]
     "language": {
-      "sProcessing":    "Procesando...",
+      "sProcessing":    'Procesando... <i class="fa fa-spinner fa-spin"></i>',
       "sLengthMenu":    "Mostrar _MENU_ Registros",
       "sZeroRecords":   "No se encontraron resultados",
       "sEmptyTable":    "Ningún dato disponible en esta tabla",
@@ -218,15 +218,15 @@ table_index_datatable =  ->
       "sInfoEmpty":     "Mostrando registros del 0 al 0 de un total de 0 registros",
       "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
       "sInfoPostFix":   "",
-      "sSearch":        "Buscar: ",
+      "sSearch":        '<i class="fa fa-search"></i> Buscar: ',
       "sUrl":           "",
       "sInfoThousands":  ",",
-      "sLoadingRecords": "Cargando...",
+      "sLoadingRecords": 'Cargando... <i class="fa fa-spinner fa-spin"></i>',
       "oPaginate": {
         "sFirst":    "Primero",
         "sLast":    "Último",
-        "sNext":    "Siguiente",
-        "sPrevious": "Anterior"
+        "sNext":    'Siguiente <i class="fa fa-angle-right"></i>',
+        "sPrevious": '<i class="fa fa-angle-left"></i> Anterior'
       },
       "oAria": {
         "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",

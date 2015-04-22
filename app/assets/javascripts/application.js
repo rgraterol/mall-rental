@@ -13,7 +13,3 @@
 //= require peity/jquery.peity.min.js
 //= require slimscroll/jquery.slimscroll.min.js
 //= require inspinia.js
-//= require local.js
-//= require mall.js
-//= require actividad_economica.js
-//= require ventas.js

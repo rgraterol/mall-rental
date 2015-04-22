@@ -88,4 +88,5 @@ Myapp::Application.routes.draw do
 
   #ESTADISTICAS
   get 'estadisticas/intermensuales_ventas_alquiler', to: 'estadisticas#mf_intermensuales_vxa'
+  post 'estadisticas/intermensuales', to: 'estadisticas#filtro_intermensuales'
 end

@@ -21,7 +21,6 @@ class Arrendatario < ActiveRecord::Base
 
   has_many :tiendas, dependent: :destroy
 
-
   validates :nombre, :rif, :direccion, :telefono, :telefono_rl, :nombre_rl, :cedula_rl, :mall_id, presence: true
 
   def self.valid_arrendatarios(user)
