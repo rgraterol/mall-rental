@@ -12,6 +12,8 @@ bs = Moneda.create!(nombre: 'Bolívares')
 dolar = Moneda.create!(nombre: 'Dolares')
 euro = Moneda.create!(nombre: 'Euros')
 
+CambioMoneda.create!(fecha: Date.today, cambio_ml_x_usd: 250)
+
 venezuela = Pai.create!(nombre: 'Venezuela', moneda: bs)
 usa = Pai.create!(nombre: 'Estados Unidos', moneda: dolar)
 españa = Pai.create!(nombre: 'España', moneda: euro)

@@ -61,6 +61,11 @@ class CambioMonedasController < ApplicationController
     end
   end
 
+  def mf_cambio_moneda
+    usd = params[:ml].to_i / CambioMoneda.last.cambio_ml_x_usd
+    render json: usd
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cambio_moneda

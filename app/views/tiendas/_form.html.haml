@@ -73,7 +73,7 @@
                 = c.label :canon_fijo_usd, class: 'col-sm-3 control-label ' do
                   Canón Fijo en $:
                 .col-sm-9
-                  = c.text_field :canon_fijo_usd, class: 'form-control numeric_contrato_alquiler canon_fijo_usd'
+                  = c.text_field :canon_fijo_usd, readonly: true,  class: 'form-control numeric_contrato_alquiler canon_fijo_usd'
             %div#canon_porcentaje{style: (c.object.tipo_canon_alquiler == 'canon_fijo_y_porcentaje_ventas' || c.object.tipo_canon_alquiler == 'porcentaje_de_ventas') ? '' : 'display:none'}
               .form-group
                 = c.label :porc_canon_ventas, class: 'col-sm-3 control-label' do

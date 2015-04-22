@@ -154,54 +154,6 @@ jQuery(document).ready ($) ->
       $('#canon_porcentaje').hide()
       $('#canon_porcentaje').find(':input').prop('disabled', true);
 
-
-#  $('#table_tiendas_index').dataTable
-#    'dom': 'T<"clear">lfrtip'
-#    'tableTools':
-#      'sSwfPath': '../assets/dataTables/swf/copy_csv_xls_pdf.swf'
-#      "aButtons": [
-#        {
-#          "sExtends":     "copy",
-#          "sButtonText": "Copiar"
-#        },
-#        {
-#          "sExtends":     "csv",
-#          "sButtonText": "Excel"
-#        },
-#        {
-#          "sExtends":     "pdf",
-#          "sButtonText": "PDF"
-#        },
-#        {
-#          "sExtends":     "print",
-#          "sButtonText": "Imprimir"
-#        },
-#      ]
-#    "language": {
-#      "sProcessing":    "Procesando...",
-#      "sLengthMenu":    "Mostrar _MENU_ Registros",
-#      "sZeroRecords":   "No se encontraron resultados",
-#      "sEmptyTable":    "Ningún dato disponible en esta tabla",
-#      "sInfo":          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-#      "sInfoEmpty":     "Mostrando registros del 0 al 0 de un total de 0 registros",
-#      "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
-#      "sInfoPostFix":   "",
-#      "sSearch":        "Buscar: ",
-#      "sUrl":           "",
-#      "sInfoThousands":  ",",
-#      "sLoadingRecords": "Cargando...",
-#      "oPaginate": {
-#        "sFirst":    "Primero",
-#        "sLast":    "Último",
-#        "sNext":    "Siguiente",
-#        "sPrevious": "Anterior"
-#      },
-#      "oAria": {
-#        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-#        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-#      }
-#    }
-
   $('.tienda-filter').change ->
     $('#div_table_tiendas_index').empty()
     $('#loading_table_index').show()
@@ -221,6 +173,16 @@ jQuery(document).ready ($) ->
       complete: ->
         $('#loading_table_index').hide()
 
+
+  $('.canon_fijo_ml').keyup ->
+    $.ajax
+      type: "POST"
+      url: "/cambio_monedas/mf_cambio_moneda/"
+      dataType: "JSON"
+      data:
+        ml: $(this).val()
+      success: (data) ->
+        $('.canon_fijo_usd').val(data)
 
   $(document).on "page:update", ->
     $('#table_tiendas_index').dataTable

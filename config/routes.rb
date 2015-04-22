@@ -50,6 +50,7 @@ Myapp::Application.routes.draw do
   resources :tipo_canon_alquilers
 
   resources :cambio_monedas
+  post 'cambio_monedas/mf_cambio_moneda'
   
   resources :actividad_economicas
 

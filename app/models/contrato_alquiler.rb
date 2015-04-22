@@ -33,6 +33,7 @@ class ContratoAlquiler < ActiveRecord::Base
 
   def clean_canon_alquiler
     if self.tipo_canon_alquiler == "canon_fijo"
+      self.canon_fijo_usd = self.canon_fijo_ml / CambioMoneda.last.cambio_ml_x_usd
       self.porc_canon_ventas = nil
       self.monto_minimo_ventas = nil
     elsif self.tipo_canon_alquiler == "porcentaje_de_ventas"
@@ -43,6 +44,7 @@ class ContratoAlquiler < ActiveRecord::Base
 
   def set_nro_contrato
     self.nro_contrato = NumerosControl.get_nro_contrato
+    self.canon_fijo_usd = self.canon_fijo_ml / CambioMoneda.last.cambio_ml_x_usd if self.canon_fijo_ml.present?
   end
 
   def fecha_inicio_fix

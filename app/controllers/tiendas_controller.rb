@@ -68,6 +68,6 @@ class TiendasController < ApplicationController
     end
 
     def tienda_params
-      params.require(:tienda).permit(:nombre, :local_id, :arrendatario_id, :actividad_economica_id, contrato_alquilers_attributes: [ :id, :tipo_canon_alquiler, :fecha_inicio, :fecha_fin, :archivo_contrato, :canon_fijo_ml, :canon_fijo_usd, :porc_canon_ventas, :monto_minimo_ventas])
+      params.require(:tienda).permit(:nombre, :local_id, :arrendatario_id, :actividad_economica_id, contrato_alquilers_attributes: [ :id, :tipo_canon_alquiler, :fecha_inicio, :fecha_fin, :archivo_contrato, :canon_fijo_ml, :porc_canon_ventas, :monto_minimo_ventas])
     end
 end
