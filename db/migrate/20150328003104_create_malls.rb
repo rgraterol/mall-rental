@@ -7,6 +7,7 @@ class CreateMalls < ActiveRecord::Migration
       t.string :direccion_fiscal
       t.string :telefono
       t.belongs_to :pai,index:true
+      t.belongs_to :cuenta_bancarium, index:true
 
       t.timestamps
     end

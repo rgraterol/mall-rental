@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nroCta: MyString
+  tipoCuenta: MyString
+  beneficiario: MyString
+  docIdentidad: MyString
+
+two:
+  nroCta: MyString
+  tipoCuenta: MyString
+  beneficiario: MyString
+  docIdentidad: MyString

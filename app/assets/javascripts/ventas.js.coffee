@@ -1,18 +1,12 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
-
+#= require jquery.blockUI.js
 
 jQuery(document).ready ($) ->
   $(".actualizar_ventas").change()
   $(".actualizar_auditoria_ventas").change()
   $(".actualizar_ventas_mes").change()
-  ###now = new Date()
-  anio_hoy = now.getFullYear()
-  mes_hoy = now.getMonth().to_s
-
-  if ($("#date_lapso_year").val()).to_s == anio_hoy.to_s
-    alert(mes_hoy)###
 
 $(".actualizar_ventas").on "change", ->
   $.ajax
@@ -167,5 +161,36 @@ $(".actualizar_ventas_mes").on "change", ->
     complete: ->
       a=1
 
+$(".btn-send-recibos").on "click", ->
+  now = new Date()
+  anio_hoy = now.getFullYear()
+  mes_hoy = now.getMonth()
+
+  year = $("#date_lapso_year").val()
+  month = $("#ventas_select_month").val()
 
 
+  if year.to_s == anio_hoy.to_s && month.to_s == mes_hoy.to_s
+    $.blockUI({
+      message: 'Esta opcion es valida solo para meses anteriores',
+      fadeIn: 700,
+      fadeOut: 700,
+      timeout: 4000,
+      showOverlay: true,
+      centerY: false,
+      css: {
+        top:  ($(window).height() - 400)/2 + 'px',
+        left: ($(window).width() - 400)/2 + 'px',
+        width: '400px'
+        right: '10px',
+        border: 'none',
+        padding: '50px',
+        backgroundColor: '#000',
+        '-webkit-border-radius': '10px',
+        '-moz-border-radius': '10px',
+        opacity: .8,
+        color: '#fff',
+        fontSize: '25px'
+      }
+    });
+    $('.blockOverlay').attr('title','Click para cerrar').click($.unblockUI);

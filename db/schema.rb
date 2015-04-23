@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150418183937) do
+ActiveRecord::Schema.define(version: 20150423022159) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,12 @@ ActiveRecord::Schema.define(version: 20150418183937) do
   end
 
   add_index "arrendatarios", ["mall_id"], name: "index_arrendatarios_on_mall_id", using: :btree
+
+  create_table "bancos", force: true do |t|
+    t.string   "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "calendario_no_laborables", force: true do |t|
     t.date     "fecha"
@@ -83,6 +89,18 @@ ActiveRecord::Schema.define(version: 20150418183937) do
 
   add_index "contrato_alquilers", ["tienda_id"], name: "index_contrato_alquilers_on_tienda_id", using: :btree
 
+  create_table "cuenta_bancaria", force: true do |t|
+    t.string   "nroCta"
+    t.string   "tipoCuenta"
+    t.string   "beneficiario"
+    t.string   "docIdentidad"
+    t.integer  "banco_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "cuenta_bancaria", ["banco_id"], name: "index_cuenta_bancaria_on_banco_id", using: :btree
+
   create_table "idiomas", force: true do |t|
     t.string   "nombre"
     t.datetime "created_at"
@@ -113,10 +131,12 @@ ActiveRecord::Schema.define(version: 20150418183937) do
     t.string   "direccion_fiscal"
     t.string   "telefono"
     t.integer  "pai_id"
+    t.integer  "cuenta_bancarium_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "malls", ["cuenta_bancarium_id"], name: "index_malls_on_cuenta_bancarium_id", using: :btree
   add_index "malls", ["pai_id"], name: "index_malls_on_pai_id", using: :btree
 
   create_table "monedas", force: true do |t|
@@ -141,20 +161,31 @@ ActiveRecord::Schema.define(version: 20150418183937) do
   end
 
   create_table "pago_alquilers", force: true do |t|
-    t.date     "fecha"
-    t.string   "monto_canon_fijo_ml"
-    t.string   "decimal"
-    t.decimal  "monto_canon_fijo_usd"
-    t.decimal  "monto_porc_ventas_ml"
-    t.decimal  "monto_porc_ventas_usd"
+    t.string   "nro_recibo"
+    t.date     "fecha_recibo_cobro"
+    t.integer  "anio_alquiler"
     t.integer  "mes_alquiler"
-    t.integer  "ano_alquiler"
+    t.decimal  "monto_canon_fijo_ml"
+    t.decimal  "monto_porc_ventas_ml"
+    t.decimal  "monto_alquiler_ml"
+    t.decimal  "monto_alquiler_usd"
+    t.boolean  "pagado"
+    t.date     "fecha_pago"
+    t.string   "nro_cheque_confirmacion"
+    t.string   "archivo_transferencia"
+    t.string   "nombre_banco"
+    t.boolean  "facturado"
+    t.string   "nro_factura"
+    t.date     "fecha_factura"
+    t.integer  "tipo_pago"
     t.integer  "contrato_alquiler_id"
+    t.integer  "tienda_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "pago_alquilers", ["contrato_alquiler_id"], name: "index_pago_alquilers_on_contrato_alquiler_id", using: :btree
+  add_index "pago_alquilers", ["tienda_id"], name: "index_pago_alquilers_on_tienda_id", using: :btree
 
   create_table "pais", force: true do |t|
     t.string   "nombre"
