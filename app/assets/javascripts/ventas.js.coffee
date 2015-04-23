@@ -169,7 +169,6 @@ $(".btn-send-recibos").on "click", ->
   year = $("#date_lapso_year").val()
   month = $("#ventas_select_month").val()
 
-
   if year.to_s == anio_hoy.to_s && month.to_s == mes_hoy.to_s
     $.blockUI({
       message: 'Esta opcion es valida solo para meses anteriores',
