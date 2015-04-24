@@ -1,5 +1,9 @@
 Myapp::Application.routes.draw do
 
+  resources :cuenta_bancaria
+
+  resources :bancos
+
   root to: 'static#index'
 
   devise_for :users

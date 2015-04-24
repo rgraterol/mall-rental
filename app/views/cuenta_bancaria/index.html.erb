@@ -1,0 +1,31 @@
+<h1>Listing cuenta_bancaria</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nrocta</th>
+      <th>Tipocuenta</th>
+      <th>Beneficiario</th>
+      <th>Docidentidad</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cuenta_bancaria.each do |cuenta_bancarium| %>
+      <tr>
+        <td><%= cuenta_bancarium.nroCta %></td>
+        <td><%= cuenta_bancarium.tipoCuenta %></td>
+        <td><%= cuenta_bancarium.beneficiario %></td>
+        <td><%= cuenta_bancarium.docIdentidad %></td>
+        <td><%= link_to 'Show', cuenta_bancarium %></td>
+        <td><%= link_to 'Edit', edit_cuenta_bancarium_path(cuenta_bancarium) %></td>
+        <td><%= link_to 'Destroy', cuenta_bancarium, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Cuenta bancarium', new_cuenta_bancarium_path %>
