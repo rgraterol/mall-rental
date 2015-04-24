@@ -120,6 +120,7 @@ class Tienda < ActiveRecord::Base
         hash_stats[:canon_fijo_usd] = canon_fijo_usd
         hash_stats[:porc_canon] = porc_canon
         hash_stats[:criterio] = nivel_mall.nombre
+	hash_stats[:ventas] = ventas
         estadisticas << hash_stats
       end
     elsif criterio == 'actividad_economica'
@@ -141,6 +142,7 @@ class Tienda < ActiveRecord::Base
         hash_stats[:canon_fijo_ml] = canon_fijo
         hash_stats[:canon_fijo_usd] = canon_fijo_usd
         hash_stats[:porc_canon] = porc_canon
+	hash_stats[:ventas] = ventas
         hash_stats[:criterio] = actividad_economica.nombre
         estadisticas << hash_stats
       end
@@ -164,6 +166,7 @@ class Tienda < ActiveRecord::Base
         hash_stats[:canon_fijo_usd] = canon_fijo_usd
         hash_stats[:porc_canon] = porc_canon
         hash_stats[:criterio] = tipo_local.tipo
+	hash_stats[:ventas] = ventas
         estadisticas << hash_stats
       end
     end
