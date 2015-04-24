@@ -16,7 +16,8 @@ cc_vela = Mall.create!(nombre: 'C.C La Vela', abreviado: 'cc_vela', rif: 'V-9873
 
 
 
-#ActividadEconomica.create!([{nombre: 'Zapateria', mall: cc_vela}, {nombre: 'Boutique', mall: cc_vela}, {nombre: 'Restaurant', mall: cc_vela}])
+
+ActividadEconomica.create!([{nombre: 'Zapateria', mall: cc_vela}, {nombre: 'Boutique', mall: cc_vela}, {nombre: 'Restaurant', mall: cc_vela}])
 
 actividad_eco1 = ActividadEconomica.create!(nombre: 'Zapateria', mall: cc_vela)
 actividad_eco2 = ActividadEconomica.create!(nombre: 'Boutique', mall: cc_vela)
