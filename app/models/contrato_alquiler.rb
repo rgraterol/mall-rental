@@ -19,7 +19,7 @@
 #
 
 class ContratoAlquiler < ActiveRecord::Base
-  before_create :set_nro_contrato
+  before_create :set_missing_attributes_create
   before_update :clean_canon_alquiler
   belongs_to :tienda
   has_many :ventas, through: :tienda
@@ -30,22 +30,36 @@ class ContratoAlquiler < ActiveRecord::Base
 
   mount_uploader :archivo_contrato, FileUploader
 
-  enum tipo_canon_alquiler: [:canon_fijo, :canon_fijo_y_porcentaje_ventas, :porcentaje_de_ventas]
+  enum tipo_canon_alquiler: [:fijo, :variable, :fijo_y_variable_venta_bruta, :fijo_y_variable_venta_neta, :exento]
 
   def clean_canon_alquiler
-    if self.tipo_canon_alquiler == "canon_fijo"
+    if self.tipo_canon_alquiler == "fijo"
       self.canon_fijo_usd = self.canon_fijo_ml / CambioMoneda.last.cambio_ml_x_usd
-      self.porc_canon_ventas = nil
-      self.monto_minimo_ventas = nil
-    elsif self.tipo_canon_alquiler == "porcentaje_de_ventas"
-      self.canon_fijo_ml = nil
-      self.canon_fijo_usd = nil
+      self.porc_canon_ventas = 0
+      self.monto_minimo_ventas = 0
+    elsif self.tipo_canon_alquiler == "variable"
+      self.canon_fijo_ml = 0
+      self.canon_fijo_usd = 0
+      self.monto_minimo_ventas = 0
+      self.requerida_venta = true
+    elsif self.tipo_canon_alquiler == "fijo_y_variable_venta_bruta" ||  self.tipo_canon_alquiler == "fijo_y_variable_venta_neta"
+      self.canon_fijo_usd = self.canon_fijo_ml / CambioMoneda.last.cambio_ml_x_usd
+      self.monto_minimo_ventas = self.canon_fijo_ml / (self.porc_canon_ventas / 100)
+      self.requerida_venta = true
+    else
+      self.canon_fijo_ml = 0
+      self.canon_fijo_usd = 0
+      self.porc_canon_ventas = 0
+      self.monto_minimo_ventas = 0
+      self.requerida_venta = false
     end
   end
 
-  def set_nro_contrato
+  def set_missing_attributes_create
     self.nro_contrato = NumerosControl.get_nro_contrato
     self.canon_fijo_usd = self.canon_fijo_ml / CambioMoneda.last.cambio_ml_x_usd if self.canon_fijo_ml.present?
+    self.monto_minimo_ventas = self.canon_fijo_ml / (self.porc_canon_ventas / 100) if self.porc_canon_ventas.present? && self.canon_fijo_ml.present?
+    self.requerida_venta = true if self.porc_canon_ventas.present?
   end
 
   def fecha_inicio_fix

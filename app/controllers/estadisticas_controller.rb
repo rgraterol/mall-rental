@@ -17,8 +17,13 @@ class EstadisticasController < ApplicationController
   def filtro_intermensuales
 
     @estadisticas = Tienda.estadisticas(current_user.mall, params[:fecha_init], params[:fecha_end], params[:nivel_mall_id], params[:actividad_economica_id], params[:tipo_local_id], params[:criterio])
-    puts @estadisticas.inspect
     render partial: 'table_intermensuales_vxa'
+  end
+
+  def mf_mensuales_vxa
+  end
+
+  def filtro_mensuales
   end
 
 

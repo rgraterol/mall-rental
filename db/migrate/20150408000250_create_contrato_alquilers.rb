@@ -5,10 +5,10 @@ class CreateContratoAlquilers < ActiveRecord::Migration
       t.date :fecha_inicio
       t.date :fecha_fin
       t.string :archivo_contrato
-      t.decimal :canon_fijo_ml
-      t.decimal :canon_fijo_usd
-      t.decimal :porc_canon_ventas
-      t.decimal :monto_minimo_ventas
+      t.decimal :canon_fijo_ml, default: 0
+      t.decimal :canon_fijo_usd, default: 0
+      t.decimal :porc_canon_ventas, default: 0
+      t.decimal :monto_minimo_ventas, default: 0
       t.boolean :estado_contrato
       t.integer :tipo_canon_alquiler
 

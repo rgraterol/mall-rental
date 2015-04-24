@@ -74,3 +74,6 @@
                         %td
                           = link_to  contrato_alquiler_path(id: @tienda.id, ca: contrato_alquiler.id), method: :delete, data: { confirm: "¿Esta seguro que desea eliminar el contrato nro: #{contrato_alquiler.nro_contrato} de la tienda #{@tienda.nombre}?" } do
                             %i.fa.fa-trash
+  .row
+    .col-sm-3
+      = link_to 'Volver', tiendas_path, class: 'btn btn-warning btn-block'

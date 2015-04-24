@@ -63,33 +63,47 @@
                 Fecha Fin del Contrato:
               .col-sm-9.form-inline
                 = c.date_select :fecha_fin, {}, class: 'form-control'
-            %div#canon_fijo{style: (c.object.tipo_canon_alquiler == 'canon_fijo_y_porcentaje_ventas' || c.object.tipo_canon_alquiler == 'canon_fijo') ? '' : 'display:none'}
+            %div#canon_fijo{style: (c.object.tipo_canon_alquiler == 'fijo' || c.object.tipo_canon_alquiler == 'fijo_y_variable_venta_bruta' || c.object.tipo_canon_alquiler == 'fijo_y_variable_venta_neta') ? '' : 'display:none'}
               .form-group
                 = c.label :canon_fijo_ml, class: 'col-sm-3 control-label' do
                   Canón Fijo en Bs.:
-                .col-sm-9
-                  = c.text_field :canon_fijo_ml, class: 'form-control numeric_contrato_alquiler canon_fijo_ml'
+                .col-sm-8
+                  = c.text_field :canon_fijo_ml, class: 'form-control numeric_contrato_alquiler canon_fijo_ml', id: 'canon_fijo_tienda'
+                .col-sm-1.text-left
+                  %span Bs.
               .form-group
                 = c.label :canon_fijo_usd, class: 'col-sm-3 control-label ' do
-                  Canón Fijo en $:
-                .col-sm-9
+                  Canón Fijo en USD $:
+                .col-sm-8
                   = c.text_field :canon_fijo_usd, readonly: true,  class: 'form-control numeric_contrato_alquiler canon_fijo_usd'
-            %div#canon_porcentaje{style: (c.object.tipo_canon_alquiler == 'canon_fijo_y_porcentaje_ventas' || c.object.tipo_canon_alquiler == 'porcentaje_de_ventas') ? '' : 'display:none'}
+                .col-sm-1.text-left
+                  %span $
+            %div#canon_porcentaje{style: (c.object.tipo_canon_alquiler == 'variable' || c.object.tipo_canon_alquiler == 'fijo_y_variable_venta_bruta' || c.object.tipo_canon_alquiler == 'fijo_y_variable_venta_neta') ? '' : 'display:none'}
               .form-group
                 = c.label :porc_canon_ventas, class: 'col-sm-3 control-label' do
                   \% de Canon por Ventas:
-                .col-sm-9
-                  = c.text_field :porc_canon_ventas, class: 'form-control numeric_contrato_alquiler porc_canon_ventas'
+                .col-sm-8
+                  = c.text_field :porc_canon_ventas, class: 'form-control numeric_contrato_alquiler porc_canon_ventas', id: 'porc_canon_tienda'
+                .col-sm-1.text-left
+                  %span %
               .form-group
                 = c.label :monto_minimo_ventas, class: 'col-sm-3 control-label' do
                   Monto Mínimo de Ventas Mensual:
-                .col-sm-9
-                  = c.text_field :monto_minimo_ventas, class: 'form-control numeric_contrato_alquiler monto_minimo_ventas'
+                .col-sm-8
+                  = c.text_field :monto_minimo_ventas, readonly: true, class: 'form-control numeric_contrato_alquiler monto_minimo_ventas', id: 'monto_minimo_tienda'
+                .col-sm-1.text-left
+                  %span Ventas
             .form-group
               = c.label :archivo_contrato, class: 'col-sm-3 control-label' do
                 Archivo Digital del Contrato:
               .col-sm-9
                 = render 'shared/file_upload_generic', f: c , field: :archivo_contrato, name_file: c.object.archivo_contrato || nil
+            .form-group
+              = c.label :requerida_venta, class: 'col-sm-3 control-label' do
+                Requeridas las Ventas Diarias:
+              .col-sm-9
+                = c.check_box :requerida_venta, {checked: false, id: 'requerida_venta_check'}, "true", "false"
+
   .row
     .col-lg-12
       .ibox.float-e-margins
@@ -102,25 +116,3 @@
               = f.submit 'Guardar', class: 'btn btn-mall btn-block', disable_with: 'Guardar'
 
 
-
-
-
-
-
--#<%= form_for(@tienda) do |f| %>
--#  <% if @tienda.errors.any? %>
--#    <div id="error_explanation">
--#      <h2><%= pluralize(@tienda.errors.count, "error") %> prohibited this tienda from being saved:</h2>
--#
--#      <ul>
--#      <% @tienda.errors.full_messages.each do |message| %>
--#        <li><%= message %></li>
--#      <% end %>
--#      </ul>
--#    </div>
--#  <% end %>
--#
--#  <div class="actions">
--#    <%= f.submit %>
--#  </div>
--#<% end %>

@@ -1,4 +1,6 @@
-#= require jasny/jasny-bootstrap.min
+#= require input-mask/jquery.inputmask.js
+#= require input-mask/jquery.inputmask.regex.extensions.js
+#= require jasny/jasny-bootstrap
 #= require dataTables/jquery.dataTables.js
 #= require dataTables/dataTables.bootstrap.js
 #= require dataTables/dataTables.responsive.js
@@ -42,23 +44,10 @@ jQuery(document).ready ($) ->
           numeric:
             message: 'Debe ser un valor numerico, decimales separados por punto'
           callback:
-            message: 'Canón Fijo en Bs. obligatorio para tipo Canón Fijo'
+            message: 'Canón Fijo en Bs. obligatorio para tipo Canón Fijos'
             callback: (value, validator, $field) ->
               canon = $('#select_canon_alquiler').val()
-              if (canon == 'canon_fijo' or canon == 'canon_fijo_y_porcentaje_ventas') and value == ''
-                false
-              else
-                true
-      canon_fijo_usd:
-        selector: '.canon_fijo_usd'
-        validators:
-          numeric:
-              message: 'Debe ser un valor numerico, decimales separados por punto'
-          callback:
-            message: 'Canón Fijo en $. obligatorio para tipo Canón Fijo'
-            callback: (value, validator, $field) ->
-              canon = $('#select_canon_alquiler').val()
-              if (canon == 'canon_fijo' or canon == 'canon_fijo_y_porcentaje_ventas') and value == ''
+              if (canon == 'canon_fijo' or canon == 'fijo_y_variable_venta_bruta' or canon == 'fijo_y_variable_venta_neta') and value == ''
                 false
               else
                 true
@@ -68,23 +57,10 @@ jQuery(document).ready ($) ->
           numeric:
             message: 'Debe ser un valor numerico, decimales separados por punto'
           callback:
-            message: '% Canón por Ventas obligatorio para tipo de canón Porcentaje de Ventas'
+            message: '% Canón por Ventas obligatorio para tipo de Canón Variables'
             callback: (value, validator, $field) ->
               canon = $('#select_canon_alquiler').val()
-              if (canon == 'porcentaje_de_ventas' or canon == 'canon_fijo_y_porcentaje_ventas') and value == ''
-                false
-              else
-                true
-      monto_minimo_ventas:
-        selector: '.monto_minimo_ventas'
-        validators:
-          numeric:
-            message: 'Debe ser un valor numerico, decimales separados por punto'
-          callback:
-            message: 'Monto Mínimo de Ventas Mensual obligatorio para tipo de canón Porcentaje de Ventas'
-            callback: (value, validator, $field) ->
-              canon = $('#select_canon_alquiler').val()
-              if (canon == 'porcentaje_de_ventas' or canon == 'canon_fijo_y_porcentaje_ventas') and value == ''
+              if (canon == 'porcentaje_de_ventas' or canon == 'fijo_y_variable_venta_bruta' or canon == 'fijo_y_variable_venta_neta') and value == ''
                 false
               else
                 true
@@ -135,26 +111,33 @@ jQuery(document).ready ($) ->
           $('#loading_actividad_economica').hide()
 
   $('#select_canon_alquiler').change ->
-    if $(this).val() == 'canon_fijo'
+    if $(this).val() == 'fijo'
       $('#canon_fijo').show()
       $('#canon_fijo').find(':input').prop('disabled', false);
       $('#canon_porcentaje').hide()
       $('#canon_porcentaje').find(':input').prop('disabled', true);
-    else if $(this).val() == 'canon_fijo_y_porcentaje_ventas'
+      $('#requerida_venta_check').prop('disabled', false).prop('checked', true);
+    else if ($(this).val() == 'fijo_y_variable_venta_bruta' || $(this).val() == 'fijo_y_variable_venta_neta')
       $('#canon_fijo').show()
       $('#canon_fijo').find(':input').prop('disabled', false);
       $('#canon_porcentaje').show()
       $('#canon_porcentaje').find(':input').prop('disabled', false);
-    else if $(this).val() == 'porcentaje_de_ventas'
+      $('#requerida_venta_check').prop('disabled', true).prop('checked', true);
+      calcular_monto_minimo_venta()
+    else if $(this).val() == 'variable'
       $('#canon_fijo').hide()
       $('#canon_fijo').find(':input').prop('disabled', true);
       $('#canon_porcentaje').show()
       $('#canon_porcentaje').find(':input').prop('disabled', false);
+      $('#monto_minimo_tienda').val('0')
+      $('#requerida_venta_check').prop('disabled', true).prop('checked', true);
+      key_up_porc_venta()
     else
       $('#canon_fijo').hide()
       $('#canon_fijo').find(':input').prop('disabled', true);
       $('#canon_porcentaje').hide()
       $('#canon_porcentaje').find(':input').prop('disabled', true);
+      $('#requerida_venta_check').prop('disabled', true).prop('checked', false);
 
   $('.tienda-filter').change ->
     $('#div_table_tiendas_index').empty()
@@ -185,6 +168,13 @@ jQuery(document).ready ($) ->
         ml: $(this).val()
       success: (data) ->
         $('.canon_fijo_usd').val(data)
+
+  $("#porc_canon_tienda").inputmask("Regex", {
+    regex: "[0-9]{1,3}%"
+  });
+
+
+
 
 table_index_datatable =  ->
   $('#table_tiendas_index').dataTable
@@ -233,3 +223,25 @@ table_index_datatable =  ->
         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
       }
     }
+calcular_monto_minimo_venta = ->
+  $('#porc_canon_tienda').keyup ->
+    if $(this).val() > 100
+      $(this).val 100
+    if $(this).val() == ''
+      value = 0
+    else
+      value = $('#canon_fijo_tienda').val()/($(this).val()/100)
+    $('#monto_minimo_tienda').val value
+
+  $('#canon_fijo_tienda').keyup ->
+    if $('#porc_canon_tienda').val() == ''
+      value = 0
+    else
+      value = $(this).val()/($('#porc_canon_tienda').val()/100)
+      $('#monto_minimo_tienda').val value
+
+key_up_porc_venta = ->
+  $('#porc_canon_tienda').keyup ->
+    if $(this).val() > 100
+      $(this).val 100
+    $('#monto_minimo_tienda').val 0

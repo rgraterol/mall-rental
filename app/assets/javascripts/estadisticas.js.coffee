@@ -48,7 +48,22 @@ jQuery(document).ready ($) ->
         $('#loading_intermensuales').hide()
 
 
-
+  $('#mensuales_ano_select').change ->
+    $('#table_mensuales').empty()
+    $('#loading_intermensuales').show()
+    $.ajax
+      type: "POST"
+      url: "/estadisticas/mensuales"
+      dataType: "HTML"
+      data:
+        ano: $('#mensuales_ano_select').val()
+      success: (data) ->
+        html = $('#table_mensuales')
+        html.empty()
+        html.append(data)
+        datatable_estadisticas()
+      complete: ->
+        $('#loading_intermensuales').hide()
 
 
 datatable_estadisticas =  ->
