@@ -1,11 +1,7 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
-<<<<<<< HEAD
-=======
 #= require jquery.blockUI.js
-
->>>>>>> 7ca418d2c4173f77298279060393bd267e5c918b
 jQuery(document).ready ($) ->
   $(".actualizar_ventas").change()
   $(".actualizar_auditoria_ventas").change()
