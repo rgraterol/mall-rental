@@ -57,6 +57,11 @@ module Dynamic
             @actualizada = true
           end
 
+          @recibos_cobro = false
+          @recibos_cobro_tienda = PagoAlquiler.where('anio_alquiler = ? AND mes_alquiler = ? AND tienda_id = ?', @year,@month,tienda.id)
+          if !@recibos_cobro_tienda.blank?
+            @recibos_cobro = true
+          end
           @obj = {
               'tienda_id' => @tienda_id,
               'tienda' => @tienda,
@@ -69,6 +74,7 @@ module Dynamic
               'ventas_mes' => @suma_ventas_mes,
               'total_canon' => @total_canon,
               'actualizada' => @actualizada,
+              'recibos_cobro' => @recibos_cobro,
           }
 
           @suma_canon_ventas += @canon_x_ventas

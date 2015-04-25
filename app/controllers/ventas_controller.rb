@@ -16,9 +16,11 @@ class VentasController < ApplicationController
   end
 
   def auditoria
+
     @tienda = current_user.tienda
-    @ventas = Venta.all
+    @ventas = Venta.where(tienda_id: @tienda.id)
     @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
+   # raise @contrato_alquiler.inspect
   end
 
   def mall_tiendas

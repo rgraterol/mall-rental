@@ -31,10 +31,8 @@ $(".actualizar_ventas").on "change", ->
         $("#tbody_ventas").append("<tr><td>"+element.fecha+"</td><td id='mount_"+element.id+"' class='"+@clase+"' title='"+@title+"' fecha='"+element.fecha+"' campo='"+element.id+"'>"+element.monto+"</td></tr>")
     error: (data)->
       console.log(data)
-      #$('#validacion_nombre_en_uso_actividad').show()
     complete: ->
       a=1
-      #$('# loading_actividad_economica').hide()
 
 $("#tbody_ventas").on
   click:->
@@ -68,10 +66,8 @@ $("#tbody_ventas").on
               alert('No guardo')
           error: (data)->
             console.log(data)
-          #$('#validacion_nombre_en_uso_actividad').show()
           complete: ->
             a=1
-            #$('# loading_actividad_economica').hide()
         $(this).parent().text($(this).val())
         $(this).remove()
       else
@@ -90,8 +86,8 @@ $(".actualizar_auditoria_ventas").on "change", ->
     data:
       year: $("#date_lapso_year").val()
       month: $("#ventas_select_month").val()
+    before_send: $.blockUI({message: 'Por favor espere...'})
     success: (data) ->
-
       $("#total_ventas_mes").val(data[0]['total_ventas'])
       $("#monto_canon_fijo").val(data[0]['suma_canon_fijo'])
       $("#monto_canon_x_venta").val(data[0]['suma_canon_ventas'])
@@ -104,14 +100,16 @@ $(".actualizar_auditoria_ventas").on "change", ->
         @cadena_recibo =  "title='Falta Enviarle Recibo de Cobro'"
         if element.actualizada
           @cadena_check = "checked title='Ventas Actualizadas'"
+        if element.recibos_cobro
+          @cadena_recibo = "checked title='Recibo Cobro Enviado'"
 
         $("#tbody_auditoria_ventas").append("<tr><td>"+element.tienda+"</td><td>"+element.actividad_economica+"</td>" +
                                                 "<td>"+element.local+"</td>" +
                                                 "<td>"+element.tipo_canon+"</td><td>"+element.canon_fijo+"</td>" +
                                                 "<td>"+element.ventas_mes+"</td><td>"+element.canon_x_ventas+"</td>" +
                                                 "<td>"+element.total_canon+"</td>" +
-                                                "<td><input type='checkbox' disabled='disabled' "+@cadena_check+" /></td>" +
-                                                "<td><input type='checkbox' name='recibo_cobro' disabled='disabled' "+@cadena_recibo+" /></td>" +
+                                                "<td><input type='checkbox' disabled='disabled' name='ventas_actualizadas' value='"+element.tienda_id+"' "+@cadena_check+" /></td>" +
+                                                "<td><input type='checkbox' name='recibo_cobro_"+element.tienda_id+"' disabled='disabled' "+@cadena_recibo+" /></td>" +
                                                 "<td><a href='/ventas_tiendas/"+element.tienda_id+"'>Ver Ventas diarias</a></td></tr>")
 
         $("#tbody_mall_ventas").append("<tr><td>"+element.tienda+"</td><td>"+element.actividad_economica+"</td>" +
@@ -124,9 +122,8 @@ $(".actualizar_auditoria_ventas").on "change", ->
 
     error: (data)->
       console.log(data)
-  #$('#validacion_nombre_en_uso_actividad').show()
     complete: ->
-      a=1
+      $.unblockUI()
 $(".actualizar_ventas_mes").on "change", ->
   $.ajax
     type: "POST"
@@ -135,8 +132,6 @@ $(".actualizar_ventas_mes").on "change", ->
     data:
       year: $("#date_lapso_year").val()
     success: (data) ->
-      console.log(data[0]['ventas'][0].ventas)
-
       $("#tbody-ventas-mall").empty()
       $("#tbody-ventas-mall").append("<tr><th>Enero</th><td>"+data[0]['ventas'][0].ventas+"</td><td>"+data[0]['ventas'][0].canon_fijo+"</td><td>"+data[0]['ventas'][0].canon_x_ventas+"</td><td>"+data[0]['ventas'][0].total_mes_canon+"</td></tr>")
       $("#tbody-ventas-mall").append("<tr><th>Febrero</th><td>"+data[0]['ventas'][1].ventas+"</td><td>"+data[0]['ventas'][1].canon_fijo+"</td><td>"+data[0]['ventas'][1].canon_x_ventas+"</td><td>"+data[0]['ventas'][1].total_mes_canon+"</td></tr>")
@@ -157,39 +152,55 @@ $(".actualizar_ventas_mes").on "change", ->
 
     error: (data)->
       console.log(data)
-  #$('#validacion_nombre_en_uso_actividad').show()
     complete: ->
       a=1
 
-$(".btn-send-recibos").on "click", ->
+$("#btn-send-recibos").on "click", ->
   now = new Date()
   anio_hoy = now.getFullYear()
-  mes_hoy = now.getMonth()
+  mes_hoy = now.getMonth()+1
 
-  year = $("#date_lapso_year").val()
-  month = $("#ventas_select_month").val()
-
-  if year.to_s == anio_hoy.to_s && month.to_s == mes_hoy.to_s
+  year = $("#date_lapso_year option:selected").val()
+  month = $("#ventas_select_month option:selected").val()
+  if ((String(year) == String(anio_hoy)) and (String(month) == String(mes_hoy)))
     $.blockUI({
       message: 'Esta opcion es valida solo para meses anteriores',
-      fadeIn: 700,
-      fadeOut: 700,
-      timeout: 4000,
-      showOverlay: true,
-      centerY: false,
-      css: {
-        top:  ($(window).height() - 400)/2 + 'px',
-        left: ($(window).width() - 400)/2 + 'px',
-        width: '400px'
-        right: '10px',
-        border: 'none',
-        padding: '50px',
-        backgroundColor: '#000',
-        '-webkit-border-radius': '10px',
-        '-moz-border-radius': '10px',
-        opacity: .8,
-        color: '#fff',
-        fontSize: '25px'
-      }
     });
     $('.blockOverlay').attr('title','Click para cerrar').click($.unblockUI);
+  else
+    sel_actualizada = $('input[name=ventas_actualizadas]:checked')
+
+    if (sel_actualizada.length > 0)
+      tiendas = new Array()
+      notificar = new Array()
+      for element, index in sel_actualizada
+        if !$('input[name=recibo_cobro_'+element.value+']').is(':checked')
+          tiendas.push(element.value)
+      if tiendas.length > 0
+        $.ajax
+          type: "POST"
+          url: "/dynamic_pago_alquilers/recibos_cobro"
+          dataType: "JSON"
+          async: false
+          data:
+            year: $("#date_lapso_year").val()
+            month: $("#ventas_select_month").val()
+            tiendas: tiendas
+          success: (data) ->
+            if data[0]['result']
+              for element, index in data[0]['tiendas']
+                $('input[name=recibo_cobro_'+element+']').prop('checked',true)
+              $.blockUI({
+                message: 'Recibos de Cobro enviados correctamente',
+                timeout: 3000,
+              });
+          error: (data)->
+            #$.unblockUI()
+            console.log(data)
+          complete: ->
+            a=1
+      else
+        $.blockUI({
+          message: 'Ya se enviaron los recibos de cobro',
+        });
+        setTimeout($.unblockUI, 2000);

@@ -111,13 +111,15 @@ ActiveRecord::Schema.define(version: 20150423022159) do
     t.string   "foto"
     t.string   "nro_local"
     t.string   "ubicacion_pasillo"
-    t.decimal  "area"
-    t.boolean  "propiedad_mall"
     t.integer  "tipo_local_id"
     t.integer  "nivel_mall_id"
     t.integer  "mall_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "area_planta"
+    t.decimal  "area_terraza"
+    t.decimal  "area_mezanina"
+    t.integer  "tipo_estado_local"
   end
 
   add_index "locals", ["mall_id"], name: "index_locals_on_mall_id", using: :btree

@@ -67,6 +67,8 @@ Myapp::Application.routes.draw do
 
   resources :contrato_alquilers
 
+  resources :pago_alquilers
+
   get 'auditoria_ventas' => 'ventas#auditoria', as: :auditoria_ventas
 
   get 'ventas_tiendas/:tienda_id' => 'ventas#index', as: :ventas_tienda
@@ -83,5 +85,6 @@ Myapp::Application.routes.draw do
     post 'dynamic_venta_diaria/guardar_ventas'
     post 'dynamic_venta_auditoria/auditoria'
     post 'dynamic_ventas_mes/ventas'
+    post 'dynamic_pago_alquilers/recibos_cobro'
   end
 end
