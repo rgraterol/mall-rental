@@ -2,7 +2,7 @@
   .col-lg-10
     %h2
       Nuevo Local:
-      = @mall.nombre
+      = current_user.mall.nombre
 
     %ol.breadcrumb
       %li
@@ -45,7 +45,7 @@
               = f.label :nivel_mall_id, "Ubicacion - Nivel: ", class: 'col-sm-2 control-label'
               .col-sm-10
                 .mostrar
-                  = f.collection_select(:nivel_mall_id, NivelMall.all, :id, :nombre )
+                  = f.collection_select(:nivel_mall_id, NivelMall.all, :id, :nombre, include_blank: 'Seleccione Nivel Ubicacion')
                 .oculto
                   = text_field_tag :nivel_mall_new,'', autofocus: true, size: 30, placeholder: 'Escriba el nombre del nuevo nivel'
                   %span.glyphicon.glyphicon-floppy-disk#icon-save-new-nivel
@@ -71,7 +71,7 @@
               .col-sm-10
                 = f.collection_select(:tipo_local_id, TipoLocal.all, :id, :tipo)
             .form-group
-              = f.label :tipo_estado_local, "Tipo de Local: ", class: 'col-sm-2 control-label'
+              = f.label :tipo_estado_local, "Estado del Local: ", class: 'col-sm-2 control-label'
               .col-sm-10
                 = f.select(:tipo_estado_local, Local.valid_tipo_estado_local.map { |x| [x.humanize.titleize, x]}, {include_blank: 'Seleccione un Estado de Local'}, class: 'form-control')
             .form-group
@@ -89,12 +89,8 @@
                       = f.file_field :foto
                     -#%input{:name => "...", :type => "file"}/
                     %a.btn.btn-mall.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"} Quitar
-            .form-group
-              .col-sm-10.col-sm-offset-2
-                = f.check_box :propiedad_mall, label: "Es propiedad del Mall", default: false
-                = f.label :'Es propiedad del Mall', class: 'control-label'
                 %br
-            = f.hidden_field :mall_id, :value => @mall.id
+            = f.hidden_field :mall_id, :value => current_user.mall.id
             .form-group
               .col-sm-3.col-sm-offset-9
                 = f.submit "Guardar", class: "btn btn-warning btn-block"

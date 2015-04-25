@@ -18,6 +18,29 @@ jQuery(document).ready ->
         validators:
           notEmpty:
             message: 'Debe ingresar el Área del Local'
+      "local[area_planta]":
+        validators:
+          notEmpty:
+            message: 'Debe ingresar el Área de la Planta'
+          numeric:
+            message: 'Debe ser numerico'
+      "local[area_terraza]":
+        validators:
+          notEmpty:
+            message: 'Debe ingresar el Área de la Terraza'
+        numeric:
+          message: 'Debe ser numerico'
+      "local[area_mezanina]":
+        validators:
+          notEmpty:
+            message: 'Debe ingresar el Área de la Mezanina'
+          numeric:
+            message: 'Debe ser numerico'
+      "local[nivel_mall_id]":
+        validators:
+          notEmpty:
+            message: 'Debe seleccionar el Nivel Ubicacion'
+
 
   $('#form_edit_local').bootstrapValidator
     feedbackIcons:

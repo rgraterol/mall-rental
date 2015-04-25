@@ -20,6 +20,5 @@ class Venta < ActiveRecord::Base
 
   def intermensuales_vxa
 
-
   end
 end

@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 20150424152637) do
     t.integer  "tienda_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "requerida_venta",     default: true
+    t.boolean  "requerida_venta"
   end
 
   add_index "contrato_alquilers", ["tienda_id"], name: "index_contrato_alquilers_on_tienda_id", using: :btree

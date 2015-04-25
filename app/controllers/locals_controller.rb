@@ -89,7 +89,7 @@ class LocalsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def local_params
-      params.require(:local).permit(:foto, :nro_local, :ubicacion_pasillo, :area, :propiedad_mall, :tipo_local_id, :nivel_mall_id, :mall_id)
+      params.require(:local).permit(:foto, :nro_local, :ubicacion_pasillo, :area_planta, :area_terraza, :area_mezanina, :tipo_local_id, :tipo_estado_local, :nivel_mall_id, :mall_id)
     end
 
 

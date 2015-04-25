@@ -22,13 +22,17 @@
               = link_to "Nuevo Local", { controller: "locals", action: "new"}, class: "btn btn-mall btn-block"
           %hr
           .row
-            .col-md-4.col-sm-offset-1
+            .col-md-3.col-sm-offset-1
               = form_for(@local1, :html => { :class => "form-horizontal" } ) do |f|
                 = f.label :'Ubicacion - Nivel', class: ' control-label', for: 'local_nivel_mall_id'
                 = f.collection_select(:nivel_mall_id, NivelMall.all, :id, :nombre, :onchange => 'llamar_funcion()')
-            .col-md-5
+            .col-md-3
               = form_for(@local2,  :html => { :class => "form-horizontal" } ) do |m|
                 = m.label :'Tipo de Local', class: 'control-label', for: 'local_tipo_local_id'
+                = m.collection_select(:tipo_local_id, TipoLocal.all, :id, :tipo, :onchange => 'funcion_llamar()')
+            .col-md-3
+              = form_for(@local2,  :html => { :class => "form-horizontal" } ) do |m|
+                = m.label :'Estado del Local', class: 'control-label', for: 'local_tipo_local_id'
                 = m.collection_select(:tipo_local_id, TipoLocal.all, :id, :tipo, :onchange => 'funcion_llamar()')
           %br
           %br
@@ -41,9 +45,11 @@
                     %th Nro. Local
                     %th Nivel Ubicación
                     %th Pasillo
-                    %th Área
+                    %th Área Planta
+                    %th Área Mezanina
+                    %th Área Terraza
                     %th Tipo Local
-                    %th Propiedad Mall
+                    %th Estado Local
                     %th Acciones
                 %tbody
                   - @locals.all.each do |local|
@@ -52,27 +58,15 @@
                       %td= local.nro_local
                       %td= local.nivel_mall.nombre
                       %td= local.ubicacion_pasillo
-                      %td= local.area
+                      %td= local.area_planta
+                      %td= local.area_mezanina
+                      %td= local.area_terraza
                       %td= local.tipo_local.tipo
-                      - if local.propiedad_mall
-                        - @propiedad = 'Si'
-                      - else
-                        - @propiedad = 'No'
-                      %td= @propiedad
+                      %td= local.tipo_estado_local.humanize.capitalize
                       %td
                         = link_to edit_local_path(local) do
                           %i.fa.fa-pencil
                           Editar
-                        &nbsp;
-                        &nbsp;
-                        &nbsp;
-                        &nbsp;
-                        &nbsp;
-                        &nbsp;
-                        &nbsp;
-                        &nbsp;
-                        &nbsp;
-                        &nbsp;
                         = link_to local, data: { confirm: "Seguro que desea eliminar el Local ?" }, method: :delete do
                           %i.fa.fa-trash
                           Eliminar

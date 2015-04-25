@@ -10,6 +10,7 @@
 /tmp/
 /.idea/
 /config/database.yml
+/public/uploads/tmp/*
 
 ## Specific to RubyMotion:
 .dat*
