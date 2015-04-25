@@ -23,28 +23,44 @@
       Tipo Canon Alquiler:
     .col-sm-10
       = f.select :tipo_canon_alquiler, ContratoAlquiler.tipo_canon_alquilers.keys.to_a.map { |x| [x.humanize.titleize, x]}, {selected: f.object.tipo_canon_alquiler || nil, include_blank: 'Seleccione un Tipo de Canon de Alquiler'}, {class: 'form-control tipo_canon_alquiler_required', id: 'select_canon_alquiler'}
-  %div#canon_fijo{style: (f.object.tipo_canon_alquiler == 'canon_fijo_y_porcentaje_ventas' || f.object.tipo_canon_alquiler == 'canon_fijo') ? '' : 'display:none'}
+  %div#canon_fijo{style: (f.object.tipo_canon_alquiler == 'fijo_y_variable_venta_bruta' || f.object.tipo_canon_alquiler == 'fijo_y_variable_venta_neta' || f.object.tipo_canon_alquiler == 'fijo') ? '' : 'display:none'}
     .form-group
       = f.label :canon_fijo_ml, class: 'col-sm-2 control-label' do
         Canón Fijo en Bs.:
-      .col-sm-10
-        = f.text_field :canon_fijo_ml, class: 'form-control numeric_contrato_alquiler'
+      .col-sm-8
+        = f.text_field :canon_fijo_ml, class: 'form-control numeric_contrato_alquiler', id: 'canon_fijo_tienda'
+      .col-sm-2
+        %span
+          Bs.
     .form-group
-      = f.label :canon_fijo_usd, class: 'col-sm-2 control-label ' do
+      = f.label :canon_fijo_usd,  class: 'col-sm-2 control-label ' do
         Canón Fijo en $:
-      .col-sm-10
-        = f.text_field :canon_fijo_usd, class: 'form-control numeric_contrato_alquiler'
-  %div#canon_porcentaje{style: (f.object.tipo_canon_alquiler == 'canon_fijo_y_porcentaje_ventas' || f.object.tipo_canon_alquiler == 'porcentaje_de_ventas') ? '' : 'display:none'}
+      .col-sm-8
+        = f.text_field :canon_fijo_usd, readonly: true , class: 'form-control numeric_contrato_alquiler canon_fijo_usd'
+      .col-sm-2
+        %span
+          $
+  %div#canon_porcentaje{style: (f.object.tipo_canon_alquiler == 'fijo_y_variable_venta_bruta' || f.object.tipo_canon_alquiler == 'fijo_y_variable_venta_neta' || f.object.tipo_canon_alquiler == 'variable') ? '' : 'display:none'}
     .form-group
       = f.label :porc_canon_ventas, class: 'col-sm-2 control-label' do
         \% de Canon por Ventas:
-      .col-sm-10
-        = f.text_field :porc_canon_ventas, class: 'form-control numeric_contrato_alquiler'
+      .col-sm-8
+        = f.text_field :porc_canon_ventas, class: 'form-control numeric_contrato_alquiler', id: 'porc_canon_tienda'
+      .col-sm-2
+        %span %
     .form-group
       = f.label :monto_minimo_ventas, class: 'col-sm-2 control-label' do
         Monto Mínimo de Ventas Mensual:
-      .col-sm-10
-        = f.text_field :monto_minimo_ventas, class: 'form-control numeric_contrato_alquiler'
+      .col-sm-8
+        = f.text_field :monto_minimo_ventas, readonly: true, class: 'form-control numeric_contrato_alquiler', id: 'monto_minimo_tienda'
+      .col-sm-2.text-left
+        %span
+          Ventas
+  .form-group
+    = f.label :requerida_venta, class: 'col-sm-2 control-label' do
+      Requeridas las Ventas Diarias:
+    .col-sm-10
+      = f.check_box :requerida_venta, {disabled: f.object.tipo_canon_alquiler == 'fijo' ? false : true, id: 'requerida_venta_check'}, "true", "false"
   .form-group
     .col-sm-3
       = link_to 'Atras', contrato_alquilers_path(tienda: @tienda.nombre, id: @tienda.id), class: 'btn btn-warning btn-block'

@@ -1,0 +1,76 @@
+= provide(:title, "#{current_user.mall.nombre } - Estadísticas Intermensuales")
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      = current_user.mall.nombre
+      \- Estadísticas Intermensuales de Ventas e Ingresos por Alquiler
+      %i.fa.fa-bar-chart
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Estadísticas Intermensuales de Ventas e Ingresos por Alquiler
+.wrapper.wrapper-content.animated.fadeInRight
+  .row.form-horizontal
+    .col-sm-3
+      .form-group
+        .col-sm-2
+          %label.font-normal Rango Fecha:
+        .col-sm-8
+          #datepicker.input-daterange.input-group
+            = text_field_tag :fecha_init, "01/01/#{Date.today.strftime("%Y")}", class: 'input-sm form-control', id: 'fecha_init'
+            %span.input-group-addon a
+            = text_field_tag :fecha_end, "31/12/#{Date.today.strftime("%Y")}", class: 'input-sm form-control', id: 'fecha_end'
+    .col-sm-3
+      .form-group
+        = label_tag :ubicacion, class: 'col-sm-4 control-label' do
+          Nivel Mall:
+          &nbsp;
+        .col-sm-8
+          = collection_select :ubicacion, nil, current_user.mall.nivel_malls, :id, :nombre, {include_blank: 'Todos'}, {class: 'form-control tienda-filter', id:'nivel_mall_select_tiendas'}
+    .col-sm-3
+      .form-group
+        = label_tag :actividad_economica, class: 'col-sm-4 control-label' do
+          Actividad Económica:
+          &nbsp;
+        .col-sm-8
+          = collection_select :actividad_economica, nil, current_user.mall.actividad_economicas, :id, :nombre, {include_blank: 'Todas'}, {class: 'form-control tienda-filter', id:'actividad_economica_select_tiendas'}
+    .col-sm-3
+      .form-group
+        = label_tag :tipo_local, class: 'col-sm-4 control-label' do
+          Tipo de Local:
+          &nbsp;
+        .col-sm-8
+          = collection_select :tipo_local, nil, TipoLocal.all, :id, :tipo, {include_blank: 'Todos'}, {class: 'form-control tienda-filter', id:'tipo_local_select_tiendas'}
+    %br
+    %br
+  %hr
+  .row
+    .col-md-1
+      %h3
+        Criterio:
+    .col-md-1
+      = radio_button_tag :stats, 'tiendas', true, class: 'criterio'
+      Tienda
+    .col-md-1
+      = radio_button_tag :stats, 'nivel_mall', false, class: 'criterio'
+      Nivel Mall
+    .col-md-1
+      = radio_button_tag :stats, 'actividad_economica', false, class: 'criterio'
+      Actividad Económica
+    .col-md-1
+      = radio_button_tag :stats, 'tipo_local', false, class: 'criterio'
+      Tipo de Local
+  %hr
+  .row#mista_onetake
+    .col-sm-3.col-sm-offset-4
+      %a.btn.btn-mall.btn-block#mista_onetake_button{href: '#'}
+        Buscar
+  %hr
+  %div#table_intermensuales
+  .row#loading_intermensuales{style:'display:none;'}
+    .col-sm-3.col-sm-offset-4.text-center
+      %h2
+        Buscando
+        %br
+        %i.fa.fa-refresh.fa-spin.fa-2x

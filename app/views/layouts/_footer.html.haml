@@ -1,6 +1,6 @@
 .footer
   .pull-right
-    C.C. La Vela
+    = current_user.mall.nombre rescue 'MallRental'
   %div
     %strong Copyright
-    Ricardo Xavier Graterol © 2015
+    = mail_to 'xavier.graterol@gmail.com','Ricardo Xavier Graterol © 2015'

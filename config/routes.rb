@@ -54,6 +54,7 @@ Myapp::Application.routes.draw do
   resources :tipo_canon_alquilers
 
   resources :cambio_monedas
+  post 'cambio_monedas/mf_cambio_moneda'
   
   resources :actividad_economicas
 
@@ -62,6 +63,7 @@ Myapp::Application.routes.draw do
   resources :arrendatarios
 
   resources :tiendas
+  post 'tiendas/mf_dynamic_filter'
 
   resources :ventas
 
@@ -87,4 +89,13 @@ Myapp::Application.routes.draw do
     post 'dynamic_ventas_mes/ventas'
     post 'dynamic_pago_alquilers/recibos_cobro'
   end
+
+  #CONTROLADOR DE NOTIFICACIONES MAILERS
+  get 'notificar_usuarios_mall', to: 'mail_notifications#mf_notify_tiendas_mall'
+
+  #ESTADISTICAS
+  get 'estadisticas/intermensuales_ventas_alquiler', to: 'estadisticas#mf_intermensuales_vxa'
+  post 'estadisticas/intermensuales', to: 'estadisticas#filtro_intermensuales'
+  get 'estadisticas/mensuales_ingresos_alquiler', to: 'estadisticas#mf_mensuales_vxa'
+  post 'estadisticas/mensuales', to: 'estadisticas#filtro_mensuales'
 end

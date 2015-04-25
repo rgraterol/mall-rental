@@ -1,37 +1,31 @@
-
-
-
-
-
-
-      .col-md-4
-        -@suma = number_with_precision(0, precision: 2, separator: ',', delimiter: '.')
-        .form-group
-          .col-md-5
-            = label_tag :total_ventas_mes do
-              Total Ventas:
-          .col-md-7
-            -@suma = number_with_precision(0, precision: 2, separator: ',', delimiter: '.')
-            = text_field_tag :total_ventas_mes, @suma, autofocus: true, class: 'form-control', readonly: 'readonly'
-        .col-md-4
-          .form-group
-            .col-md-5
-              = label_tag :monto_canon_fijo do
-                Monto Canon Fijo:
-            .col-md-7
-              = text_field_tag :monto_canon_fijo, @suma, autofocus: true, class: 'form-control', readonly: 'readonly'
-        .row
-          .col-md-4.col-sm-offset-3
-            .form-group
-              .col-md-5
-                = label_tag :monto_canon_x_venta do
-                  Monto Canon x Venta:
-              .col-md-7
-                = text_field_tag :monto_canon_x_venta, @suma, autofocus: true, class: 'form-control', readonly: 'readonly'
-          .col-md-4
-            .form-group
-              .col-md-5
-                = label_tag :total_canon do
-                  Total Canon:
-              .col-md-7
-                = text_field_tag :total_canon, @suma, autofocus: true, class: 'form-control', readonly: 'readonly'
+.col-md-4
+-@suma = number_with_precision(0, precision: 2, separator: ',', delimiter: '.')
+.form-group
+.col-md-5
+  = label_tag :total_ventas_mes do
+    Total Ventas:
+.col-md-7
+  -@suma = number_with_precision(0, precision: 2, separator: ',', delimiter: '.')
+  = text_field_tag :total_ventas_mes, @suma, autofocus: true, class: 'form-control', readonly: 'readonly'
+.col-md-4
+.form-group
+  .col-md-5
+    = label_tag :monto_canon_fijo do
+      Monto Canon Fijo:
+  .col-md-7
+    = text_field_tag :monto_canon_fijo, @suma, autofocus: true, class: 'form-control', readonly: 'readonly'
+.row
+.col-md-4.col-sm-offset-3
+  .form-group
+    .col-md-5
+      = label_tag :monto_canon_x_venta do
+        Monto Canon x Venta:
+    .col-md-7
+      = text_field_tag :monto_canon_x_venta, @suma, autofocus: true, class: 'form-control', readonly: 'readonly'
+.col-md-4
+  .form-group
+    .col-md-5
+      = label_tag :total_canon do
+        Total Canon:
+    .col-md-7
+      = text_field_tag :total_canon, @suma, autofocus: true, class: 'form-control', readonly: 'readonly'

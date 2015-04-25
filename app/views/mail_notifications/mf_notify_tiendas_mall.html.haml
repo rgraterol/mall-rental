@@ -1,0 +1,21 @@
+= provide(:title, "#{current_user.mall.nombre }")
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      = current_user.mall.nombre
+      \- Notificaciones a Usuarios de Tiendas
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Notificaciones
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox-content.border-bottom.text-center
+        %h2
+          Notificaciones a Usuarios de Tiendas
+        %p
+          Se le ha enviado una notificación a todos los usuarios del Mall que poseen tiendas con contratos de alquiler vencidos.
+
+        = link_to 'Volver', tiendas_path, class: 'btn btn-mall'

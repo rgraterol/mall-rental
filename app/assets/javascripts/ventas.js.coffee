@@ -2,7 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 #= require jquery.blockUI.js
-
 jQuery(document).ready ($) ->
   $(".actualizar_ventas").change()
   $(".actualizar_auditoria_ventas").change()

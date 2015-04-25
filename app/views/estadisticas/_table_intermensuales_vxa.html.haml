@@ -1,0 +1,25 @@
+.row
+  .col-lg-12
+    .ibox.float-e-margins
+      .ibox-content
+        .row
+          .col-lg-12
+            .table-responsive
+              %table.table.table-striped.table-bordered.table-hover.datatable_estadisticas
+                %thead
+                  %tr
+                    %td Criterio
+                    %td Ventas
+                    %td Ingresos por Canón Fijo
+                    %td Ingresos por Porcentaje de Ventas
+                    %td Total de Ingresos
+                    %td Total de Ingresos (USD $)
+                %tbody
+                  - @estadisticas.each do |estadistica|
+                    %tr
+                      %td= estadistica[:criterio]
+                      %td= estadistica[:ventas] || '0'
+                      %td= estadistica[:canon_fijo_ml] || '0'
+                      %td= estadistica[:porc_ventas] || '0'
+                      %td= (estadistica[:canon_fijo_ml] || 0) + (estadistica[:porc_ventas] || 0)
+                      %td= (estadistica[:canon_fijo_ml] || 0)+ (estadistica[:porc_ventas] || 0) / CambioMoneda.last.cambio_ml_x_usd

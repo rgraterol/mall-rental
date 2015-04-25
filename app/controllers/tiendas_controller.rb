@@ -52,12 +52,22 @@ class TiendasController < ApplicationController
     end
   end
 
+  def mf_dynamic_filter
+    @tiendas = current_user.mall.tiendas.joins(:contrato_alquilers, :actividad_economica, :nivel_mall).by_nivel_mall(params[:nivel_mall_id]).by_actividad_economica(params[:actividad_economica_id]).by_vencimiento(params[:vencido])
+    if @tiendas.blank?
+      render partial: 'tiendas_filter_nil'
+    else
+      render partial: 'table_tiendas_filter'
+    end
+  end
+
+
   private
     def set_tienda
-      @tienda = current_user.mall.tiendas.find_by(id: params[:id])
+      @tienda = current_user.mall.tiendas.find_by(id: params_id)
     end
 
     def tienda_params
-      params.require(:tienda).permit(:nombre, :local_id, :arrendatario_id, :actividad_economica_id, contrato_alquilers_attributes: [ :id, :tipo_canon_alquiler, :fecha_inicio, :fecha_fin, :archivo_contrato, :canon_fijo_ml, :canon_fijo_usd, :porc_canon_ventas, :monto_minimo_ventas])
+      params.require(:tienda).permit(:nombre, :local_id, :arrendatario_id, :actividad_economica_id, contrato_alquilers_attributes: [ :id, :tipo_canon_alquiler, :fecha_inicio, :fecha_fin, :archivo_contrato, :canon_fijo_ml, :porc_canon_ventas ,:requerida_venta])
     end
 end

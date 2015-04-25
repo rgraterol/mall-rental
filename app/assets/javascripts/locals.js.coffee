@@ -2,6 +2,7 @@
 #= require jasny/jasny-bootstrap.min
 
 jQuery(document).ready ->
+
   $('#form_registro_local').bootstrapValidator
     feedbackIcons:
       valid: 'fa fa-check ',

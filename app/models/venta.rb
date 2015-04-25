@@ -14,4 +14,12 @@
 
 class Venta < ActiveRecord::Base
   belongs_to :tienda
+  has_one :nivel_mall, through: :tienda
+  has_one :actividad_economica, through: :tienda
+  has_many :contrato_alquilers, through: :tienda
+
+  def intermensuales_vxa
+
+
+  end
 end

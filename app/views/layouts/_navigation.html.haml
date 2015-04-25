@@ -4,7 +4,7 @@
       %li.nav-header
         .dropdown.profile-element
           %span
-            -#= image_tag current_user.avatar.url || 'building-avatar.gif', height: 50, class:'img-circle'
+            = image_tag current_user.avatar.url || 'building-avatar.gif', height: 50, class:'img-circle'
             -#%img.img-circle{:alt => "image", :src => "#{image_url 'building-avatar.gif'}", height: 50}
           %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
             %span.clear
@@ -83,6 +83,17 @@
             %li{class: is_active_action('index')}= link_to 'Visualizar Tiendas', tiendas_path
             - if can? :new, Tienda
               %li{class: is_active_action('new')}= link_to 'Nueva Tienda', new_tienda_path
+      - if can? :manage, :estadisticas
+        %li{class: is_active_controller('estadisticas')}
+          %a{href: '#'}
+            %i.fa.fa-bar-chart
+            %span.nav-label Estadísticas
+            %span.fa.arrow
+          %ul{:class => "nav nav-second-level #{is_active_controller('estadisticas')}"}
+            - if can? :mf_intermensuales_vxa, :estadisticas
+              %li{class: is_active_action('mf_intermensuales_vxa')}= link_to 'Intermensuales Ventas/Ingresos por Alquiler', estadisticas_intermensuales_ventas_alquiler_path
+            - if can? :mf_mensuales_vxa, :estadisticas
+              %li{class: is_active_action('mf_mensuales_vxa')}= link_to 'Mensuales Ventas/Ingresos por Alquiler', estadisticas_mensuales_ingresos_alquiler_path
       -#%li{:class => is_active_controller('dashboards')}
       -#  %a{:href => ""}
       -#    %i.fa.fa-th-large

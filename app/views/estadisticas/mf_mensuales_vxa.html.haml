@@ -1,0 +1,27 @@
+= provide(:title, "#{current_user.mall.nombre } - Estadísticas Mensuales")
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      = current_user.mall.nombre
+      \- Estadísticas Mensuales de Ventas e Ingresos por Alquiler
+      %i.fa.fa-bar-chart
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Estadísticas Mensuales de Ventas e Ingresos por Alquiler
+.wrapper.wrapper-content.animated.fadeInRight
+  .row.form-horizontal
+    .form-group
+      = label 'Año', 'Año', class: 'col-sm-2 control-label'
+      .col-sm-5
+        = select_year Date.today, {start_year: current_user.mall.tiendas.first.contrato_alquilers.first.fecha_inicio.year, end_year: Date.today.year}, {class: 'form-control', id: 'mensuales_ano_select'}
+  %div#table_mensuales
+    = render 'table_mensuales_vxa'
+
+  .row#loading_intermensuales{style:'display:none;'}
+    .col-sm-3.col-sm-offset-4.text-center
+      %h2
+        Buscando
+        %br
+        %i.fa.fa-refresh.fa-spin.fa-2x

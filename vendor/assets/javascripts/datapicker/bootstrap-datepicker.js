@@ -1425,7 +1425,16 @@
 			monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 			today: "Today",
 			clear: "Clear"
-		}
+		},
+        es: {
+            months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthsShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+            days: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            daysShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+            daysMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+            today: "Hoy",
+            clear: "Limpiar"
+        }
 	};
 
 	var DPGlobal = {
