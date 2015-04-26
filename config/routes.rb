@@ -71,7 +71,7 @@ Myapp::Application.routes.draw do
 
   resources :pago_alquilers
 
-  get 'auditoria_ventas' => 'ventas#auditoria', as: :auditoria_ventas
+  get 'cobranza_alquiler' => 'ventas#cobranza', as: :cobranza_alquiler
 
   get 'ventas_tiendas/:tienda_id' => 'ventas#index', as: :ventas_tienda
 
@@ -88,6 +88,7 @@ Myapp::Application.routes.draw do
     post 'dynamic_venta_auditoria/auditoria'
     post 'dynamic_ventas_mes/ventas'
     post 'dynamic_pago_alquilers/recibos_cobro'
+    post 'dynamic_add_nivel_mall/guardar'
   end
 
   #CONTROLADOR DE NOTIFICACIONES MAILERS

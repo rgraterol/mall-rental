@@ -74,4 +74,39 @@ class ContratoAlquiler < ActiveRecord::Base
     return true if self.archivo_contrato.url.split('.').last == 'pdf'
     return false
   end
+
+  def calculate_canon(contrato,vmt)
+
+    if contrato.tipo_canon_alquiler == 'fijo'
+      @canon_fijo = contrato.canon_fijo_ml
+      @canon_x_ventas = 0
+    elsif contrato.tipo_canon_alquiler == "variable"
+      @monto_minimo_v = contrato.canon_fijo_ml/(contrato.porc_canon_ventas / 100)
+      if vmt >= @monto_minimo_v
+        @canon_x_ventas = (vmt - @monto_minimo_v)*(contrato.porc_canon_ventas/100)
+      else
+        @canon_x_ventas = 0
+      end
+    elsif contrato.tipo_canon_alquiler == "fijo_y_variable_venta_bruta" ||  contrato.tipo_canon_alquiler == "fijo_y_variable_venta_neta"
+      @canon_fijo = contrato.canon_fijo_ml
+      @monto_minimo_v = @canon_fijo / (contrato.porc_canon_ventas / 100)
+      if vmt >= @monto_minimo_v
+        @canon_x_ventas = (vmt - @monto_minimo_v)*(contrato.porc_canon_ventas/100)
+      else
+        @canon_x_ventas = 0
+      end
+    else
+      @canon_fijo = 0
+      @monto_minimo_v = 0
+      @canon_x_ventas = 0
+    end
+
+    @canon_alquiler = @canon_fijo + @canon_x_ventas
+    @obj = {
+        'canon_fijo' => @canon_fijo,
+        'canon_x_ventas' => @canon_x_ventas,
+        'canon_alquiler' => @canon_alquiler
+      }
+    return  @obj
+  end
 end

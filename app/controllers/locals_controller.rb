@@ -72,7 +72,7 @@ class LocalsController < ApplicationController
     @mall_id = @local.mall_id
     @local.destroy
     respond_to do |format|
-      format.html { redirect_to local_index_path(@mall_id), notice: 'Local eliminado exitosamente.' }
+      format.html { redirect_to local_index_path notice: 'Local eliminado exitosamente.' }
       format.json { head :no_content }
     end
   end

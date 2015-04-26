@@ -18,7 +18,7 @@
       .ibox.float-e-margins
         .ibox-title
           %h3
-            Editar un Local
+            Registro de Nuevo Local
         .ibox-content
           = form_for(@local, url: {action: :update}, html: {class:"form-horizontal m-t-md", id: "form_edit_local"}) do |f|
             - if @local.errors.any?
@@ -34,7 +34,7 @@
             .form-group
               = f.label :mall, "Mall: ", class: 'col-sm-2 control-label'
               .col-sm-10
-                = f.text_field :mall, :value => @local.mall.nombre, autofocus: true, class: 'form-control',  readonly: 'readonly'
+                = f.text_field :mall, :value => current_user.mall.nombre, autofocus: true, class: 'form-control',  readonly: 'readonly'
             .form-group
               = f.label :nro_local, "Nro Local: ", class: 'col-sm-2 control-label'
               .col-sm-10
@@ -42,27 +42,44 @@
             .form-group
               = f.label :nivel_mall_id, "Ubicacion - Nivel: ", class: 'col-sm-2 control-label'
               .col-sm-10
-                = f.collection_select(:nivel_mall_id, NivelMall.all, :id, :nombre)
+                .mostrar
+                  = f.collection_select(:nivel_mall_id, NivelMall.all, :id, :nombre, include_blank: 'Seleccione Nivel Ubicacion')
+                .oculto
+                  = text_field_tag :nivel_mall_new,'', autofocus: true, size: 30, placeholder: 'Escriba el nombre del nuevo nivel'
+                  %span.glyphicon.glyphicon-floppy-disk#icon-save-new-nivel
+                  %span.glyphicon.glyphicon-remove#icon-deshacer-new-nivel
             .form-group
-              = f.label :ubicacion_pasillo, "Pasillo: ", class: 'col-sm-2 control-label'
+              = f.label :ubicacion_pasillo, "Ubicacion - Pasillo: ", class: 'col-sm-2 control-label'
               .col-sm-10
                 = f.text_field :ubicacion_pasillo, class: 'form-control'
             .form-group
-              = f.label :area, "Area (m2)", class: 'col-sm-2 control-label'
+              = f.label :area_planta, "Area de Planta(m2)", class: 'col-sm-2 control-label'
               .col-sm-10
-                = f.text_field :area, class: "form-control"
+                = f.text_field :area_planta, class: "form-control"
+            .form-group
+              = f.label :area_mezanina, "Area de Mezanina(m2)", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :area_mezanina, class: "form-control"
+            .form-group
+              = f.label :area_terraza, "Area de Terraza(m2)", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :area_terraza, class: "form-control"
             .form-group
               = f.label :tipo_local_id, "Tipo de Local: ", class: 'col-sm-2 control-label'
               .col-sm-10
                 = f.collection_select(:tipo_local_id, TipoLocal.all, :id, :tipo)
+            .form-group
+              = f.label :tipo_estado_local, "Estado del Local: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.select(:tipo_estado_local, Local.valid_tipo_estado_local.map { |x| [x.humanize.titleize, x]}, {include_blank: 'Seleccione un Estado de Local'}, class: 'form-control')
             .form-group
               = f.label :foto, 'Foto: ', class: 'col-sm-2 control-label'
               .col-sm-10
                 .fileinput.fileinput-new{"data-provides" => "fileinput"}
                   .fileinput-new.thumbnail{:style => "width: 200px; height: 150px;"}
                     -#%img{:alt => "...", "data-src" => "holder.js/100%x100%"}/
-                    = image_tag @local.foto.url || 'building-avatar.gif', "data-src" => "holder.js/100%x100%"
-                  .fileinput-preview.fileinput-exists.thumbnail{:style => "max-width: 200px; max-height: 150px;"}
+                    = image_tag 'building-avatar.gif', "data-src" => "holder.js/100%x100%"
+                  .fileinput-preview.fileinput-exists.thumbnail{:style => "max-width: 100px; max-height: 80px;"}
                   %div
                     %span.btn.btn-mall.btn-file
                       %span.fileinput-new Seleccionar Imagen
@@ -70,12 +87,11 @@
                       = f.file_field :foto
                     -#%input{:name => "...", :type => "file"}/
                     %a.btn.btn-mall.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"} Quitar
-            .form-group
-              .col-sm-10.col-sm-offset-2
-                = f.check_box :propiedad_mall, label: "Es propiedad del Mall", default: false
-                = f.label :'Es propiedad del Mall', class: 'control-label'
                 %br
-            = f.hidden_field :mall_id, :value => @local.mall.id
+            = f.hidden_field :mall_id, :value => current_user.mall.id
             .form-group
               .col-sm-3.col-sm-offset-9
                 = f.submit "Actualizar", class: "btn btn-warning btn-block"
+
+
+

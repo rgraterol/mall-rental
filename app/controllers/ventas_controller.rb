@@ -5,27 +5,28 @@ class VentasController < ApplicationController
 
   def index
     @tienda_id = params[:tienda_id]
-    if @tienda_id == ''
-      @tienda = current_user.mall.tiendas.first
+    if @tienda_id.nil?
+      @tienda_id = current_user.tienda
+      @ventas_mall = false
     else
-      @tienda = Tienda.find_by(id: @tienda_id)
+      @ventas_mall = true
     end
 
+    @tienda = Tienda.find(@tienda_id)
+    @local = Local.find(@tienda.local_id)
     @ventas = Venta.where(tienda_id: @tienda.id)
     @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
   end
 
-  def auditoria
-
+  def cobranza
     @tienda = current_user.tienda
     @ventas = Venta.where(tienda_id: @tienda.id)
     @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
-   # raise @contrato_alquiler.inspect
   end
 
   def mall_tiendas
 
-    @tienda = current_user.mall.tiendas.first
+    @tienda = current_user.tienda
 
     @ventas = Venta.where(tienda_id: @tienda_id)
     @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)

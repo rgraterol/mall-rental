@@ -1,6 +1,6 @@
 class FileUploader < CarrierWave::Uploader::Base
 
-   Include RMagick or MiniMagick
+   include MiniMagick
   #include CarrierWave::RMagick
 
   storage :file

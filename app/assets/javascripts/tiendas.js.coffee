@@ -65,9 +65,6 @@ jQuery(document).ready ($) ->
               else
                 true
 
-
-
-
   $('#add_actividad_economica_select').hide()
   $('#validacion_nombre_actividad').hide()
   $('#validacion_nombre_en_uso_actividad').hide()
@@ -172,9 +169,6 @@ jQuery(document).ready ($) ->
   $("#porc_canon_tienda").inputmask("Regex", {
     regex: "[0-9]{1,3}%"
   });
-
-
-
 
 table_index_datatable =  ->
   $('#table_tiendas_index').dataTable

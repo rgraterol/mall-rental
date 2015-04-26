@@ -31,8 +31,9 @@ module Dynamic
           @tienda_id = tienda.id
           @actividad_economica = tienda.actividad_economica.nombre
           @local_n = @local.nro_local
-          @contrato_alquiler = ContratoAlquiler.where(tienda: tienda)
-          @tipo_canon = @contrato_alquiler.last.tipo_canon_alquiler
+          @contrato_alquiler = ContratoAlquiler.find_by(tienda: tienda)
+
+          @tipo_canon = @contrato_alquiler.tipo_canon_alquiler.humanize.capitalize
 
           @calendario = CalendarioNoLaborable.new()
           @cantidad_dias_laborables = @calendario.cantidad_dias_laborables(@month,@year)
@@ -40,18 +41,11 @@ module Dynamic
           @suma_ventas_mes = Venta.where('extract(year from fecha) = ? AND extract(month from fecha ) = ? AND tienda_id = ?', @year,@month,tienda.id).sum(:monto_ml)
           @cantidad_ventas_mes = Venta.where('extract(year from fecha) = ? AND extract(month from fecha ) = ? AND tienda_id = ?', @year,@month,tienda.id).count
 
-          if @tipo_canon == 'canon_fijo'
-            @canon_x_ventas = 0
-            @canon_fijo = @contrato_alquiler.last.canon_fijo_ml
-          elsif @tipo_canon == 'canon_fijo_y_porcentaje_ventas'
-            @canon_x_ventas = (@suma_ventas_mes * @contrato_alquiler.last.porc_canon_ventas)
-            @canon_fijo = @contrato_alquiler.last.canon_fijo_ml
-          elsif @tipo_canon == 'porcentaje_de_ventas'
-            @canon_fijo = 0
-            @canon_x_ventas = @suma_ventas_mes * @contrato_alquiler.last.porc_canon_ventas
-          end
+          @canons = @contrato_alquiler.calculate_canon(@contrato_alquiler,@suma_ventas_mes)
+          @canon_fijo = @canons['canon_fijo']
+          @canon_x_ventas = @canons['canon_x_ventas']
+          @total_canon = @canons['canon_alquiler']
 
-          @total_canon = (@canon_fijo + @canon_x_ventas)
           @actualizada = false
           if(@cantidad_dias_laborables == @cantidad_ventas_mes)
             @actualizada = true

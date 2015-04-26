@@ -45,11 +45,19 @@
               = f.label :nivel_mall_id, "Ubicacion - Nivel: ", class: 'col-sm-2 control-label'
               .col-sm-10
                 .mostrar
-                  = f.collection_select(:nivel_mall_id, NivelMall.all, :id, :nombre, include_blank: 'Seleccione Nivel Ubicacion')
+                  = f.collection_select(:nivel_mall_id, NivelMall.valid_nivel_malls(current_user), :id, :nombre, {include_blank: 'Seleccione Nivel Ubicacion'}, class: 'form-control')
                 .oculto
-                  = text_field_tag :nivel_mall_new,'', autofocus: true, size: 30, placeholder: 'Escriba el nombre del nuevo nivel'
-                  %span.glyphicon.glyphicon-floppy-disk#icon-save-new-nivel
-                  %span.glyphicon.glyphicon-remove#icon-deshacer-new-nivel
+                  .row
+                    .col-sm-10
+                      = text_field_tag :nivel_mall_new,'', autofocus: true, size: 30, placeholder: 'Escriba el nombre del nuevo nivel',  class: "form-control"
+                    %span.glyphicon.glyphicon-floppy-disk#icon-save-new-nivel
+                    %span.glyphicon.glyphicon-remove#icon-deshacer-new-nivel
+                  .row
+                    .col-sm-10
+                      %span.help-block.text-danger#validacion_nombre_nivel
+                        Nombre no puede estar en blanco.
+                      %span.help-block.text-danger#validacion_nombre_en_uso_nivel
+                        Ubicacion Nivel ya existente.
             .form-group
               = f.label :ubicacion_pasillo, "Ubicacion - Pasillo: ", class: 'col-sm-2 control-label'
               .col-sm-10
@@ -69,7 +77,7 @@
             .form-group
               = f.label :tipo_local_id, "Tipo de Local: ", class: 'col-sm-2 control-label'
               .col-sm-10
-                = f.collection_select(:tipo_local_id, TipoLocal.all, :id, :tipo)
+                = f.collection_select(:tipo_local_id, TipoLocal.all, :id, :tipo,  {include_blank: 'Seleccione Tipo de Local'}, class: 'form-control')
             .form-group
               = f.label :tipo_estado_local, "Estado del Local: ", class: 'col-sm-2 control-label'
               .col-sm-10

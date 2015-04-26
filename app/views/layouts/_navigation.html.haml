@@ -73,6 +73,19 @@
           = link_to ventas_mall_tiendas_path do
             %i.fa.fa-building-o
             %span.nav-label Ventas
+      %li{class: is_active_controller('ventas')}
+        %a{href: '#'}
+          %i.fa.fa-credit-card
+          %span.nav-label Ventas
+          %span.fa.arrow
+        %ul{:class => "nav nav-second-level #{is_active_controller('ventas')}"}
+          %li{class: is_active_action('index')}= link_to 'Ventas Diarias Tienda', ventas_path
+          - if can? :cobranza, Venta
+            %li{class: is_active_action('cobranza')}= link_to 'Gestion de Cobranza', cobranza_alquiler_path
+          - if can? :ventas_diarias, Venta
+            %li{class: is_active_action('mall_tiendas')}= link_to 'Ventas del Mall x Tienda', ventas_mall_tiendas_path
+          - if can? :ventas_mensuales, Venta
+            %li{class: is_active_action('mensuales')}= link_to 'Ventas Mensuales del Mall', ventas_mensuales_mall_path
       - if can? :index, Tienda
         %li{class: is_active_controller('tiendas')}
           %a{href: '#'}

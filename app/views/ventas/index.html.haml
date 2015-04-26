@@ -5,8 +5,9 @@
     %ol.breadcrumb
       %li
         = link_to 'Inicio', root_url
-      %li
-        = link_to 'Cobranzas de Alquiler', auditoria_ventas_path
+      -if @ventas_mall
+        %li
+          = link_to 'Ventas del Mall', ventas_mall_tiendas_path
       %li
         Ventas Diarias de la tienda
 
@@ -30,7 +31,7 @@
                   = label_tag :tienda do
                     Tienda:
                 .col-md-8
-                  = hidden_field_tag :tienda_id, params[:tienda_id]
+                  = hidden_field_tag :tienda_id, @tienda.id
                   = text_field_tag :tienda, @tienda.nombre, autofocus: true, class: 'form-control', readonly: 'readonly'
             .col-md-4
               .form-group
@@ -38,7 +39,7 @@
                   = label_tag :nro_local do
                     Nro. de Local:
                 .col-md-8
-                  = text_field_tag :nro_local, @tienda.local.nro_local, autofocus: true, class: 'form-control', readonly: 'readonly'
+                  = text_field_tag :nro_local, @local.nro_local, autofocus: true, class: 'form-control', readonly: 'readonly'
           .row
             .col-md-4.col-sm-offset-3
               .form-group
