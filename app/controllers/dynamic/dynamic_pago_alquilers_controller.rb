@@ -10,28 +10,19 @@ module Dynamic
       @ventas_tiendas = Array.new
       @tiendas.each do |tienda|
         @tiend = Tienda.where(id: tienda)
-        @contrato_alquiler = ContratoAlquiler.where(tienda: tienda)
-        @tipo_canon = @contrato_alquiler.last.tipo_canon_alquiler
-
-        if @tipo_canon == 'canon_fijo'
-          @canon_x_ventas = 0
-          @canon_fijo = @contrato_alquiler.last.canon_fijo_ml
-        elsif @tipo_canon == 'canon_fijo_y_porcentaje_ventas'
-          @canon_x_ventas = (@suma_ventas_mes * @contrato_alquiler.last.porc_canon_ventas)
-          @canon_fijo = @contrato_alquiler.last.canon_fijo_ml
-        elsif @tipo_canon == 'porcentaje_de_ventas'
-          @canon_fijo = 0
-          @canon_x_ventas = @suma_ventas_mes * @contrato_alquiler.last.porc_canon_ventas
-        end
+        @contrato_alquiler = ContratoAlquiler.find_by(tienda: tienda)
+        @tipo_canon = @contrato_alquiler.tipo_canon_alquiler.humanize.capitalize
 
         @nro_recibo = '001' #falta aumentar el num de recibo
         @fecha_recibo = Date.today
         @anio_alquiler = @year
         @mes_alquiler = @month
-        @monto_canon_fijo_ml = @canon_fijo
-        @monto_porc_ventas = @canon_x_ventas
-        @monto_alquiler = @canon_fijo + @canon_x_ventas
-        @monto_alquiler_usd = @monto_alq
+
+        @canons = @contrato_alquiler.calculate_canon(@contrato_alquiler,@suma_ventas_mes)
+        @monto_canon_fijo_ml = @canons['canon_fijo']
+        @monto_porc_ventas = @canons['canon_x_ventas']
+        @monto_alquiler = @canons['canon_alquiler']
+        @monto_alquiler_usd = @monto_alquiler
         @pagado = false
 
         @pago = PagoAlquiler.new(nro_recibo: @nro_recibo, fecha_recibo_cobro: @fecha_recibo,

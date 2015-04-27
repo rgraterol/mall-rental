@@ -1,0 +1,84 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Nuevo Pago Alquiler:
+      = current_user.tienda
+
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Registro de Pago Alquiler x Transferencia
+
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            Registro de Pago Alquiler x Transferencia
+        .ibox-content
+          = form_for(@pago_alquiler, url: {action: :create}, html: {class:"form-horizontal m-t-md", id: "form_registro_pago_transferencia"}) do |f|
+            - if @pago_alquiler.errors.any?
+              #error_explanation
+                %h2
+                  = pluralize(@pago_alquiler.errors.count, "error")
+                  prohibited this local from being saved:
+
+                %ul
+                  - @pago_alquiler.errors.full_messages.each do |message|
+                    %li
+                      = message
+            .form-group
+              = f.label :nombre, "Tienda: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :nombre, :value => current_user.tienda.nombre, class: 'form-control', readonly: 'readonly'
+            .form-group
+              = f.label :nro_local, "Nro Local: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :nro_local, :value => current_user.tienda.local.nro_local, class: 'form-control', readonly: 'readonly'
+            .form-group
+              = f.label :anio_mes_alquiler, "A&ntilde;o/Mes Alquiler: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :anio_mes_alquiler, class: 'form-control'
+            .form-group
+              = f.label :cuenta_bancaria, "Nro. Cuenta: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                .group-show
+                  = f.collection_select(:cuenta_bancaria_id, CuentaBancarium.all, :id, :nombre )
+            .form-group
+              = f.label :ubicacion_pasillo, "Pasillo: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :ubicacion_pasillo, class: 'form-control'
+            .form-group
+              = f.label :area, "Area (m2)", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :area, class: "form-control"
+            .form-group
+              = f.label :tipo_local_id, "Tipo de Local: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.collection_select(:tipo_local_id, TipoLocal.all, :id, :tipo)
+            .form-group
+              = f.label :foto, 'Foto: ', class: 'col-sm-2 control-label'
+              .col-sm-10
+                .fileinput.fileinput-new{"data-provides" => "fileinput"}
+                  .fileinput-new.thumbnail{:style => "width: 200px; height: 150px;"}
+                    -#%img{:alt => "...", "data-src" => "holder.js/100%x100%"}/
+                    = image_tag 'building-avatar.gif', "data-src" => "holder.js/100%x100%"
+                  .fileinput-preview.fileinput-exists.thumbnail{:style => "max-width: 100px; max-height: 80px;"}
+                  %div
+                    %span.btn.btn-mall.btn-file
+                      %span.fileinput-new Seleccionar Imagen
+                      %span.fileinput-exists Cambiar
+                      = f.file_field :foto
+                    -#%input{:name => "...", :type => "file"}/
+                    %a.btn.btn-mall.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"} Quitar
+            .form-group
+              .col-sm-10.col-sm-offset-2
+                = f.check_box :propiedad_mall, label: "Es propiedad del Mall", default: false
+                = f.label :'Es propiedad del Mall', class: 'control-label'
+                %br
+            = f.hidden_field :mall_id, :value => @mall.id
+            .form-group
+              .col-sm-3.col-sm-offset-9
+                = f.submit "Guardar", class: "btn btn-warning btn-block"

@@ -13,73 +13,80 @@ module Dynamic
 
       @tiendas_mall = Array.new
       @locales.each do |local|
-        @tienda_locals = Tienda.where(local_id: local.id)
-        @obj = {
-            'tienda' => @tienda_locals,
-            'local' => local
-        }
-        @tiendas_mall.push(@obj)
+        @tienda_locals = Tienda.where("local_id= ? AND abierta= ?", local.id, true).first
+        if !@tienda_locals.blank?
+          @contrato_alquiler = ContratoAlquiler.where(tienda_id: (@tienda_locals.id))
+          #raise @contrato_alquiler.first.inspect
+          if @contrato_alquiler.first.tipo_canon_alquiler.humanize.capitalize != 'exonerado'
+            @obj = {
+                'tienda' => @tienda_locals,
+                'local' => local,
+            }
+            @tiendas_mall.push(@obj)
+          end
+        end
       end
+      #raise @tiendas_mall.inspect
 
       @array_tienda = Array.new
       @tiendas_mall.each do |tienda_mall|
+        #raise tienda_mall.inspect
         @local = tienda_mall['local']
-        tienda_mall['tienda'].each do |tienda|
+        @tienda = tienda_mall['tienda']
 
-          @datos_cobranza = Array.new
-          @tienda = tienda.nombre
-          @tienda_id = tienda.id
-          @actividad_economica = tienda.actividad_economica.nombre
-          @local_n = @local.nro_local
-          @contrato_alquiler = ContratoAlquiler.find_by(tienda: tienda)
+        @datos_cobranza = Array.new
+        @tienda_nombre = @tienda.nombre
+        @tienda_id = @tienda.id
+        @actividad_economica = @tienda.actividad_economica.nombre
+        @local_n = @local.nro_local
+        @contrato_alquiler = ContratoAlquiler.find_by(tienda: @tienda)
 
-          @tipo_canon = @contrato_alquiler.tipo_canon_alquiler.humanize.capitalize
+        @tipo_canon = @contrato_alquiler.tipo_canon_alquiler.humanize.capitalize
 
-          @calendario = CalendarioNoLaborable.new()
-          @cantidad_dias_laborables = @calendario.cantidad_dias_laborables(@month,@year)
+        @calendario = CalendarioNoLaborable.new()
+        @cantidad_dias_laborables = @calendario.cantidad_dias_laborables(@month,@year)
 
-          @suma_ventas_mes = Venta.where('extract(year from fecha) = ? AND extract(month from fecha ) = ? AND tienda_id = ?', @year,@month,tienda.id).sum(:monto_ml)
-          @cantidad_ventas_mes = Venta.where('extract(year from fecha) = ? AND extract(month from fecha ) = ? AND tienda_id = ?', @year,@month,tienda.id).count
+        @suma_ventas_mes = Venta.where('extract(year from fecha) = ? AND extract(month from fecha ) = ? AND tienda_id = ?', @year,@month,@tienda.id).sum(:monto_ml)
+        @cantidad_ventas_mes = Venta.where('extract(year from fecha) = ? AND extract(month from fecha ) = ? AND tienda_id = ?', @year,@month,@tienda.id).count
 
-          @canons = @contrato_alquiler.calculate_canon(@contrato_alquiler,@suma_ventas_mes)
-          @canon_fijo = @canons['canon_fijo']
-          @canon_x_ventas = @canons['canon_x_ventas']
-          @total_canon = @canons['canon_alquiler']
+        @canons = @contrato_alquiler.calculate_canon(@contrato_alquiler,@suma_ventas_mes)
+        @canon_fijo = @canons['canon_fijo']
+        @canon_x_ventas = @canons['canon_x_ventas']
+        @total_canon = @canons['canon_alquiler']
 
-          @actualizada = false
-          if(@cantidad_dias_laborables == @cantidad_ventas_mes)
-            @actualizada = true
-          end
-
-          @recibos_cobro = false
-          @recibos_cobro_tienda = PagoAlquiler.where('anio_alquiler = ? AND mes_alquiler = ? AND tienda_id = ?', @year,@month,tienda.id)
-          if !@recibos_cobro_tienda.blank?
-            @recibos_cobro = true
-          end
-          @obj = {
-              'tienda_id' => @tienda_id,
-              'tienda' => @tienda,
-              'actividad_economica' => @actividad_economica,
-              'local' => @local_n,
-              'nivel_ubicacion' => @local.nivel_mall.nombre,
-              'tipo_canon' => @tipo_canon,
-              'canon_fijo' => @canon_fijo,
-              'canon_x_ventas' => @canon_x_ventas,
-              'ventas_mes' => @suma_ventas_mes,
-              'total_canon' => @total_canon,
-              'actualizada' => @actualizada,
-              'recibos_cobro' => @recibos_cobro,
-          }
-
-          @suma_canon_ventas += @canon_x_ventas
-          @suma_canon_fijo += @canon_fijo
-          @total_ventas += @suma_ventas_mes
-
-          @array_tienda.push(@obj)
+        @actualizada = false
+        if(@cantidad_dias_laborables == @cantidad_ventas_mes)
+          @actualizada = true
         end
+
+        @recibos_cobro = false
+        @recibos_cobro_tienda = PagoAlquiler.where('anio_alquiler = ? AND mes_alquiler = ? AND tienda_id = ?', @year,@month,@tienda.id)
+        if !@recibos_cobro_tienda.blank?
+          @recibos_cobro = true
+        end
+        @obj = {
+            'tienda_id' => @tienda_id,
+            'tienda' => @tienda_nombre,
+            'actividad_economica' => @actividad_economica,
+            'local' => @local_n,
+            'nivel_ubicacion' => @local.nivel_mall.nombre,
+            'tipo_canon' => @tipo_canon,
+            'canon_fijo' => @canon_fijo,
+            'canon_x_ventas' => @canon_x_ventas,
+            'ventas_mes' => @suma_ventas_mes,
+            'total_canon' => @total_canon,
+            'actualizada' => @actualizada,
+            'recibos_cobro' => @recibos_cobro,
+        }
+
+        @suma_canon_ventas += @canon_x_ventas
+        @suma_canon_fijo += @canon_fijo
+        @total_ventas += @suma_ventas_mes
+
+        @array_tienda.push(@obj)
       end
       @total_s = @suma_canon_fijo + @suma_canon_ventas
-      render json: [ result: true, cont: @cantidad_dias_laborables, tiendas: @array_tienda, suma_canon_ventas: @suma_canon_ventas, suma_canon_fijo: @suma_canon_fijo, total: @total_s, total_ventas: @total_ventas]
+      render json: [ result: true, cont: @cantidad_dias_laborables, tiendas: @array_tienda, suma_canon_ventas: @suma_canon_ventas, suma_canon_fijo: @suma_canon_fijo, total: @total_s, total_ventas: @total_ventas, tiendas_cont: @contrato_alquiler]
     end
   end
 end
