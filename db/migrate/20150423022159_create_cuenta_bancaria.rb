@@ -1,10 +1,10 @@
 class CreateCuentaBancaria < ActiveRecord::Migration
   def change
     create_table :cuenta_bancaria do |t|
-      t.string :nroCta
-      t.string :tipoCuenta
+      t.string :nro_cta
+      t.string :tipo_cuenta
       t.string :beneficiario
-      t.string :docIdentidad
+      t.string :doc_identidad
       t.references :banco, index: true
 
 

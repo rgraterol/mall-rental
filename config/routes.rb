@@ -81,6 +81,8 @@ Myapp::Application.routes.draw do
 
   get 'ventas_mensuales_mall' => 'ventas#mensuales', as: :ventas_mensuales_mall
 
+  get 'registrar_pago_transferencia' => 'pago_alquilers#new_transferencia', as: :registrar_pago_transferencia
+
   scope module: 'dynamic' do
     post 'dynamic_add_actividad/actividad'
     post 'dynamic_venta_diaria/venta'

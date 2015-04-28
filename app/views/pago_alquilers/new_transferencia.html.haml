@@ -38,47 +38,33 @@
               .col-sm-10
                 = f.text_field :nro_local, :value => current_user.tienda.local.nro_local, class: 'form-control', readonly: 'readonly'
             .form-group
-              = f.label :anio_mes_alquiler, "A&ntilde;o/Mes Alquiler: ", class: 'col-sm-2 control-label'
+              = f.label :anio_alquiler, "Año/Mes Alquiler: ", class: 'col-sm-2 control-label'
               .col-sm-10
-                = f.text_field :anio_mes_alquiler, class: 'form-control'
+                = f.text_field :anio_alquiler, class: 'form-control'
             .form-group
               = f.label :cuenta_bancaria, "Nro. Cuenta: ", class: 'col-sm-2 control-label'
               .col-sm-10
                 .group-show
-                  = f.collection_select(:cuenta_bancaria_id, CuentaBancarium.all, :id, :nombre )
+                  = f.select(:cuenta_bancaria_id,{},{include_blank: 'Seleccione la cuenta bancaria'},html_options = {class: "form-control"})  do
+                    - CuentaBancarium.all.each do |c|
+                      = content_tag(:option, c.banco.nombre+'  '+c.nroCta, value: c.id)
+                    - {class: "form-control"}
             .form-group
-              = f.label :ubicacion_pasillo, "Pasillo: ", class: 'col-sm-2 control-label'
+              = f.label :monto, "Monto Transferido: ", class: 'col-sm-2 control-label'
               .col-sm-10
-                = f.text_field :ubicacion_pasillo, class: 'form-control'
+                = text_field_tag :monto,'',class: 'form-control'
             .form-group
-              = f.label :area, "Area (m2)", class: 'col-sm-2 control-label'
+              = f.label :fecha_pago, "Fecha Transferencia", class: 'col-sm-2 control-label'
               .col-sm-10
-                = f.text_field :area, class: "form-control"
+                = f.text_field :fecha_pago, class: "form-control"
             .form-group
-              = f.label :tipo_local_id, "Tipo de Local: ", class: 'col-sm-2 control-label'
+              = f.label :nro_cheque_confirmacion, "Nro Confirmacion", class: 'col-sm-2 control-label'
               .col-sm-10
-                = f.collection_select(:tipo_local_id, TipoLocal.all, :id, :tipo)
+                = f.text_field :nro_cheque_confirmacion, class: "form-control"
             .form-group
-              = f.label :foto, 'Foto: ', class: 'col-sm-2 control-label'
+              = f.label :archivo_transferencia, 'Archivo de Transferencia: ', class: 'col-sm-2 control-label'
               .col-sm-10
-                .fileinput.fileinput-new{"data-provides" => "fileinput"}
-                  .fileinput-new.thumbnail{:style => "width: 200px; height: 150px;"}
-                    -#%img{:alt => "...", "data-src" => "holder.js/100%x100%"}/
-                    = image_tag 'building-avatar.gif', "data-src" => "holder.js/100%x100%"
-                  .fileinput-preview.fileinput-exists.thumbnail{:style => "max-width: 100px; max-height: 80px;"}
-                  %div
-                    %span.btn.btn-mall.btn-file
-                      %span.fileinput-new Seleccionar Imagen
-                      %span.fileinput-exists Cambiar
-                      = f.file_field :foto
-                    -#%input{:name => "...", :type => "file"}/
-                    %a.btn.btn-mall.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"} Quitar
-            .form-group
-              .col-sm-10.col-sm-offset-2
-                = f.check_box :propiedad_mall, label: "Es propiedad del Mall", default: false
-                = f.label :'Es propiedad del Mall', class: 'control-label'
-                %br
-            = f.hidden_field :mall_id, :value => @mall.id
+                = render 'shared/file_upload_generic', f: f , field: :archivo_transferencia, name_file: f.object.archivo_transferencia || nil
             .form-group
               .col-sm-3.col-sm-offset-9
                 = f.submit "Guardar", class: "btn btn-warning btn-block"

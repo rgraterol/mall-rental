@@ -1,0 +1,2 @@
+module PagoAlquilersHelper
+end
