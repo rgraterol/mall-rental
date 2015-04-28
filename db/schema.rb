@@ -76,10 +76,10 @@ ActiveRecord::Schema.define(version: 20150424152637) do
     t.date     "fecha_inicio"
     t.date     "fecha_fin"
     t.string   "archivo_contrato"
-    t.decimal  "canon_fijo_ml"
-    t.decimal  "canon_fijo_usd"
-    t.decimal  "porc_canon_ventas"
-    t.decimal  "monto_minimo_ventas"
+    t.decimal  "canon_fijo_ml",       default: 0.0
+    t.decimal  "canon_fijo_usd",      default: 0.0
+    t.decimal  "porc_canon_ventas",   default: 0.0
+    t.decimal  "monto_minimo_ventas", default: 0.0
     t.boolean  "estado_contrato"
     t.integer  "tipo_canon_alquiler"
     t.integer  "tienda_id"
@@ -91,10 +91,10 @@ ActiveRecord::Schema.define(version: 20150424152637) do
   add_index "contrato_alquilers", ["tienda_id"], name: "index_contrato_alquilers_on_tienda_id", using: :btree
 
   create_table "cuenta_bancaria", force: true do |t|
-    t.string   "nroCta"
-    t.string   "tipoCuenta"
+    t.string   "nro_cta"
+    t.string   "tipo_cuenta"
     t.string   "beneficiario"
-    t.string   "docIdentidad"
+    t.string   "doc_identidad"
     t.integer  "banco_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -117,9 +117,9 @@ ActiveRecord::Schema.define(version: 20150424152637) do
     t.integer  "mall_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "area_planta"
-    t.decimal  "area_terraza"
-    t.decimal  "area_mezanina"
+    t.decimal  "area_planta",       default: 0.0
+    t.decimal  "area_terraza",      default: 0.0
+    t.decimal  "area_mezanina",     default: 0.0
     t.integer  "tipo_estado_local"
   end
 
@@ -183,11 +183,13 @@ ActiveRecord::Schema.define(version: 20150424152637) do
     t.integer  "tipo_pago"
     t.integer  "contrato_alquiler_id"
     t.integer  "tienda_id"
+    t.integer  "cuenta_bancarium_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "pago_alquilers", ["contrato_alquiler_id"], name: "index_pago_alquilers_on_contrato_alquiler_id", using: :btree
+  add_index "pago_alquilers", ["cuenta_bancarium_id"], name: "index_pago_alquilers_on_cuenta_bancarium_id", using: :btree
   add_index "pago_alquilers", ["tienda_id"], name: "index_pago_alquilers_on_tienda_id", using: :btree
 
   create_table "pais", force: true do |t|

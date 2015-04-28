@@ -6,6 +6,6 @@ class AddCamposToLocals < ActiveRecord::Migration
     add_column :locals, :tipo_estado_local, :integer
     remove_column :locals, :area, :decimal
     remove_column :locals, :propiedad_mall, :boolean
-
   end
 end
+
