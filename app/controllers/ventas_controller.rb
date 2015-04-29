@@ -1,9 +1,14 @@
 class VentasController < ApplicationController
   before_action :authenticate_user!
   before_action :set_venta, only: [:show, :edit, :update, :destroy]
-  #load_and_authorize_resource
+  load_and_authorize_resource
 
   def index
+    @user_tienda = current_user.tienda
+    if @user_tienda.blank?
+      authorize! :index, root_url, :message => "Debe tener una tienda asignada."
+    end
+
     @tienda_id = params[:tienda_id]
     if @tienda_id.nil?
       @tienda_id = current_user.tienda
@@ -19,23 +24,25 @@ class VentasController < ApplicationController
   end
 
   def cobranza
-    @tienda = current_user.tienda
+=begin
+    @mall = current_user.mall
+    @tiendas = Tienda.where(mall: @mall)
+    raise @tiendas.inspect
     @ventas = Venta.where(tienda_id: @tienda.id)
     @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
+=end
   end
 
   def mall_tiendas
-
+=begin
     @tienda = current_user.tienda
-
     @ventas = Venta.where(tienda_id: @tienda_id)
     @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
+=end
   end
 
   def  mensuales
     @mall = current_user.mall
-    #@tiendas = current_user.mall.tiendas
-    @ventas = Venta.all
   end
 
 
