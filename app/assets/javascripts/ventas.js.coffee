@@ -119,7 +119,6 @@ $(".actualizar_auditoria_ventas").on "change", ->
                                           "<td>"+element.total_canon+"</td>" +
                                           "<td><a href='/ventas_tiendas/"+element.tienda_id+"'>Ver Ventas diarias</a></td></tr>")
 
-
     error: (data)->
       console.log(data)
     complete: ->
@@ -133,18 +132,12 @@ $(".actualizar_ventas_mes").on "change", ->
       year: $("#date_lapso_year").val()
     success: (data) ->
       $("#tbody-ventas-mall").empty()
-      $("#tbody-ventas-mall").append("<tr><th>Enero</th><td>"+data[0]['ventas'][0].ventas+"</td><td>"+data[0]['ventas'][0].canon_fijo+"</td><td>"+data[0]['ventas'][0].canon_x_ventas+"</td><td>"+data[0]['ventas'][0].total_mes_canon+"</td></tr>")
-      $("#tbody-ventas-mall").append("<tr><th>Febrero</th><td>"+data[0]['ventas'][1].ventas+"</td><td>"+data[0]['ventas'][1].canon_fijo+"</td><td>"+data[0]['ventas'][1].canon_x_ventas+"</td><td>"+data[0]['ventas'][1].total_mes_canon+"</td></tr>")
-      $("#tbody-ventas-mall").append("<tr><th>Marzo</th><td>"+data[0]['ventas'][2].ventas+"</td><td>"+data[0]['ventas'][2].canon_fijo+"</td><td>"+data[0]['ventas'][2].canon_x_ventas+"</td><td>"+data[0]['ventas'][2].total_mes_canon+"</td></tr>")
-      $("#tbody-ventas-mall").append("<tr><th>Abril</th><td>"+data[0]['ventas'][3].ventas+"</td><td>"+data[0]['ventas'][3].canon_fijo+"</td><td>"+data[0]['ventas'][3].canon_x_ventas+"</td><td>"+data[0]['ventas'][3].total_mes_canon+"</td></tr>")
-      $("#tbody-ventas-mall").append("<tr><th>Mayo</th><td>"+data[0]['ventas'][4].ventas+"</td><td>"+data[0]['ventas'][4].canon_fijo+"</td><td>"+data[0]['ventas'][4].canon_x_ventas+"</td><td>"+data[0]['ventas'][4].total_mes_canon+"</td></tr>")
-      $("#tbody-ventas-mall").append("<tr><th>Junio</th><td>"+data[0]['ventas'][5].ventas+"</td><td>"+data[0]['ventas'][5].canon_fijo+"</td><td>"+data[0]['ventas'][5].canon_x_ventas+"</td><td>"+data[0]['ventas'][5].total_mes_canon+"</td></tr>")
-      $("#tbody-ventas-mall").append("<tr><th>Julio</th><td>"+data[0]['ventas'][6].ventas+"</td><td>"+data[0]['ventas'][6].canon_fijo+"</td><td>"+data[0]['ventas'][6].canon_x_ventas+"</td><td>"+data[0]['ventas'][6].total_mes_canon+"</td></tr>")
-      $("#tbody-ventas-mall").append("<tr><th>Agosto</th><td>"+data[0]['ventas'][7].ventas+"</td><td>"+data[0]['ventas'][7].canon_fijo+"</td><td>"+data[0]['ventas'][7].canon_x_ventas+"</td><td>"+data[0]['ventas'][7].total_mes_canon+"</td></tr>")
-      $("#tbody-ventas-mall").append("<tr><th>Septiembre</th><td>"+data[0]['ventas'][8].ventas+"</td><td>"+data[0]['ventas'][8].canon_fijo+"</td><td>"+data[0]['ventas'][8].canon_x_ventas+"</td><td>"+data[0]['ventas'][8].total_mes_canon+"</td></tr>")
-      $("#tbody-ventas-mall").append("<tr><th>Octubre</th><td>"+data[0]['ventas'][9].ventas+"</td><td>"+data[0]['ventas'][9].canon_fijo+"</td><td>"+data[0]['ventas'][9].canon_x_ventas+"</td><td>"+data[0]['ventas'][9].total_mes_canon+"</td></tr>")
-      $("#tbody-ventas-mall").append("<tr><th>Noviembre</th><td>"+data[0]['ventas'][10].ventas+"</td><td>"+data[0]['ventas'][10].canon_fijo+"</td><td>"+data[0]['ventas'][10].canon_x_ventas+"</td><td>"+data[0]['ventas'][10].total_mes_canon+"</td></tr>")
-      $("#tbody-ventas-mall").append("<tr><th>Diciembre</th><td>"+data[0]['ventas'][11].ventas+"</td><td>"+data[0]['ventas'][11].canon_fijo+"</td><td>"+data[0]['ventas'][11].canon_x_ventas+"</td><td>"+data[0]['ventas'][11].total_mes_canon+"</td></tr>")
+      meses = ['Enero', 'Febrero', 'Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+      mes_fin = data[0]['mes_actual']-1
+
+      for num in [0..mes_fin]
+        $("#tbody-ventas-mall").append("<tr><th>"+meses[num]+"</th><td>"+data[0]['ventas'][num].ventas+"</td><td>"+data[0]['ventas'][num].canon_fijo+"</td><td>"+data[0]['ventas'][num].canon_x_ventas+"</td><td>"+data[0]['ventas'][num].total_mes_canon+"</td></tr>")
+
       $("#suma_total").text(data[0]['suma_total'])
       $("#total_canon_fijo").text(data[0]['total_canon_fijo'])
       $("#total_canon_x_ventas").text(data[0]['total_canon_x_ventas'])

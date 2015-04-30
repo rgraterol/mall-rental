@@ -14,21 +14,24 @@ class ApplicationController < ActionController::Base
     redirect_to root_path
   end
 
+
   before_action do
-    if user_signed_in? && current_user.tienda.present? && current_user.tienda.fecha_fin_contrato_actual < Date.today
+    if (user_signed_in? && current_user.tienda.present?) && (current_user.tienda.fecha_fin_contrato_actual < Date.today)
       flash[:notice] = 'Usted posee el contrato de alquiler vencido, por favor dirigirse a administración para actualizar su contrato'
       sign_out current_user
     end
+
+
   end
 
   protected
     def self.permission
       self.name.gsub('Controller','').singularize.split('::').last.constantize.name rescue nil
     end
+end
 
     def current_ability
       @current_ability ||= Ability.new(current_user)
-    end
 
     def load_permissions
       @current_permissions = current_user.roles.each do |role|

@@ -38,7 +38,7 @@ class Tienda < ActiveRecord::Base
 
   def set_missing_attributes
     self.update(fecha_apertura: (self.contrato_alquilers.first.fecha_inicio rescue Date.today),
-                abierta: true, fecha_fin_contrato_actual: (self.contrato_alquilers.last.fecha_inicio rescue Date.today))
+                abierta: true, fecha_fin_contrato_actual: (self.contrato_alquilers.last.fecha_fin rescue Date.today))
   end
 
   def vencido?
