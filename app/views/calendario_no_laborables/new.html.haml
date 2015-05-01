@@ -1,0 +1,48 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Registro de Nueva Fecha No Laborable:
+      = @mall.nombre
+
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Calendario No Laborable', calendario_no_laborables_path
+      %li
+        Nueva Fecha No Laborable
+
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            Registro de Nueva Fecha
+        .ibox-content
+          = form_for(@calendario_no_laborable, url: {action: :create}, html: {class:"form-horizontal m-t-md", id: "form_registro_calendario"}) do |f|
+            - if @calendario_no_laborable.errors.any?
+              #error_explanation
+                %h2
+                  = pluralize(@calendario_no_laborable.errors.count, "error")
+                  prohibited this local from being saved:
+
+                %ul
+                  - @calendario_no_laborable.errors.full_messages.each do |message|
+                    %li
+                      = message
+            .form-group
+              = f.label :fecha, "Fecha: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                #datepicker.input-daterange.input-group
+                  = f.text_field :fecha,:value => "#{Date.today.strftime("%d/%m/%Y")}", class: 'input-sm form-control', id: 'fecha_calendario_nl'
+
+            .form-group
+              = f.label :motivo, "Motivo: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :motivo, class: 'form-control'
+
+            = f.hidden_field :mall_id, :value => @mall.id
+            .form-group
+              .col-sm-3.col-sm-offset-9
+                = f.submit "Guardar", class: "btn btn-warning btn-block"

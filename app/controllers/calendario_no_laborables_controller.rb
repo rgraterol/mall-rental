@@ -4,6 +4,7 @@ class CalendarioNoLaborablesController < ApplicationController
   # GET /calendario_no_laborables
   # GET /calendario_no_laborables.json
   def index
+    @mall = current_user.mall
     @calendario_no_laborables = CalendarioNoLaborable.all
   end
 
@@ -15,10 +16,12 @@ class CalendarioNoLaborablesController < ApplicationController
   # GET /calendario_no_laborables/new
   def new
     @calendario_no_laborable = CalendarioNoLaborable.new
-  end
+    @mall = current_user.mall
 
+  end
   # GET /calendario_no_laborables/1/edit
   def edit
+    @mall = current_user.mall
   end
 
   # POST /calendario_no_laborables
@@ -28,8 +31,8 @@ class CalendarioNoLaborablesController < ApplicationController
 
     respond_to do |format|
       if @calendario_no_laborable.save
-        format.html { redirect_to @calendario_no_laborable, notice: 'Calendario no laborable was successfully created.' }
-        format.json { render :show, status: :created, location: @calendario_no_laborable }
+        format.html { redirect_to calendario_no_laborables_path, notice: 'Fecha No Laborable se ha guardado exitosamente.' }
+        format.json { render :index, status: :created, location: @calendario_no_laborable }
       else
         format.html { render :new }
         format.json { render json: @calendario_no_laborable.errors, status: :unprocessable_entity }
@@ -42,8 +45,8 @@ class CalendarioNoLaborablesController < ApplicationController
   def update
     respond_to do |format|
       if @calendario_no_laborable.update(calendario_no_laborable_params)
-        format.html { redirect_to @calendario_no_laborable, notice: 'Calendario no laborable was successfully updated.' }
-        format.json { render :show, status: :ok, location: @calendario_no_laborable }
+        format.html { redirect_to calendario_no_laborables_path, notice: 'Fecha No Laborable se actualizo correctamente.' }
+        format.json { render :index, status: :ok, location: @calendario_no_laborable }
       else
         format.html { render :edit }
         format.json { render json: @calendario_no_laborable.errors, status: :unprocessable_entity }
@@ -56,7 +59,7 @@ class CalendarioNoLaborablesController < ApplicationController
   def destroy
     @calendario_no_laborable.destroy
     respond_to do |format|
-      format.html { redirect_to calendario_no_laborables_url, notice: 'Calendario no laborable was successfully destroyed.' }
+      format.html { redirect_to calendario_no_laborables_url, notice: 'Fecha No Laborable se elimino exitosamente.' }
       format.json { head :no_content }
     end
   end
@@ -71,6 +74,6 @@ class CalendarioNoLaborablesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def calendario_no_laborable_params
-      params.require(:calendario_no_laborable).permit(:fecha, :motivo)
+      params.require(:calendario_no_laborable).permit(:fecha, :motivo, :mall_id )
     end
 end

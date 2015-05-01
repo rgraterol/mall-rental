@@ -1,0 +1,45 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Calendario No Laborable del
+      =current_user.mall.nombre
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Malls Registrados', malls_path
+      %li
+        Calendario No Laborable
+
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-sm-3
+              = link_to "Nueva Fecha No Laborable", new_calendario_no_laborable_path, class: "btn btn-mall btn-block"
+          %br
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover.dataTables-example
+                %thead
+                  %tr
+                    %th Fecha
+                    %th Motivo
+                    %th{width: '25%'} Acciones
+                %tbody
+                  - @calendario_no_laborables.all.each do |calendario_no_laborable|
+                    %tr
+                      %td= calendario_no_laborable.fecha.strftime("%d/%m/%Y")
+                      %td= calendario_no_laborable.motivo
+                      %td
+                        = link_to edit_calendario_no_laborable_path(calendario_no_laborable) do
+                          %i.fa.fa-pencil
+                          Editar
+                        %br
+                        = link_to calendario_no_laborable, data: { confirm: "Seguro que desea eliminar la Fecha NoLaborable ?" }, method: :delete do
+                          %i.fa.fa-trash
+                          Eliminar
+                          %br

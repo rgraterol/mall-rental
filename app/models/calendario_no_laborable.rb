@@ -12,6 +12,7 @@
 class CalendarioNoLaborable < ActiveRecord::Base
   validates :motivo, presence: true
   validates :fecha, presence: true, uniqueness: true
+  has_many :malls
 
   def cantidad_dias_laborables(mes,anio)
     @mes = Time.days_in_month(mes.to_i, anio.to_i)

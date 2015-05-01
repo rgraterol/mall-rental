@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150424152637) do
+ActiveRecord::Schema.define(version: 20150430222145) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,14 +52,20 @@ ActiveRecord::Schema.define(version: 20150424152637) do
     t.string   "motivo"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "mall_id"
   end
+
+  add_index "calendario_no_laborables", ["mall_id"], name: "index_calendario_no_laborables_on_mall_id", using: :btree
 
   create_table "cambio_monedas", force: true do |t|
     t.date     "fecha"
     t.decimal  "cambio_ml_x_usd"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "mall_id"
   end
+
+  add_index "cambio_monedas", ["mall_id"], name: "index_cambio_monedas_on_mall_id", using: :btree
 
   create_table "canon_alquilers", force: true do |t|
     t.date     "fecha"
@@ -76,10 +82,10 @@ ActiveRecord::Schema.define(version: 20150424152637) do
     t.date     "fecha_inicio"
     t.date     "fecha_fin"
     t.string   "archivo_contrato"
-    t.decimal  "canon_fijo_ml",       default: 0.0
-    t.decimal  "canon_fijo_usd",      default: 0.0
-    t.decimal  "porc_canon_ventas",   default: 0.0
-    t.decimal  "monto_minimo_ventas", default: 0.0
+    t.decimal  "canon_fijo_ml"
+    t.decimal  "canon_fijo_usd"
+    t.decimal  "porc_canon_ventas"
+    t.decimal  "monto_minimo_ventas"
     t.boolean  "estado_contrato"
     t.integer  "tipo_canon_alquiler"
     t.integer  "tienda_id"
@@ -91,10 +97,10 @@ ActiveRecord::Schema.define(version: 20150424152637) do
   add_index "contrato_alquilers", ["tienda_id"], name: "index_contrato_alquilers_on_tienda_id", using: :btree
 
   create_table "cuenta_bancaria", force: true do |t|
-    t.string   "nro_cta"
-    t.string   "tipo_cuenta"
+    t.string   "nroCta"
+    t.string   "tipoCuenta"
     t.string   "beneficiario"
-    t.string   "doc_identidad"
+    t.string   "docIdentidad"
     t.integer  "banco_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -183,13 +189,12 @@ ActiveRecord::Schema.define(version: 20150424152637) do
     t.integer  "tipo_pago"
     t.integer  "contrato_alquiler_id"
     t.integer  "tienda_id"
-    t.integer  "cuenta_bancarium_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "cuenta_bancaria_id"
   end
 
   add_index "pago_alquilers", ["contrato_alquiler_id"], name: "index_pago_alquilers_on_contrato_alquiler_id", using: :btree
-  add_index "pago_alquilers", ["cuenta_bancarium_id"], name: "index_pago_alquilers_on_cuenta_bancarium_id", using: :btree
   add_index "pago_alquilers", ["tienda_id"], name: "index_pago_alquilers_on_tienda_id", using: :btree
 
   create_table "pais", force: true do |t|

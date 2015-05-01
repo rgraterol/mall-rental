@@ -11,4 +11,5 @@
 
 class CambioMoneda < ActiveRecord::Base
   validates :cambio_ml_x_usd, numericality: true, presence: true
+  has_many :malls
 end

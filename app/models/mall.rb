@@ -26,6 +26,8 @@ class Mall < ActiveRecord::Base
   has_many :user_tiendas, through: :tiendas, dependent: :destroy
   has_many :contrato_alquilers, through: :tiendas, dependent: :destroy
   belongs_to :cuenta_bancarium
+  belongs_to :cambio_moneda
+  belongs_to :calendario_no_laborable
 
   validates :nombre, :abreviado, :rif, :direccion_fiscal, :telefono, :cuenta_bancarium, presence: true
   validates :rif, uniqueness: true
