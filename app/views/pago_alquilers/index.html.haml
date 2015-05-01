@@ -21,7 +21,7 @@
           %br
           .row
             .col-md-12
-              %table.table.table-striped.table-bordered.table-hover#table_auditoria_ventas
+              %table.table.table-striped.table-bordered.table-hover#table_pagos_mall
                 %thead
                   %tr
                     %th.text-center{width: '8%'}
@@ -41,16 +41,3 @@
                     %th.text-center{width: '15%'}
                       Acciones
                 %tbody#tbody_pagos_alquiler
-                %tfoot
-                  %tr
-                    %th{colspan: 4}
-                      TOTAL
-                    %td
-                      = text_field_tag :monto_canon_fijo, @suma, autofocus: true, class: 'form-control', readonly: 'readonly'
-                    %td
-                      = text_field_tag :total_ventas_mes, @suma, autofocus: true, class: 'form-control', readonly: 'readonly'
-                    %td
-                      = text_field_tag :monto_canon_x_venta, @suma, autofocus: true, class: 'form-control', readonly: 'readonly'
-                    %td
-                      = text_field_tag :total_canon, @suma, autofocus: true, class: 'form-control', readonly: 'readonly'
-

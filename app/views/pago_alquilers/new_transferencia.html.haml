@@ -2,7 +2,7 @@
   .col-lg-10
     %h2
       Nuevo Pago Alquiler:
-      = current_user.tienda
+      = current_user.tienda.nombre
 
     %ol.breadcrumb
       %li
@@ -38,9 +38,10 @@
               .col-sm-10
                 = f.text_field :nro_local, :value => current_user.tienda.local.nro_local, class: 'form-control', readonly: 'readonly'
             .form-group
-              = f.label :anio_alquiler, "Año/Mes Alquiler: ", class: 'col-sm-2 control-label'
-              .col-sm-10
-                = f.text_field :anio_alquiler, class: 'form-control'
+              = f.label :fecha_alquiler, "Año/Mes Alquiler: ", class: 'col-sm-2 control-label'
+              .col-sm-6
+                = select_month(Date.today, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'mes_alquiler', :prefix => 'pago_alquiler'})
+                = select_year(Date.today, options = { :start_year => Time.now.year, :end_year => Time.now.year - 5, :field_name => 'anio_alquiler', :prefix => 'pago_alquiler'})
             .form-group
               = f.label :cuenta_bancaria, "Nro. Cuenta: ", class: 'col-sm-2 control-label'
               .col-sm-10
@@ -50,13 +51,13 @@
                       = content_tag(:option, c.banco.nombre+'  '+c.nroCta, value: c.id)
                     - {class: "form-control"}
             .form-group
-              = f.label :monto, "Monto Transferido: ", class: 'col-sm-2 control-label'
+              = f.label :monto_alquiler_ml, "Monto Transferido: ", class: 'col-sm-2 control-label'
               .col-sm-10
-                = text_field_tag :monto,'',class: 'form-control'
+                = f.text_field :monto_alquiler_ml,class: 'form-control'
             .form-group
               = f.label :fecha_pago, "Fecha Transferencia", class: 'col-sm-2 control-label'
               .col-sm-10
-                = f.text_field :fecha_pago, class: "form-control"
+                = f.text_field :fecha_pago, class: "input-sm form-control", id: 'fecha_pago'
             .form-group
               = f.label :nro_cheque_confirmacion, "Nro Confirmacion", class: 'col-sm-2 control-label'
               .col-sm-10
@@ -64,7 +65,7 @@
             .form-group
               = f.label :archivo_transferencia, 'Archivo de Transferencia: ', class: 'col-sm-2 control-label'
               .col-sm-10
-                = render 'shared/file_upload_generic', f: f , field: :archivo_transferencia, name_file: f.object.archivo_transferencia || nil
+                = render 'shared/file_upload_transf', f: f , field: :archivo_transferencia, name_file: f.object.archivo_transferencia || nil
             .form-group
               .col-sm-3.col-sm-offset-9
                 = f.submit "Guardar", class: "btn btn-warning btn-block"

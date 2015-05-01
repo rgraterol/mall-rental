@@ -69,7 +69,6 @@ Myapp::Application.routes.draw do
 
   resources :contrato_alquilers
 
-  resources :pago_alquilers
 
   get 'cobranza_alquiler' => 'ventas#cobranza', as: :cobranza_alquiler
 
@@ -81,7 +80,10 @@ Myapp::Application.routes.draw do
 
   get 'ventas_mensuales_mall' => 'ventas#mensuales', as: :ventas_mensuales_mall
 
-  get 'registrar_pago_transferencia' => 'pago_alquilers#new_transferencia', as: :registrar_pago_transferencia
+  get 'pago_alquilers/new_transferencia' => 'pago_alquilers#new_transferencia', as: :registrar_pago_transferencia
+  post '/pago_alquilers/create' =>  'pago_alquilers#create'
+
+  resources :pago_alquilers
 
   scope module: 'dynamic' do
     post 'dynamic_add_actividad/actividad'
