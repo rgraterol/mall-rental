@@ -89,8 +89,9 @@ class ContratoAlquiler < ActiveRecord::Base
       end
     elsif contrato.tipo_canon_alquiler == "fijo_y_variable_venta_bruta" ||  contrato.tipo_canon_alquiler == "fijo_y_variable_venta_neta"
       @canon_fijo = contrato.canon_fijo_ml
-      @monto_minimo_v = @canon_fijo / (contrato.porc_canon_ventas / 100)
-      if vmt >= @monto_minimo_v
+      @monto_minimo_v = contrato.monto_minimo_ventas
+
+      if(vmt.to_f >= @monto_minimo_v.to_f)
         @canon_x_ventas = (vmt - @monto_minimo_v)*(contrato.porc_canon_ventas/100)
       else
         @canon_x_ventas = 0

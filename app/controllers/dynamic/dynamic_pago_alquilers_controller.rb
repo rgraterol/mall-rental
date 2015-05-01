@@ -11,6 +11,7 @@ module Dynamic
       @tiendas.each do |tienda|
         @tiend = Tienda.where(id: tienda)
         @contrato_alquiler = ContratoAlquiler.find_by(tienda: tienda)
+        @contrato_a = ContratoAlquiler.find_by(tienda: tienda)
         @tipo_canon = @contrato_alquiler.tipo_canon_alquiler.humanize.capitalize
 
         @nro_recibo = '001' #falta aumentar el num de recibo
@@ -18,7 +19,7 @@ module Dynamic
         @anio_alquiler = @year
         @mes_alquiler = @month
 
-        @canons = @contrato_alquiler.calculate_canon(@contrato_alquiler,@suma_ventas_mes)
+        @canons = @contrato_alquiler.calculate_canon(@contrato_a,@suma_ventas_mes)
         @monto_canon_fijo_ml = @canons['canon_fijo']
         @monto_porc_ventas = @canons['canon_x_ventas']
         @monto_alquiler = @canons['canon_alquiler']

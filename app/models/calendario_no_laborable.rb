@@ -23,8 +23,8 @@ class CalendarioNoLaborable < ActiveRecord::Base
     else
       @mes = Time.days_in_month(mes.to_i, anio.to_i)
     end
-
-    @dias = CalendarioNoLaborable.where('extract(year from fecha) = ? AND extract(month from fecha ) = ?', anio,mes).count
+    @hoy = @today.strftime("%d").to_i
+    @dias = CalendarioNoLaborable.where('extract(year from fecha) = ? AND extract(month from fecha ) = ? AND extract(day from fecha )<= ?', anio,mes,@hoy).count
     return (@mes-@dias)
   end
 end

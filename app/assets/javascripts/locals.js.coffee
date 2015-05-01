@@ -89,7 +89,7 @@ jQuery(document).ready ->
           notEmpty:
             message: 'Debe seleccionar el Estado del Local'
 
-  $("#local_nivel_mall_id").append("<option value='999'>Nuevo...</option>")
+$("#local_nivel_mall_id").append("<option value='999'>Nuevo...</option>")
 $("#local_nivel_mall_id").on "change", ->
   if (this.value) == '999'
     $(".mostrar").css "display","none"

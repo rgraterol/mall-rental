@@ -62,7 +62,7 @@ $("#tbody_ventas").on
             if(data[0]['result'])
               $(".actualizar_ventas").change()
             else
-              alert('No guardo')
+              console.log(data)
           error: (data)->
             console.log(data)
           complete: ->
@@ -87,6 +87,7 @@ $(".actualizar_auditoria_ventas").on "change", ->
       month: $("#ventas_select_month").val()
     before_send: $.blockUI({message: 'Por favor espere...'})
     success: (data) ->
+      console.log(data)
       console.log(data[0]['tiendas_cont'])
       $("#total_ventas_mes").val(data[0]['total_ventas'])
       $("#monto_canon_fijo").val(data[0]['suma_canon_fijo'])
@@ -102,7 +103,7 @@ $(".actualizar_auditoria_ventas").on "change", ->
           @cadena_check = "checked title='Ventas Actualizadas'"
         if element.recibos_cobro
           @cadena_recibo = "checked title='Recibo Cobro Enviado'"
-
+        console.log(element)
         $("#tbody_auditoria_ventas").append("<tr><td>"+element.tienda+"</td><td>"+element.actividad_economica+"</td>" +
                                                 "<td>"+element.local+"</td>" +
                                                 "<td>"+element.tipo_canon+"</td><td>"+element.canon_fijo+"</td>" +
@@ -197,3 +198,8 @@ $("#btn-send-recibos").on "click", ->
           message: 'Ya se enviaron los recibos de cobro',
         });
         setTimeout($.unblockUI, 2000);
+    else
+      $.blockUI({
+        message: 'No hay tiendas actualizadas para enviar recibos de cobro',
+      });
+      setTimeout($.unblockUI, 2000);
