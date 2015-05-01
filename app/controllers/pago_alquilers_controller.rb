@@ -15,6 +15,9 @@ class PagoAlquilersController < ApplicationController
   # GET /pago_alquilers/new
   def new_transferencia
     @tienda = current_user.tienda
+    if @tienda.blank?
+      authorize! :index, root_url, :message => "Debe tener una tienda asignada."
+    end
     @pago_alquiler = PagoAlquiler.new
   end
 
