@@ -16,6 +16,7 @@ $(".actualizar_ventas").on "change", ->
       year: $("#date_lapso_year").val()
       month: $("#ventas_select_month").val()
       tienda_id: $("#tienda_id").val()
+    #before_send: $.blockUI({message: 'Actualizando...'})
     success: (data) ->
       $("#total_ventas").val(data[0]['suma'])
       $("#tbody_ventas").empty()
@@ -31,7 +32,7 @@ $(".actualizar_ventas").on "change", ->
     error: (data)->
       console.log(data)
     complete: ->
-      a=1
+      #$.unblockUI()
 
 $("#tbody_ventas").on
   click:->
@@ -60,7 +61,31 @@ $("#tbody_ventas").on
             tienda_id: $("#tienda_id").val()
           success: (data) ->
             if(data[0]['result'])
-              $(".actualizar_ventas").change()
+
+              $.blockUI({
+                message: $('div.growlUI'),
+                fadeIn: 700,
+                fadeOut: 700,
+                timeout: 3000,
+                showOverlay: false,
+                centerY: false,
+                css: {
+                  width: '350px',
+                  top: '40px',
+                  left: '',
+                  right: '10px',
+                  border: 'none',
+                  padding: '5px',
+                  backgroundColor: '#000',
+                  '-webkit-border-radius': '10px',
+                  '-moz-border-radius': '10px',
+                  opacity: .6,
+                  color: '#fff'
+                }
+              });
+              run = () ->
+                $(".actualizar_ventas").change()
+              setTimeout(run, 1000)
             else
               console.log(data)
           error: (data)->
@@ -103,7 +128,7 @@ $(".actualizar_auditoria_ventas").on "change", ->
           @cadena_check = "checked title='Ventas Actualizadas'"
         if element.recibos_cobro
           @cadena_recibo = "checked title='Recibo Cobro Enviado'"
-        console.log(element)
+
         $("#tbody_auditoria_ventas").append("<tr><td>"+element.tienda+"</td><td>"+element.actividad_economica+"</td>" +
                                                 "<td>"+element.local+"</td>" +
                                                 "<td>"+element.tipo_canon+"</td><td>"+element.canon_fijo+"</td>" +

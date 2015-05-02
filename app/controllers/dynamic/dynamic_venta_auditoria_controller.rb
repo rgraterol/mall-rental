@@ -43,8 +43,9 @@ module Dynamic
 
         @tipo_canon = @contrato_alquiler.tipo_canon_alquiler.humanize.capitalize
 
+        @mall = current_user.mall.id
         @calendario = CalendarioNoLaborable.new()
-        @cantidad_dias_laborables = @calendario.cantidad_dias_laborables(@month,@year)
+        @cantidad_dias_laborables = @calendario.cantidad_dias_laborables(@month,@year,@mall)
 
         @suma_ventas_mes = Venta.where('extract(year from fecha) = ? AND extract(month from fecha ) = ? AND tienda_id = ?', @year,@month,@tienda.id).sum(:monto_ml)
         @cantidad_ventas_mes = Venta.where('extract(year from fecha) = ? AND extract(month from fecha ) = ? AND tienda_id = ?', @year,@month,@tienda.id).count
