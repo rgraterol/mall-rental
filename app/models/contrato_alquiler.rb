@@ -70,9 +70,20 @@ class ContratoAlquiler < ActiveRecord::Base
     self.fecha_fin.strftime("%d/%m/%Y")
   end
 
+=begin #Codigo como estaba el de Ricardo
   def archivo_contrato_pdf?
     return true if self.archivo_contrato.url.split('.').last == 'pdf'
     return false
+  end
+=end
+
+  def archivo_contrato_pdf? #cambios de Lery para hacer que funcione si no tiene archivo cargado.
+    if self.archivo_contrato.url.nil?
+      return false
+    else
+      return true if self.archivo_contrato.url.split('.').last == 'pdf' || !(self.archivo_contrato.url.nil?)
+      return false
+    end
   end
 
   def calculate_canon(contrato,vmt)

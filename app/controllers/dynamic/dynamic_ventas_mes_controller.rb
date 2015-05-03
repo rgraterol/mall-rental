@@ -24,7 +24,6 @@ module Dynamic
       @tiendas_mall = Mall.find(current_user.mall).tiendas
       for i in 1..@mes_fin.to_i
         @k = i.to_s
-        #@ventas = Mall.find(current_user.mall).tiendas.first.ventas.where('extract(year from fecha) = ? AND extract(month from fecha) = ?', @year, @k).sum(:monto_ml)
         @suma = 0
         @canon_fijo = 0
         @canon_x_ventas = 0
@@ -44,6 +43,7 @@ module Dynamic
             else
               @canon_fijo = 0
             end
+
             if !@contratos.first.porc_canon_ventas.nil?
               @canon_x_ventas += (@contratos.first.porc_canon_ventas * @ventas)
             end
@@ -59,6 +59,7 @@ module Dynamic
               'total_mes_canon' => ActionController::Base.helpers.number_to_currency(@total_mes_canon, separator: ',', delimiter: '.', format: "%n %u", unit: ""),
           }
         end
+
         @ventas_mes.push(@obj)
         @suma_total += @suma
         @total_canon_x_ventas += @canon_x_ventas
