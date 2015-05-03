@@ -1,0 +1,30 @@
+.text_label_monto{
+  height: 30px;
+  padding-top: 9px;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align: right;
+}
+
+#monto_cobrar{
+  text-align: right;
+}
+
+
+#thead_top > tr > th, #thead_top > tr > td{
+  background-color: rgba(1, 1, 0, 0.36) !important;
+}
+
+#thead_top > tr > td.vacia{
+  background: none !important;
+}
+
+#td_suma_monto_alquiler, #td_suma_monto_pagado{
+  padding: 8px 1px !important;
+
+}
+
+#td_suma_monto_alquiler input, #td_suma_monto_pagado input{
+  text-align: right !important;
+  padding: 6px 2px!important;
+}

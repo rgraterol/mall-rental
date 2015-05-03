@@ -4,7 +4,33 @@ class PagoAlquilersController < ApplicationController
   # GET /pago_alquilers
   # GET /pago_alquilers.json
   def index
-    @pago_alquilers = PagoAlquiler.all
+
+    @tiendas = current_user.mall.tiendas
+    @pago_alquilers = Array.new
+    @today = Time.now
+    @year = @today.strftime("%Y")
+    @month = @today.strftime("%-m").to_i-1
+    @suma_x_cobrar = 0
+    @suma_monto_alquiler = 0
+    @suma_monto_pagado = 0
+
+    @tiendas.each do |tienda|
+      @pago_alq = PagoAlquiler.where('extract(year from fecha_recibo_cobro) = ? AND extract(month from fecha_recibo_cobro) = ? AND tienda_id = ?', @year,@month,tienda.id)
+
+      if !@pago_alq.blank?
+        @pago_alquilers.push(@pago_alq)
+        @pago_alquilers.each do |pago|
+          @suma_x_cobrar += pago.where('pagado = ?', FALSE).sum(:monto_alquiler_ml)
+          @suma_monto_alquiler += pago.sum(:monto_alquiler_ml)
+          @suma_monto_pagado += pago.where('pagado = ?', TRUE).sum(:monto_alquiler_ml)
+        end
+      end
+    end
+
+    @suma_x_cob = ActionController::Base.helpers.number_to_currency(@suma_x_cobrar, separator: ',', delimiter: '.', format: "%n %u", unit: "")
+    @suma_monto_pag = ActionController::Base.helpers.number_to_currency(@suma_monto_pagado, separator: ',', delimiter: '.', format: "%n %u", unit: "")
+    @suma_monto_alq = ActionController::Base.helpers.number_to_currency(@suma_monto_alquiler, separator: ',', delimiter: '.', format: "%n %u", unit: "")
+
   end
 
   # GET /pago_alquilers/1
@@ -18,6 +44,11 @@ class PagoAlquilersController < ApplicationController
     if @tienda.blank?
       authorize! :index, root_url, :message => "Debe tener una tienda asignada."
     end
+    @pago_alquiler = PagoAlquiler.new
+  end
+
+  def new_cheque_efectivo
+    @mall = current_user.mall
     @pago_alquiler = PagoAlquiler.new
   end
 
@@ -65,7 +96,7 @@ class PagoAlquilersController < ApplicationController
                 :nro_cheque_confirmacion => params[:pago_alquiler]['nro_cheque_confirmacion'],
                 :cuenta_bancaria_id => params[:pago_alquiler]['cuenta_bancaria_id'],
                 :pagado => TRUE,
-                :nombre_banco => @cuenta_bancaria.banco.nombre,
+                :nombre_banco => params[:pago_alquiler]['nombre_banco'],
                 :facturado => FALSE,
                 :tipo_pago => 1,
                 :contrato_alquiler_id => @contrato_alquiler.id,
@@ -78,6 +109,78 @@ class PagoAlquilersController < ApplicationController
                 format.json { head :no_content }
               else
                 format.html { render action: 'new_transferencia' }
+                format.json { render json: @pago_alquiler.errors, status: :unprocessable_entity }
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+
+  def create_cheque
+
+    @pago_alquiler = PagoAlquiler.new(pago_alquiler_params)
+
+    @tienda_id = params[:pago_alquiler]['tienda']
+    @mes_alquiler = params[:pago_alquiler]['mes_alquiler']
+    @anio_alquiler = params[:pago_alquiler]['anio_alquiler']
+
+    @pago = PagoAlquiler.where('tienda_id = ?',@tienda_id)
+    if @pago.blank?
+      flash[:danger] = 'La tienda no tiene recibos guardados.'
+      render :action=>'new_cheque_efectivo'
+    elsif
+    @pago = PagoAlquiler.where('tienda_id = ? AND pagado = ?',@tienda_id, FALSE)
+      if @pago.blank?
+        flash[:danger] = 'La tienda no tiene recibos por pagar.'
+        render :action=>'new_cheque_efectivo'
+      elsif
+      @pago = PagoAlquiler.where('tienda_id = ? AND pagado = ? AND anio_alquiler = ? AND mes_alquiler = ?',@tienda_id,FALSE,@anio_alquiler.to_i, @mes_alquiler.to_i)
+        if @pago.blank?
+          flash[:danger] = 'El mes y año a pagar no corresponde al que debe pagar.'
+          render :action=>'new_cheque_efectivo'
+        else
+          @pago = @pago.last
+          @monto_alquiler = @pago.monto_alquiler_ml
+
+          if @monto_alquiler.to_f != params[:pago_alquiler]['monto_alquiler_ml'].to_f
+            flash[:danger] = 'El monto de transferencia no corresponde al monto del canon.'
+            render :action=>'new_cheque_efectivo'
+          else
+
+            @contrato_alquiler = ContratoAlquiler.find_by(tienda_id: @tienda_id)
+
+            if params[:pago_alquiler]['tipo_pago'] == 'Cheque'
+              @cuenta_bancaria_id = params[:pago_alquiler]['cuenta_bancaria_id']
+              @nro_cheq_conf = params[:pago_alquiler]['nro_cheque_confirmacion']
+              @nombre_banco = params[:pago_alquiler]['nombre_banco']
+            else
+              @cuenta_bancaria_id = nil
+              @nro_cheq_conf = nil
+              @nombre_banco = nil
+            end
+
+              @obj = {
+                  :fecha_pago => params[:pago_alquiler]['fecha_pago'],
+                  :nro_cheque_confirmacion => @nro_cheq_conf,
+                  :cuenta_bancaria_id => @cuenta_bancaria_id,
+                  :pagado => TRUE,
+                  :nombre_banco => @nombre_banco,
+                  :facturado => FALSE,
+                  :tipo_pago => params[:pago_alquiler]['tipo_pago'],
+                  :contrato_alquiler_id => @contrato_alquiler.id,
+              }
+
+
+            @pago_alquiler = @obj
+
+            respond_to do |format|
+              if @pago.update(@pago_alquiler)
+                format.html { redirect_to pago_alquilers_url, notice: 'Pago alquiler se guardo correctamente.' }
+                format.json { head :no_content }
+              else
+                format.html { render action: 'new_cheque_efectivo' }
                 format.json { render json: @pago_alquiler.errors, status: :unprocessable_entity }
               end
             end
@@ -120,17 +223,6 @@ class PagoAlquilersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pago_alquiler_params
-      params.require(:pago_alquiler).permit(:mes_alquiler,:anio_alquiler, :cuenta_bancaria_id, :monto_alquiler_ml, :fecha_pago, :nro_cheque_confirmacion)
-
-=begin
-      nro_recibo: @nro_recibo, fecha_recibo_cobro: @fecha_recibo,
-          anio_alquiler: @anio_alquiler, mes_alquiler: @mes_alquiler,
-          monto_canon_fijo_ml: @monto_canon_fijo_ml, monto_porc_ventas_ml: @monto_porc_ventas,
-          monto_alquiler_ml: @monto_alquiler, monto_alquiler_usd: @monto_alquiler, pagado: @pagado,
-          tienda_id: tienda)
-      if @pago.save
-=end
-
-
+      params.require(:pago_alquiler).permit(:mes_alquiler,:anio_alquiler, :cuenta_bancaria_id, :monto_alquiler_ml, :fecha_pago, :nro_cheque_confirmacion, :tipo_pago, :tienda_id, :nombre_banco)
     end
 end

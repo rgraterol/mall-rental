@@ -14,30 +14,105 @@
       .ibox.float-e-margins
         .ibox-content
           .row
-            .col-md-3
+            .col-md-4
               .col-md-5.col-sm-3.col-xs-5
                 = form_tag(@lapso_year, :html => { :class => "form-horizontal" } ) do |f|
-                  = select_year(Date.today, options = { :start_year => Time.now.year, :end_year => Time.now.year - 5, :field_name => 'lapso_year'}, :class => 'actualizar_auditoria_ventas')
+                  = select_year(Date.today, options = { :start_year => Time.now.year, :end_year => Time.now.year - 5, :field_name => 'lapso_year'}, :class => 'actualizar_pagos_alquiler')
+              .col-md-5
+                = form_tag(@lapso_month, :html => { :class => "form-horizontal" } ) do |f|
+                  = select_month(Date.today - 1.month, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'select_month', :prefix => 'pagos_alquiler'}, :class => 'actualizar_pagos_alquiler')
+            .col-md-5.col-sm-offset-2
+              .form-group
+                .col-md-4.text_label_monto
+                  = label_tag :monto_cobrar do
+                    Monto x Cobrar:
+                .col-md-5
+                  - @suma_x_cobrar = ActionController::Base.helpers.number_to_currency(@suma_x_cobrar, separator: ',', delimiter: '.', format: "%n %u", unit: "")
+                  = text_field_tag :monto_cobrar, @suma_x_cobrar, class: 'form-control', readonly: 'readonly'
           %br
           .row
             .col-md-12
               %table.table.table-striped.table-bordered.table-hover#table_pagos_mall
+                %thead#thead_top
+                  %tr
+                    %td.vacia
+                    %th.text-center{colspan: 3}
+                      Cobranza
+                    %th.text-center{colspan: 6}
+                      Pago
+                    %th.text-center{colspan: 3}
+                      Factura
                 %thead
                   %tr
-                    %th.text-center{width: '8%'}
-                      Mes
+                    %th.text-center{width: '9%'}
+                      Tienda
                     %th.text-center{width: '5%'}
-                      Cobranza
-                    %th.text-center{width: '7%'}
-                      Pagado x Canon Fijo
+                      Nro Recibo
                     %th.text-center{width: '8%'}
-                      Pagado x Porc Ventas
-                    %th.text-center{width: '15%'}
-                      Total Pagado
-                    %th.text-center{width: '15%'}
-                      Total Pagado (USD)
-                    %th.text-center{width: '15%'}
-                      Monto x Cobrar
-                    %th.text-center{width: '15%'}
-                      Acciones
-                %tbody#tbody_pagos_alquiler
+                      Fecha Cobro
+                    %th.text-center{width: '14%'}
+                      Monto
+                    %th.text-center{width: '5%'}
+                      Pagado
+                    %th.text-center{width: '14%'}
+                      Monto
+                    %th.text-center{width: '6%'}
+                      Tipo Pago
+                    %th.text-center{width: '8%'}
+                      Fecha
+                    %th.text-center{width: '8%'}
+                      Nro Pago
+                    %th.text-center{width: '9%'}
+                      Cta Bancaria
+                    %th.text-center{width: '5%'}
+                      Facturado
+                    %th.text-center{width: '5%'}
+                      Nro Factura
+                    %th.text-center{width: '5%'}
+                      Fecha
+                - if !@pago_alquilers.blank?
+                  %tbody#tbody_pagos_alquiler
+
+                    - @pago_alquilers.each do |pagos|
+                      -pagos.each do |pago|
+                        - if pago.pagado
+                          - @monto = pago.monto_alquiler_ml
+                        - else
+                          - @monto = 0
+
+                        - @monto_alquiler = pago.monto_alquiler_ml
+                        - @monto = ActionController::Base.helpers.number_to_currency(@monto, separator: ',', delimiter: '.', format: "%n %u", unit: "")
+                        - @monto_alquiler = ActionController::Base.helpers.number_to_currency(@monto_alquiler, separator: ',', delimiter: '.', format: "%n %u", unit: "")
+                        %tr
+                          %td= pago.tienda.nombre
+                          %td{ :class => 'text-center' }
+                            = pago.nro_recibo
+                          %td= pago.fecha_recibo_cobro
+                          %td{ :class => 'text-right' }
+                            = @monto_alquiler
+                          %td{ :class => 'text-center' }
+                            = check_box_tag 'alquiler_pago', 'Pago Realizado', pago.pagado, disabled: true
+                          %td{ :class => 'text-right' }
+                            = @monto
+                          %td= pago.tipo_pago.humanize.capitalize rescue nil
+                          %td= pago.fecha_pago
+                          %td= pago.nro_cheque_confirmacion
+                          %td{ :class => 'text-center' }
+                            = CuentaBancarium.find(pago.cuenta_bancaria_id).banco.nombre
+                          %td{ :class => 'text-center' }
+                            = check_box_tag 'pago_facturado', 'Pago Facturado', pago.facturado, disabled: true
+                          %td= pago.nro_factura
+                          %td= pago.fecha_factura
+                  %tfoot#tfoot_pagos_alquiler
+                    %tr
+                      %th
+                        Total:
+                      %td{colspan: 2}
+                      %td#td_suma_monto_alquiler
+                        = text_field_tag :input_suma_monto_alquiler, @suma_monto_alq, class: 'form-control', readonly: 'readonly'
+                      %td
+                      %td#td_suma_monto_pagado
+                        = text_field_tag :input_suma_monto_pagado, @suma_monto_pag, class: 'form-control', readonly: 'readonly'
+                - else
+                  %tr
+                    %td.text-center{colspan: 13}= 'No existen registros de pago para este periodo'

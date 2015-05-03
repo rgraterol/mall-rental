@@ -82,6 +82,8 @@ Myapp::Application.routes.draw do
 
   get 'pago_alquilers/new_transferencia' => 'pago_alquilers#new_transferencia', as: :registrar_pago_transferencia
   post '/pago_alquilers/create' =>  'pago_alquilers#create'
+  get 'pago_alquilers/new_cheque_efectivo' => 'pago_alquilers#new_cheque_efectivo', as: :registrar_pago_cheque_efectivo
+  post '/pago_alquilers/create_cheque' =>  'pago_alquilers#create_cheque'
 
   resources :pago_alquilers
 
@@ -92,6 +94,7 @@ Myapp::Application.routes.draw do
     post 'dynamic_venta_auditoria/auditoria'
     post 'dynamic_ventas_mes/ventas'
     post 'dynamic_pago_alquilers/recibos_cobro'
+    post 'dynamic_pago_alquilers/actualizar_pagos'
     post 'dynamic_add_nivel_mall/guardar'
   end
 

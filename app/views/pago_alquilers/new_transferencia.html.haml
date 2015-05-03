@@ -55,13 +55,17 @@
               .col-sm-10
                 = f.text_field :monto_alquiler_ml,class: 'form-control'
             .form-group
-              = f.label :fecha_pago, "Fecha Transferencia", class: 'col-sm-2 control-label'
+              = f.label :fecha_pago, "Fecha Transferencia:", class: 'col-sm-2 control-label'
               .col-sm-10
                 = f.text_field :fecha_pago, class: "input-sm form-control", id: 'fecha_pago'
             .form-group
-              = f.label :nro_cheque_confirmacion, "Nro Confirmacion", class: 'col-sm-2 control-label'
+              = f.label :nro_cheque_confirmacion, "Nro Confirmacion:", class: 'col-sm-2 control-label'
               .col-sm-10
                 = f.text_field :nro_cheque_confirmacion, class: "form-control"
+            .form-group
+              = f.label :nombre_banco, "Nombre del Banco Emisor:", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :nombre_banco, class: "form-control"
             .form-group
               = f.label :archivo_transferencia, 'Archivo de Transferencia: ', class: 'col-sm-2 control-label'
               .col-sm-10

@@ -27,4 +27,8 @@ class PagoAlquiler < ActiveRecord::Base
   belongs_to :cuenta_bancarium
 
   enum tipo_pago: [:Cheque, :Transferencia, :Efectivo]
+
+  def self.valid_forma_pago
+    %w[Cheque Efectivo]
+  end
 end

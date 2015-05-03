@@ -112,8 +112,6 @@ $(".actualizar_auditoria_ventas").on "change", ->
       month: $("#ventas_select_month").val()
     before_send: $.blockUI({message: 'Por favor espere...'})
     success: (data) ->
-      console.log(data)
-      console.log(data[0]['tiendas_cont'])
       $("#total_ventas_mes").val(data[0]['total_ventas'])
       $("#monto_canon_fijo").val(data[0]['suma_canon_fijo'])
       $("#monto_canon_x_venta").val(data[0]['suma_canon_ventas'])

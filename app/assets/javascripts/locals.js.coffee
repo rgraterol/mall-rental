@@ -117,7 +117,7 @@ $("#icon-save-new-nivel").on "click", ->
         data:
           nombre: valor
         success: (data) ->
-          console.log(data)
+
           $("#local_nivel_mall_id").append("<option value='"+data.id+"'>"+data.nombre+"</option>")
           $("#local_nivel_mall_id").val(data.id)
           $(".mostrar").css "display","block"

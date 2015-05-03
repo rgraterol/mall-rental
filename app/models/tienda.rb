@@ -80,6 +80,10 @@ class Tienda < ActiveRecord::Base
     where(tipo_locals: {id: tipo_local_id})
   end
 
+  def self.valid_tiendas(user)
+    return Tienda.joins(:local).joins(:mall).where(malls: {id: user.mall_id})
+  end
+
 
   #TODO MOVER A UN LUGAR MAS ADECUADO
   def self.estadisticas(mall, fecha_init, fecha_end, nivel_mall_id, actividad_economica_id, tipo_local_id, criterio )
