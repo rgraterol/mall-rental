@@ -34,11 +34,16 @@ class VentasController < ApplicationController
   end
 
   def mall_tiendas
-=begin
-    @tienda = current_user.tienda
-    @ventas = Venta.where(tienda_id: @tienda_id)
-    @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
-=end
+    if !params[:acceso].nil?
+      @acceso = params[:acceso]
+      @month = params[:month]
+      @today = Time.now
+      @year == @today.strftime("%Y")
+      @month = Date.new(@year.to_i,@month.to_i,1)
+    else
+      @acceso = 1
+
+    end
   end
 
   def  mensuales

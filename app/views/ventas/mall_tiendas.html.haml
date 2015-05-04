@@ -5,6 +5,9 @@
     %ol.breadcrumb
       %li
         = link_to 'Inicio', root_url
+      -if @acceso != 1
+        %li
+          = link_to 'Reporte de Pagos Mensuales', pagos_mensuales_mall_path
       %li
         Reporte de Ventas del Mall x Tiendas
 
@@ -16,42 +19,11 @@
           .row
             .col-md-3
               .col-md-5.col-sm-3.col-xs-5
-                = form_tag(@lapso_year, :html => { :class => "form-horizontal" } ) do |f|
+                = form_tag(@lapso_year, :html => {:class => "form-horizontal" } ) do |f|
                   = select_year(Date.today, options = { :start_year => Time.now.year, :end_year => Time.now.year - 5, :field_name => 'lapso_year'}, :class => 'actualizar_auditoria_ventas')
               .col-md-5.col-sm-3.col-xs-5
                 = form_tag(@lapso_month, :html => { :class => "form-horizontal" } ) do |f|
-                  = select_month(Date.today, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'select_month', :prefix => 'ventas'}, :class => 'actualizar_auditoria_ventas')
-            .col-md-4
-              -@suma = number_with_precision(0, precision: 2, separator: ',', delimiter: '.')
-              .form-group
-                .col-md-5
-                  = label_tag :total_ventas_mes do
-                    Total Ventas:
-                .col-md-7
-                  -@suma = number_with_precision(0, precision: 2, separator: ',', delimiter: '.')
-                  = text_field_tag :total_ventas_mes, @suma, autofocus: true, class: 'form-control', readonly: 'readonly'
-            .col-md-4
-              .form-group
-                .col-md-5
-                  = label_tag :monto_canon_fijo do
-                    Monto Canon Fijo:
-                .col-md-7
-                  = text_field_tag :monto_canon_fijo, @suma, autofocus: true, class: 'form-control', readonly: 'readonly'
-          .row
-            .col-md-4.col-sm-offset-3
-              .form-group
-                .col-md-5
-                  = label_tag :monto_canon_x_venta do
-                    Monto Canon x Venta:
-                .col-md-7
-                  = text_field_tag :monto_canon_x_venta, @suma, autofocus: true, class: 'form-control', readonly: 'readonly'
-            .col-md-4
-              .form-group
-                .col-md-5
-                  = label_tag :total_canon do
-                    Total Canon:
-                .col-md-7
-                  = text_field_tag :total_canon, @suma, autofocus: true, class: 'form-control', readonly: 'readonly'
+                  = select_month(@month || Date.today, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'select_month', :prefix => 'ventas', selected: @month}, :class => 'actualizar_auditoria_ventas')
           %br
           .row
             .col-md-12
@@ -78,3 +50,14 @@
                       Total Canon
                     %th.text-center{width: '6%'}
                 %tbody#tbody_mall_ventas
+                %tfoot#tfoot_mall_ventas
+                  %tr
+                    %th{width: '8%', colspan: 5}
+                    %th.text-right{width: '13%'}
+                      = text_field_tag :monto_canon_fijo, @suma, class: 'form-control', readonly: 'readonly'
+                    %th.text-right{width: '13%'}
+                      = text_field_tag :total_ventas_mes, @suma, class: 'form-control', readonly: 'readonly'
+                    %th.text-right{width: '13%'}
+                      = text_field_tag :monto_canon_x_venta, @suma, class: 'form-control', readonly: 'readonly'
+                    %th.text-right{width: '13%'}
+                      = text_field_tag :total_canon, @suma, class: 'form-control', readonly: 'readonly'

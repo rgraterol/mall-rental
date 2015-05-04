@@ -1,0 +1,74 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Ventas Mensuales del Mall
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        P Mensuales del Mall
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          %br
+          .row
+            .col-md-3
+              = form_tag(@lapso_year, :html => { :class => "form-horizontal" } ) do |f|
+                = select_year(Date.today, options = { :start_year => Time.now.year, :end_year => Time.now.year - 5, :field_name => 'lapso_year'}, :class => 'actualizar_pagos_mensuales')
+          %br
+          %br
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover.dataTables-example#table_pagos_mensuales_mall
+                %thead
+                  %tr
+                    %th.text-center Mes
+                    %th.text-center Cobranza
+                    %th.text-center Pagado x Canon Fijo
+                    %th.text-center Pagado x Porc Ventas
+                    %th.text-center Total Pagado
+                    %th.text-center Total Pagado (USD)
+                    %th.text-center Monto x Cobrar
+                    %th.text-center Acciones
+                %tbody#tbody_pagos_mensuales_mall
+                  %tr
+                    %td.text-center Enero
+                    %td.text-center{rowspan: 12, colspan: 7,style: "vertical-align: middle"}
+                      %span.text-center{style: "vertical-align: middle"}
+                        Cargando Datos...
+                  %tr
+                    %td.text-center Febrero
+                  %tr
+                    %td.text-center Marzo
+                  %tr
+                    %td.text-center Abril
+                  %tr
+                    %td.text-center Mayo
+                  %tr
+                    %td.text-center Junio
+                  %tr
+                    %td.text-center Julio
+                  %tr
+                    %td.text-center Agosto
+                  %tr
+                    %td.text-center Septiembre
+                  %tr
+                    %td.text-center Octubre
+                  %tr
+                    %td.text-center Noviembre
+                  %tr
+                    %td.text-center Diciembre
+                %tfoot#tfoot-ventas-mall
+                  %tr
+                    %td.text-center TOTAL
+                    %td#suma_cobranza
+                    %td#suma_pagado_canon_fijo
+                    %td#suma_pagado_x_ventas
+                    %td#suma_total_pagado
+                    %td#suma_total_pagado_usd
+                    %td#suma_monto_x_cobrar
+
+

@@ -190,6 +190,10 @@ class PagoAlquilersController < ApplicationController
     end
   end
 
+  def pagos_mensuales
+
+  end
+
   # PATCH/PUT /pago_alquilers/1
   # PATCH/PUT /pago_alquilers/1.json
   def update

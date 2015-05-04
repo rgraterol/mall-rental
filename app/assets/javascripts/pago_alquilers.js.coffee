@@ -3,6 +3,7 @@
 
 jQuery(document).ready ($) ->
 
+  $(".actualizar_pagos_mensuales").change()
   $('#fecha_pago').datepicker
     keyboardNavigation: false
     forceParse: false
@@ -151,6 +152,35 @@ $(".actualizar_pagos_alquiler").on "change", ->
         $("#monto_cobrar").val('0,00')
         $("#tfoot_pagos_alquiler").hide()
         $("#tbody_pagos_alquiler").append("<tr><td colspan=13 class='text-center'>No existen registros de pago para este periodo</td></tr>")
+
+    error: (data)->
+      console.log(data)
+    complete: ->
+      a=1
+
+$(".actualizar_pagos_mensuales").on "change", ->
+  $.ajax
+    type: "POST"
+    url: "/dynamic_pago_alquilers_mensuales/pagos"
+    dataType: "JSON"
+    data:
+      year: $("#date_lapso_year").val()
+    success: (data) ->
+      $("#tbody_pagos_mensuales_mall").empty()
+      meses = ['Enero', 'Febrero', 'Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+      mes_fin = data[0]['mes_actual']-1
+
+      console.log(data)
+
+      for num in [0..mes_fin]
+        $("#tbody_pagos_mensuales_mall").append("<tr><th>"+meses[num]+"</th><td>"+data[0]['pagos'][num].total_cobranza+"</td><td>"+data[0]['pagos'][num].pagado_canon_fijo+"</td><td>"+data[0]['pagos'][num].pagado_x_ventas+"</td><td>"+data[0]['pagos'][num].total_pagado+"</td><td>"+data[0]['pagos'][num].total_pagado_usd+"</td><td>"+data[0]['pagos'][num].monto_cobrar+"</td><td><a href='/ventas_mall_tiendas/2/"+(num+1)+"'>Ver Detalles de Pagos</a></td></tr>")
+
+      $("#suma_cobranza").text(data[0]['totales']['suma_cobranza'])
+      $("#suma_pagado_canon_fijo").text(data[0]['totales']['suma_pagado_canon_fijo'])
+      $("#suma_pagado_x_ventas").text(data[0]['totales']['suma_pagado_x_ventas'])
+      $("#suma_total_pagado").text(data[0]['totales']['suma_total_pagado'])
+      $("#suma_total_pagado_usd").text(data[0]['totales']['suma_total_pagado_usd'])
+      $("#suma_monto_x_cobrar").text(data[0]['totales']['suma_monto_x_cobrar'])
 
     error: (data)->
       console.log(data)
