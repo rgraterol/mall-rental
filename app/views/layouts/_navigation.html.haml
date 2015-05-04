@@ -48,6 +48,26 @@
               %li{class: is_active_action('index')}= link_to 'Visualizar Roles', roles_path
             - if can? :new, Role
               %li{class: is_active_action('new')}= link_to 'Nuevo Rol', new_role_path
+      - if can? :manage, Pai
+        %li{class: is_active_controller('pais')}
+          = link_to pais_path do
+            %i.fa.fa-map-marker
+            %span.nav-label Paises
+      - if can? :manage, CambioMoneda
+        %li{class: is_active_controller('cambio_monedas')}
+          = link_to cambio_monedas_path do
+            %i.fa.fa-money
+            %span.nav-label Cambio de Moneda
+      - if can? :index, Mall
+        %li{class: is_active_controller('malls')}
+          = link_to malls_path do
+            %i.fa.fa-building-o
+            %span.nav-label Malls
+      - if can? :manage, CalendarioNoLaborable
+        %li{class: is_active_controller('calendario_no_laborables')}
+          = link_to calendario_no_laborables_path do
+            %i.fa.fa-calendar
+            %span.nav-label Calendario No Laboral
       - if can? :index, :mall_user
         %li{class: is_active_controller('users/mall_users')}
           = link_to mall_users_path do
@@ -56,22 +76,17 @@
       - if can? :index, Arrendatario
         %li{class: is_active_controller('arrendatarios')}
           = link_to arrendatarios_path do
-            %i.fa.fa-money
+            %i.fa.fa-server
             %span.nav-label Arrendatarios
       - if can? :index, Local
         %li
           = link_to local_index_path do
-            %i.fa.fa-building-o
+            %i.fa.fa-bars
             %span.nav-label Locales
-      - if can? :index, Mall
-        %li{class: is_active_controller('malls')}
-          = link_to malls_path do
-            %i.fa.fa-building-o
-            %span.nav-label Malls
       - if can? :index, Tienda
         %li{class: is_active_controller('tiendas')}
           %a{href: '#'}
-            %i.fa.fa-credit-card
+            %i.fa.fa-shopping-cart
             %span.nav-label Tiendas
             %span.fa.arrow
           %ul{:class => "nav nav-second-level #{is_active_controller('tiendas')}"}
@@ -81,7 +96,7 @@
       - if can? :index, Venta
         %li{class: is_active_controller('ventas')}
           %a{href: '#'}
-            %i.fa.fa-credit-card
+            %i.fa.fa-usd
             %span.nav-label Ventas
             %span.fa.arrow
           %ul{:class => "nav nav-second-level #{is_active_controller('ventas')}"}
@@ -95,7 +110,7 @@
       - if can? :index, PagoAlquiler
         %li{class: is_active_controller('pago_alquilers')}
           %a{href: '#'}
-            %i.fa.fa-credit-card
+            %i.fa.fa-cc-visa
             %span.nav-label Pago Alquiler
             %span.fa.arrow
           %ul{:class => "nav nav-second-level #{is_active_controller('pago_alquilers')}"}

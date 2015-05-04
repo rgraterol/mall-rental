@@ -3,6 +3,7 @@
     %h2
       Locales Registrados
       = @mall.present? ? ' del '+@mall.nombre : nil
+      %i.fa.fa-bars
 
     %ol.breadcrumb
       %li
@@ -54,7 +55,7 @@
                 %tbody
                   - @locals.all.each do |local|
                     %tr
-                      %td=# image_tag local.foto.url || 'building-avatar.gif', class: 'img-circle', height: 80
+                      %td= image_tag local.foto.url || 'building-avatar.gif', class: 'img-circle', height: 80
                       %td= local.nro_local
                       %td= local.nivel_mall.nombre
                       %td= local.ubicacion_pasillo

@@ -3,7 +3,8 @@
   .col-lg-10
     %h2
       = current_user.mall.nombre
-      \- Nuevo Usuario
+      \- Nuevo Usuario Mall
+      %i.fa.fa-users
     %ol.breadcrumb
       %li
         = link_to 'Inicio', root_url
@@ -12,7 +13,7 @@
       %li
         = link_to 'Registro de Nuevo Usuario Mall', new_mall_user_path
       %li
-        Nuevo Usuario
+        Nuevo Usuario Mall
 
 .wrapper.wrapper-content
   .row.animated.fadeInRight

@@ -57,9 +57,9 @@ class ContratoAlquiler < ActiveRecord::Base
 
   def set_missing_attributes_create
     self.nro_contrato = NumerosControl.get_nro_contrato
-    self.canon_fijo_usd = self.canon_fijo_ml / CambioMoneda.last.cambio_ml_x_usd if self.canon_fijo_ml.present?
-    self.monto_minimo_ventas = self.canon_fijo_ml / (self.porc_canon_ventas / 100) if self.porc_canon_ventas.present? && self.canon_fijo_ml.present?
-    self.requerida_venta = true if self.porc_canon_ventas.present?
+    self.canon_fijo_usd = self.canon_fijo_ml / CambioMoneda.last.cambio_ml_x_usd if self.canon_fijo_ml.present? && self.canon_fijo_ml != 0
+    self.monto_minimo_ventas = self.canon_fijo_ml / (self.porc_canon_ventas / 100) if self.porc_canon_ventas.present? && porc_canon_ventas != 0 && self.canon_fijo_ml.present? && self.canon_fijo_ml != 0
+    self.requerida_venta = true if self.porc_canon_ventas.present? && self.porc_canon_ventas != 0
   end
 
   def fecha_inicio_fix

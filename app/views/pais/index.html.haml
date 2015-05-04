@@ -29,11 +29,11 @@
                     %th Moneda
                     %th Acciones
                 %tbody
-                  - @paises.all.each do |pais|
+                  - @pais.all.each do |pais|
                     %tr
                       %td= pais.nombre
-                      %td= pais.idioma.nombre
-                      %td= pais.moneda.nombre
+                      %td= pais.idioma.nombre rescue ''
+                      %td= pais.moneda.nombre rescue ''
                       %td
                         = link_to edit_pai_path(pais) do
                           %i.fa.fa-pencil

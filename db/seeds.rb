@@ -1,4 +1,3 @@
-admin_role = Role.create!(name: 'SUPER MALL ADMIN', permissions: Permission.where(name: 'manage'))
 
 bs = Moneda.create!(nombre: 'Bolívares')
 dolar = Moneda.create!(nombre: 'Dolares')
@@ -6,9 +5,12 @@ euro = Moneda.create!(nombre: 'Euros')
 
 CambioMoneda.create!(fecha: Date.today, cambio_ml_x_usd: 250)
 
-venezuela = Pai.create!(nombre: 'Venezuela', moneda: bs)
-usa = Pai.create!(nombre: 'Estados Unidos', moneda: dolar)
-españa = Pai.create!(nombre: 'España', moneda: euro)
+es = Idioma.create!(nombre: 'Español')
+en = Idioma.create!(nombre: 'Inglés')
+venezuela = Pai.create!(nombre: 'Venezuela', moneda: bs, idioma: es)
+usa = Pai.create!(nombre: 'Estados Unidos', moneda: dolar, idioma: en)
+españa = Pai.create!(nombre: 'España', moneda: euro, idioma: es)
+
 
 banco1 = Banco.create!(nombre: 'Banesco')
 
@@ -16,9 +18,8 @@ cuenta_banco1 = CuentaBancarium.create!(nro_cta: '0134-5254-5485255', tipo_cuent
 
 cc_vela = Mall.create!(nombre: 'C.C La Vela', abreviado: 'cc_vela', rif: 'V-98735638-1', direccion_fiscal: 'Porlamar - Margarita', telefono: '0285-8965425', pai: venezuela, cuenta_bancarium: cuenta_banco1)
 
-User.create!(name: 'Super Administrador', username: 'mall_admin', password: '12345678', email: 'surf.airwaves@hotmail.com', cellphone: '0414-2312322', role: admin_role, mall: cc_vela)
 
-ActividadEconomica.create!([{nombre: 'Zapateria', mall: cc_vela}, {nombre: 'Boutique', mall: cc_vela}, {nombre: 'Restaurant', mall: cc_vela}])
+# ActividadEconomica.create!([{nombre: 'Zapateria', mall: cc_vela}, {nombre: 'Boutique', mall: cc_vela}, {nombre: 'Restaurant', mall: cc_vela}])
 
 actividad_eco1 = ActividadEconomica.create!(nombre: 'Zapateria', mall: cc_vela)
 actividad_eco2 = ActividadEconomica.create!(nombre: 'Boutique', mall: cc_vela)

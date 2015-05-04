@@ -57,12 +57,12 @@
               = c.label :fecha_inicio, class: 'col-sm-3 control-label' do
                 Fecha Inicio del Contrato:
               .col-sm-9.form-inline
-                = c.date_select :fecha_inicio, {}, class: 'form-control'
+                = c.date_select :fecha_inicio, {default: "01/01/#{Date.today.year}".to_date}, class: 'form-control'
             .form-group
               = c.label :fecha_fin, class: 'col-sm-3 control-label' do
                 Fecha Fin del Contrato:
               .col-sm-9.form-inline
-                = c.date_select :fecha_fin, {}, class: 'form-control'
+                = c.date_select :fecha_fin, {default: "31/12/#{Date.today.year}".to_date}, class: 'form-control'
             %div#canon_fijo{style: (c.object.tipo_canon_alquiler == 'fijo' || c.object.tipo_canon_alquiler == 'fijo_y_variable_venta_bruta' || c.object.tipo_canon_alquiler == 'fijo_y_variable_venta_neta') ? '' : 'display:none'}
               .form-group
                 = c.label :canon_fijo_ml, class: 'col-sm-3 control-label' do
@@ -102,7 +102,7 @@
               = c.label :requerida_venta, class: 'col-sm-3 control-label' do
                 Requeridas las Ventas Diarias:
               .col-sm-9
-                = c.check_box :requerida_venta, {checked: false, id: 'requerida_venta_check'}, "true", "false"
+                = c.check_box :requerida_venta, {disabled: c.object.tipo_canon_alquiler == 'fijo' ? false : true, id: 'requerida_venta_check'}, "true", "false"
 
   .row
     .col-lg-12
@@ -116,3 +116,6 @@
               = f.submit 'Guardar', class: 'btn btn-mall btn-block', disable_with: 'Guardar'
 
 
+.div.growlUI
+  =image_tag 'check48.png', class: 'img-circle', width: '20px'
+  Actividad Económica Guardada Exitosamente

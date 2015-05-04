@@ -32,7 +32,7 @@ class Tienda < ActiveRecord::Base
   has_many :pago_alquilers
 
   after_create :set_missing_attributes
-  # after_update :set_missing_attributes
+
 
   validates :local_id, :actividad_economica_id, :arrendatario_id, presence: true
 
@@ -96,7 +96,10 @@ class Tienda < ActiveRecord::Base
         porc_canon = 0
         ventas = 0
         tienda.contrato_alquilers.each do |contrato|
-          canon_fijo, canon_fijo_usd, porc_canon, ventas = ventas_x_contrato(canon_fijo, canon_fijo_usd, contrato, porc_canon, ventas)
+           porc_canon, ventas = ventas_x_contrato(canon_fijo, canon_fijo_usd, contrato, porc_canon, ventas)
+        end
+        tienda.pago_alquilers.each do |pago_alquiler|
+          # canon_fijo, canon_fijo_usd =
         end
         hash_stats[:ventas] = ventas
         hash_stats[:canon_fijo_ml] = canon_fijo
@@ -117,7 +120,7 @@ class Tienda < ActiveRecord::Base
           canon_fijo_usd += canon_fijo_usd
           porc_canon += porc_canon
           tienda.contrato_alquilers.each do |contrato|
-            canon_fijo, canon_fijo_usd, porc_canon, ventas = ventas_x_contrato(canon_fijo, canon_fijo_usd, contrato, porc_canon, ventas)
+             porc_canon, ventas = ventas_x_contrato(canon_fijo, canon_fijo_usd, contrato, porc_canon, ventas)
           end
         end
         hash_stats = Hash.new
@@ -125,7 +128,7 @@ class Tienda < ActiveRecord::Base
         hash_stats[:canon_fijo_usd] = canon_fijo_usd
         hash_stats[:porc_canon] = porc_canon
         hash_stats[:criterio] = nivel_mall.nombre
-	hash_stats[:ventas] = ventas
+	      hash_stats[:ventas] = ventas
         estadisticas << hash_stats
       end
     elsif criterio == 'actividad_economica'
@@ -140,15 +143,16 @@ class Tienda < ActiveRecord::Base
           canon_fijo_usd += canon_fijo_usd
           porc_canon += porc_canon
           tienda.contrato_alquilers.each do |contrato|
-            canon_fijo, canon_fijo_usd, porc_canon, ventas = ventas_x_contrato(canon_fijo, canon_fijo_usd, contrato, porc_canon, ventas)
+             porc_canon, ventas = ventas_x_contrato(canon_fijo, canon_fijo_usd, contrato, porc_canon, ventas)
           end
         end
         hash_stats = Hash.new
         hash_stats[:canon_fijo_ml] = canon_fijo
         hash_stats[:canon_fijo_usd] = canon_fijo_usd
         hash_stats[:porc_canon] = porc_canon
-	hash_stats[:ventas] = ventas
+	      hash_stats[:ventas] = ventas
         hash_stats[:criterio] = actividad_economica.nombre
+
         estadisticas << hash_stats
       end
     elsif criterio == 'tipo_local'
@@ -163,7 +167,7 @@ class Tienda < ActiveRecord::Base
           canon_fijo_usd += canon_fijo_usd
           porc_canon += porc_canon
           tienda.contrato_alquilers.each do |contrato|
-            canon_fijo, canon_fijo_usd, porc_canon, ventas = ventas_x_contrato(canon_fijo, canon_fijo_usd, contrato, porc_canon, ventas)
+             porc_canon, ventas = ventas_x_contrato(canon_fijo, canon_fijo_usd, contrato, porc_canon, ventas)
           end
         end
         hash_stats = Hash.new
@@ -171,7 +175,7 @@ class Tienda < ActiveRecord::Base
         hash_stats[:canon_fijo_usd] = canon_fijo_usd
         hash_stats[:porc_canon] = porc_canon
         hash_stats[:criterio] = tipo_local.tipo
-	hash_stats[:ventas] = ventas
+	      hash_stats[:ventas] = ventas
         estadisticas << hash_stats
       end
     end
@@ -180,14 +184,10 @@ class Tienda < ActiveRecord::Base
 
   def self.ventas_x_contrato(canon_fijo, canon_fijo_usd, contrato, porc_canon, ventas)
     ventas += ventas
-    canon_fijo += canon_fijo
-    canon_fijo_usd += canon_fijo_usd
     porc_canon += porc_canon
     ventas = contrato.ventas.count
-    canon_fijo = contrato.ventas.count * contrato.canon_fijo_ml unless contrato.canon_fijo_ml.blank?
-    canon_fijo_usd = contrato.ventas.count * contrato.canon_fijo_usd unless contrato.canon_fijo_ml.blank?
     porc_canon = contrato.ventas.sum(:monto_ml) * contrato.porc_canon_ventas unless contrato.porc_canon_ventas.blank?
-    return canon_fijo, canon_fijo_usd, porc_canon, ventas
+    return  porc_canon, ventas
   end
 
 

@@ -4,3 +4,30 @@
 //= require dataTables/dataTables.tableTools.min.css
 //= require jquery-ui/jquery-ui-1.10.4.custom.min.css
 //= require jqGrid/ui.jqgrid.css
+
+div.growlUI { background: url(check48.png) no-repeat 10px 10px }
+div.growlUI h1, div.growlUI h2 {
+  color: white;
+  font-size: 15px;
+  padding: 5px 5px 5px 75px;
+  text-align: left
+}
+
+.blockUI{
+  background-color: #000;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  opacity: .8;
+  color: #fff;
+  font-size: 18px;
+}
+
+div.growlUI {
+  background: none !important;
+  display: none;
+}
+div.growlUI h1, div.growlUI h2 {
+  color: white;
+  padding: 15px 15px 15px 75px;
+  text-align: left
+}

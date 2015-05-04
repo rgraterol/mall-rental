@@ -28,10 +28,10 @@ class ApplicationController < ActionController::Base
     def self.permission
       self.name.gsub('Controller','').singularize.split('::').last.constantize.name rescue nil
     end
-end
 
     def current_ability
       @current_ability ||= Ability.new(current_user)
+    end
 
     def load_permissions
       @current_permissions = current_user.roles.each do |role|

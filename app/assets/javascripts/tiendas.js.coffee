@@ -9,6 +9,7 @@
 #= require jqGrid/jquery.jqGrid.min.js
 #= require jquery-ui/jquery-ui.min.js
 #= require bootstrapValidator/bootstrapValidator
+#= require jquery.blockUI.js
 
 jQuery(document).ready ($) ->
 
@@ -102,6 +103,27 @@ jQuery(document).ready ($) ->
           $("#select_actividad_economica_tienda").val(data.id);
           $('#add_actividad_economica_select').hide()
           $('#nueva_actividad_economica').val('')
+          $.blockUI({
+            message: $('div.growlUI'),
+            fadeIn: 700,
+            fadeOut: 700,
+            timeout: 3000,
+            showOverlay: false,
+            centerY: false,
+            css: {
+              width: '350px',
+              top: '40px',
+              left: '',
+              right: '10px',
+              border: 'none',
+              padding: '5px',
+              backgroundColor: '#000',
+              '-webkit-border-radius': '10px',
+              '-moz-border-radius': '10px',
+              opacity: .6,
+              color: '#fff'
+            }
+          });
         error: (data)->
           $('#validacion_nombre_en_uso_actividad').show()
         complete: ->

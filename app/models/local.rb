@@ -23,7 +23,8 @@ class Local < ActiveRecord::Base
   validates :tipo_local_id, :nro_local, :area_planta, :area_terraza, :area_mezanina, presence: true
   validates :area_planta, :area_terraza, :area_mezanina, numericality: true
   validates :tipo_estado_local, presence: true
-  #mount_uploader :foto, AvatarUploader
+
+  mount_uploader :foto, AvatarUploader
 
   enum tipo_estado_local: [:Disponible, :Alquilado, :En_Reparacion, :Vendido]
 
