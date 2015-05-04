@@ -112,7 +112,12 @@ class ContratoAlquiler < ActiveRecord::Base
       @monto_minimo_v = 0
       @canon_x_ventas = 0
     end
-
+    if (@canon_fijo.nil?)
+      @canon_fijo = 0
+    end
+    if @canon_x_ventas.nil?
+      @canon_x_ventas = 0
+    end
     @canon_alquiler = @canon_fijo + @canon_x_ventas
     @obj = {
         'canon_fijo' => @canon_fijo,
