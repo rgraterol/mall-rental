@@ -69,7 +69,7 @@
             .form-group
               = f.label :archivo_transferencia, 'Archivo de Transferencia: ', class: 'col-sm-2 control-label'
               .col-sm-10
-                = render 'shared/file_upload_transf', f: f , field: :archivo_transferencia, name_file: f.object.archivo_transferencia || nil
+                = render 'shared/file_upload_generic', f: f, field: :archivo_transferencia, name_file: f.object.archivo_transferencia || nil
             .form-group
               .col-sm-3.col-sm-offset-9
                 = f.submit "Guardar", class: "btn btn-warning btn-block"

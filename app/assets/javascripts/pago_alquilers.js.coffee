@@ -1,4 +1,5 @@
 #= require datapicker/bootstrap-datepicker.js
+#= require jasny/jasny-bootstrap
 #= require bootstrapValidator/bootstrapValidator.js
 
 jQuery(document).ready ($) ->
