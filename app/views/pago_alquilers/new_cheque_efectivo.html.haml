@@ -54,9 +54,9 @@
                 = f.label :cuenta_bancaria, "Nro. Cuenta a Depositar: ", class: 'col-sm-2 control-label'
                 .col-sm-10
                   .group-show
-                    = f.select(:cuenta_bancaria_id,{},{ include_blank: 'Seleccione la cuenta bancaria'},html_options = {class: "form-control"})  do
+                    = f.select(:cuenta_bancarium_id,{},{ include_blank: 'Seleccione la cuenta bancaria'},html_options = {class: "form-control"})  do
                       - CuentaBancarium.all.each do |c|
-                        = content_tag(:option, c.banco.nombre+'  '+c.nroCta, value: c.id)
+                        = content_tag(:option, c.banco.nombre+'  '+c.nro_cta, value: c.id)
                       - {class: "form-control"}
             %div#rowNumero{style: (f.object.tipo_pago == 'Cheque') ? '' : 'display:none'}
               .form-group
