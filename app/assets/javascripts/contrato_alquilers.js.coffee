@@ -41,7 +41,7 @@ jQuery(document).ready ->
   calcular_monto_minimo_venta()
 
   $("#porc_canon_tienda").inputmask("Regex", {
-    regex: "[0-9]{1,3}%"
+    regex: "[0-9.]{1,5}%"
   });
 
   $('#select_canon_alquiler').change ->

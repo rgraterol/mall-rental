@@ -91,65 +91,65 @@ class Tienda < ActiveRecord::Base
     if criterio == 'tiendas'
       mall.tiendas.joins(:nivel_mall, :actividad_economica, :tipo_local, :contrato_alquilers).by_nivel_mall(nivel_mall_id).by_actividad_economica(actividad_economica_id).by_rango_contrato(fecha_init, fecha_end).by_tipo_local(tipo_local_id).each do |tienda|
         hash_stats = Hash.new
-        canon_fijo = 0
-        canon_fijo_usd = 0
-        porc_canon = 0
         ventas = 0
         tienda.contrato_alquilers.each do |contrato|
-           porc_canon, ventas = ventas_x_contrato(canon_fijo, canon_fijo_usd, contrato, porc_canon, ventas)
-        end
-        tienda.pago_alquilers.each do |pago_alquiler|
-          # canon_fijo, canon_fijo_usd =
+           ventas = ventas_x_contrato(contrato, ventas)
         end
         hash_stats[:ventas] = ventas
-        hash_stats[:canon_fijo_ml] = canon_fijo
-        hash_stats[:canon_fijo_usd] = canon_fijo_usd
-        hash_stats[:porc_canon] = porc_canon
+        hash_stats[:canon_fijo_ml] = tienda.pago_alquilers.sum(:monto_canon_fijo_ml)
+        hash_stats[:porc_canon] = tienda.pago_alquilers.sum(:monto_porc_ventas_ml)
+        hash_stats[:total] = tienda.pago_alquilers.sum(:monto_alquiler_ml)
+        hash_stats[:total_usd] = tienda.pago_alquilers.sum(:monto_alquiler_usd)
         hash_stats[:criterio] = tienda.nombre
         estadisticas << hash_stats
       end
     elsif criterio == 'nivel_mall'
       mall.nivel_mall_stats(nivel_mall_id).each do |nivel_mall|
         canon_fijo = 0
-        canon_fijo_usd = 0
         porc_canon = 0
         ventas = 0
+        total = 0
+        total_usd = 0
         nivel_mall.tiendas.joins(:nivel_mall, :actividad_economica, :tipo_local, :contrato_alquilers).by_nivel_mall(nivel_mall_id).by_actividad_economica(actividad_economica_id).by_rango_contrato(fecha_init, fecha_end).by_tipo_local(tipo_local_id).each do |tienda|
           ventas += ventas
-          canon_fijo += canon_fijo
-          canon_fijo_usd += canon_fijo_usd
-          porc_canon += porc_canon
+          canon_fijo = canon_fijo + tienda.pago_alquilers.sum(:monto_canon_fijo_ml)
+          porc_canon = porc_canon + tienda.pago_alquilers.sum(:monto_porc_ventas_ml)
+          total = total + tienda.pago_alquilers.sum(:monto_alquiler_ml)
+          total_usd = total_usd + tienda.pago_alquilers.sum(:monto_alquiler_usd)
           tienda.contrato_alquilers.each do |contrato|
-             porc_canon, ventas = ventas_x_contrato(canon_fijo, canon_fijo_usd, contrato, porc_canon, ventas)
+            ventas = ventas_x_contrato(contrato, ventas)
           end
         end
         hash_stats = Hash.new
         hash_stats[:canon_fijo_ml] = canon_fijo
-        hash_stats[:canon_fijo_usd] = canon_fijo_usd
         hash_stats[:porc_canon] = porc_canon
+        hash_stats[:total] = total
+        hash_stats[:total_usd] = total_usd
         hash_stats[:criterio] = nivel_mall.nombre
-	      hash_stats[:ventas] = ventas
         estadisticas << hash_stats
       end
     elsif criterio == 'actividad_economica'
       mall.actividad_economicas_stats(actividad_economica_id).each do |actividad_economica|
         canon_fijo = 0
-        canon_fijo_usd = 0
         porc_canon = 0
         ventas = 0
+        total = 0
+        total_usd = 0
         actividad_economica.tiendas.joins(:nivel_mall, :actividad_economica, :tipo_local, :contrato_alquilers).by_nivel_mall(nivel_mall_id).by_actividad_economica(actividad_economica_id).by_rango_contrato(fecha_init, fecha_end).by_tipo_local(tipo_local_id).each do |tienda|
           ventas += ventas
-          canon_fijo += canon_fijo
-          canon_fijo_usd += canon_fijo_usd
-          porc_canon += porc_canon
+          canon_fijo = canon_fijo + tienda.pago_alquilers.sum(:monto_canon_fijo_ml)
+          porc_canon = porc_canon + tienda.pago_alquilers.sum(:monto_porc_ventas_ml)
+          total = total + tienda.pago_alquilers.sum(:monto_alquiler_ml)
+          total_usd = total_usd + tienda.pago_alquilers.sum(:monto_alquiler_usd)
           tienda.contrato_alquilers.each do |contrato|
-             porc_canon, ventas = ventas_x_contrato(canon_fijo, canon_fijo_usd, contrato, porc_canon, ventas)
+            ventas = ventas_x_contrato(contrato, ventas)
           end
         end
         hash_stats = Hash.new
         hash_stats[:canon_fijo_ml] = canon_fijo
-        hash_stats[:canon_fijo_usd] = canon_fijo_usd
         hash_stats[:porc_canon] = porc_canon
+        hash_stats[:total] = total
+        hash_stats[:total_usd] = total_usd
 	      hash_stats[:ventas] = ventas
         hash_stats[:criterio] = actividad_economica.nombre
 
@@ -158,22 +158,25 @@ class Tienda < ActiveRecord::Base
     elsif criterio == 'tipo_local'
       mall.tipo_locals_stats(tipo_local_id).each do |tipo_local|
         canon_fijo = 0
-        canon_fijo_usd = 0
         porc_canon = 0
         ventas = 0
+        total = 0
+        total_usd = 0
         tipo_local.tiendas.joins(:nivel_mall, :actividad_economica, :tipo_local, :contrato_alquilers).by_nivel_mall(nivel_mall_id).by_actividad_economica(actividad_economica_id).by_rango_contrato(fecha_init, fecha_end).by_tipo_local(tipo_local_id).each do |tienda|
           ventas += ventas
-          canon_fijo += canon_fijo
-          canon_fijo_usd += canon_fijo_usd
-          porc_canon += porc_canon
+          canon_fijo = canon_fijo + tienda.pago_alquilers.sum(:monto_canon_fijo_ml)
+          porc_canon = porc_canon + tienda.pago_alquilers.sum(:monto_porc_ventas_ml)
+          total = total + tienda.pago_alquilers.sum(:monto_alquiler_ml)
+          total_usd = total_usd + tienda.pago_alquilers.sum(:monto_alquiler_usd)
           tienda.contrato_alquilers.each do |contrato|
-             porc_canon, ventas = ventas_x_contrato(canon_fijo, canon_fijo_usd, contrato, porc_canon, ventas)
+            ventas = ventas_x_contrato(contrato, ventas)
           end
         end
         hash_stats = Hash.new
         hash_stats[:canon_fijo_ml] = canon_fijo
-        hash_stats[:canon_fijo_usd] = canon_fijo_usd
         hash_stats[:porc_canon] = porc_canon
+        hash_stats[:total] = total
+        hash_stats[:total_usd] = total_usd
         hash_stats[:criterio] = tipo_local.tipo
 	      hash_stats[:ventas] = ventas
         estadisticas << hash_stats
@@ -182,13 +185,9 @@ class Tienda < ActiveRecord::Base
     return estadisticas
   end
 
-  def self.ventas_x_contrato(canon_fijo, canon_fijo_usd, contrato, porc_canon, ventas)
+  def self.ventas_x_contrato(contrato, ventas)
     ventas += ventas
-    porc_canon += porc_canon
     ventas = contrato.ventas.count
-    porc_canon = contrato.ventas.sum(:monto_ml) * contrato.porc_canon_ventas unless contrato.porc_canon_ventas.blank?
-    return  porc_canon, ventas
+    return   ventas
   end
-
-
 end

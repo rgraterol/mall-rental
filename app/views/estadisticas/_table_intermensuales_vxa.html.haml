@@ -21,5 +21,5 @@
                       %td= estadistica[:ventas] || '0'
                       %td= estadistica[:canon_fijo_ml] || '0'
                       %td= estadistica[:porc_canon] || '0'
-                      %td= (estadistica[:canon_fijo_ml] || 0) + (estadistica[:porc_ventas] || 0)
-                      %td= (estadistica[:canon_fijo_ml] || 0)+ (estadistica[:porc_ventas] || 0) / CambioMoneda.last.cambio_ml_x_usd
+                      %td= estadistica[:total] || 0
+                      %td= estadistica[:total_usd] || 0

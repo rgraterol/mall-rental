@@ -189,7 +189,7 @@ jQuery(document).ready ($) ->
         $('.canon_fijo_usd').val(data)
 
   $("#porc_canon_tienda").inputmask("Regex", {
-    regex: "[0-9]{1,3}%"
+    regex: "[0-9.]{1,5}%"
   });
 
 table_index_datatable =  ->

@@ -62,7 +62,7 @@ class CambioMonedasController < ApplicationController
   end
 
   def mf_cambio_moneda
-    usd = params[:ml].to_i / CambioMoneda.last.cambio_ml_x_usd
+    usd = (params[:ml].to_i / CambioMoneda.last.cambio_ml_x_usd).round(2)
     render json: usd
   end
 
