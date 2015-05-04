@@ -179,6 +179,9 @@ class PagoAlquilersController < ApplicationController
               if @pago.update(@pago_alquiler)
                 format.html { redirect_to pago_alquilers_url, notice: 'Pago alquiler se guardo correctamente.' }
                 format.json { head :no_content }
+               # format.html { redirect_to mostrar_recibo_pago_path(@pago_alquiler), notice: 'Pago alquiler se guardo correctamente.' }
+               # format.json { render :show, status: :ok, location: @pago_alquiler }
+
               else
                 format.html { render action: 'new_cheque_efectivo' }
                 format.json { render json: @pago_alquiler.errors, status: :unprocessable_entity }

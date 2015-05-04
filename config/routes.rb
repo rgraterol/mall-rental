@@ -86,6 +86,7 @@ Myapp::Application.routes.draw do
   post '/pago_alquilers/create' =>  'pago_alquilers#create'
   get 'pago_alquilers/new_cheque_efectivo' => 'pago_alquilers#new_cheque_efectivo', as: :registrar_pago_cheque_efectivo
   post '/pago_alquilers/create_cheque' =>  'pago_alquilers#create_cheque'
+  get 'pago_alquilers/:id' => 'pago_alquilers#show', as: :mostrar_recibo_pago
   get 'pagos_mensuales_mall' => 'pago_alquilers#pagos_mensuales', as: :pagos_mensuales_mall
 
   resources :pago_alquilers

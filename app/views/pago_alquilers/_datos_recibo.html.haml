@@ -1,0 +1,44 @@
+%p
+  %strong Tienda:
+  = @pago_alquiler.tienda.nombre
+  %p
+    %strong Periodo Cancelado:
+    = @pago_alquiler.mes_alquiler
+    = '/'
+    = @pago_alquiler.anio_alquiler
+  %p
+    %strong Número de Recibo:
+    = @pago_alquiler.nro_recibo
+  %p
+    %strong Monto de Pago:
+    -@pago = number_with_precision(@pago_alquiler.monto_alquiler_ml, precision: 2, separator: ',', delimiter: '.')
+    = @pago
+  %p
+    %strong Fecha de Pago:
+    = @pago_alquiler.fecha_pago.strftime("%d/%m/%Y")
+  %p
+    %strong Forma de Pago:
+    = @pago_alquiler.tipo_pago.humanize.capitalize
+
+  - if @pago_alquiler.tipo_pago == 'Cheque'
+    %p
+      %strong Nro de Cheque:
+      = @pago_alquiler.nro_cheque_confirmacion
+    %p
+      %strong Cheque del Banco:
+      = @pago_alquiler.nombre_banco
+
+  - if @pago_alquiler.tipo_pago == 'Transferencia'
+    %p
+      %strong Nro Transferencia:
+      = @pago_alquiler.nro_cheque_confirmacion
+    %p
+      %strong Banco Emisor de la transferencia:
+      = @pago_alquiler.nombre_banco
+    %p
+      %strong Cuenta Bancaria de la  Transfencia:
+      = CuentaBancarium.find(@pago_alquiler.cuenta_bancaria_id).banco.nombre
+    %p
+      %br
+      = link_to notificar_usuarios_mall_path, class: 'btn btn-warning pull-left' do
+        Imprimir Factura

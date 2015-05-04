@@ -38,7 +38,7 @@
                 = select_month(Date.today, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'mes_alquiler', :prefix => 'pago_alquiler'})
                 = select_year(Date.today, options = { :start_year => Time.now.year, :end_year => Time.now.year - 5, :field_name => 'anio_alquiler', :prefix => 'pago_alquiler'})
             .form-group
-              = f.label :monto_alquiler_ml, "Monto Transferido: ", class: 'col-sm-2 control-label'
+              = f.label :monto_alquiler_ml, "Monto del Pago: ", class: 'col-sm-2 control-label'
               .col-sm-10
                 = f.text_field :monto_alquiler_ml, class: 'form-control', placeholder: 'Ej. 9999,99'
             .form-group
