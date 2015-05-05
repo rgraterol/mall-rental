@@ -44,7 +44,7 @@ class Mall < ActiveRecord::Base
 
   def tipo_locals_stats(tipo_local_id)
     return TipoLocal.find_by_sql [
-       "SELECT
+       "SELECT DISTINCT
           tipo_locals.*
         FROM
           public.malls,
@@ -57,7 +57,7 @@ class Mall < ActiveRecord::Base
           locals.id = tiendas.local_id AND
           locals.tipo_local_id = tipo_locals.id;"] unless tipo_local_id.present?
     return TipoLocal.find_by_sql [
-      "SELECT
+      "SELECT DISTINCT
         tipo_locals.*
       FROM
         public.malls,
