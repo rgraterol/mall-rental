@@ -64,10 +64,10 @@ module Dynamic
 
         if !@pago_alq.blank?
           if @pago_alq.tipo_pago != 'Efectivo'
-            if @pago_alq.cuenta_bancaria_id.nil?
+            if @pago_alq.cuenta_bancarium_id.nil?
               @cuenta_bancaria = ''
             else
-              @cuenta_bancaria = CuentaBancarium.find(@pago_alq.cuenta_bancaria_id).banco.nombre
+              @cuenta_bancaria = CuentaBancarium.find(@pago_alq.cuenta_bancarium_id).banco.nombre
             end
           else
             @cuenta_bancaria = ''
