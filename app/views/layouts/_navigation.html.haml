@@ -53,6 +53,11 @@
           = link_to pais_path do
             %i.fa.fa-map-marker
             %span.nav-label Paises
+      - if can? :manage, Banco
+        %li{class: is_active_controller('bancos')}
+          = link_to bancos_path do
+            %i.fa.fa-bank
+            %span.nav-label Bancos
       - if can? :manage, CambioMoneda
         %li{class: is_active_controller('cambio_monedas')}
           = link_to cambio_monedas_path do

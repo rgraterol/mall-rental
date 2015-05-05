@@ -42,6 +42,6 @@ class CuentaBancariaController < ApplicationController
     end
 
     def cuenta_bancarium_params
-      params.require(:cuenta_bancarium).permit(:nroCta, :tipoCuenta, :beneficiario, :docIdentidad)
+      params.require(:cuenta_bancarium).permit(:nro_cta, :tipo_cuenta, :beneficiario, :doc_identidad, :banco_id)
     end
 end
