@@ -59,7 +59,8 @@ module Dynamic
       @tiendas = current_user.mall.tiendas
       @pago_alquilers = Array.new
       @tiendas.each do |tienda|
-        @pago_alq = PagoAlquiler.find_by('extract(year from fecha_recibo_cobro) = ? AND extract(month from fecha_recibo_cobro) = ? AND tienda_id = ?', @year,@month,tienda.id)
+       # @pago_alq = PagoAlquiler.find_by('extract(year from fecha_recibo_cobro) = ? AND extract(month from fecha_recibo_cobro) = ? AND tienda_id = ?', @year,@month,tienda.id)
+        @pago_alq = PagoAlquiler.find_by('anio_alquiler = ? AND mes_alquiler = ? AND tienda_id = ?', @year,@month,tienda.id)
 
         if !@pago_alq.blank?
           if @pago_alq.cuenta_bancaria_id.nil?
