@@ -89,12 +89,12 @@ class PagoAlquilersController < ApplicationController
             flash[:danger] = 'El monto de transferencia no corresponde al monto del canon.'
             render :action=>'new_transferencia'
           else
-            @cuenta_bancaria = CuentaBancarium.find(params[:pago_alquiler]['cuenta_bancaria_id'])
+            @cuenta_bancaria = CuentaBancarium.find(params[:pago_alquiler]['cuenta_bancarium_id'])
             @contrato_alquiler = ContratoAlquiler.find_by(tienda_id: @tienda_id)
             @obj = {
                 :fecha_pago => params[:pago_alquiler]['fecha_pago'],
                 :nro_cheque_confirmacion => params[:pago_alquiler]['nro_cheque_confirmacion'],
-                :cuenta_bancaria_id => params[:pago_alquiler]['cuenta_bancaria_id'],
+                :cuenta_bancarium_id => params[:pago_alquiler]['cuenta_bancarium_id'],
                 :pagado => TRUE,
                 :nombre_banco => params[:pago_alquiler]['nombre_banco'],
                 :facturado => FALSE,
@@ -152,11 +152,11 @@ class PagoAlquilersController < ApplicationController
             @contrato_alquiler = ContratoAlquiler.find_by(tienda_id: @tienda_id)
 
             if params[:pago_alquiler]['tipo_pago'] == 'Cheque'
-              @cuenta_bancaria_id = params[:pago_alquiler]['cuenta_bancaria_id']
+              cuenta_bancarium_id = params[:pago_alquiler]['cuenta_bancarium_id']
               @nro_cheq_conf = params[:pago_alquiler]['nro_cheque_confirmacion']
               @nombre_banco = params[:pago_alquiler]['nombre_banco']
             else
-              @cuenta_bancaria_id = nil
+              cuenta_bancarium_id = nil
               @nro_cheq_conf = nil
               @nombre_banco = nil
             end
@@ -164,7 +164,7 @@ class PagoAlquilersController < ApplicationController
               @obj = {
                   :fecha_pago => params[:pago_alquiler]['fecha_pago'],
                   :nro_cheque_confirmacion => @nro_cheq_conf,
-                  :cuenta_bancaria_id => @cuenta_bancaria_id,
+                  :cuenta_bancarium_id => cuenta_bancarium_id,
                   :pagado => TRUE,
                   :nombre_banco => @nombre_banco,
                   :facturado => FALSE,
@@ -230,6 +230,6 @@ class PagoAlquilersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pago_alquiler_params
-      params.require(:pago_alquiler).permit(:mes_alquiler,:anio_alquiler, :cuenta_bancaria_id, :monto_alquiler_ml, :fecha_pago, :nro_cheque_confirmacion, :tipo_pago, :tienda_id, :nombre_banco)
+      params.require(:pago_alquiler).permit(:mes_alquiler,:anio_alquiler, :cuenta_bancarium_id, :monto_alquiler_ml, :fecha_pago, :nro_cheque_confirmacion, :tipo_pago, :tienda_id, :nombre_banco)
     end
 end

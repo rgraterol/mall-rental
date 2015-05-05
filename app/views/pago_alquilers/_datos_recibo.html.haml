@@ -37,7 +37,7 @@
       = @pago_alquiler.nombre_banco
     %p
       %strong Cuenta Bancaria de la  Transfencia:
-      = CuentaBancarium.find(@pago_alquiler.cuenta_bancaria_id).banco.nombre
+      = CuentaBancarium.find(@pago_alquiler.cuenta_bancarium_id).banco.nombre
   %br
   %p
     = link_to notificar_usuarios_mall_path, class: 'btn btn-warning pull-left' do
