@@ -33,7 +33,7 @@ jQuery(document).ready ($) ->
         validators:
           notEmpty:
             message: 'Debe ingresar el numero de confirmacion'
-      "pago_alquiler[cuenta_bancaria_id]":
+      "pago_alquiler[cuenta_bancarium_id]":
         validators:
           notEmpty:
             message: 'Debe seleccionar la cuenta bancaria'
@@ -67,7 +67,7 @@ jQuery(document).ready ($) ->
         validators:
           notEmpty:
             message: 'Debe ingresar el numero del cheque'
-      "pago_alquiler[cuenta_bancaria_id]":
+      "pago_alquiler[cuenta_bancarium_id]":
         validators:
           notEmpty:
             message: 'Debe seleccionar la cuenta bancaria'
@@ -82,7 +82,7 @@ jQuery(document).ready ($) ->
           callback:
             message: 'Debe ingresar cuenta bancaria y nro de confirmacion'
             callback: (value, validator, $field) ->
-              if value == '' && $("#pago_alquiler_cuenta_bancaria_id").val() == '' && $("#pago_alquiler_nro_cheque_confirmacion").val() == '' && $("#pago_alquiler_nombre_banco").val() == ''
+              if value == '' && $("#pago_alquiler_cuenta_bancarium_id").val() == '' && $("#pago_alquiler_nro_cheque_confirmacion").val() == '' && $("#pago_alquiler_nombre_banco").val() == ''
                 false
               else
                 true

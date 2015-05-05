@@ -63,10 +63,10 @@ module Dynamic
         @pago_alq = PagoAlquiler.find_by('anio_alquiler = ? AND mes_alquiler = ? AND tienda_id = ?', @year,@month,tienda.id)
 
         if !@pago_alq.blank?
-          if @pago_alq.cuenta_bancaria_id.nil?
+          if @pago_alq.cuenta_bancarium_id.nil?
             @cuenta_bancaria = ''
           else
-            @cuenta_bancaria = CuentaBancarium.find(@pago_alq.cuenta_bancaria_id).banco.nombre
+            @cuenta_bancaria = CuentaBancarium.find(@pago_alq.cuenta_bancarium_id).banco.nombre
           end
 
           if @pago_alq.tipo_pago.nil?
