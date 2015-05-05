@@ -38,7 +38,7 @@ module Dynamic
           @result = true
         end
 
-        @ventas = Venta.where('extract(year from fecha) = ? AND extract(month from fecha ) = ? AND tienda_id = ?', @year,@month,tienda)
+        @ventas = Venta.where('extract(year from fecha) = ? AND extract(month from fecha) = ? AND tienda_id = ?', @year,@month,tienda)
         @ventas.each do |venta|
           if venta.update(editable: false)
             @result = true

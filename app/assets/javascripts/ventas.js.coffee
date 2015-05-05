@@ -103,6 +103,7 @@ $("#tbody_ventas").on
   ".editar_monto_venta input"
 
 $(".actualizar_auditoria_ventas").on "change", ->
+
   $.ajax
     type: "POST"
     url: "/dynamic_venta_auditoria/auditoria"

@@ -5,6 +5,7 @@ module Dynamic
     def auditoria
       @year = params[:year]
       @month = params[:month]
+
       @suma_canon_ventas = 0
       @suma_canon_fijo = 0
       @total_ventas = 0
@@ -16,7 +17,7 @@ module Dynamic
         @tienda_locals = Tienda.where("local_id= ? AND abierta= ?", local.id, true).first
         if !@tienda_locals.blank?
           @contrato_alquiler = ContratoAlquiler.where(tienda_id: (@tienda_locals.id))
-          #raise @contrato_alquiler.first.inspect
+
           if @contrato_alquiler.first.tipo_canon_alquiler.humanize.capitalize != 'exonerado'
             @obj = {
                 'tienda' => @tienda_locals,
@@ -26,11 +27,11 @@ module Dynamic
           end
         end
       end
-      #raise @tiendas_mall.inspect
+
 
       @array_tienda = Array.new
       @tiendas_mall.each do |tienda_mall|
-        #raise tienda_mall.inspect
+
         @local = tienda_mall['local']
         @tienda = tienda_mall['tienda']
 
@@ -47,9 +48,10 @@ module Dynamic
         @calendario = CalendarioNoLaborable.new()
         @cantidad_dias_laborables = @calendario.cantidad_dias_laborables(@month,@year,@mall)
 
-        @suma_ventas_mes = Venta.where('extract(year from fecha) = ? AND extract(month from fecha ) = ? AND tienda_id = ?', @year,@month,@tienda.id).sum(:monto_ml)
-        @cantidad_ventas_mes = Venta.where('extract(year from fecha) = ? AND extract(month from fecha ) = ? AND tienda_id = ?', @year,@month,@tienda.id).count
+        @suma_ventas_mes = Venta.where('extract(year from fecha) = ? AND extract(month from fecha) = ? AND tienda_id = ?', @year,@month,@tienda.id).sum(:monto_ml)
 
+        @cantidad_ventas_mes = Venta.where('extract(year from fecha) = ? AND extract(month from fecha) = ? AND tienda_id = ?', @year,@month,@tienda.id).count
+        #raise @cantidad_ventas_mes.to_i.inspect
         @canons = @contrato_alquiler.calculate_canon(@contrato_alquiler,@suma_ventas_mes)
         @canon_fijo = @canons['canon_fijo']
         @canon_x_ventas = @canons['canon_x_ventas']
@@ -59,6 +61,7 @@ module Dynamic
         if(@cantidad_dias_laborables == @cantidad_ventas_mes)
           @actualizada = true
         end
+
 
 
 

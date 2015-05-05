@@ -21,7 +21,7 @@ module Dynamic
       for i in 1..@dias_mes
         @fecha = Date.new(@year.to_i,@month.to_i,i)
         @ventas_dia = Venta.where(fecha: @fecha).where(tienda_id: @tienda_id)
-        @dia_no_lab = CalendarioNoLaborable.find_by('extract(year from fecha) = ? AND extract(month from fecha ) = ? AND extract(day from fecha ) = ? AND mall_id = ?', @year,@month,i,@mall_id)
+        @dia_no_lab = CalendarioNoLaborable.find_by('extract(year from fecha) = ? AND extract(month from fecha) = ? AND extract(day from fecha ) = ? AND mall_id = ?', @year,@month,i,@mall_id)
 
         if @ventas_dia.length > 0 && @dia_no_lab.blank?
           @obj = {
@@ -48,7 +48,7 @@ module Dynamic
 
         @ventas_mes.push(@obj)
       end
-      @suma = Venta.where('extract(year from fecha) = ? AND extract(month from fecha ) = ? AND tienda_id = ?', @year,@month,@tienda_id).sum(:monto_ml)
+      @suma = Venta.where('extract(year from fecha) = ? AND extract(month from fecha) = ? AND tienda_id = ?', @year,@month,@tienda_id).sum(:monto_ml)
       @suma = ActionController::Base.helpers.number_to_currency(@suma, separator: ',', delimiter: '.', format: "%n %u", unit: "")
       render json: [ventas: @ventas_mes, result: true, suma: @suma, tienda_id: @tienda_id]
     end
@@ -56,7 +56,7 @@ module Dynamic
     def guardar_ventas
       @fecha = params[:codigo]
       @valor = params[:valor]
-      @valor_usd = @valor.to_i / CambioMoneda.last.cambio_ml_x_usd
+      @valor_usd = @valor.to_f / CambioMoneda.last.cambio_ml_x_usd
       @id = params[:id]
       @tienda_id = params[:tienda_id]
 
