@@ -14,7 +14,10 @@ module Dynamic
         @contrato_a = ContratoAlquiler.find_by(tienda: tienda)
         @tipo_canon = @contrato_alquiler.tipo_canon_alquiler.humanize.capitalize
 
-        @nro_recibo = '001' #falta aumentar el num de recibo
+
+        @nro_recibo = NroRecibo.get_numero_recibo.to_s
+        @nro_recibo = @nro_recibo.to_s.rjust(4, '0')
+
         @fecha_recibo = Date.today
         @anio_alquiler = @year
         @mes_alquiler = @month
@@ -23,13 +26,13 @@ module Dynamic
         @monto_canon_fijo_ml = @canons['canon_fijo']
         @monto_porc_ventas = @canons['canon_x_ventas']
         @monto_alquiler = @canons['canon_alquiler']
-        @monto_alquiler_usd = @monto_alquiler
+        @monto_alquiler_usd = @monto_alquiler/CambioMoneda.last.cambio_ml_x_usd
         @pagado = false
 
         @pago = PagoAlquiler.new(nro_recibo: @nro_recibo, fecha_recibo_cobro: @fecha_recibo,
                            anio_alquiler: @anio_alquiler, mes_alquiler: @mes_alquiler,
                            monto_canon_fijo_ml: @monto_canon_fijo_ml, monto_porc_ventas_ml: @monto_porc_ventas,
-                           monto_alquiler_ml: @monto_alquiler, monto_alquiler_usd: @monto_alquiler, pagado: @pagado,
+                           monto_alquiler_ml: @monto_alquiler, monto_alquiler_usd: @monto_alquiler_usd, pagado: @pagado,
                            tienda_id: tienda)
         if @pago.save
           @result = true

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150430222145) do
+ActiveRecord::Schema.define(version: 20150505060959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,10 +82,10 @@ ActiveRecord::Schema.define(version: 20150430222145) do
     t.date     "fecha_inicio"
     t.date     "fecha_fin"
     t.string   "archivo_contrato"
-    t.decimal  "canon_fijo_ml",       default: 0.0
-    t.decimal  "canon_fijo_usd",      default: 0.0
-    t.decimal  "porc_canon_ventas",   default: 0.0
-    t.decimal  "monto_minimo_ventas", default: 0.0
+    t.decimal  "canon_fijo_ml"
+    t.decimal  "canon_fijo_usd"
+    t.decimal  "porc_canon_ventas"
+    t.decimal  "monto_minimo_ventas"
     t.boolean  "estado_contrato"
     t.integer  "tipo_canon_alquiler"
     t.integer  "tienda_id"
@@ -163,6 +163,12 @@ ActiveRecord::Schema.define(version: 20150430222145) do
 
   add_index "nivel_malls", ["mall_id"], name: "index_nivel_malls_on_mall_id", using: :btree
 
+  create_table "nro_recibos", force: true do |t|
+    t.integer  "numero"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "numeros_controls", force: true do |t|
     t.integer  "nro_contrato"
     t.datetime "created_at"
@@ -189,13 +195,12 @@ ActiveRecord::Schema.define(version: 20150430222145) do
     t.integer  "tipo_pago"
     t.integer  "contrato_alquiler_id"
     t.integer  "tienda_id"
-    t.integer  "cuenta_bancarium_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "cuenta_bancaria_id"
   end
 
   add_index "pago_alquilers", ["contrato_alquiler_id"], name: "index_pago_alquilers_on_contrato_alquiler_id", using: :btree
-  add_index "pago_alquilers", ["cuenta_bancarium_id"], name: "index_pago_alquilers_on_cuenta_bancarium_id", using: :btree
   add_index "pago_alquilers", ["tienda_id"], name: "index_pago_alquilers_on_tienda_id", using: :btree
 
   create_table "pais", force: true do |t|

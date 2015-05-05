@@ -10,6 +10,10 @@ class VentasController < ApplicationController
     end
 
     @tienda_id = params[:tienda_id]
+    @month = params[:month]
+    @today = Time.now
+    @year == @today.strftime("%Y")
+    @month = Date.new(@year.to_i,@month.to_i,1)
     if @tienda_id.nil?
       @tienda_id = current_user.tienda
       @ventas_mall = false

@@ -27,7 +27,7 @@
                   = select_year(Date.today, options = { :start_year => Time.now.year, :end_year => Time.now.year - 5, :field_name => 'lapso_year'}, :class => 'actualizar_ventas')
               .col-md-5
                 = form_tag(@lapso_month, :html => { :class => "form-horizontal" } ) do |f|
-                  = select_month(Date.today, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'select_month', :prefix => 'ventas'}, :class => 'actualizar_ventas')
+                  = select_month(@month || Date.today, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'select_month', :prefix => 'ventas'}, :class => 'actualizar_ventas')
 
             .col-md-4
               .form-group

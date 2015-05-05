@@ -38,7 +38,7 @@
     %p
       %strong Cuenta Bancaria de la  Transfencia:
       = CuentaBancarium.find(@pago_alquiler.cuenta_bancaria_id).banco.nombre
-    %p
-      %br
-      = link_to notificar_usuarios_mall_path, class: 'btn btn-warning pull-left' do
-        Imprimir Factura
+  %br
+  %p
+    = link_to notificar_usuarios_mall_path, class: 'btn btn-warning pull-left' do
+      Imprimir Factura

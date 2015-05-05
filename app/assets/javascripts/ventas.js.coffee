@@ -134,14 +134,14 @@ $(".actualizar_auditoria_ventas").on "change", ->
                                                 "<td>"+element.total_canon+"</td>" +
                                                 "<td><input type='checkbox' disabled='disabled' name='ventas_actualizadas' value='"+element.tienda_id+"' "+@cadena_check+" /></td>" +
                                                 "<td><input type='checkbox' name='recibo_cobro_"+element.tienda_id+"' disabled='disabled' "+@cadena_recibo+" /></td>" +
-                                                "<td><a href='/ventas_tiendas/"+element.tienda_id+"'>Ver Ventas diarias</a></td></tr>")
+                                                "<td><a href='/ventas_tiendas/"+element.tienda_id+"/"+data[0]['mes']+"'>Ver Ventas diarias</a></td></tr>")
 
         $("#tbody_mall_ventas").append("<tr><td>"+element.tienda+"</td><td>"+element.actividad_economica+"</td>" +
                                           "<td>"+element.local+"</td><td>"+element.nivel_ubicacion+"</td>" +
                                           "<td>"+element.tipo_canon+"</td><td>"+element.canon_fijo+"</td>" +
                                           "<td>"+element.ventas_mes+"</td><td>"+element.canon_x_ventas+"</td>" +
                                           "<td>"+element.total_canon+"</td>" +
-                                          "<td><a href='/ventas_tiendas/"+element.tienda_id+"'>Ver Ventas diarias</a></td></tr>")
+                                          "<td><a href='/ventas_tiendas/"+element.tienda_id+"/"+data[0]['mes']+"'>Ver Ventas diarias</a></td></tr>")
 
     error: (data)->
       console.log(data)
@@ -154,6 +154,7 @@ $(".actualizar_ventas_mes").on "change", ->
     dataType: "JSON"
     data:
       year: $("#date_lapso_year").val()
+    before_send: $.blockUI({message: 'Por favor espere...'})
     success: (data) ->
       $("#tbody-ventas-mall").empty()
       meses = ['Enero', 'Febrero', 'Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
@@ -170,7 +171,7 @@ $(".actualizar_ventas_mes").on "change", ->
     error: (data)->
       console.log(data)
     complete: ->
-      a=1
+      $.unblockUI()
 
 $("#btn-send-recibos").on "click", ->
   now = new Date()

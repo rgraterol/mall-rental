@@ -177,10 +177,10 @@ class PagoAlquilersController < ApplicationController
 
             respond_to do |format|
               if @pago.update(@pago_alquiler)
-                format.html { redirect_to pago_alquilers_url, notice: 'Pago alquiler se guardo correctamente.' }
-                format.json { head :no_content }
-               # format.html { redirect_to mostrar_recibo_pago_path(@pago_alquiler), notice: 'Pago alquiler se guardo correctamente.' }
-               # format.json { render :show, status: :ok, location: @pago_alquiler }
+               # format.html { redirect_to pago_alquilers_url, notice: 'Pago alquiler se guardo correctamente.' }
+                #format.json { head :no_content }
+                format.html { redirect_to mostrar_recibo_pago_path(@pago), notice: 'Pago alquiler se guardo correctamente.' }
+                format.json { render :show, status: :ok }
 
               else
                 format.html { render action: 'new_cheque_efectivo' }

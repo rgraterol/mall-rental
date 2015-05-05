@@ -74,6 +74,8 @@ Myapp::Application.routes.draw do
 
   get 'ventas_tiendas/:tienda_id' => 'ventas#index', as: :ventas_tienda
 
+  get 'ventas_tiendas/:tienda_id/:month' => 'ventas#index', as: :ventas_tienda_mes
+
   get 'ventas_mes_tiendas' => 'ventas#index', as: :ventas_mes_tienda
 
   get 'ventas_mall_tiendas' => 'ventas#mall_tiendas', as: :ventas_mall_tiendas

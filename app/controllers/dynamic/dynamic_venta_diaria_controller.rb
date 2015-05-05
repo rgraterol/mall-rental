@@ -34,7 +34,7 @@ module Dynamic
             @obj = {
                 'id' => '-1',
                 'fecha' => @fecha.strftime("%d/%m/%Y"),
-                'monto' => 'Dia No Laborale: '+@dia_no_lab.motivo,
+                'monto' => 'Dia No Laborable: '+@dia_no_lab.motivo,
                 'editable' => false,
             }
          else
