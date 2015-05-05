@@ -58,6 +58,11 @@
           = link_to cambio_monedas_path do
             %i.fa.fa-money
             %span.nav-label Cambio de Moneda
+      -if can? :manage, CuentaBancarium
+        %li{class: is_active_controller('cuenta_bancarias')}
+          = link_to cuenta_bancaria_path do
+            %i.fa.fa-file-text
+            %span.nav-label Cuentas Bancarias
       - if can? :index, Mall
         %li{class: is_active_controller('malls')}
           = link_to malls_path do

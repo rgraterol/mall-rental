@@ -14,10 +14,10 @@
   <tbody>
     <% @cuenta_bancaria.each do |cuenta_bancarium| %>
       <tr>
-        <td><%= cuenta_bancarium.nroCta %></td>
-        <td><%= cuenta_bancarium.tipoCuenta %></td>
+        <td><%= cuenta_bancarium.nro_cta %></td>
+        <td><%= cuenta_bancarium.tipo_cuenta %></td>
         <td><%= cuenta_bancarium.beneficiario %></td>
-        <td><%= cuenta_bancarium.docIdentidad %></td>
+        <td><%= cuenta_bancarium.doc_identidad %></td>
         <td><%= link_to 'Show', cuenta_bancarium %></td>
         <td><%= link_to 'Edit', edit_cuenta_bancarium_path(cuenta_bancarium) %></td>
         <td><%= link_to 'Destroy', cuenta_bancarium, method: :delete, data: { confirm: 'Are you sure?' } %></td>

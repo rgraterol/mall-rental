@@ -168,6 +168,7 @@ class Tienda < ActiveRecord::Base
           porc_canon = porc_canon + tienda.pago_alquilers.sum(:monto_porc_ventas_ml)
           total = total + tienda.pago_alquilers.sum(:monto_alquiler_ml)
           total_usd = total_usd + tienda.pago_alquilers.sum(:monto_alquiler_usd)
+
           tienda.contrato_alquilers.each do |contrato|
             ventas = ventas_x_contrato(contrato, ventas)
           end
