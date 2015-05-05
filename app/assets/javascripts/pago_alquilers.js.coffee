@@ -129,7 +129,6 @@ $(".actualizar_pagos_alquiler").on "change", ->
           monto = element.monto_pagado
 
           $("#monto_cobrar").val(data[0].suma_x_cobrar)
-          console.log(data)
           $("#input_suma_monto_alquiler").val(data[0].suma)
           $("#input_suma_monto_pagado").val(data[0].suma_monto_pagado)
 
