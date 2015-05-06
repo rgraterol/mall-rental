@@ -112,7 +112,7 @@ class Tienda < ActiveRecord::Base
         total_usd = 0
         nivel_mall.tiendas.joins(:nivel_mall, :actividad_economica, :tipo_local, :contrato_alquilers).by_nivel_mall(nivel_mall_id).by_actividad_economica(actividad_economica_id).by_rango_contrato(fecha_init, fecha_end).by_tipo_local(tipo_local_id).each do |tienda|
           ventas = ventas + tienda.ventas.sum(:monto_ml)
-          canon_fijo = canon_fijo + tienda.pago_alquilers.where("pago_alquilers.fecha_recibo_cobro >= ? OR pago_alquilers.fecha_recibo_cobro <= ?", fecha_end, fecha_init).sum(:monto_canon_fijo_ml)
+          canon_fijo = canon_fijo + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_end.. fecha_init).sum(:monto_canon_fijo_ml)
           porc_canon = porc_canon + tienda.pago_alquilers.where("pago_alquilers.fecha_recibo_cobro >= ? AND pago_alquilers.fecha_recibo_cobro <= ?", fecha_end, fecha_init).sum(:monto_porc_ventas_ml)
           total = total + tienda.pago_alquilers.where("pago_alquilers.fecha_recibo_cobro >= ? AND pago_alquilers.fecha_recibo_cobro <= ?", fecha_end, fecha_init).sum(:monto_alquiler_ml)
           total_usd = total_usd + tienda.pago_alquilers.where("pago_alquilers.fecha_recibo_cobro >= ? AND pago_alquilers.fecha_recibo_cobro <= ?", fecha_end, fecha_init).sum(:monto_alquiler_usd)
