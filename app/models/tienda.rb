@@ -95,11 +95,11 @@ class Tienda < ActiveRecord::Base
         # tienda.contrato_alquilers.each do |contrato|
         #    ventas = ventas_x_contrato(contrato, ventas)
         # end
-        hash_stats[:ventas] = tienda.ventas.sum(:monto_ml)
-        hash_stats[:canon_fijo_ml] = tienda.pago_alquilers.sum(:monto_canon_fijo_ml)
-        hash_stats[:porc_canon] = tienda.pago_alquilers.sum(:monto_porc_ventas_ml)
-        hash_stats[:total] = tienda.pago_alquilers.sum(:monto_alquiler_ml)
-        hash_stats[:total_usd] = tienda.pago_alquilers.sum(:monto_alquiler_usd)
+        hash_stats[:ventas] = tienda.ventas.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_ml)
+        hash_stats[:canon_fijo_ml] = tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_canon_fijo_ml)
+        hash_stats[:porc_canon] = tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_porc_ventas_ml)
+        hash_stats[:total] = tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_alquiler_ml)
+        hash_stats[:total_usd] = tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_alquiler_usd)
         hash_stats[:criterio] = tienda.nombre
         estadisticas << hash_stats
       end
@@ -111,11 +111,11 @@ class Tienda < ActiveRecord::Base
         total = 0
         total_usd = 0
         nivel_mall.tiendas.joins(:nivel_mall, :actividad_economica, :tipo_local, :contrato_alquilers).by_nivel_mall(nivel_mall_id).by_actividad_economica(actividad_economica_id).by_rango_contrato(fecha_init, fecha_end).by_tipo_local(tipo_local_id).each do |tienda|
-          ventas = ventas + tienda.ventas.sum(:monto_ml)
+          ventas = ventas + tienda.ventas.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_ml)
           canon_fijo = canon_fijo + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_canon_fijo_ml)
-          porc_canon = porc_canon + tienda.pago_alquilers.where("pago_alquilers.fecha_recibo_cobro >= ? AND pago_alquilers.fecha_recibo_cobro <= ?", fecha_end, fecha_init).sum(:monto_porc_ventas_ml)
-          total = total + tienda.pago_alquilers.where("pago_alquilers.fecha_recibo_cobro >= ? AND pago_alquilers.fecha_recibo_cobro <= ?", fecha_end, fecha_init).sum(:monto_alquiler_ml)
-          total_usd = total_usd + tienda.pago_alquilers.where("pago_alquilers.fecha_recibo_cobro >= ? AND pago_alquilers.fecha_recibo_cobro <= ?", fecha_end, fecha_init).sum(:monto_alquiler_usd)
+          porc_canon = porc_canon + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_porc_ventas_ml)
+          total = total + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_alquiler_ml)
+          total_usd = total_usd + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_alquiler_usd)
         end
         hash_stats = Hash.new
         hash_stats[:canon_fijo_ml] = canon_fijo
@@ -134,11 +134,11 @@ class Tienda < ActiveRecord::Base
         total = 0
         total_usd = 0
         actividad_economica.tiendas.joins(:nivel_mall, :actividad_economica, :tipo_local, :contrato_alquilers).by_nivel_mall(nivel_mall_id).by_actividad_economica(actividad_economica_id).by_rango_contrato(fecha_init, fecha_end).by_tipo_local(tipo_local_id).each do |tienda|
-          canon_fijo = canon_fijo + tienda.pago_alquilers.sum(:monto_canon_fijo_ml)
-          porc_canon = porc_canon + tienda.pago_alquilers.sum(:monto_porc_ventas_ml)
-          total = total + tienda.pago_alquilers.sum(:monto_alquiler_ml)
-          total_usd = total_usd + tienda.pago_alquilers.sum(:monto_alquiler_usd)
-          ventas = ventas + tienda.ventas.sum(:monto_ml)
+          canon_fijo = canon_fijo + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_canon_fijo_ml)
+          porc_canon = porc_canon + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_porc_ventas_ml)
+          total = total + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_alquiler_ml)
+          total_usd = total_usd + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_alquiler_usd)
+          ventas = ventas + tienda.ventas.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_ml)
           # tienda.contrato_alquilers.each do |contrato|
           #   ventas = ventas_x_contrato(contrato, ventas)
           # end
@@ -161,14 +161,11 @@ class Tienda < ActiveRecord::Base
         total = 0
         total_usd = 0
         tipo_local.tiendas.joins(:nivel_mall, :actividad_economica, :tipo_local, :contrato_alquilers).by_nivel_mall(nivel_mall_id).by_actividad_economica(actividad_economica_id).by_rango_contrato(fecha_init, fecha_end).by_tipo_local(tipo_local_id).each do |tienda|
-          canon_fijo = canon_fijo + tienda.pago_alquilers.sum(:monto_canon_fijo_ml)
-          porc_canon = porc_canon + tienda.pago_alquilers.sum(:monto_porc_ventas_ml)
-          total = total + tienda.pago_alquilers.sum(:monto_alquiler_ml)
-          total_usd = total_usd + tienda.pago_alquilers.sum(:monto_alquiler_usd)
-          ventas = ventas + tienda.ventas.sum(:monto_ml)
-          # tienda.contrato_alquilers.each do |contrato|
-          #   ventas = ventas_x_contrato(contrato, ventas)
-          # end
+          canon_fijo = canon_fijo + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_canon_fijo_ml)
+          porc_canon = porc_canon + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_porc_ventas_ml)
+          total = total + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_alquiler_ml)
+          total_usd = total_usd + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_alquiler_usd)
+          ventas = ventas + tienda.ventas.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_ml)
         end
         hash_stats = Hash.new
         hash_stats[:canon_fijo_ml] = canon_fijo
