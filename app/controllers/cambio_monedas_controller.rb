@@ -15,10 +15,12 @@ class CambioMonedasController < ApplicationController
   # GET /cambio_monedas/new
   def new
     @cambio_moneda = CambioMoneda.new
+    @mall = current_user.mall
   end
 
   # GET /cambio_monedas/1/edit
   def edit
+    @mall = current_user.mall
   end
 
   # POST /cambio_monedas

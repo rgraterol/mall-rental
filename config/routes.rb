@@ -103,6 +103,7 @@ Myapp::Application.routes.draw do
     post 'dynamic_pago_alquilers/actualizar_pagos'
     post "/dynamic_pago_alquilers_mensuales/pagos"
     post 'dynamic_add_nivel_mall/guardar'
+    post 'dynamic_filter_locals/actualizar'
   end
 
   #CONTROLADOR DE NOTIFICACIONES MAILERS

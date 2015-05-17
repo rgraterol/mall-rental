@@ -1,0 +1,35 @@
+.row
+  .col-md-12
+    .table-responsive
+    %table.table.table-striped.table-bordered.table-hover#table_locals_index
+      %thead
+        %tr
+          %th Foto
+          %th Nro. Local
+          %th Nivel Ubicación
+          %th Pasillo
+          %th Área Planta
+          %th Área Mezanina
+          %th Área Terraza
+          %th Tipo Local
+          %th Estado Local
+          %th Acciones
+      %tbody
+        - @locals.all.each do |local|
+          %tr
+            %td= image_tag local.foto.url || 'building-avatar.gif', class: 'img-circle', height: 80
+            %td= local.nro_local
+            %td= local.nivel_mall.nombre
+            %td= local.ubicacion_pasillo
+            %td= local.area_planta
+            %td= local.area_mezanina
+            %td= local.area_terraza
+            %td= local.tipo_local.tipo
+            %td= local.tipo_estado_local.humanize.capitalize
+            %td
+              = link_to edit_local_path(local) do
+                %i.fa.fa-pencil
+                Editar
+              = link_to local, data: { confirm: "Seguro que desea eliminar el Local ?" }, method: :delete do
+                %i.fa.fa-trash
+                Eliminar
