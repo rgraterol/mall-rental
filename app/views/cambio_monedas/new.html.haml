@@ -36,5 +36,6 @@
             .form-group
               .col-sm-3.col-sm-offset-9
                 = f.hidden_field :mall_id, :value => @mall.id
+                = f.hidden_field :fecha, :value => Date.today
                 = f.submit "Guardar", class: "btn btn-warning btn-block"
 

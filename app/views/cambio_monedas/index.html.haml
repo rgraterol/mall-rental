@@ -31,8 +31,8 @@
                 %tbody
                   - @cambio_monedas.each do |moneda|
                     %tr
-                      %td= moneda.fecha
-                      %td= moneda.cambio_ml_x_usd
+                      %td= moneda.fecha.strftime("%d-%m-%Y")
+                      %td= number_with_precision(moneda.cambio_ml_x_usd, precision: 2, separator: ',', delimiter: '.')
                       %td
                         = link_to edit_cambio_moneda_path(moneda) do
                           %i.fa.fa-pencil

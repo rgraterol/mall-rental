@@ -1,0 +1,41 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Editando Cambio de Moneda
+
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Cambio de Monedas Registrados', cambio_monedas_path
+      %li
+        Editar Cambio de Moneda
+
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            Editar Cambio de Moneda
+        .ibox-content
+          = form_for(@cambio_moneda, url: {action: :update}, html: {class:"form-horizontal m-t-md", id: "form_edit_cambio_moneda"}) do |f|
+            - if @cambio_moneda.errors.any?
+              #error_explanation
+                %h2
+                  = pluralize(@cambio_moneda.errors.count, "error")
+                  prohibited this local from being saved:
+                %ul
+                  - @cambio_moneda.errors.full_messages.each do |message|
+                    %li
+                      = message
+            .form-group
+              = f.label :cambio_ml_x_usd, "Cambio de Moneda USD: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :cambio_ml_x_usd, class: 'form-control'
+            .form-group
+              .col-sm-3.col-sm-offset-9
+                = f.hidden_field :mall_id, :value => @mall.id
+                = f.hidden_field :fecha, :value => Date.today
+                = f.submit "Actualizar", class: "btn btn-warning btn-block"
+

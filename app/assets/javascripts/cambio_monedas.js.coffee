@@ -1,4 +1,6 @@
 #= require bootstrapValidator/bootstrapValidator.js
+#= require input-mask/jquery.inputmask.js
+#= require input-mask/jquery.inputmask.regex.extensions.js
 
 jQuery(document).ready ($) ->
 
@@ -15,3 +17,8 @@ jQuery(document).ready ($) ->
             message: 'Debe ingresar el valor'
           numeric:
             message: 'El valor debe ser numerico'
+
+  $("#cambio_moneda_cambio_ml_x_usd").inputmask("Regex", {
+    #regex: "[0-9.]{1,5}%"
+    regex: "/^[0-9]+\.[0-9]{2}$|[0-9]+\.[0-9]{2}[^0-9]/"
+  });

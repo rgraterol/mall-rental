@@ -14,6 +14,15 @@ class MailNotificationsController < ApplicationController
     end
   end
 
+  def mf_notify_tiendas_no_actualizadas
+    current_user.mall.tiendas.each do |tienda|
+      tienda.users.each do |user|
+        NotificacionesMailer.notify_tiendas_no_actualizadas(user)
+      end
+
+    end
+  end
+
 
 
   private

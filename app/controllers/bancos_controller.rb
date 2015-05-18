@@ -5,16 +5,15 @@ class BancosController < ApplicationController
 
   def index
     @bancos = Banco.all
-    respond_with(@bancos)
   end
 
   def show
-    respond_with(@banco)
+
   end
 
   def new
     @banco = Banco.new
-    respond_with(@banco)
+
   end
 
   def edit
@@ -22,18 +21,36 @@ class BancosController < ApplicationController
 
   def create
     @banco = Banco.new(banco_params)
-    @banco.save
-    respond_with(@banco)
+    respond_to do |format|
+      if @banco.save
+        format.html { redirect_to bancos_path, notice: 'Banco fue guardado satisfactoriamente.' }
+        format.json { render :index, status: :created, location: @banco }
+      else
+        format.html { render :new }
+        format.json { render json: @banco.errors, status: :unprocessable_entity }
+      end
+    end
+
   end
 
   def update
-    @banco.update(banco_params)
-    respond_with(@banco)
+    respond_to do |format|
+      if @banco.update(banco_params)
+        format.html { redirect_to bancos_path, notice: 'Banco fue actualizado satisfactoriamente.' }
+        format.json { render :index, status: :ok, location: @banco }
+      else
+        format.html { render :new }
+        format.json { render json: @banco.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
     @banco.destroy
-    respond_with(@banco)
+    respond_to do |format|
+      format.html { redirect_to bancos_url, notice: 'Banco se elimino correctamente.' }
+      format.json { head :no_content }
+    end
   end
 
   private

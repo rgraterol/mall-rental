@@ -228,3 +228,4 @@ $("#btn-send-recibos").on "click", ->
         message: 'No hay tiendas actualizadas para enviar recibos de cobro',
       });
       setTimeout($.unblockUI, 2000);
+

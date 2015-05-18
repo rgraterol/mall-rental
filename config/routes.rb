@@ -109,6 +109,8 @@ Myapp::Application.routes.draw do
   #CONTROLADOR DE NOTIFICACIONES MAILERS
   get 'notificar_usuarios_mall', to: 'mail_notifications#mf_notify_tiendas_mall'
 
+  get 'notificar_tiendas_no_actualizadas', to:  'mail_notifications#mf_notify_tiendas_no_actualizadas'
+
   #ESTADISTICAS
   get 'estadisticas/intermensuales_ventas_alquiler', to: 'estadisticas#mf_intermensuales_vxa'
   post 'estadisticas/intermensuales', to: 'estadisticas#filtro_intermensuales'
