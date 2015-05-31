@@ -49,10 +49,10 @@
         .ibox-content.border-bottom.form-horizontal
           = f.fields_for :contrato_alquilers, @contrato_alquiler do |c|
             .form-group
-              = c.label :tipo_canon_alquiler, class: 'col-sm-3 control-label' do
+              = c.label :tipo_canon_alquiler_id, class: 'col-sm-3 control-label' do
                 Tipo Canon Alquiler:
               .col-sm-9
-                = c.select :tipo_canon_alquiler, ContratoAlquiler.tipo_canon_alquilers.keys.to_a.map { |x| [x.humanize.titleize, x]}, {selected: c.object.tipo_canon_alquiler || nil, include_blank: 'Seleccione un Tipo de Canon de Alquiler'}, {class: 'form-control tipo_canon_alquiler_required', id: 'select_canon_alquiler'}
+                = c.select :tipo_canon_alquiler_id, options_from_collection_for_select(TipoCanonAlquiler.all, :id, :tipo_nombre, selected: c.object.tipo_canon_alquiler_id || nil), {include_blank: 'Seleccione un Tipo de Canon de Alquiler'}, {class: 'form-control tipo_canon_alquiler_required', id: 'select_canon_alquiler'}
             .form-group
               = c.label :fecha_inicio, class: 'col-sm-3 control-label' do
                 Fecha Inicio del Contrato:

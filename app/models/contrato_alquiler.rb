@@ -24,25 +24,29 @@ class ContratoAlquiler < ActiveRecord::Base
   belongs_to :tienda
   has_many :ventas, through: :tienda
   has_one :mall, through: :tienda
+  belongs_to :tipo_canon_alquiler
 
   #TODO Validaciones
   # validates :tipo_canon_alquiler, :archivo_contrato, presence: true
 
   mount_uploader :archivo_contrato, FileUploader
 
-  enum tipo_canon_alquiler: [:fijo, :variable, :fijo_y_variable_venta_bruta, :fijo_y_variable_venta_neta, :exento]
+  # enum tipo_canon_alquiler: [:fijo, :variable, :fijo_y_variable_venta_bruta, :fijo_y_variable_venta_neta, :exento]
+
+  # validates :tipo_canon_alquiler_id, presence: true
+  # validates :tienda_id, presence: true
 
   def clean_canon_alquiler
-    if self.tipo_canon_alquiler == "fijo"
+    if self.tipo_canon_alquiler.tipo == "fijo"
       self.canon_fijo_usd = self.canon_fijo_ml / CambioMoneda.last.cambio_ml_x_usd
       self.porc_canon_ventas = 0
       self.monto_minimo_ventas = 0
-    elsif self.tipo_canon_alquiler == "variable"
+    elsif self.tipo_canon_alquiler.tipo == "variable_venta_bruta" || self.tipo_canon_alquiler.tipo == "variable_venta_neta"
       self.canon_fijo_ml = 0
       self.canon_fijo_usd = 0
       self.monto_minimo_ventas = 0
       self.requerida_venta = true
-    elsif self.tipo_canon_alquiler == "fijo_y_variable_venta_bruta" ||  self.tipo_canon_alquiler == "fijo_y_variable_venta_neta"
+    elsif self.tipo_canon_alquiler.tipo == "fijo_y_variable_venta_bruta" ||  self.tipo_canon_alquiler.tipo == "fijo_y_variable_venta_neta"
       self.canon_fijo_usd = self.canon_fijo_ml / CambioMoneda.last.cambio_ml_x_usd
       self.monto_minimo_ventas = self.canon_fijo_ml / (self.porc_canon_ventas / 100)
       self.requerida_venta = true
@@ -81,7 +85,7 @@ class ContratoAlquiler < ActiveRecord::Base
     if self.archivo_contrato.url.nil?
       return false
     else
-      return true if self.archivo_contrato.url.split('.').last == 'pdf' || !(self.archivo_contrato.url.nil?)
+      return true if self.archivo_contrato.url.split('.').last == 'pdf'
       return false
     end
   end

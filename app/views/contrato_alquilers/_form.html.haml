@@ -19,11 +19,11 @@
     .col-sm-10
       = render 'shared/file_upload_generic', f: f, field: :archivo_contrato, name_file: f.object.archivo_contrato || nil
   .form-group
-    = f.label :tipo_canon_alquiler, class: 'col-sm-2   control-label' do
+    = f.label :tipo_canon_alquiler_id , class: 'col-sm-2   control-label' do
       Tipo Canon Alquiler:
     .col-sm-10
-      = f.select :tipo_canon_alquiler, ContratoAlquiler.tipo_canon_alquilers.keys.to_a.map { |x| [x.humanize.titleize, x]}, {selected: f.object.tipo_canon_alquiler || nil, include_blank: 'Seleccione un Tipo de Canon de Alquiler'}, {class: 'form-control tipo_canon_alquiler_required', id: 'select_canon_alquiler'}
-  %div#canon_fijo{style: (f.object.tipo_canon_alquiler == 'fijo_y_variable_venta_bruta' || f.object.tipo_canon_alquiler == 'fijo_y_variable_venta_neta' || f.object.tipo_canon_alquiler == 'fijo') ? '' : 'display:none'}
+      = f.select :tipo_canon_alquiler_id, options_from_collection_for_select(TipoCanonAlquiler.all, :id, :tipo_nombre, selected: f.object.tipo_canon_alquiler_id || nil), {include_blank: 'Seleccione un Tipo de Canon de Alquiler'}, {class: 'form-control tipo_canon_alquiler_required', id: 'select_canon_alquiler'}
+  %div#canon_fijo{style: (f.object.tipo_canon_alquiler.tipo == 'fijo_y_variable_venta_bruta' || f.object.tipo_canon_alquiler.tipo == 'fijo_y_variable_venta_neta' || f.object.tipo_canon_alquiler.tipo == 'fijo') ? '' : 'display:none'}
     .form-group
       = f.label :canon_fijo_ml, class: 'col-sm-2 control-label' do
         Canón Fijo en Bs.:
@@ -40,7 +40,7 @@
       .col-sm-2
         %span
           $
-  %div#canon_porcentaje{style: (f.object.tipo_canon_alquiler == 'fijo_y_variable_venta_bruta' || f.object.tipo_canon_alquiler == 'fijo_y_variable_venta_neta' || f.object.tipo_canon_alquiler == 'variable') ? '' : 'display:none'}
+  %div#canon_porcentaje{style: (f.object.tipo_canon_alquiler.tipo == 'fijo_y_variable_venta_bruta' || f.object.tipo_canon_alquiler.tipo == 'fijo_y_variable_venta_neta' || f.object.tipo_canon_alquiler.tipo == 'variable_venta_bruta' || f.object.tipo_canon_alquiler.tipo == 'variable_venta_neta') ? '' : 'display:none'}
     .form-group
       = f.label :porc_canon_ventas, class: 'col-sm-2 control-label' do
         \% de Canon por Ventas:
