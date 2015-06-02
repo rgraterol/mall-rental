@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150602004152) do
+ActiveRecord::Schema.define(version: 20150602014337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -149,6 +149,13 @@ ActiveRecord::Schema.define(version: 20150602004152) do
 
   add_index "malls", ["cuenta_bancarium_id"], name: "index_malls_on_cuenta_bancarium_id", using: :btree
   add_index "malls", ["pai_id"], name: "index_malls_on_pai_id", using: :btree
+
+  create_table "malls_roles", id: false, force: true do |t|
+    t.integer "role_id"
+    t.integer "mall_id"
+  end
+
+  add_index "malls_roles", ["mall_id", "role_id"], name: "index_malls_roles_on_mall_id_and_role_id", using: :btree
 
   create_table "monedas", force: true do |t|
     t.string   "nombre"
