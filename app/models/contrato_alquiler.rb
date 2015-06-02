@@ -27,14 +27,11 @@ class ContratoAlquiler < ActiveRecord::Base
   belongs_to :tipo_canon_alquiler
 
   #TODO Validaciones
-  # validates :tipo_canon_alquiler, :archivo_contrato, presence: true
+  validates :archivo_contrato, presence: true
+  validates :tipo_canon_alquiler_id, presence: true
+  validates :tienda_id, presence: true
 
   mount_uploader :archivo_contrato, FileUploader
-
-  # enum tipo_canon_alquiler: [:fijo, :variable, :fijo_y_variable_venta_bruta, :fijo_y_variable_venta_neta, :exento]
-
-  # validates :tipo_canon_alquiler_id, presence: true
-  # validates :tienda_id, presence: true
 
   def clean_canon_alquiler
     if self.tipo_canon_alquiler.tipo == "fijo"

@@ -33,6 +33,6 @@ class Local < ActiveRecord::Base
   end
 
   def self.valid_tipo_estado_local
-    %w[Disponible En_Reparacion Vendido]
+    %w[Disponible Alquilado En_Reparacion Vendido]
   end
 end
