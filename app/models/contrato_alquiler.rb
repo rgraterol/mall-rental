@@ -2,21 +2,23 @@
 #
 # Table name: contrato_alquilers
 #
-#  id                  :integer          not null, primary key
-#  nro_contrato        :string(255)
-#  fecha_inicio        :date
-#  fecha_fin           :date
-#  archivo_contrato    :string(255)
-#  canon_fijo_ml       :decimal(, )
-#  canon_fijo_usd      :decimal(, )
-#  porc_canon_ventas   :decimal(, )
-#  monto_minimo_ventas :decimal(, )
-#  estado_contrato     :boolean
-#  tipo_canon_alquiler :integer
-#  tienda_id           :integer
-#  created_at          :datetime
-#  updated_at          :datetime
+#  id                     :integer          not null, primary key
+#  nro_contrato           :string(255)
+#  fecha_inicio           :date
+#  fecha_fin              :date
+#  archivo_contrato       :string(255)
+#  canon_fijo_ml          :decimal(, )      default(0.0)
+#  canon_fijo_usd         :decimal(, )      default(0.0)
+#  porc_canon_ventas      :decimal(, )      default(0.0)
+#  monto_minimo_ventas    :decimal(, )      default(0.0)
+#  estado_contrato        :boolean
+#  tienda_id              :integer
+#  created_at             :datetime
+#  updated_at             :datetime
+#  requerida_venta        :boolean
+#  tipo_canon_alquiler_id :integer
 #
+
 
 class ContratoAlquiler < ActiveRecord::Base
   before_create :set_missing_attributes_create

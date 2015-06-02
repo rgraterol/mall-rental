@@ -15,6 +15,7 @@
 #  updated_at                :datetime
 #
 
+
 class Tienda < ActiveRecord::Base
   belongs_to :local
   has_one :nivel_mall, through: :local

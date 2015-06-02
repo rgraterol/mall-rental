@@ -2,21 +2,25 @@
 #
 # Table name: roles
 #
-#  id         :integer          not null, primary key
-#  name       :string(50)       default(""), not null
-#  role_type  :integer          default(0), not null
-#  created_at :datetime
-#  updated_at :datetime
+#  id               :integer          not null, primary key
+#  name             :string(50)       default(""), not null
+#  role_type        :integer          default(0), not null
+#  created_at       :datetime
+#  updated_at       :datetime
+#  tipo_servicio_id :integer
 #
+
 
 
 class Role < ActiveRecord::Base
 
   has_many :users
-
   has_and_belongs_to_many :permissions
+  belongs_to :tipo_servicio
 
   validates :name, presence: true
+  validates :role_type, presence: true
+  validates :tipo_servicio_id, presence: true
 
   enum role_type: [:administrador_sistema, :administrador_cliente, :cliente_mall, :cliente_tienda]
 

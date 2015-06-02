@@ -2,16 +2,18 @@
 #
 # Table name: malls
 #
-#  id               :integer          not null, primary key
-#  nombre           :string(255)
-#  abreviado        :string(255)
-#  rif              :string(255)
-#  direccion_fiscal :string(255)
-#  telefono         :string(255)
-#  pai_id           :integer
-#  created_at       :datetime
-#  updated_at       :datetime
+#  id                  :integer          not null, primary key
+#  nombre              :string(255)
+#  abreviado           :string(255)
+#  rif                 :string(255)
+#  direccion_fiscal    :string(255)
+#  telefono            :string(255)
+#  pai_id              :integer
+#  cuenta_bancarium_id :integer
+#  created_at          :datetime
+#  updated_at          :datetime
 #
+
 
 class Mall < ActiveRecord::Base
   has_many :nivel_malls, dependent: :destroy
