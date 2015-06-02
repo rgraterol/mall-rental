@@ -1,5 +1,7 @@
 Myapp::Application.routes.draw do
 
+  resources :plantilla_contrato_alquilers
+
   resources :cuenta_bancaria
 
   resources :bancos
@@ -50,6 +52,7 @@ Myapp::Application.routes.draw do
   get 'actividad_economicas' => 'actividad_economicas#index', as: :actividad_economicas
 
   get 'actividad_economica' => 'actividad_economicas#show'
+
   
   resources :tipo_canon_alquilers
 

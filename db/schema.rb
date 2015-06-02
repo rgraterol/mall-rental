@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150517204901) do
+ActiveRecord::Schema.define(version: 20150531161730) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -230,6 +230,18 @@ ActiveRecord::Schema.define(version: 20150517204901) do
   end
 
   add_index "permissions_roles", ["permission_id", "role_id"], name: "index_permissions_roles_on_permission_id_and_role_id", using: :btree
+
+  create_table "plantilla_contrato_alquilers", force: true do |t|
+    t.string   "nombre"
+    t.text     "contenido"
+    t.integer  "mall_id"
+    t.integer  "tipo_canon_alquiler_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "plantilla_contrato_alquilers", ["mall_id"], name: "index_plantilla_contrato_alquilers_on_mall_id", using: :btree
+  add_index "plantilla_contrato_alquilers", ["tipo_canon_alquiler_id"], name: "index_plantilla_contrato_alquilers_on_tipo_canon_alquiler_id", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name",       limit: 50, default: "", null: false

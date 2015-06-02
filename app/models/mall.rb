@@ -28,6 +28,7 @@ class Mall < ActiveRecord::Base
   belongs_to :cuenta_bancarium
   belongs_to :cambio_moneda
   belongs_to :calendario_no_laborable
+  has_many :plantilla_contrato_alquilers
 
   validates :nombre, :abreviado, :rif, :direccion_fiscal, :telefono, :cuenta_bancarium, presence: true
   validates :rif, uniqueness: true
