@@ -60,6 +60,6 @@ class ArrendatariosController < ApplicationController
     end
 
     def arrendatario_params
-      params.require(:arrendatario).permit(:nombre, :rif, :direccion, :telefono, :nombre_rl, :cedula_rl, :email_rl, :telefono_rl)
+      params.require(:arrendatario).permit(:nombre, :rif, :direccion, :telefono, :nombre_rl, :cedula_rl, :email_rl, :telefono_rl, :registro_mercantil)
     end
 end

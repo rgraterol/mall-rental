@@ -74,6 +74,15 @@
               = f.text_field :telefono_rl, class: 'form-control'
   .row
     .col-lg-12
+      .ibox-content.border-bottom
+        .row
+          .col-sm-12
+            .form-horizontal
+              = f.label :registro_mercantil, class: 'control-label' do
+                Inscripción en el Registro Mercantil
+              = f.text_area :registro_mercantil, class: 'form-control', rows: 6
+  .row
+    .col-lg-12
       .ibox-content
         .row
           .col-sm-3.col-sm-offset-9
