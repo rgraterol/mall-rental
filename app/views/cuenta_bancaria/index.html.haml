@@ -1,23 +1,51 @@
-%h1 Listing cuenta_bancaria
-%table
-  %thead
-    %tr
-      %th Nrocta
-      %th Tipocuenta
-      %th Beneficiario
-      %th Docidentidad
-      %th Banco
-      %th{:colspan => "3"}
-  %tbody
-    - @cuenta_bancaria.each do |cuenta_bancarium|
-      %tr
-        %td= cuenta_bancarium.nro_cta
-        %td= cuenta_bancarium.tipo_cuenta
-        %td= cuenta_bancarium.beneficiario
-        %td= cuenta_bancarium.doc_identidad
-        %td= cuenta_bancarium.banco.nombre rescue nil
-        %td= link_to 'Show', cuenta_bancarium
-        %td= link_to 'Edit', edit_cuenta_bancarium_path(cuenta_bancarium)
-        %td= link_to 'Destroy', cuenta_bancarium, method: :delete, data: { confirm: 'Are you sure?' }
-%br/
-= link_to 'New Cuenta bancarium', new_cuenta_bancarium_path
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Cuentas Bancarias
+
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Cuentas Bancarias
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-sm-3
+              = link_to "Nueva Cuenta Bancaria", { controller: "cuenta_bancaria", action: "new" }, class: "btn btn-mall btn-block"
+          %hr
+          %br
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover.dataTables-example
+                %thead
+                  %tr
+                    %th Nro Cuenta
+                    %th Tipo Cuenta
+                    %th Beneficiario
+                    %th Doc Identidad
+                    %th Banco
+                    %th Acciones
+                %tbody
+                  - @cuenta_bancarias.each do |cuenta|
+                    %tr
+                      %td= cuenta.nro_cta
+                      %td= cuenta.tipo_cuenta
+                      %td= cuenta.beneficiario
+                      %td= cuenta.doc_identidad
+                      %td= cuenta.banco.nombre rescue nil
+                      %td
+                        = link_to edit_cuenta_bancarium_path(cuenta) do
+                          %i.fa.fa-pencil
+                          Editar
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        = link_to cuenta, data: { confirm: "Seguro que desea eliminar la Cuenta Bancaria ?" }, method: :delete do
+                          %i.fa.fa-trash
+                          Eliminar
+

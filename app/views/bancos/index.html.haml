@@ -1,0 +1,42 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Lista de Bancos
+
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Bancos
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-sm-3
+              = link_to "Nuevo Banco", { controller: "bancos", action: "new" }, class: "btn btn-mall btn-block"
+          %hr
+          %br
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover.dataTables-example
+                %thead
+                  %tr
+                    %th{width: '75%'} Banco
+                    %th Acciones
+                %tbody
+                  - @bancos.each do |banco|
+                    %tr
+                      %td= banco.nombre
+                      %td
+                        = link_to edit_banco_path(banco) do
+                          %i.fa.fa-pencil
+                          Editar
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        = link_to banco, data: { confirm: "Seguro que desea eliminar el Banco ?" }, method: :delete do
+                          %i.fa.fa-trash
+                          Eliminar

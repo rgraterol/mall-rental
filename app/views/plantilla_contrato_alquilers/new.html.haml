@@ -1,0 +1,51 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Nueva Plantilla Contrato Alquiler
+
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Plantillas de Contrato Alquiler Registradas', plantilla_contrato_alquilers_path
+      %li
+        Nueva Plantilla Contrato Alquiler
+
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            Registro de Nueva Plantilla Contrato Alquiler
+        .ibox-content
+          = form_for(@plantilla_contrato_alquiler, url: {action: :create}, html: {class:"form-horizontal m-t-md", id: "form_registro_plantilla_contrato_alquiler"}) do |f|
+            - if @plantilla_contrato_alquiler.errors.any?
+              #error_explanation
+                %h2
+                  = pluralize(@plantilla_contrato_alquiler.errors.count, "error")
+                  prohibited this local from being saved:
+                %ul
+                  - @plantilla_contrato_alquiler.errors.full_messages.each do |message|
+                    %li
+                      = message
+            .form-group
+              = f.label :mall_id, "Mall: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.select :mall_id, options_from_collection_for_select(Mall.all, :id, :nombre, selected: f.object.mall_id || nil), {include_blank: 'Seleccione un Mall'}, class: 'form-control mall_required'
+            .form-group
+              = f.label :nombre, "Nombre de la Plantilla: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :nombre, autofocus: true, class: 'form-control'
+            .form-group
+              = f.label :tipo_canon_alquiler_id, "Tipo de Canon: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.select :tipo_canon_alquiler_id,options_from_collection_for_select(TipoCanonAlquiler.all, :id, :tipo, selected: f.object.tipo_canon_alquiler_id || nil), {include_blank: 'Seleccione un Tipo Canon Alquiler'}, {class: 'form-control tipo_canon_alquiler_required', id: 'select_canon_alquiler'}
+            .form-group
+              = f.label :contenido, "Contenido de la Plantilla: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_area :contenido, autofocus: true, :rows => 8, class: 'form-control'
+            .form-group
+              .col-sm-3.col-sm-offset-9
+                = f.submit "Guardar", class: "btn btn-warning btn-block"
+

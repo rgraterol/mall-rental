@@ -1,0 +1,58 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Nueva Cuenta Bancaria
+
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Cuentas Bancarias Registradas', cuenta_bancaria_path
+      %li
+        Nueva Cuenta Bancaria
+
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            Registro de Nueva Cuenta Bancaria
+        .ibox-content
+          = form_for(@cuenta_bancarium, url: {action: :create}, html: {class:"form-horizontal m-t-md", id: "form_registro_cuenta"}) do |f|
+
+            - if @cuenta_bancarium.errors.any?
+              #error_explanation
+                %h2
+                  = pluralize(@cuenta_bancarium.errors.count, "error")
+                  prohibited this local from being saved:
+
+                %ul
+                  - @cuenta_bancarium.errors.full_messages.each do |message|
+                    %li
+                      = message
+            .form-group
+              = f.label :nro_cta, "Numero de Cuenta: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :nro_cta, autofocus: true, class: 'form-control'
+            .form-group
+              = f.label :tipo_cuenta, "Tipo de Cuenta: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :tipo_cuenta, autofocus: true, class: 'form-control'
+            .form-group
+              = f.label :beneficiario, "Beneficiario: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :beneficiario, autofocus: true, class: 'form-control'
+            .form-group
+              = f.label :doc_identidad, "Documento Identidad: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :doc_identidad, autofocus: true, class: 'form-control'
+            .form-group
+              = f.label :banco, "Banco: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.select :banco_id, options_from_collection_for_select(Banco.all, :id, :nombre, selected: f.object.banco_id || nil), {include_blank: 'Seleccione un Banco'}, class: 'form-control'
+            .form-group
+              .col-sm-3.col-sm-offset-9
+                = f.hidden_field :mall_id, :value => @mall.id
+                = f.submit "Guardar", class: "btn btn-warning btn-block"
+

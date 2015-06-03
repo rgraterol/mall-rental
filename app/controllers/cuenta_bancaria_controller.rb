@@ -4,36 +4,62 @@ class CuentaBancariaController < ApplicationController
   respond_to :html
 
   def index
-    @cuenta_bancaria = CuentaBancarium.all
-    respond_with(@cuenta_bancaria)
+    @cuenta_bancarias = CuentaBancarium.all
+
   end
 
   def show
-    respond_with(@cuenta_bancarium)
+
   end
 
   def new
     @cuenta_bancarium = CuentaBancarium.new
-    respond_with(@cuenta_bancarium)
+    @mall = current_user.mall
+
   end
 
   def edit
+    @mall = current_user.mall
   end
 
   def create
     @cuenta_bancarium = CuentaBancarium.new(cuenta_bancarium_params)
-    @cuenta_bancarium.save
-    respond_with(@cuenta_bancarium)
+
+    respond_to do |format|
+      if @cuenta_bancarium.save
+        format.html { redirect_to cuenta_bancaria_path, notice: 'Cuenta Bancaria guardada existosamente.' }
+        format.json { render :index, status: :created, location: @cuenta_bancarium }
+      else
+        format.html { render :new }
+        format.json { render json: @cuenta_bancarium.errors, status: :unprocessable_entity }
+      end
+    end
+
   end
 
   def update
-    @cuenta_bancarium.update(cuenta_bancarium_params)
-    respond_with(@cuenta_bancarium)
+    respond_to do |format|
+      if @cuenta_bancarium.update(cuenta_bancarium_params)
+        format.html { redirect_to cuenta_bancaria_path, notice: 'Cuenta Bancaria guardada existosamente.' }
+        format.json { render :index, status: :ok, location: @cuenta_bancarium }
+      else
+        format.html { render :edit }
+        format.json { render json: @cuenta_bancarium.errors, status: :unprocessable_entity }
+      end
+    end
+
+
+
+
   end
 
   def destroy
     @cuenta_bancarium.destroy
-    respond_with(@cuenta_bancarium)
+    respond_to do |format|
+      format.html { redirect_to cuenta_bancarium_url, notice: 'Cuenta Bancaria se ha eliminado exitosamente.' }
+      format.json { head :no_content }
+    end
+
   end
 
   private
@@ -42,6 +68,6 @@ class CuentaBancariaController < ApplicationController
     end
 
     def cuenta_bancarium_params
-      params.require(:cuenta_bancarium).permit(:nro_cta, :tipo_cuenta, :beneficiario, :doc_identidad, :banco_id)
+      params.require(:cuenta_bancarium).permit(:nro_cta, :tipo_cuenta, :beneficiario, :doc_identidad, :banco_id, :mall_id)
     end
 end

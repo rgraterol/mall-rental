@@ -1,0 +1,45 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Gestion de Cambio de Moneda
+      %i.fa.fa-money
+
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Cambio de Monedas
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-sm-3
+              = link_to "Nuevo Cambio de Moneda", { controller: "cambio_monedas", action: "new" }, class: "btn btn-mall btn-block"
+          %hr
+          %br
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover.dataTables-example
+                %thead
+                  %tr
+                    %th Fecha
+                    %th Cambio ML x USD
+                    %th Acciones
+                %tbody
+                  - @cambio_monedas.each do |moneda|
+                    %tr
+                      %td= moneda.fecha.strftime("%d-%m-%Y")
+                      %td= number_with_precision(moneda.cambio_ml_x_usd, precision: 2, separator: ',', delimiter: '.')
+                      %td
+                        = link_to edit_cambio_moneda_path(moneda) do
+                          %i.fa.fa-pencil
+                          Editar
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        = link_to moneda, data: { confirm: "Seguro que desea eliminar el Cambio de Moneda ?" }, method: :delete do
+                          %i.fa.fa-trash
+                          Eliminar

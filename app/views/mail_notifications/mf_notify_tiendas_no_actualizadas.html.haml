@@ -1,0 +1,135 @@
+= provide(:title, "#{current_user.mall.nombre }")
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      = current_user.mall.nombre
+      \- Notificaciones a Tiendas No Actualizadas
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Notificaciones
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox-content.border-bottom.text-center
+        %h2
+          Notificaciones a Tiendas No Actualizadas
+        %p
+          Se le ha enviado una notificación a todas las tiendas del Mall que poseen ventas no actualizadas.
+
+=#a continuacion esta el recibo de cobro que sera enviado por correo electronico en la notificacion de cobro, hay que colocarlo en el
+=# sitio adecuado para que sea cargado con los datos reales, pero se encuentra aqui para ver la vista html
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .ibox-content.border-bottom
+    .row
+      .col-lg-3
+        =image_tag 'logo_la_vela.jpg', width: 130
+      .col-lg-6
+        %h2.bold
+          INVERSIONES A.H.S., C.A.
+        %h2
+          R.I.F.: J-30144717-4
+        %hr
+        %p.text-left
+          Calle Los Uveros, entre Av. Bolivar y Av. Guayacan
+          %br
+          C.C. La Vela, Nivel Mar, Oficina Adminisrativa
+          %br
+          Porlamar, Telefono: 0295 2600700
+      .col-lg-3{:align => "right", style: "height: 100px; padding-top: 150px" }
+        %span
+          FECHA:
+          =Date.today.strftime("%d-%m-%Y")
+        %br
+        %span
+          REF. N°: 2009-09646
+    %br
+    %br
+    .row
+      .col-lg-12
+        %h3.bold
+          SEÑORES: RIDE SHOP,C.A.
+        %h3.bold
+          LOCAL: Mar-38
+    %br
+    .row
+      .col-lg-12.text-center
+        %h2.bold{style: "text-decoration: underline;"}
+          NOTIFICACION DE COBRO
+    %br
+    %br
+    .row
+      .col-lg-12
+        %p.text-justify{style: "padding: 10px"}
+          Estimado arrendatario, le extendemos un cordial saludo, al momento de informarle el saldo actual de su deuda
+          con la administracion, correspondiente al canon de alquiler que a continuacion detallamos:
+        .row
+          .col-lg-8.text-right
+            ALQUILER LOCAL MES ABRIL 2015
+          .col-lg-2.text-right
+            137.280,00
+        .row.text-right
+          .col-lg-8.text-right
+            DESCUENTO Bs.
+          .col-lg-2.text-right
+            0,00
+            %hr{style: "margin-top: 0px; margin-bottom: 7px; margin-right: -10px;  border: 0; border-top: 2px solid #e3e3e3;"}
+        .row.text-right
+          .col-lg-8.text-right
+            SUB-TOTAL, MONTO BASE PARA RETENCION Bs.
+          .col-lg-2.text-right.bold
+            137.280,00
+        .row.text-right
+          .col-lg-8.text-right
+            IMPUESTO RETENIDO POR ENTERAR, 5% Bs.
+          .col-lg-2.text-right
+            6.864,00
+        .row.text-right
+          .col-lg-8.text-right
+            ='(-)AMORTIZACION ALQUILER PAGADO POR ANTICIPADO Bs.'
+          .col-lg-2.text-right.bold
+            0,00
+            %hr{style: "margin-top: 0px; margin-bottom: 5px; margin-right: -10px;  border: 0; border-top: 2px solid #e3e3e3;"}
+        .row.text-right
+          %h3.bold
+            .col-lg-8.text-right
+              TOTAL A PAGAR POR CONCEPTO DE ALQUILER Bs.
+            .col-lg-2.text-right
+              130.416,00
+    %br
+    %br
+    .row
+      .col-lg-12.text-justify
+        %p{style: "padding: 10px; line-height: 20px;"}
+          Solamente podran pagar en la oficina administrativa del Centro Comercial La Vela,
+          donde se entregaran las facturas originales, agradecemos emitir cheque NO ENDOSABLE
+          a nombre de INVERSIONES A.H.S., C.A. o depositar en la cuenta corriente No. 0121 0155 41 0101224992
+          a nombre de INVERSIONES A.H.S., C.A. del banco Corp Banca. De utilizar este sistema debera remitir
+          la planilla de deposito a nuestra oficina, indicando el nombre y nomenclatura del local, haciendo
+          la salvedad que hasta tanto no se reciba la constancia de pago de la manera y forma antes senalada
+          la administradora no considerara liberada la deuda respectiva. Favor abstenerse de pagar en efectivo
+          en nuestra oficina.
+          %br
+          %br
+          Agradecemos pagar su deuda entre los primeros cinco (5) dias contados a partir de la fecha de la presente notificacion.
+          %br
+          %br
+          Cualquier sugerencia o aclaratoria favor llamar a nuestro numero de telefono 0295 2600700, y/o pueden acercarse a nuestra
+          oficina administrativa ubicada en el Nivel Mar del Centro Comercial La Vela y le daremos pronta respuesta a sus inquietudes.
+    %br
+    %br
+    .row
+      .col-lg-12.text-center
+        =image_tag 'firma.png', width: 300
+
+%br
+%br
+
+
+
+
+
+
+

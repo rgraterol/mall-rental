@@ -26,7 +26,9 @@
             .col-md-3.text-right.col-md-offset-6
               = button_tag 'Enviar Recibos de Cobro', class: 'btn btn-mall btn-block', id: 'btn-send-recibos'
             .col-md-3
-              = button_tag 'Notificar Tiendas No Actualizadas', class: 'btn btn-mall btn-block', id: 'btn-notificar-tiendas'
+              = link_to notificar_tiendas_no_actualizadas_path, class: 'btn btn-danger pull-right' do
+                Notificar Tiendas No Actualizadas
+                %i.fa.fa-envelope
           %br
           .row
             .col-md-12

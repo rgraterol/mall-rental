@@ -17,4 +17,6 @@ class CanonAlquiler < ActiveRecord::Base
   validates :canon_fijo_ml, numericality: { greater_than_or_equal_to: 0 }
   validates :canon_fijo_usd, numericality: true
   validates :porc_canon_ventas, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100  }
+
+
 end

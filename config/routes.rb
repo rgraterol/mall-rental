@@ -1,5 +1,7 @@
 Myapp::Application.routes.draw do
 
+  resources :plantilla_contrato_alquilers
+
   resources :cuenta_bancaria
 
   resources :bancos
@@ -50,6 +52,7 @@ Myapp::Application.routes.draw do
   get 'actividad_economicas' => 'actividad_economicas#index', as: :actividad_economicas
 
   get 'actividad_economica' => 'actividad_economicas#show'
+
   
   resources :tipo_canon_alquilers
 
@@ -103,10 +106,13 @@ Myapp::Application.routes.draw do
     post 'dynamic_pago_alquilers/actualizar_pagos'
     post "/dynamic_pago_alquilers_mensuales/pagos"
     post 'dynamic_add_nivel_mall/guardar'
+    post 'dynamic_filter_locals/actualizar'
   end
 
   #CONTROLADOR DE NOTIFICACIONES MAILERS
   get 'notificar_usuarios_mall', to: 'mail_notifications#mf_notify_tiendas_mall'
+
+  get 'notificar_tiendas_no_actualizadas', to:  'mail_notifications#mf_notify_tiendas_no_actualizadas'
 
   #ESTADISTICAS
   get 'estadisticas/intermensuales_ventas_alquiler', to: 'estadisticas#mf_intermensuales_vxa'

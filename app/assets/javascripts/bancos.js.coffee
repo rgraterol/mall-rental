@@ -1,3 +1,27 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+#= require bootstrapValidator/bootstrapValidator.js
+
+jQuery(document).ready ($) ->
+
+  $('#form_registro_banco').bootstrapValidator
+    feedbackIcons:
+      valid: 'fa fa-check ',
+      invalid: 'fa fa-times',
+      validating: 'fa fa-refresh'
+    live: 'submitted'
+    fields:
+      "banco[nombre]":
+        validators:
+          notEmpty:
+            message: 'Debe ingresar el nombre del banco'
+
+  $('#form_edit_banco').bootstrapValidator
+    feedbackIcons:
+      valid: 'fa fa-check ',
+      invalid: 'fa fa-times',
+      validating: 'fa fa-refresh'
+    live: 'submitted'
+    fields:
+      "banco[nombre]":
+        validators:
+          notEmpty:
+            message: 'Debe ingresar el nombre del banco'

@@ -1,0 +1,38 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Plantilla Contrato Alquiler
+
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Plantillas de Contrato Alquiler Registradas', plantilla_contrato_alquilers_path
+      %li
+        Ver Plantilla Contrato Alquiler
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-md-6
+              %h2
+                = @plantilla_contrato_alquiler.nombre
+              %br
+              %p
+                %br
+                = @plantilla_contrato_alquiler.contenido
+
+    .row
+    .col-lg-12
+      .ibox-content
+        .row
+          .col-sm-3
+            = link_to plantilla_contrato_alquilers_path, class: 'btn btn-warning btn-block' do
+              Regresar
+          .col-sm-3.col-sm-offset-6
+            = link_to edit_plantilla_contrato_alquiler_path(@plantilla_contrato_alquiler), class: 'btn btn-mall btn-block' do
+              Editar
+

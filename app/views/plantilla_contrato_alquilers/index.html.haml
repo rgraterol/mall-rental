@@ -1,0 +1,49 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Gestion de Plantilla de Contratos de Alquiler
+
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Plantilla de Contratos de Alquiler
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-sm-3
+              = link_to "Nueva Plantilla", { controller: "plantilla_contrato_alquilers", action: "new" }, class: "btn btn-mall btn-block"
+          %hr
+          %br
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover.dataTables-example
+                %thead
+                  %tr
+                    %th{width: '25%'} Mall
+                    %th{width: '25%'} Nombre de la Plantilla
+                    %th Tipo Canon Alquiler
+                    %th{width: '20%'} Acciones
+                %tbody
+                  - @plantilla_contrato_alquilers.each do |plantilla|
+                    %tr
+                      %td= plantilla.mall.nombre
+                      %td= plantilla.nombre
+
+                      %td= plantilla.tipo_canon_alquiler.tipo
+                      %td
+                        = link_to plantilla_contrato_alquiler_path(plantilla) do
+                          %i.fa.fa-search
+                          Ver
+                        %br
+                        = link_to edit_plantilla_contrato_alquiler_path(plantilla) do
+                          %i.fa.fa-pencil
+                          Editar
+                        %br
+                        = link_to plantilla, data: { confirm: "Seguro que desea eliminar la Plantilla ?" }, method: :delete do
+                          %i.fa.fa-trash
+                          Eliminar

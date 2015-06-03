@@ -1,0 +1,39 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Editando Banco
+
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Bancos Registrados', bancos_path
+      %li
+        Editar Banco
+
+.wrapper.wrapper-content
+  .row.animated.fadeInRight
+    .col-md-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            Editar Banco
+        .ibox-content
+          = form_for(@banco, url: {action: :update}, html: {class:"form-horizontal m-t-md", id: "form_edit_banco"}) do |f|
+            - if @banco.errors.any?
+              #error_explanation
+                %h2
+                  = pluralize(@banco.errors.count, "error")
+                  prohibited this local from being saved:
+                %ul
+                  - @banco.errors.full_messages.each do |message|
+                    %li
+                      = message
+            .form-group
+              = f.label :nombre, "Nombre: ", class: 'col-sm-2 control-label'
+              .col-sm-10
+                = f.text_field :nombre, autofocus: true, class: 'form-control'
+            .form-group
+              .col-sm-3.col-sm-offset-9
+                = f.submit "Actualizar", class: "btn btn-warning btn-block"
+
