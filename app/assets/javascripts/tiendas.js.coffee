@@ -34,6 +34,14 @@ jQuery(document).ready ($) ->
         validators:
           notEmpty:
             message: "Actividad Económica es Obligatoria"
+      "tienda[monto_garantia]":
+        validators:
+          notEmpty:
+            message: "Monto del depósito de garantía es Obligatorio"
+      "tienda[codigo_contable]":
+        validators:
+          notEmpty:
+            message: "Código Contable es Obligatorio"
       tipo_canon_alquiler_required:
         selector: '.tipo_canon_alquiler_required'
         validators:

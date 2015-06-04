@@ -133,7 +133,7 @@
             - if can? :pagos_mensuales, PagoAlquiler
               %li{class: is_active_action('pagos_mensuales')}= link_to 'Reporte de Pagos Mensuales', pagos_mensuales_mall_path
 
-      - if can? :manage, :estadisticas && current_user.mall_id.present?
+      - if (can? :manage, :estadisticas) && current_user.mall_id.present?
         %li{class: is_active_controller('estadisticas')}
           %a{href: '#'}
             %i.fa.fa-bar-chart
