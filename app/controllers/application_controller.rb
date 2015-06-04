@@ -51,4 +51,10 @@ class ApplicationController < ActionController::Base
       ActionController::Parameters.new(id: params[:id]).permit(:id)[:id]
     end
 
+    def check_user_mall
+      if current_user.mall_id.nil?
+        redirect_to root_path, alert: 'Usted como administrador debe poseer un mall asociado para ingresar a esta página.'
+      end
+    end
+
 end

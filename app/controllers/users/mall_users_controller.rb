@@ -3,6 +3,7 @@ class Users::MallUsersController < ApplicationController
   authorize_resource class: :mall_user
   before_action :set_user, only: [:destroy, :show, :edit, :update]
   before_action :set_roles, only: [:new, :edit]
+  before_action :check_user_mall
   @@password = ""
 
   def index

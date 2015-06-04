@@ -32,13 +32,18 @@ class Tienda < ActiveRecord::Base
   has_many :pago_alquilers
 
   after_create :set_missing_attributes
+  before_update :set_missing_attributes_update
 
 
   validates :local_id, :actividad_economica_id, :arrendatario_id, presence: true
 
   def set_missing_attributes
     self.update(fecha_apertura: (self.contrato_alquilers.first.fecha_inicio rescue Date.today),
-                abierta: true, fecha_fin_contrato_actual: (self.contrato_alquilers.last.fecha_fin rescue Date.today))
+                abierta: true, fecha_fin_contrato_actual: (self.contrato_alquilers.last.fecha_fin rescue Date.today), monto_garantia_usd: (self.monto_garantia / CambioMoneda.last.cambio_ml_x_usd rescue nil))
+  end
+
+  def set_missing_attributes_update
+    self.monto_garantia_usd = self.monto_garantia / CambioMoneda.last.cambio_ml_x_usd if self.monto_garantia.present?
   end
 
   def vencido?

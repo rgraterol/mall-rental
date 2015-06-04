@@ -4,6 +4,7 @@ class ContratoAlquilersController < ApplicationController
   before_action :set_tienda_aux, only: :update
   before_action :set_tienda, only: [:index, :new, :create, :destroy, :show, :edit]
   before_action :set_contrato_alquiler, only: [:destroy, :show, :edit, :update]
+  before_action :check_user_mall
 
   # GET /contrato_alquilers
   # GET /contrato_alquilers.json

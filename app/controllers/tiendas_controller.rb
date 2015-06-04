@@ -2,6 +2,7 @@ class TiendasController < ApplicationController
   before_action :authenticate_user!
   before_action :set_tienda, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
+  before_action :check_user_mall
 
   def index
     @tiendas = current_user.mall.tiendas
@@ -68,6 +69,6 @@ class TiendasController < ApplicationController
     end
 
     def tienda_params
-      params.require(:tienda).permit(:nombre, :local_id, :arrendatario_id, :actividad_economica_id, contrato_alquilers_attributes: [ :id, :tipo_canon_alquiler, :fecha_inicio, :fecha_fin, :archivo_contrato, :canon_fijo_ml, :porc_canon_ventas ,:requerida_venta])
+      params.require(:tienda).permit(:nombre, :local_id, :arrendatario_id, :actividad_economica_id, :monto_garantia, :codigo_contable, contrato_alquilers_attributes: [ :id, :tipo_canon_alquiler, :fecha_inicio, :fecha_fin, :archivo_contrato, :canon_fijo_ml, :porc_canon_ventas ,:requerida_venta])
     end
 end

@@ -1,5 +1,6 @@
 class PagoAlquilersController < ApplicationController
   before_action :set_pago_alquiler, only: [:show, :edit, :update, :destroy]
+  before_action :check_user_mall
 
   # GET /pago_alquilers
   # GET /pago_alquilers.json

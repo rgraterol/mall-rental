@@ -192,6 +192,24 @@ jQuery(document).ready ($) ->
     regex: "[0-9.]{1,5}%"
   });
 
+  $('#canon_fijo_tienda').inputmask("Regex", {
+    regex: "[0-9.]{1,25}%"
+  });
+
+  $('#tienda_monto_garantia').inputmask("Regex", {
+    regex: "[0-9.]{1,25}%"
+  });
+
+  $('#tienda_monto_garantia').keyup ->
+    $.ajax
+      type: "POST"
+      url: "/cambio_monedas/mf_cambio_moneda/"
+      dataType: "JSON"
+      data:
+        ml: $(this).val()
+      success: (data) ->
+        $('#tienda_monto_garantia_usd').val(data)
+
 table_index_datatable =  ->
   $('#table_tiendas_index').dataTable
     'dom': 'T<"clear">lfrtip'
