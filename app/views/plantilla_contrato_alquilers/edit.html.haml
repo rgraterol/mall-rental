@@ -40,7 +40,7 @@
             .form-group
               = f.label :tipo_canon_alquiler, "Tipo de Canon: ", class: 'col-sm-2 control-label'
               .col-sm-10
-                = f.select :tipo_canon_alquiler, ContratoAlquiler.tipo_canon_alquilers.keys.to_a.map { |x| [x.humanize.titleize, x]}, {selected: f.object.tipo_canon_alquiler_id || nil, include_blank: 'Seleccione un Tipo de Canon de Alquiler'}, {class: 'form-control tipo_canon_alquiler_required', id: 'select_canon_alquiler'}
+                = f.select :tipo_canon_alquiler_id,options_from_collection_for_select(TipoCanonAlquiler.all, :id, :tipo, selected: f.object.tipo_canon_alquiler_id || nil), {include_blank: 'Seleccione un Tipo Canon Alquiler'}, {class: 'form-control tipo_canon_alquiler_required', id: 'select_canon_alquiler'}
             .form-group
               = f.label :contenido, "Contenido de la Plantilla: ", class: 'col-sm-2 control-label'
               .col-sm-10

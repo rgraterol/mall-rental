@@ -1,0 +1,53 @@
+<%= form_for(@venta_diarium) do |f| %>
+  <% if @venta_diarium.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@venta_diarium.errors.count, "error") %> prohibited this venta_diarium from being saved:</h2>
+
+      <ul>
+      <% @venta_diarium.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :fecha %><br>
+    <%= f.date_select :fecha %>
+  </div>
+  <div class="field">
+    <%= f.label :monto %><br>
+    <%= f.text_field :monto %>
+  </div>
+  <div class="field">
+    <%= f.label :monto_notas_credito %><br>
+    <%= f.text_field :monto_notas_credito %>
+  </div>
+  <div class="field">
+    <%= f.label :monto_bruto %><br>
+    <%= f.text_field :monto_bruto %>
+  </div>
+  <div class="field">
+    <%= f.label :monto_bruto_usd %><br>
+    <%= f.text_field :monto_bruto_usd %>
+  </div>
+  <div class="field">
+    <%= f.label :monto_costo_venta %><br>
+    <%= f.text_field :monto_costo_venta %>
+  </div>
+  <div class="field">
+    <%= f.label :monto_neto %><br>
+    <%= f.text_field :monto_neto %>
+  </div>
+  <div class="field">
+    <%= f.label :monto_neto_usd %><br>
+    <%= f.text_field :monto_neto_usd %>
+  </div>
+  <div class="field">
+    <%= f.label :editable %><br>
+    <%= f.check_box :editable %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

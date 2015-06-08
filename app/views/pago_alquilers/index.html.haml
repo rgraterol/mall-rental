@@ -98,7 +98,7 @@
                           %td= pago.fecha_pago
                           %td= pago.nro_cheque_confirmacion
                           %td{ :class => 'text-center' }
-                            = CuentaBancarium.find(pago.cuenta_bancarium_id).banco.nombre
+                            = CuentaBancarium.find(pago.cuenta_bancaria_id).banco.nombre rescue nil
                           %td{ :class => 'text-center' }
                             = check_box_tag 'pago_facturado', 'Pago Facturado', pago.facturado, disabled: true
                           %td= pago.nro_factura

@@ -1,0 +1,54 @@
+// Place all the styles related to the ventas controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+//= require jquery-ui/jquery-ui-1.10.4.custom.min.css
+//= require jqGrid/ui.jqgrid.css
+
+.editar_monto_venta{
+  width: 50%;
+}
+
+#tbody-ventas-mall td, #tfoot-ventas-mall td{
+  text-align: right;
+  padding-right: 30px
+}
+
+div.growlUI { background: url(check48.png) no-repeat 10px 10px }
+div.growlUI h1, div.growlUI h2 {
+  color: white;
+  font-size: 15px;
+  padding: 5px 5px 5px 75px;
+  text-align: left
+}
+
+.blockUI{
+  background-color: #000;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  opacity: .8;
+  color: #fff;
+  font-size: 18px;
+}
+
+#tbody_auditoria_ventas td{
+  text-align: right;
+
+}
+
+#tfoot_auditoria_ventas td input{
+  text-align: right;
+}
+
+div.growlUI {
+  background: none !important;
+  display: none;
+}
+div.growlUI h1, div.growlUI h2 {
+  color: white;
+  padding: 15px 15px 15px 75px;
+  text-align: left
+}
+
+#table_mall_ventas, #table_mall_ventas input{
+  text-align: right !important;
+}
