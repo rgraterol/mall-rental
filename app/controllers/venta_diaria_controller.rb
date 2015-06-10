@@ -26,6 +26,13 @@ class VentaDiariaController < ApplicationController
     @local = Local.find(@tienda.local_id)
     @ventas =  VentaDiarium.where(tienda_id: @tienda.id)
     @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
+
+    if @contrato_alquiler.last.tipo_canon_alquiler == 'fijo' || @contrato_alquiler.last.tipo_canon_alquiler == 'variableVB' ||@contrato_alquiler.last.tipo_canon_alquiler == 'fijo_y_variable_venta_bruta'
+      @render = 'venta_bruta'
+    else
+      @render = 'venta_neta'
+    end
+
   end
 
   def cobranza

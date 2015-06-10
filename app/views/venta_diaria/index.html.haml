@@ -64,11 +64,8 @@
                     Canon Alquiler:
                 .col-md-8
                   = text_field_tag :canon_alquiler, number_with_precision(@contrato_alquiler.last.canon_fijo_ml, precision: 2, separator: ',', delimiter: '.'), autofocus: true, class: 'form-control', readonly: 'readonly'
-          %br
-          .row
-            .col-md-12
-              %table.table.table-striped.table-bordered.table-hover#table_ventas_diaria_bruta
-                = render 'venta_bruta'
+          = render @render
+
           %br
           .row
             .col-md-2

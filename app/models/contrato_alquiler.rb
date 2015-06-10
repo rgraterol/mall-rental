@@ -30,7 +30,9 @@ class ContratoAlquiler < ActiveRecord::Base
 
   mount_uploader :archivo_contrato, FileUploader
 
-  enum tipo_canon_alquiler: [:fijo, :variable, :fijo_y_variable_venta_bruta, :fijo_y_variable_venta_neta, :exento]
+ # enum tipo_canon_alquiler: [:fijo, :variable, :fijo_y_variable_venta_bruta, :fijo_y_variable_venta_neta, :exento]
+
+  enum tipo_canon_alquiler: [:fijo, :variableVB, :variableVN, :fijo_y_variable_venta_bruta, :fijo_y_variable_venta_neta, :exonerado]
 
   def clean_canon_alquiler
     if self.tipo_canon_alquiler == "fijo"
