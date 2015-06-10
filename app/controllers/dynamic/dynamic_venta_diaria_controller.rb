@@ -113,25 +113,29 @@ module Dynamic
       @fecha = params[:fecha]
       @valor = params[:valor].sub('.', '')
       @nota_credito = params[:nota_credito].sub('.', '')
+      @costo_venta = params[:costo_venta].sub('.','')
       @valor_bruto = @valor.to_f - @nota_credito.to_f
+      @venta_neta = @valor_bruto - @costo_venta.to_f
       @valor_usd = @valor_bruto.to_f / CambioMoneda.last.cambio_ml_x_usd
+      @venta_neta_usd = @venta_neta.to_f / CambioMoneda.last.cambio_ml_x_usd
       @id = params[:identificador]
       @opcion = params[:opcion]
       @tienda_id = params[:tienda_id]
       @year = params[:year]
       @month = params[:month]
 
-
-
       @venta_mensual = VentaMensual.where('anio = ? AND mes = ? AND tienda_id = ?', @year,@month,@tienda_id)
 
       @suma_venta = VentaDiarium.where('extract(year from fecha) = ? AND extract(month from fecha) = ?', @year,@month).sum(:monto)
       @suma_notas_credito = VentaDiarium.where('extract(year from fecha) = ? AND extract(month from fecha) = ?', @year,@month).sum(:monto_notas_credito)
+      @suma_costo_venta = VentaDiarium.where('extract(year from fecha) = ? AND extract(month from fecha) = ?', @year,@month).sum(:monto_costo_venta)
       @monto_bruto = @suma_venta - @suma_notas_credito
       @monto_bruto_usd = @monto_bruto / CambioMoneda.last.cambio_ml_x_usd
+      @suma_venta_neta = @monto_bruto - @suma_costo_venta
+      @suma_neto_usd = @suma_venta_neta / CambioMoneda.last.cambio_ml_x_usd
 
       if @venta_mensual.blank?
-        @venta_mensual = VentaMensual.new(anio: @year, mes: @month, monto: @suma_venta, monto_notas_credito: @suma_notas_credito, monto_bruto: @monto_bruto, monto_bruto_USD: @monto_bruto_usd, tienda_id: @tienda_id)
+        @venta_mensual = VentaMensual.new(anio: @year, mes: @month, monto: @suma_venta, monto_notas_credito: @suma_notas_credito, monto_bruto: @monto_bruto, monto_bruto_USD: @monto_bruto_usd, monto_costo_venta: @suma_costo_venta, monto_neto: @suma_venta_neta, monto_neto_USD: @suma_neto_usd, tienda_id: @tienda_id)
         if @venta_mensual.save
           @id_mensual = @venta_mensual.id
         end
@@ -140,16 +144,19 @@ module Dynamic
       end
 
       if @opcion == 'new'
-        @venta = VentaDiarium.new(fecha: @fecha, monto: @valor, monto_notas_credito: @nota_credito, monto_bruto: @valor_bruto, monto_bruto_usd: @valor_usd,venta_mensual_id: @id_mensual)
+        @venta = VentaDiarium.new(fecha: @fecha, monto: @valor, monto_notas_credito: @nota_credito, monto_bruto: @valor_bruto, monto_bruto_usd: @valor_usd, monto_costo_venta: @costo_venta, monto_neto: @venta_neta, monto_neto_usd: @venta_neta_usd, venta_mensual_id: @id_mensual)
         respond_to do |format|
           if @venta.save
             @suma_venta = VentaDiarium.where('extract(year from fecha) = ? AND extract(month from fecha) = ?', @year,@month).sum(:monto)
             @suma_notas_credito = VentaDiarium.where('extract(year from fecha) = ? AND extract(month from fecha) = ?', @year,@month).sum(:monto_notas_credito)
+            @suma_costo_venta = VentaDiarium.where('extract(year from fecha) = ? AND extract(month from fecha) = ?', @year,@month).sum(:monto_costo_venta)
             @monto_bruto = @suma_venta - @suma_notas_credito
             @monto_bruto_usd = @monto_bruto / CambioMoneda.last.cambio_ml_x_usd
+            @suma_venta_neta = @monto_bruto - @monto_costo_venta
+            @suma_neto_usd = @suma_venta_neta / CambioMoneda.last.cambio_ml_x_usd
 
             @venta_mens = VentaMensual.find_by(id: @id_mensual)
-            @venta_mens.update(monto: @suma_venta, monto_notas_credito: @suma_notas_credito, monto_bruto: @monto_bruto, monto_bruto_USD: @monto_bruto_usd)
+            @venta_mens.update(monto: @suma_venta, monto_notas_credito: @suma_notas_credito, monto_bruto: @monto_bruto, monto_bruto_USD: @monto_bruto_usd, monto_costo_venta: @suma_costo_venta, monto_neto: @suma_venta_neta, monto_neto_USD: @suma_neto_usd)
             format.json { render json: [data: @venta, result: true] }
           else
             render json: [data: @venta, result: false]
@@ -158,14 +165,17 @@ module Dynamic
       else
         @venta = VentaDiarium.find_by(id: params[:identificador])
         respond_to do |format|
-          if @venta.update(monto: @valor, monto_notas_credito: @nota_credito, monto_bruto: @valor_bruto, monto_bruto_usd: @valor_usd)
+          if @venta.update( monto: @valor, monto_notas_credito: @nota_credito, monto_bruto: @valor_bruto, monto_bruto_usd: @valor_usd, monto_costo_venta: @costo_venta, monto_neto: @venta_neta, monto_neto_usd: @venta_neta_usd)
             @suma_venta = VentaDiarium.where('extract(year from fecha) = ? AND extract(month from fecha) = ?', @year,@month).sum(:monto)
             @suma_notas_credito = VentaDiarium.where('extract(year from fecha) = ? AND extract(month from fecha) = ?', @year,@month).sum(:monto_notas_credito)
+            @suma_costo_venta = VentaDiarium.where('extract(year from fecha) = ? AND extract(month from fecha) = ?', @year,@month).sum(:monto_costo_venta)
             @monto_bruto = @suma_venta - @suma_notas_credito
             @monto_bruto_usd = @monto_bruto / CambioMoneda.last.cambio_ml_x_usd
+            @suma_venta_neta = @monto_bruto - @suma_costo_venta
+            @suma_neto_usd = @suma_venta_neta / CambioMoneda.last.cambio_ml_x_usd
 
             @venta_mens = VentaMensual.find_by(id: @id_mensual)
-            @venta_mens.update(monto: @suma_venta, monto_notas_credito: @suma_notas_credito, monto_bruto: @monto_bruto, monto_bruto_USD: @monto_bruto_usd)
+            @venta_mens.update(monto: @suma_venta, monto_notas_credito: @suma_notas_credito, monto_bruto: @monto_bruto, monto_bruto_USD: @monto_bruto_usd, monto_costo_venta: @suma_costo_venta, monto_neto: @suma_venta_neta, monto_neto_USD: @suma_neto_usd)
             format.json { render json: [data: @venta, result: true] }
           else
             render json: [data: @venta, result: false]
