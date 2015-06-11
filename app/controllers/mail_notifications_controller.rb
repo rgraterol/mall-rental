@@ -1,5 +1,6 @@
 class MailNotificationsController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_user_mall
   # authorize_resource class: :mail_notifications
 
   # Notifica a todos los usuarios de las tiendas con

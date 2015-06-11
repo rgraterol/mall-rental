@@ -1,0 +1,25 @@
+<%= form_for(@plantilla_contrato_alquiler) do |f| %>
+  <% if @plantilla_contrato_alquiler.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@plantilla_contrato_alquiler.errors.count, "error") %> prohibited this plantilla_contrato_alquiler from being saved:</h2>
+
+      <ul>
+      <% @plantilla_contrato_alquiler.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nombre %><br>
+    <%= f.text_field :nombre %>
+  </div>
+  <div class="field">
+    <%= f.label :contenido %><br>
+    <%= f.text_field :contenido %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

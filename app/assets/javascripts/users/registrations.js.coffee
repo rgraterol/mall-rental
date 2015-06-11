@@ -29,7 +29,7 @@ jQuery(document).ready ->
           notEmpty:
             message: 'Debe ingresar un valor'
           identical:
-            field: 'user[password]'
+            field: "user[password]"
             message: 'Las contraseñas no coinciden'
       "user[email]":
         validators:
@@ -107,5 +107,5 @@ jQuery(document).ready ->
       "user[password_confirmation]":
         validators:
           identical:
-            field: 'user[password]'
+            field: "user[password]"
             message: 'Las contraseñas no coinciden'

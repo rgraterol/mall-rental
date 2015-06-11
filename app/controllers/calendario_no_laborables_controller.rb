@@ -1,5 +1,6 @@
 class CalendarioNoLaborablesController < ApplicationController
   before_action :set_calendario_no_laborable, only: [:show, :edit, :update, :destroy]
+  before_action :check_user_mall
 
   # GET /calendario_no_laborables
   # GET /calendario_no_laborables.json

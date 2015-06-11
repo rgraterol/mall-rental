@@ -44,6 +44,21 @@
               .col-sm-1
                 %span.fa-stack
                   %i#loading_actividad_economica.fa.fa-2x.fa-spinner.fa-spin
+          .form-group
+            = f.label :monto_garantia, class: 'col-sm-2 control-label' do
+              Monto del depósito de garantía en Bs:
+            .col-sm-10
+              = f.text_field :monto_garantia, class: 'form-control', id: 'tienda_monto_garantia'
+          .form-group
+            = f.label :monto_garantia_usd, class: 'col-sm-2 control-label' do
+              Monto del depósito de garantía en $:
+            .col-sm-10
+              = f.text_field :monto_garantia_usd, readonly: true, class: 'form-control', id: 'tienda_monto_garantia_usd'
+          .form-group
+            = f.label :codigo_contable, class: 'col-sm-2 control-label' do
+              Código Contable:
+            .col-sm-10
+              = f.text_field :codigo_contable, class: 'form-control', id: 'tienda_codigo_contable'
     .col-lg-6
       .ibox.float-e-margins
         .ibox-content.border-bottom.form-horizontal

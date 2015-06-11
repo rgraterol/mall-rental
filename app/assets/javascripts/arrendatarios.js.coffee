@@ -5,8 +5,53 @@
 #= require jqGrid/i18n/grid.locale-el.js
 #= require jqGrid/jquery.jqGrid.min.js
 #= require jquery-ui/jquery-ui.min.js
-
+#= require bootstrapValidator/bootstrapValidator
 jQuery(document).ready ->
+
+  $('#form_arrendatarios').bootstrapValidator
+    feedbackIcons:
+      valid: 'fa fa-check ',
+      invalid: 'fa fa-times',
+      validating: 'fa fa-refresh'
+    live: 'submitted'
+    fields:
+      "arrendatario[nombre]":
+        validators:
+          notEmpty:
+            message: "Nombre de la empresa es Obligatorio"
+      "arrendatario[rif]":
+        validators:
+          notEmpty:
+            message: "RIF de la empresa es Obligatorio"
+      "arrendatario[direccion]":
+        validators:
+          notEmpty:
+            message: "Dirección de la empresa es Obligatorio"
+      "arrendatario[telefono]":
+        validators:
+          notEmpty:
+            message: "Teléfono de la empresa es Obligatorio"
+      "arrendatario[nombre_rl]":
+        validators:
+          notEmpty:
+            message: "Nombre del representante legal es Obligatorio"
+      "arrendatario[cedula_rl]":
+        validators:
+          notEmpty:
+            message: "Cédula del representante legal es Obligatorio"
+      "arrendatario[email_rl]":
+        validators:
+          notEmpty:
+            message: "Email del representante legal es Obligatorio"
+      "arrendatario[telefono_rl]":
+        validators:
+          notEmpty:
+            message: "Teléfono del representante legal es Obligatorio"
+      "arrendatario[registro_mercantil]":
+        validators:
+          notEmpty:
+            message: "Inscripción en el Registro Mercantil del representante legal es Obligatorio"
+
 
   $('#table_inquilinos_index').dataTable
     'dom': 'T<"clear">lfrtip'

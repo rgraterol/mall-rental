@@ -2,6 +2,7 @@ class VentasController < ApplicationController
   before_action :authenticate_user!
   before_action :set_venta, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
+  before_action :check_user_mall
 
   def index
     @user_tienda = current_user.tienda

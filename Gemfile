@@ -28,6 +28,7 @@ gem 'turbolinks'
 
 gem 'jquery-turbolinks'
 
+#HAML Porque HTML SUCKS!
 gem 'haml'
 
 # devise for authentication

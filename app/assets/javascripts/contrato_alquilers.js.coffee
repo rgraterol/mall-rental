@@ -44,6 +44,9 @@ jQuery(document).ready ->
   $("#porc_canon_tienda").inputmask("Regex", {
     regex: "[0-9.]{1,5}%"
   });
+  $('#canon_fijo_tienda').inputmask("Regex", {
+    regex: "[0-9.]{1,25}%"
+  });
 
   $('#select_canon_alquiler').change ->
     if $(this).val() == '1'

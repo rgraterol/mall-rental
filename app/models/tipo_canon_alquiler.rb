@@ -10,9 +10,12 @@
 
 class TipoCanonAlquiler < ActiveRecord::Base
   has_many :contrato_alquilers
-  # validates :tipo, inclusion: { in: ['Canon fijo', 'Canon fijo y porcentaje ventas', 'Porcentaje de ventas']}
+  has_many :plantilla_contrato_alquilers
+  # validates :tipo, inclusion: { in: [:fijo, :variable, :fijo_y_variable_venta_bruta, :fijo_y_variable_venta_neta, :exento]}
 
   def tipo_nombre
-    self.tipo.humanize.titleize
+  self.tipo.humanize.titleize
   end
+
+
 end

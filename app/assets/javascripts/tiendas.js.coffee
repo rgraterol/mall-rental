@@ -34,6 +34,14 @@ jQuery(document).ready ($) ->
         validators:
           notEmpty:
             message: "Actividad Económica es Obligatoria"
+      "tienda[monto_garantia]":
+        validators:
+          notEmpty:
+            message: "Monto del depósito de garantía es Obligatorio"
+      "tienda[codigo_contable]":
+        validators:
+          notEmpty:
+            message: "Código Contable es Obligatorio"
       tipo_canon_alquiler_required:
         selector: '.tipo_canon_alquiler_required'
         validators:
@@ -191,6 +199,24 @@ jQuery(document).ready ($) ->
   $("#porc_canon_tienda").inputmask("Regex", {
     regex: "[0-9.]{1,5}%"
   });
+
+  $('#canon_fijo_tienda').inputmask("Regex", {
+    regex: "[0-9.]{1,25}%"
+  });
+
+  $('#tienda_monto_garantia').inputmask("Regex", {
+    regex: "[0-9.]{1,25}%"
+  });
+
+  $('#tienda_monto_garantia').keyup ->
+    $.ajax
+      type: "POST"
+      url: "/cambio_monedas/mf_cambio_moneda/"
+      dataType: "JSON"
+      data:
+        ml: $(this).val()
+      success: (data) ->
+        $('#tienda_monto_garantia_usd').val(data)
 
 table_index_datatable =  ->
   $('#table_tiendas_index').dataTable

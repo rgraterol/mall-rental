@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150602014337) do
+ActiveRecord::Schema.define(version: 20150603152713) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +38,7 @@ ActiveRecord::Schema.define(version: 20150602014337) do
     t.integer  "mall_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "registro_mercantil"
   end
 
   add_index "arrendatarios", ["mall_id"], name: "index_arrendatarios_on_mall_id", using: :btree
@@ -82,10 +84,10 @@ ActiveRecord::Schema.define(version: 20150602014337) do
     t.date     "fecha_inicio"
     t.date     "fecha_fin"
     t.string   "archivo_contrato"
-    t.decimal  "canon_fijo_ml",          default: 0.0
-    t.decimal  "canon_fijo_usd",         default: 0.0
-    t.decimal  "porc_canon_ventas",      default: 0.0
-    t.decimal  "monto_minimo_ventas",    default: 0.0
+    t.decimal  "canon_fijo_ml",       precision: 30, scale: 2, default: 0.0
+    t.decimal  "canon_fijo_usd",      precision: 30, scale: 2, default: 0.0
+    t.decimal  "porc_canon_ventas",   precision: 30, scale: 2, default: 0.0
+    t.decimal  "monto_minimo_ventas", precision: 30, scale: 2, default: 0.0
     t.boolean  "estado_contrato"
     t.integer  "tienda_id"
     t.datetime "created_at"
@@ -239,6 +241,18 @@ ActiveRecord::Schema.define(version: 20150602014337) do
 
   add_index "permissions_roles", ["permission_id", "role_id"], name: "index_permissions_roles_on_permission_id_and_role_id", using: :btree
 
+  create_table "plantilla_contrato_alquilers", force: true do |t|
+    t.string   "nombre"
+    t.text     "contenido"
+    t.integer  "mall_id"
+    t.integer  "tipo_canon_alquiler_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "plantilla_contrato_alquilers", ["mall_id"], name: "index_plantilla_contrato_alquilers_on_mall_id", using: :btree
+  add_index "plantilla_contrato_alquilers", ["tipo_canon_alquiler_id"], name: "index_plantilla_contrato_alquilers_on_tipo_canon_alquiler_id", using: :btree
+
   create_table "roles", force: true do |t|
     t.string   "name",             limit: 50, default: "", null: false
     t.integer  "role_type",                   default: 0,  null: false
@@ -260,6 +274,9 @@ ActiveRecord::Schema.define(version: 20150602014337) do
     t.integer  "arrendatario_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "monto_garantia",            precision: 30, scale: 2
+    t.decimal  "monto_garantia_usd",        precision: 30, scale: 2
+    t.string   "codigo_contable"
   end
 
   add_index "tiendas", ["actividad_economica_id"], name: "index_tiendas_on_actividad_economica_id", using: :btree
@@ -320,6 +337,7 @@ ActiveRecord::Schema.define(version: 20150602014337) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
+  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   create_table "ventas", force: true do |t|
     t.datetime "fecha"

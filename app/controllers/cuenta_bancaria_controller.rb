@@ -1,6 +1,6 @@
 class CuentaBancariaController < ApplicationController
   before_action :set_cuenta_bancarium, only: [:show, :edit, :update, :destroy]
-
+  before_action :check_user_mall
   respond_to :html
 
   def index
