@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha: 2015-06-06
+  monto: 1.5
+  monto_notas_credito: 1.5
+  monto_bruto: 1.5
+  monto_bruto_usd: 1.5
+  monto_costo_venta: 1.5
+  monto_neto: 1.5
+  monto_neto_usd: 1.5
+  editable: false
+
+two:
+  fecha: 2015-06-06
+  monto: 1.5
+  monto_notas_credito: 1.5
+  monto_bruto: 1.5
+  monto_bruto_usd: 1.5
+  monto_costo_venta: 1.5
+  monto_neto: 1.5
+  monto_neto_usd: 1.5
+  editable: false

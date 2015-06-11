@@ -1,0 +1,27 @@
+<h1>Listing documento_ventas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Titulo</th>
+      <th>Nomnbre</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @documento_ventas.each do |documento_venta| %>
+      <tr>
+        <td><%= documento_venta.titulo %></td>
+        <td><%= documento_venta.nomnbre %></td>
+        <td><%= link_to 'Show', documento_venta %></td>
+        <td><%= link_to 'Edit', edit_documento_venta_path(documento_venta) %></td>
+        <td><%= link_to 'Destroy', documento_venta, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Documento venta', new_documento_venta_path %>

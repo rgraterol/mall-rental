@@ -11,8 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150603152713) do
 
+ActiveRecord::Schema.define(version: 20150606210335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,6 +111,16 @@ ActiveRecord::Schema.define(version: 20150603152713) do
 
   add_index "cuenta_bancaria", ["banco_id"], name: "index_cuenta_bancaria_on_banco_id", using: :btree
   add_index "cuenta_bancaria", ["mall_id"], name: "index_cuenta_bancaria_on_mall_id", using: :btree
+
+  create_table "documento_ventas", force: true do |t|
+    t.string   "titulo"
+    t.string   "nombre"
+    t.integer  "venta_mensual_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "documento_ventas", ["venta_mensual_id"], name: "index_documento_ventas_on_venta_mensual_id", using: :btree
 
   create_table "idiomas", force: true do |t|
     t.string   "nombre"
@@ -339,16 +349,39 @@ ActiveRecord::Schema.define(version: 20150603152713) do
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
-  create_table "ventas", force: true do |t|
-    t.datetime "fecha"
-    t.decimal  "monto_ml",   precision: 12, scale: 2
-    t.decimal  "monto_usd",  precision: 12, scale: 2
+  create_table "venta_diaria", force: true do |t|
+    t.date     "fecha"
+    t.float    "monto"
+    t.float    "monto_notas_credito", default: 0.0
+    t.float    "monto_bruto"
+    t.float    "monto_bruto_usd"
+    t.float    "monto_costo_venta",   default: 0.0
+    t.float    "monto_neto",          default: 0.0
+    t.float    "monto_neto_usd",      default: 0.0
+    t.boolean  "editable",            default: true
+    t.integer  "venta_mensual_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "venta_diaria", ["venta_mensual_id"], name: "index_venta_diaria_on_venta_mensual_id", using: :btree
+
+  create_table "venta_mensuals", force: true do |t|
+    t.integer  "anio"
+    t.integer  "mes"
+    t.float    "monto"
+    t.float    "monto_notas_credito", default: 0.0
+    t.float    "monto_bruto"
+    t.float    "monto_bruto_USD"
+    t.float    "monto_costo_venta",   default: 0.0
+    t.float    "monto_neto",          default: 0.0
+    t.float    "monto_neto_USD",      default: 0.0
+    t.boolean  "editable",            default: true
     t.integer  "tienda_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "editable",                            default: true
   end
 
-  add_index "ventas", ["tienda_id"], name: "index_ventas_on_tienda_id", using: :btree
+  add_index "venta_mensuals", ["tienda_id"], name: "index_venta_mensuals_on_tienda_id", using: :btree
 
 end

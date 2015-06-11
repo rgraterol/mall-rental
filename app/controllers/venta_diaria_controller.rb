@@ -1,8 +1,5 @@
-class VentasController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_venta, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
-  before_action :check_user_mall
+class VentaDiariaController < ApplicationController
+  before_action :set_venta_diarium, only: [:show, :edit, :update, :destroy]
 
   def index
     @user_tienda = current_user.tienda
@@ -27,8 +24,15 @@ class VentasController < ApplicationController
 
     @tienda = Tienda.find(@tienda_id)
     @local = Local.find(@tienda.local_id)
-    @ventas = Venta.where(tienda_id: @tienda.id)
+    @ventas =  VentaDiarium.where(tienda_id: @tienda.id)
     @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
+
+    if @contrato_alquiler.last.tipo_canon_alquiler == 'fijo' || @contrato_alquiler.last.tipo_canon_alquiler == 'variableVB' ||@contrato_alquiler.last.tipo_canon_alquiler == 'fijo_y_variable_venta_bruta'
+      @render = 'venta_bruta'
+    else
+      @render = 'venta_neta'
+    end
+
   end
 
   def cobranza
@@ -36,7 +40,7 @@ class VentasController < ApplicationController
     @mall = current_user.mall
     @tiendas = Tienda.where(mall: @mall)
     raise @tiendas.inspect
-    @ventas = Venta.where(tienda_id: @tienda.id)
+    @venta_diarias_2 = Venta.where(tienda_id: @tienda.id)
     @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
 =end
   end
@@ -64,16 +68,17 @@ class VentasController < ApplicationController
 
     @tienda = current_user.mall.tiendas.first
 
-    @ventas = Venta.where(tienda_id: @tienda_id)
+    @venta_diarias_2 = Venta.where(tienda_id: @tienda_id)
     @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
   end
 =end
 
   def show
+
   end
 
   def new
-    @venta = Venta.new
+    @venta_diarium = VentaDiarium.new
   end
 
   def edit
@@ -92,11 +97,12 @@ class VentasController < ApplicationController
   end
 
   private
-  def set_venta
-    @venta = current_user.tienda.ventas.find_by(id: params[:id])
-  end
+    def set_venta_diarium
+      @venta_diarium = current_user.tienda.venta_diarium.find_by(id: params[:id])
 
-  def venta_params
-    params.require(:venta).permit(:fecha, :monto_ml, :monto_usd, :tienda)
-  end
+    end
+
+    def venta_diarium_params
+      params.require(:venta_diarium).permit(:fecha, :monto, :monto_notas_credito, :monto_bruto, :monto_bruto_usd, :monto_costo_venta, :monto_neto, :monto_neto_usd, :editable)
+    end
 end

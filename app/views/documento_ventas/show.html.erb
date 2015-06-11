@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Titulo:</strong>
+  <%= @documento_venta.titulo %>
+</p>
+
+<p>
+  <strong>Nomnbre:</strong>
+  <%= @documento_venta.nomnbre %>
+</p>
+
+<%= link_to 'Edit', edit_documento_venta_path(@documento_venta) %> |
+<%= link_to 'Back', documento_ventas_path %>

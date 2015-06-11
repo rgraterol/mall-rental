@@ -53,7 +53,7 @@ module Dynamic
           @total_mes_canon = @canon_fijo + @canon_x_ventas
 
           @obj = {
-              'ventas' => ActionController::Base.helpers.number_to_currency(@suma, separator: ',', delimiter: '.', format: "%n %u", unit: ""),
+              'venta_diaria' => ActionController::Base.helpers.number_to_currency(@suma, separator: ',', delimiter: '.', format: "%n %u", unit: ""),
               'canon_fijo' => ActionController::Base.helpers.number_to_currency(@canon_fijo, separator: ',', delimiter: '.', format: "%n %u", unit: ""),
               'canon_x_ventas' => ActionController::Base.helpers.number_to_currency(@canon_x_ventas, separator: ',', delimiter: '.', format: "%n %u", unit: ""),
               'total_mes_canon' => ActionController::Base.helpers.number_to_currency(@total_mes_canon, separator: ',', delimiter: '.', format: "%n %u", unit: ""),
