@@ -11,7 +11,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema.define(version: 20150606210335) do
 
   # These are extensions that must be enabled in order to support this database
@@ -84,10 +83,10 @@ ActiveRecord::Schema.define(version: 20150606210335) do
     t.date     "fecha_inicio"
     t.date     "fecha_fin"
     t.string   "archivo_contrato"
-    t.decimal  "canon_fijo_ml",       precision: 30, scale: 2, default: 0.0
-    t.decimal  "canon_fijo_usd",      precision: 30, scale: 2, default: 0.0
-    t.decimal  "porc_canon_ventas",   precision: 30, scale: 2, default: 0.0
-    t.decimal  "monto_minimo_ventas", precision: 30, scale: 2, default: 0.0
+    t.decimal  "canon_fijo_ml",          precision: 30, scale: 2, default: 0.0
+    t.decimal  "canon_fijo_usd",         precision: 30, scale: 2, default: 0.0
+    t.decimal  "porc_canon_ventas",      precision: 30, scale: 2, default: 0.0
+    t.decimal  "monto_minimo_ventas",    precision: 30, scale: 2, default: 0.0
     t.boolean  "estado_contrato"
     t.integer  "tienda_id"
     t.datetime "created_at"

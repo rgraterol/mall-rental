@@ -2,18 +2,19 @@
 #
 # Table name: arrendatarios
 #
-#  id          :integer          not null, primary key
-#  nombre      :string(255)
-#  rif         :string(255)
-#  direccion   :string(255)
-#  telefono    :string(255)
-#  nombre_rl   :string(255)
-#  cedula_rl   :string(255)
-#  email_rl    :string(255)
-#  telefono_rl :string(255)
-#  mall_id     :integer
-#  created_at  :datetime
-#  updated_at  :datetime
+#  id                 :integer          not null, primary key
+#  nombre             :string(255)
+#  rif                :string(255)
+#  direccion          :string(255)
+#  telefono           :string(255)
+#  nombre_rl          :string(255)
+#  cedula_rl          :string(255)
+#  email_rl           :string(255)
+#  telefono_rl        :string(255)
+#  mall_id            :integer
+#  created_at         :datetime
+#  updated_at         :datetime
+#  registro_mercantil :text
 #
 
 class Arrendatario < ActiveRecord::Base

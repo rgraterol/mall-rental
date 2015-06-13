@@ -7,10 +7,10 @@
 #  fecha_inicio           :date
 #  fecha_fin              :date
 #  archivo_contrato       :string(255)
-#  canon_fijo_ml          :decimal(, )      default(0.0)
-#  canon_fijo_usd         :decimal(, )      default(0.0)
-#  porc_canon_ventas      :decimal(, )      default(0.0)
-#  monto_minimo_ventas    :decimal(, )      default(0.0)
+#  canon_fijo_ml          :decimal(30, 2)   default(0.0)
+#  canon_fijo_usd         :decimal(30, 2)   default(0.0)
+#  porc_canon_ventas      :decimal(30, 2)   default(0.0)
+#  monto_minimo_ventas    :decimal(30, 2)   default(0.0)
 #  estado_contrato        :boolean
 #  tienda_id              :integer
 #  created_at             :datetime
@@ -18,6 +18,7 @@
 #  requerida_venta        :boolean
 #  tipo_canon_alquiler_id :integer
 #
+
 
 
 class ContratoAlquiler < ActiveRecord::Base
@@ -35,7 +36,7 @@ class ContratoAlquiler < ActiveRecord::Base
 
   mount_uploader :archivo_contrato, FileUploader
 
-  enum tipo_canon_alquiler: [:fijo, :variableVB, :variableVN, :fijo_y_variable_venta_bruta, :fijo_y_variable_venta_neta, :exonerado]
+  # enum tipo_canon_alquiler: [:fijo, :variableVB, :variableVN, :fijo_y_variable_venta_bruta, :fijo_y_variable_venta_neta, :exonerado]
 
 
   def clean_canon_alquiler

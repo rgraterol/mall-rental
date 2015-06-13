@@ -15,6 +15,7 @@
 #
 
 
+
 class Mall < ActiveRecord::Base
   has_many :nivel_malls, dependent: :destroy
   belongs_to :pai

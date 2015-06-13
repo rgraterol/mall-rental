@@ -8,6 +8,7 @@
 #  updated_at :datetime
 #
 
+
 class TipoCanonAlquiler < ActiveRecord::Base
   has_many :contrato_alquilers
   has_many :plantilla_contrato_alquilers
