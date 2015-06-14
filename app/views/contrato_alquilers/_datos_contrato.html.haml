@@ -6,7 +6,7 @@
     = @tienda.contrato_alquilers.last.nro_contrato
   %p
     %strong Tipo de Canon de Alquiler:
-    = @tienda.contrato_alquilers.last.tipo_canon_alquiler.tipo.humanize.titleize
+    = @tienda.contrato_alquilers.last.tipo_canon_alquiler.tipo.humanize.titleize rescue ''
   - if @tienda.contrato_alquilers.last.tipo_canon_alquiler.tipo == 'canon_fijo'
     %p
       %strong Monto Canón Fijo en Bs.:
