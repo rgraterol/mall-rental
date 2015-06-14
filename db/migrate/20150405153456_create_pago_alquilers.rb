@@ -20,7 +20,6 @@ class CreatePagoAlquilers < ActiveRecord::Migration
       t.integer :tipo_pago
 
       t.references :contrato_alquiler, index: true
-      t.references :tienda, index: true
       t.references :cuenta_bancarium, index: true
 
       t.timestamps

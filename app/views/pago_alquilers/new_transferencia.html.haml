@@ -17,59 +17,91 @@
         .ibox-title
           %h3
             Registro de Pago Alquiler x Transferencia
-        .ibox-content
-          = form_for(@pago_alquiler, url: {action: :create}, html: {class:"form-horizontal m-t-md", id: "form_registro_pago_transferencia"}) do |f|
-            - if @pago_alquiler.errors.any?
-              #error_explanation
-                %h2
-                  = pluralize(@pago_alquiler.errors.count, "error")
-                  prohibited this local from being saved:
 
-                %ul
-                  - @pago_alquiler.errors.full_messages.each do |message|
-                    %li
-                      = message
-            .form-group
-              = f.label :nombre, "Tienda: ", class: 'col-sm-2 control-label'
-              .col-sm-10
-                = f.text_field :nombre, :value => current_user.tienda.nombre, class: 'form-control', readonly: 'readonly'
-            .form-group
-              = f.label :nro_local, "Nro Local: ", class: 'col-sm-2 control-label'
-              .col-sm-10
-                = f.text_field :nro_local, :value => current_user.tienda.local.nro_local, class: 'form-control', readonly: 'readonly'
-            .form-group
-              = f.label :fecha_alquiler, "Año/Mes Alquiler: ", class: 'col-sm-2 control-label'
-              .col-sm-6
-                = select_month(Date.today, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'mes_alquiler', :prefix => 'pago_alquiler'})
-                = select_year(Date.today, options = { :start_year => Time.now.year, :end_year => Time.now.year - 5, :field_name => 'anio_alquiler', :prefix => 'pago_alquiler'})
-            .form-group
-              = f.label :cuenta_bancaria, "Nro. Cuenta: ", class: 'col-sm-2 control-label'
-              .col-sm-10
-                .group-show
-                  = f.select(:cuenta_bancaria_id,{},{include_blank: 'Seleccione la cuenta bancaria'},html_options = {class: "form-control"})  do
-                    - CuentaBancarium.all.each do |c|
-                      = content_tag(:option, c.banco.nombre+'  '+c.nro_cta, value: c.id)
-                    - {class: "form-control"}
-            .form-group
-              = f.label :monto_alquiler_ml, "Monto Transferido: ", class: 'col-sm-2 control-label'
-              .col-sm-10
-                = f.text_field :monto_alquiler_ml,class: 'form-control'
-            .form-group
-              = f.label :fecha_pago, "Fecha Transferencia:", class: 'col-sm-2 control-label'
-              .col-sm-10
-                = f.text_field :fecha_pago, class: "input-sm form-control", id: 'fecha_pago'
-            .form-group
-              = f.label :nro_cheque_confirmacion, "Nro Confirmacion:", class: 'col-sm-2 control-label'
-              .col-sm-10
-                = f.text_field :nro_cheque_confirmacion, class: "form-control"
-            .form-group
-              = f.label :nombre_banco, "Nombre del Banco Emisor:", class: 'col-sm-2 control-label'
-              .col-sm-10
-                = f.text_field :nombre_banco, class: "form-control"
-            .form-group
-              = f.label :archivo_transferencia, 'Archivo de Transferencia: ', class: 'col-sm-2 control-label'
-              .col-sm-10
-                = render 'shared/file_upload_generic', f: f, field: :archivo_transferencia, name_file: f.object.archivo_transferencia || nil
-            .form-group
-              .col-sm-3.col-sm-offset-9
-                = f.submit "Guardar", class: "btn btn-warning btn-block"
+        .ibox-content
+          .row
+            .col-md-4.col-lg-offset-2
+              .form-group
+                .col-md-4
+                  = label_tag :tienda do
+                    Nombre:
+                .col-md-8
+                  = hidden_field_tag :tienda_id, @tienda.id
+                  = text_field_tag :tienda, @tienda.nombre, class: 'form-control', readonly: 'readonly'
+            .col-md-4
+              .form-group
+                .col-md-4
+                  = label_tag :nro_local do
+                    Nro. de Local:
+                .col-md-8
+                  = text_field_tag :nro_local, @local.nro_local, class: 'form-control', readonly: 'readonly'
+        .ibox-content
+          .row
+            .col-lg-2
+              Facturas x Pagar
+            .col-md-9
+              %table.table.table-striped.table-bordered.table-hover#table_ventas_diaria_bruta
+                %thead
+                  %tr
+                    %th{width: '15%'} Fecha
+                    %th Nro Factura
+                    %th Monto Factura
+                    %th Pago Total
+                    %th Abono
+                    %th Monto
+        -#.ibox-content
+        -#  = form_for(@pago_alquiler, url: {action: :create}, html: {class:"form-horizontal m-t-md", id: "form_registro_pago_transferencia"}) do |f|
+        -#    - if @pago_alquiler.errors.any?
+        -#      #error_explanation
+        -#        %h2
+        -#          = pluralize(@pago_alquiler.errors.count, "error")
+        -#          prohibited this local from being saved:
+        -#
+        -#        %ul
+        -#          - @pago_alquiler.errors.full_messages.each do |message|
+        -#            %li
+        -#              = message
+        -#    .form-group
+        -#      = f.label :nombre, "Nombre: ", class: 'col-sm-2 control-label'
+        -#      .col-sm-10
+        -#        = f.text_field :nombre, :value => current_user.tienda.nombre, class: 'form-control', readonly: 'readonly'
+        -#    .form-group
+        -#      = f.label :nro_local, "Nro Local: ", class: 'col-sm-2 control-label'
+        -#      .col-sm-10
+        -#        = f.text_field :nro_local, :value => current_user.tienda.local.nro_local, class: 'form-control', readonly: 'readonly'
+        -#    .form-group
+        -#      = f.label :fecha_alquiler, "Año/Mes Alquiler: ", class: 'col-sm-2 control-label'
+        -#      .col-sm-6
+        -#        = select_month(Date.today, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'mes_alquiler', :prefix => 'pago_alquiler'})
+        -#        = select_year(Date.today, options = { :start_year => Time.now.year, :end_year => Time.now.year - 5, :field_name => 'anio_alquiler', :prefix => 'pago_alquiler'})
+        -#    .form-group
+        -#      = f.label :cuenta_bancaria, "Nro. Cuenta: ", class: 'col-sm-2 control-label'
+        -#      .col-sm-10
+        -#        .group-show
+        -#          = f.select(:cuenta_bancaria_id,{},{include_blank: 'Seleccione la cuenta bancaria'},html_options = {class: "form-control"})  do
+        -#            - CuentaBancarium.all.each do |c|
+        -#              = content_tag(:option, c.banco.nombre+'  '+c.nro_cta, value: c.id)
+        -#            - {class: "form-control"}
+        -#    .form-group
+        -#      = f.label :monto_alquiler_ml, "Monto Transferido: ", class: 'col-sm-2 control-label'
+        -#      .col-sm-10
+        -#        = f.text_field :monto_alquiler_ml,class: 'form-control'
+        -#    .form-group
+        -#      = f.label :fecha_pago, "Fecha Transferencia:", class: 'col-sm-2 control-label'
+        -#      .col-sm-10
+        -#        = f.text_field :fecha_pago, class: "input-sm form-control", id: 'fecha_pago'
+        -#    .form-group
+        -#      = f.label :nro_cheque_confirmacion, "Nro Confirmacion:", class: 'col-sm-2 control-label'
+        -#      .col-sm-10
+        -#        = f.text_field :nro_cheque_confirmacion, class: "form-control"
+        -#    .form-group
+        -#      = f.label :nombre_banco, "Nombre del Banco Emisor:", class: 'col-sm-2 control-label'
+        -#      .col-sm-10
+        -#        = f.text_field :nombre_banco, class: "form-control"
+        -#    .form-group
+        -#      = f.label :archivo_transferencia, 'Archivo de Transferencia: ', class: 'col-sm-2 control-label'
+        -#      .col-sm-10
+        -#        = render 'shared/file_upload_generic', f: f, field: :archivo_transferencia, name_file: f.object.archivo_transferencia || nil
+        -#    .form-group
+        -#      .col-sm-3.col-sm-offset-9
+        -#        = f.submit "Guardar", class: "btn btn-warning btn-block"

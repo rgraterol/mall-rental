@@ -1,12 +1,12 @@
 .row.wrapper.border-bottom.white-bg.page-heading
   .col-lg-10
     %h2
-      Reporte de Pagos Mensuales de Alquiler
+      Reporte de Pagos Alquiler x Tienda
     %ol.breadcrumb
       %li
         = link_to 'Inicio', root_url
       %li
-        Pagos Mensuales de Alquiler
+        Reporte de Pagos Alquiler x Tienda
 
 .wrapper.wrapper-content.animated.fadeInRight
   .row
@@ -15,20 +15,12 @@
         .ibox-content
           .row
             .col-md-4
-              .col-md-5.col-sm-3.col-xs-5
+              .col-md-5.col-sm-3.col-xs-3
                 = form_tag(@lapso_year, :html => { :class => "form-horizontal" } ) do |f|
                   = select_year(Date.today, options = { :start_year => Time.now.year, :end_year => Time.now.year - 5, :field_name => 'lapso_year'}, :class => 'actualizar_pagos_alquiler')
               .col-md-5
                 = form_tag(@lapso_month, :html => { :class => "form-horizontal" } ) do |f|
                   = select_month(Date.today - 1.month, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'select_month', :prefix => 'pagos_alquiler'}, :class => 'actualizar_pagos_alquiler')
-            .col-md-5.col-sm-offset-2
-              .form-group
-                .col-md-4.text_label_monto
-                  = label_tag :monto_cobrar do
-                    Monto x Cobrar:
-                .col-md-5
-                  - @suma_x_cobrar = ActionController::Base.helpers.number_to_currency(@suma_x_cobrar, separator: ',', delimiter: '.', format: "%n %u", unit: "")
-                  = text_field_tag :monto_cobrar, @suma_x_cobrar, class: 'form-control', readonly: 'readonly'
           %br
           .row
             .col-md-12
@@ -38,10 +30,8 @@
                     %td.vacia
                     %th.text-center{colspan: 3}
                       Cobranza
-                    %th.text-center{colspan: 6}
+                    %th.text-center{colspan: 4}
                       Pago
-                    %th.text-center{colspan: 3}
-                      Factura
                 %thead
                   %tr
                     %th.text-center{width: '9%'}
@@ -53,68 +43,63 @@
                     %th.text-center{width: '14%'}
                       Monto
                     %th.text-center{width: '5%'}
-                      Pagado
+                      Cancelado
                     %th.text-center{width: '14%'}
-                      Monto
+                      Abonado
                     %th.text-center{width: '6%'}
-                      Tipo Pago
+                      Monto Pago
                     %th.text-center{width: '8%'}
-                      Fecha
-                    %th.text-center{width: '8%'}
-                      Nro Pago
-                    %th.text-center{width: '9%'}
-                      Cta Bancaria
-                    %th.text-center{width: '5%'}
-                      Facturado
-                    %th.text-center{width: '5%'}
-                      Nro Factura
-                    %th.text-center{width: '5%'}
-                      Fecha
-
+                      Monto x Cobrar
                 %tbody#tbody_pagos_alquiler
-                  - if !@pago_alquilers.blank?
-                    - @pago_alquilers.each do |pagos|
-                      -pagos.each do |pago|
-                        - if pago.pagado
-                          - @monto = pago.monto_alquiler_ml
-                        - else
-                          - @monto = 0
+                  - if !@cobranza_alquilers.blank?
+                    - @cobranza_alquilers.each do |cobranzas|
+                      -cobranzas.each do |cobranza|
+                        -
+                        - @monto_alquiler = cobranza.monto_alquiler
 
-                        - @monto_alquiler = pago.monto_alquiler_ml
                         - @monto = ActionController::Base.helpers.number_to_currency(@monto, separator: ',', delimiter: '.', format: "%n %u", unit: "")
                         - @monto_alquiler = ActionController::Base.helpers.number_to_currency(@monto_alquiler, separator: ',', delimiter: '.', format: "%n %u", unit: "")
+                        - if cobranza.saldo_deudor == 0
+                          - @pagado = true
+                          - @abonado = false
+                          - @monto = cobranza.monto_alquiler
+                          - @monto_pagado = @monto
+                          - @monto_x_cobrar = 0
+                        - else
+                          - @pagado = false
+                          - @abonado = true
+                          - @monto = cobranza.monto_alquiler
+                          - @monto_x_cobrar = cobranza.saldo_deudor
+                          - @monto_pagado = @monto - @monto_x_cobrar
                         %tr
-                          %td= pago.tienda.nombre
+                          %td= cobranza.tienda.nombre
                           %td{ :class => 'text-center' }
-                            = pago.nro_recibo
-                          %td= pago.fecha_recibo_cobro
-                          %td{ :class => 'text-right' }
-                            = @monto_alquiler
-                          %td{ :class => 'text-center' }
-                            = check_box_tag 'alquiler_pago', 'Pago Realizado', pago.pagado, disabled: true
+                            = cobranza.nro_recibo
+                          %td= cobranza.fecha_recibo_cobro
                           %td{ :class => 'text-right' }
                             = @monto
-                          %td= pago.tipo_pago.humanize.capitalize rescue nil
-                          %td= pago.fecha_pago
-                          %td= pago.nro_cheque_confirmacion
                           %td{ :class => 'text-center' }
-                            = CuentaBancarium.find(pago.cuenta_bancaria_id).banco.nombre rescue nil
+                            = check_box_tag 'alquiler_pago', 'Pago Realizado', @pagado, disabled: true
                           %td{ :class => 'text-center' }
-                            = check_box_tag 'pago_facturado', 'Pago Facturado', pago.facturado, disabled: true
-                          %td= pago.nro_factura
-                          %td= pago.fecha_factura
+                            = check_box_tag 'alquiler_pago', 'Pago Realizado', @abonado, disabled: true
+                          %td{ :class => 'text-right' }
+                            = @monto_pagado
+                          %td{ :class => 'text-right' }
+                            = @monto_x_cobrar
                   - else
                     %tr
-                      %td.text-center{colspan: 13}= 'No existen registros de pago para este periodo'
+                      %td.text-center{colspan: 8}= 'No existen registros de pago para este periodo'
                 %tfoot#tfoot_pagos_alquiler
-                  - if !@pago_alquilers.blank?
+                  - if !@cobranza_alquilers.blank?
                     %tr
+                      %td{colspan: 2}
                       %th
                         Total:
-                      %td{colspan: 2}
                       %td#td_suma_monto_alquiler
                         = text_field_tag :input_suma_monto_alquiler, @suma_monto_alq, class: 'form-control', readonly: 'readonly'
-                      %td
+                      %td{colspan: 2}
                       %td#td_suma_monto_pagado
                         = text_field_tag :input_suma_monto_pagado, @suma_monto_pag, class: 'form-control', readonly: 'readonly'
-                  
+                      %td#td_suma_monto_x_cobrar
+                        = text_field_tag :input_suma_monto_x_cobrar, @suma_x_cobrar, class: 'form-control', readonly: 'readonly'
+

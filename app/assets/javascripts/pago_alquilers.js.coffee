@@ -1,6 +1,7 @@
 #= require datapicker/bootstrap-datepicker.js
 #= require jasny/jasny-bootstrap
 #= require bootstrapValidator/bootstrapValidator.js
+#= require jquery.blockUI.js
 
 jQuery(document).ready ($) ->
 
@@ -165,25 +166,27 @@ $(".actualizar_pagos_mensuales").on "change", ->
     dataType: "JSON"
     data:
       year: $("#date_lapso_year").val()
+    before_send: $.blockUI({message: 'Por favor espere...'})
     success: (data) ->
-      $("#tbody_pagos_mensuales_mall").empty()
-      meses = ['Enero', 'Febrero', 'Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
-      mes_fin = data[0]['mes_actual']-1
+      if !data[0]['result']
+        $(".texto_cargando").html('No se encontraron datos')
+      else
+        $("#tbody_pagos_mensuales_mall").empty()
+        meses = ['Enero', 'Febrero', 'Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+        mes_fin = data[0]['mes_actual']-1
 
-      console.log(data)
+        for num in [0..mes_fin]
+          $("#tbody_pagos_mensuales_mall").append("<tr><th>"+meses[num]+"</th><td>"+data[0]['pagos'][num].pagado_canon_fijo+"</td><td>"+data[0]['pagos'][num].pagado_canon_variable+"</td><td>"+data[0]['pagos'][num].total_facturado+"</td><td>"+data[0]['pagos'][num].total_pagado+"</td><td>"+data[0]['pagos'][num].total_pagado_usd+"</td><td>"+data[0]['pagos'][num].monto_cobrar+"</td><td><a href='/ventas_mall_tiendas/2/"+(num+1)+"'>Ver Detalles de Pagos</a></td></tr>")
 
-      for num in [0..mes_fin]
-        $("#tbody_pagos_mensuales_mall").append("<tr><th>"+meses[num]+"</th><td>"+data[0]['pagos'][num].total_cobranza+"</td><td>"+data[0]['pagos'][num].pagado_canon_fijo+"</td><td>"+data[0]['pagos'][num].pagado_x_ventas+"</td><td>"+data[0]['pagos'][num].total_pagado+"</td><td>"+data[0]['pagos'][num].total_pagado_usd+"</td><td>"+data[0]['pagos'][num].monto_cobrar+"</td><td><a href='/ventas_mall_tiendas/2/"+(num+1)+"'>Ver Detalles de Pagos</a></td></tr>")
-
-      $("#suma_cobranza").text(data[0]['totales']['suma_cobranza'])
-      $("#suma_pagado_canon_fijo").text(data[0]['totales']['suma_pagado_canon_fijo'])
-      $("#suma_pagado_x_ventas").text(data[0]['totales']['suma_pagado_x_ventas'])
-      $("#suma_total_pagado").text(data[0]['totales']['suma_total_pagado'])
-      $("#suma_total_pagado_usd").text(data[0]['totales']['suma_total_pagado_usd'])
-      $("#suma_monto_x_cobrar").text(data[0]['totales']['suma_monto_x_cobrar'])
+        $("#suma_total_facturado").text(data[0]['totales']['suma_total_facturado'])
+        $("#suma_pagado_canon_fijo").text(data[0]['totales']['suma_pagado_canon_fijo'])
+        $("#suma_pagado_canon_variable").text(data[0]['totales']['suma_pagado_canon_variable'])
+        $("#suma_total_pagado").text(data[0]['totales']['suma_total_pagado'])
+        $("#suma_total_pagado_usd").text(data[0]['totales']['suma_total_pagado_usd'])
+        $("#suma_monto_x_cobrar").text(data[0]['totales']['suma_monto_x_cobrar'])
 
     error: (data)->
       console.log(data)
     complete: ->
-      a=1
+      $.unblockUI()
 

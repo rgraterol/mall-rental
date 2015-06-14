@@ -1,12 +1,12 @@
 .row.wrapper.border-bottom.white-bg.page-heading
   .col-lg-10
     %h2
-      Ventas Mensuales del Mall
+      Reporte Mensual de Pagos de Alquiler
     %ol.breadcrumb
       %li
         = link_to 'Inicio', root_url
       %li
-        P Mensuales del Mall
+        Reporte Mensuales de Pagos de Alquiler
 
 .wrapper.wrapper-content.animated.fadeInRight
   .row
@@ -26,18 +26,18 @@
                 %thead
                   %tr
                     %th.text-center Mes
-                    %th.text-center Cobranza
-                    %th.text-center Pagado x Canon Fijo
-                    %th.text-center Pagado x Porc Ventas
+                    %th.text-center Facturado x Canon Fijo
+                    %th.text-center Facturado x Canon Variable
+                    %th.text-center Total Facturado
                     %th.text-center Total Pagado
                     %th.text-center Total Pagado (USD)
-                    %th.text-center Monto x Cobrar
+                    %th.text-center Total x Cobrar
                     %th.text-center Acciones
                 %tbody#tbody_pagos_mensuales_mall
                   %tr
                     %td.text-center Enero
                     %td.text-center{rowspan: 12, colspan: 7,style: "vertical-align: middle"}
-                      %span.text-center{style: "vertical-align: middle"}
+                      %span.text-center.texto_cargando{style: "vertical-align: middle"}
                         Cargando Datos...
                   %tr
                     %td.text-center Febrero
@@ -64,9 +64,9 @@
                 %tfoot#tfoot-ventas-mall
                   %tr
                     %td.text-center TOTAL
-                    %td#suma_cobranza
                     %td#suma_pagado_canon_fijo
-                    %td#suma_pagado_x_ventas
+                    %td#suma_pagado_canon_variable
+                    %td#suma_total_facturado
                     %td#suma_total_pagado
                     %td#suma_total_pagado_usd
                     %td#suma_monto_x_cobrar

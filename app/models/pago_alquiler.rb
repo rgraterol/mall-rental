@@ -22,9 +22,8 @@
 
 
 class PagoAlquiler < ActiveRecord::Base
-  belongs_to :contrato_alquiler
-  belongs_to :tienda
   belongs_to :cuenta_bancarium
+  has_many :detalle_pago_alquilers
 
   enum tipo_pago: [:Cheque, :Transferencia, :Efectivo]
 
