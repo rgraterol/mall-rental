@@ -78,24 +78,20 @@ Myapp::Application.routes.draw do
 
 
 =begin
-  get 'cobranza_alquiler' => 'venta_diaria#cobranza', as: :cobranza_alquiler
-
-  get 'ventas_tiendas/:tienda_id' => 'venta_diaria#index', as: :ventas_tienda
-
-  get 'ventas_tiendas/:tienda_id/:month' => 'venta_diaria#index', as: :ventas_tienda_mes
 
   get 'ventas_mes_tiendas' => 'venta_diaria#index', as: :ventas_mes_tienda
-
-  get 'ventas_mall_tiendas' => 'venta_diaria#mall_tiendas', as: :ventas_mall_tiendas
-
   get 'ventas_mall_tiendas/:acceso/:month' => 'venta_diaria#mall_tiendas'
 
   get 'ventas_mensuales_mall' => 'venta_diaria#mensuales', as: :ventas_mensuales_mall
 =end
 
   get 'venta_diaria_bruta' => 'venta_diaria#index', as: :venta_diaria_bruta
-
   get 'venta_diaria_bruta/:tienda_id' => 'venta_diaria#index', as: :venta_diaria_tienda
+  get 'cobranza_alquiler' => 'venta_diaria#cobranza', as: :cobranza_alquiler
+  get 'ventas_tiendas/:tienda_id' => 'venta_diaria#index', as: :ventas_tienda
+  get 'ventas_tiendas/:tienda_id/:month' => 'venta_diaria#index', as: :ventas_tienda_mes
+  get 'ventas_mall_tiendas' => 'venta_diaria#mall_tiendas', as: :ventas_mall_tiendas
+
 
   get 'pago_alquilers/new_transferencia' => 'pago_alquilers#new_transferencia', as: :registrar_pago_transferencia
   post '/pago_alquilers/create' =>  'pago_alquilers#create'

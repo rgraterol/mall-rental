@@ -2,6 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 #= require jquery.blockUI.js
+#= require jquery.number.js
 #= require jquery-ui/jquery-ui.min.js
 
 jQuery(document).ready ($) ->
@@ -20,7 +21,10 @@ $(".actualizar_ventas").on "change", ->
       tienda_id: $("#tienda_id").val()
     before_send: $.blockUI({message: 'Por favor espere...'})
     success: (data) ->
-      $("#total_ventas").val(data[0]['suma'])
+      console.log(data)
+      suma = data[0]['suma']
+      $("#total_ventas").val(suma)
+      $("#total_ventas").number(true,2,',','.')
       $("#tbody_venta_bruta").empty()
       @dias_no_lab = data[0]['dias_no_lab']
       @cantidad_ventas_mes = data[0]['cantidad_ventas_mes']
@@ -49,8 +53,14 @@ $(".actualizar_ventas").on "change", ->
         if @total_cant_ventas == 0 && !data[0]['mes_actual']
           $("#btn_up_documento_venta").prop('disabled', false);
 
-        $("#tbody_venta_bruta").append("<tr><td>"+element.fecha+"</td><td id='mount_"+element.dia+"' class='"+@clase+"' identificador='"+element.id+"'  opcion='"+@opcion+"' title='"+@title+"' fecha='"+element.fecha+"' campo='"+element.dia+"'>"+element.monto+"</td><td id='nota_credito_"+element.dia+"' class='"+@clase_2+"' opcion='"+@opcion+"' identificador='"+element.id+"' title='"+@title+"' fecha='"+element.fecha+"' campo='"+element.dia+"' >"+element.monto_notas_credito+"</td><td id='venta_bruta_"+element.dia+"' campo='"+element.dia+"'>"+element.monto_venta_bruta+"</td></tr>")
-        $("#tbody_venta_neta").append("<tr><td>"+element.fecha+"</td><td id='mount_"+element.dia+"' class='"+@clase+"' identificador='"+element.id+"' opcion='"+@opcion+"' title='"+@title+"' fecha='"+element.fecha+"' campo='"+element.dia+"'>"+element.monto+"</td><td id='nota_credito_"+element.dia+"' class='"+@clase_2+"' opcion='"+@opcion+"' identificador='"+element.id+"' title='"+@title+"' fecha='"+element.fecha+"' campo='"+element.dia+"' >"+element.monto_notas_credito+"</td><td id='venta_bruta_"+element.dia+"' campo='"+element.dia+"'>"+element.monto_venta_bruta+"</td><td id='costo_venta_"+element.dia+"' opcion='"+@opcion+"' campo='"+element.dia+"' class='"+@clase_3+"' identificador='"+element.id+"'  >"+element.monto_costo_venta+"</td><td id='venta_neta_"+element.dia+"' campo='"+element.dia+"'>"+element.monto_venta_neta+"</td></tr>")
+        $("#tbody_venta_bruta").append("<tr><td>"+element.fecha+"</td><td id='mount_"+element.dia+"' class='"+@clase+"' identificador='"+element.id+"'  opcion='"+@opcion+"' title='"+@title+"' fecha='"+element.fecha+"' campo='"+element.dia+"' valor='"+element.monto+"'>"+element.monto+"</td><td id='nota_credito_"+element.dia+"' class='"+@clase_2+"' opcion='"+@opcion+"' identificador='"+element.id+"' title='"+@title+"' fecha='"+element.fecha+"' campo='"+element.dia+"' valor='"+element.monto_notas_credito+"'>"+element.monto_notas_credito+"</td><td id='venta_bruta_"+element.dia+"' class='clase_total' campo='"+element.dia+"' valor='"+element.monto_venta_bruta+"'>"+element.monto_venta_bruta+"</td></tr>")
+        $("#tbody_venta_neta").append("<tr><td>"+element.fecha+"</td><td id='mount_"+element.dia+"' class='"+@clase+"' identificador='"+element.id+"' opcion='"+@opcion+"' title='"+@title+"' fecha='"+element.fecha+"' campo='"+element.dia+"' valor='"+element.monto+"'>"+element.monto+"</td><td id='nota_credito_"+element.dia+"' class='"+@clase_2+"' opcion='"+@opcion+"' identificador='"+element.id+"' title='"+@title+"' fecha='"+element.fecha+"' campo='"+element.dia+"' valor='"+element.monto_notas_credito+"'>"+element.monto_notas_credito+"</td><td id='venta_bruta_"+element.dia+"' class='clase_total' campo='"+element.dia+"' valor='"+element.monto_venta_bruta+"'>"+element.monto_venta_bruta+"</td><td id='costo_venta_"+element.dia+"' opcion='"+@opcion+"' campo='"+element.dia+"' class='"+@clase_3+"' identificador='"+element.id+"' valor='"+element.monto_costo_venta+"' >"+element.monto_costo_venta+"</td><td id='venta_neta_"+element.dia+"' class='clase_total' valor='"+element.monto_venta_neta+"' campo='"+element.dia+"'>"+element.monto_venta_neta+"</td></tr>")
+
+        $('#mount_'+element.dia).number(element.monto,2,',','.')
+        $('#nota_credito_'+element.dia).number(element.monto_notas_credito,2,',','.')
+        $('#venta_bruta_'+element.dia).number(element.monto_venta_bruta,2,',','.')
+        $('#costo_venta_'+element.dia).number(element.monto_costo_venta,2,',','.')
+        $('#venta_neta_'+element.dia).number(element.monto_venta_neta,2,',','.')
 
     error: (data)->
       console.log(data)
@@ -64,8 +74,8 @@ $(".tbody_ventas_diarias").on
       fecha = $(this).attr('fecha')
       id = $(this).attr('campo')
       $(this).text('')
-
       $(this).append("<input  type='text' value='"+valor+"' id='venta_"+id+"' valor='"+valor+"' codigo='"+fecha+"' campo='"+id+"'></input>")
+      $('input',this).number(true,2,',','.')
       $('input',this).focus()
   ".editar_monto_venta"
 
@@ -77,6 +87,7 @@ $(".tbody_ventas_diarias").on
       id = $(this).attr('campo')
       $(this).text('')
       $(this).append("<input type='text' value='"+valor+"' valor='"+valor+"' codigo='"+fecha+"' campo='"+id+"'></input>")
+      $('input',this).number(true,2,',','.')
       $('input',this).focus()
   ".editar_monto_notas_credito"
 
@@ -86,99 +97,118 @@ $(".tbody_ventas_diarias").on
       valor = $(this).text()
       id = $(this).attr('campo')
       $(this).text('')
-
-      $(this).append("<input type='text' value='"+valor+"' id='costo_venta_"+id+"' campo='"+id+"'></input>")
+      $(this).append("<input type='text' value='"+valor+"' valor='"+valor+"' id='costo_venta_"+id+"' campo='"+id+"'></input>")
+      $('input',this).number(true,2,',','.')
       $('input',this).focus()
+
   ".editar_costo_venta"
 
 $(".tbody_ventas_diarias").on
   blur:->
     if ($(this).val() != '')
-      valor = $(this).attr('valor')
+      $(this).parent().attr('valor',$(this).val())
       $(this).parent().addClass('campo_editar')
-      $(this).parent().text($(this).val())
+      monto = $(this).number(true,2,',','.')
+      $(this).parent().number(monto.val(),2,',','.')
       $(this).remove()
     else
-      $(this).parent().text(valor)
+      $(this).parent().text($(this).val())
       $(this).remove()
   ".editar_monto_venta input"
 
 $(".tbody_ventas_diarias").on
   blur:->
     if ($(this).val() != '')
-      campo = $(this).attr('campo')
-      valor = $(this).attr('valor')
+      $(this).parent().attr('valor',$(this).val())
       $(this).parent().addClass('campo_editar')
-      $(this).parent().text($(this).val())
+      monto = $(this).number(true,2,',','.')
+      $(this).parent().number(monto.val(),2,',','.')
       $(this).remove()
     else
-      $(this).parent().text(valor)
+      $(this).parent().text($(this).val())
       $(this).remove()
   ".editar_monto_notas_credito input"
 
 $(".tbody_ventas_diarias").on
   blur:->
     if ($(this).val() != '')
-      valor = $(this).attr('valor')
+      $(this).parent().attr('valor',$(this).val())
       $(this).parent().addClass('campo_editar')
+      monto = $(this).number(true,2,',','.')
+      $(this).parent().number(monto.val(),2,',','.')
+      $(this).remove()
+    else
       $(this).parent().text($(this).val())
       $(this).remove()
-    else
-      $(this).parent().text(valor)
-      $(this).remove()
   ".editar_costo_venta input"
 
 $(".tbody_ventas_diarias").on
   keyup:->
     campo = $(this).attr('campo')
-    if $(this).val() == '' && $(this).val() <= 0
-      value = $('#mount_'+campo).text()
-    else if $(this).val() != ''
-      monto = $('#mount_'+campo).text().replace(".", "")
-      monto = parseFloat(monto.replace(",", "."))
-      value = monto - parseFloat($(this).val())
-    else
-      value = $('#mount_'+campo).text()-($(this).val())
+    nota_credito = $('#nota_credito_'+campo).attr('valor')
 
-    $('#venta_bruta_'+campo).text(value)
-  ".editar_monto_notas_credito input"
-
-$(".tbody_ventas_diarias").on
-  keyup:->
-    campo = $(this).attr('campo')
-    venta_bruta = $('#venta_bruta_'+campo).text()
-    if $(this).val() == '' && $(this).val() <= 0
-      value = venta_bruta
-    else if $(this).val() != ''
-      monto = venta_bruta.replace(".", "")
-      monto = parseFloat(monto.replace(",", "."))
-      value = monto - parseFloat($(this).val())
-    else
-      value = venta_bruta-($(this).val())
-
-    $('#venta_neta_'+campo).text(value)
-  ".editar_costo_venta input"
-
-$(".tbody_ventas_diarias").on
-  keyup:->
-    campo = $(this).attr('campo')
     if $(this).val() == '' && $(this).val() <= 0
       if $('#nota_credito_'+campo).text() == '' && $('#nota_credito_'+campo).text() <= 0
         value = 0
       else
-        value = $('#nota_credito_'+campo).text()
+        value = $('#nota_credito_'+campo).attr('valor')
+
     else if $(this).val() != ''
-      if $('#nota_credito_'+campo).text() != ''
-        nota_cred = $('#nota_credito_'+campo).text().replace(".", "")
-        nota_cred = parseFloat(nota_cred.replace(",", "."))
+      if $('#nota_credito_'+campo).attr('valor') != ''
+        nota_cred = $('#nota_credito_'+campo).attr('valor')
+        nota_cred = parseFloat(nota_cred)
       else
         nota_cred = 0
       value = parseFloat($(this).val()) - nota_cred
     else
-      value = parseFloat($(this).val()) - $('#nota_credito_'+campo).text()
+      value = parseFloat($(this).val()) - $('#nota_credito_'+campo).attr('valor')
 
-    $('#venta_bruta_'+campo).text(value)
+    $('#venta_bruta_'+campo).attr('valor',value)
+    $('#venta_bruta_'+campo).number(value,2,',','.')
+
   ".editar_monto_venta input"
+
+$(".tbody_ventas_diarias").on
+  keyup:->
+    campo = $(this).attr('campo')
+    if $(this).val() == '' && $(this).val() <= 0
+      value = $('#mount_'+campo).attr('valor')
+    else if $(this).val() != ''
+      monto = $('#mount_'+campo).attr('valor')
+      monto = parseFloat(monto)
+      value = monto - parseFloat($(this).val())
+    else
+      value = $('#mount_'+campo).attr('valor')-($(this).val())
+    $('#venta_bruta_'+campo).attr('valor',value)
+    $('#venta_bruta_'+campo).number(value,2,',','.')
+    if $('#costo_venta'+campo).text() == '' && $('#costo_venta'+campo).text() <= 0
+      $('#venta_neta_'+campo).attr('valor',value)
+      $('#venta_neta_'+campo).number(value,2,',','.')
+    else
+      value2 = value - $('#costo_venta'+campo).attr('valor')
+      $('#venta_neta_'+campo).attr('valor',value2)
+      $('#venta_neta_'+campo).number(value2,2,',','.')
+
+  ".editar_monto_notas_credito input"
+
+$(".tbody_ventas_diarias").on
+  keyup:->
+    campo = $(this).attr('campo')
+
+    if $('#venta_bruta_'+campo).text() != ''
+      venta_bruta = $('#venta_bruta_'+campo).attr('valor')
+    if $(this).val() == '' && $(this).val() <= 0
+      value = venta_bruta
+    else if $(this).val() != ''
+      monto_venta_bruta = $('#venta_bruta_'+campo).attr('valor')
+      monto_venta_bruta = parseFloat(monto_venta_bruta)
+      value = monto_venta_bruta - parseFloat($(this).val())
+    else
+      value = monto_venta_bruta-($(this).val())
+    $('#venta_neta_'+campo).attr('valor',value)
+    $('#venta_neta_'+campo).number(value,2,',','.')
+  ".editar_costo_venta input"
+
 
 $("#btn_save_venta").on "click", ->
   if $(".campo_editar").length > 0
@@ -188,8 +218,8 @@ $("#btn_save_venta").on "click", ->
       campo = elemento.attr('campo')
       valor = $("#mount_"+campo)
       elemento_1 = $("#nota_credito_"+campo)
-      nota_credito = elemento_1.text()
-      costo_venta = $("#costo_venta_"+campo).text()
+      nota_credito = elemento_1.attr('valor')
+      costo_venta = $("#costo_venta_"+campo).attr('valor')
       opcion = elemento.attr('opcion')
       if bandera || opcion == 'update'
         $.ajax
@@ -197,7 +227,7 @@ $("#btn_save_venta").on "click", ->
           url: "/dynamic_venta_diaria/guardar_ventas"
           dataType: "JSON"
           data:
-            valor: valor.text()
+            valor: valor.attr('valor')
             nota_credito: nota_credito
             costo_venta: costo_venta
             codigo: elemento.attr('codigo')
@@ -239,8 +269,7 @@ $("#btn_save_venta").on "click", ->
               console.log(data)
           error: (data)->
             console.log(data)
-          complete: ->
-            $(".actualizar_ventas").change()
+
   else
     $.blockUI({
       message: $('div.growlUI.mensaje'),
@@ -287,7 +316,7 @@ $(".actualizar_auditoria_ventas").on "change", ->
     dataType: "JSON"
     data:
       year: $("#date_lapso_year").val()
-      month: $("#ventas_select_month").val()
+      month: $("#venta_diaria_select_month").val()
     before_send: $.blockUI({message: 'Por favor espere...'})
     success: (data) ->
       $("#total_ventas_mes").val(data[0]['total_ventas'])
@@ -300,7 +329,7 @@ $(".actualizar_auditoria_ventas").on "change", ->
       for element, index in data[0]['tiendas']
         @cadena_check = "title='Falta Registrar Ventas'"
         @cadena_recibo =  "title='Falta Enviarle Recibo de Cobro'"
-        if element.actualizada
+        if !element.editable_mensual
           @cadena_check = "checked title='Ventas Actualizadas'"
         if element.recibos_cobro
           @cadena_recibo = "checked title='Recibo Cobro Enviado'"
@@ -316,8 +345,8 @@ $(".actualizar_auditoria_ventas").on "change", ->
 
         $("#tbody_mall_ventas").append("<tr><td>"+element.tienda+"</td><td>"+element.actividad_economica+"</td>" +
           "<td>"+element.local+"</td><td>"+element.nivel_ubicacion+"</td>" +
-          "<td>"+element.tipo_canon+"</td><td>"+element.canon_fijo+"</td>" +
-          "<td>"+element.ventas_mes+"</td><td>"+element.canon_x_ventas+"</td>" +
+          "<td>"+element.tipo_canon+"</td><td>"+element.monto_venta+"</td>" +
+          "<td>"+element.canon_fijo+"</td><td>"+element.canon_x_ventas+"</td>" +
           "<td>"+element.total_canon+"</td>" +
           "<td><a href='/ventas_tiendas/"+element.tienda_id+"/"+data[0]['mes']+"'>Ver Ventas diarias</a></td></tr>")
 

@@ -87,13 +87,14 @@ class ContratoAlquiler < ActiveRecord::Base
       return false
     end
   end
+  #enum tipo_canon_alquiler: [:fijo, :variableVB, :variableVN, :fijo_y_variable_venta_bruta, :fijo_y_variable_venta_neta, :exonerado]
 
   def calculate_canon(contrato,vmt)
 
     if contrato.tipo_canon_alquiler == 'fijo'
       @canon_fijo = contrato.canon_fijo_ml
       @canon_x_ventas = 0
-    elsif contrato.tipo_canon_alquiler == "variable"
+    elsif contrato.tipo_canon_alquiler == "variableVB"
       @monto_minimo_v = contrato.canon_fijo_ml/(contrato.porc_canon_ventas / 100)
       if vmt >= @monto_minimo_v
         @canon_x_ventas = (vmt - @monto_minimo_v)*(contrato.porc_canon_ventas/100)
@@ -103,7 +104,7 @@ class ContratoAlquiler < ActiveRecord::Base
     elsif contrato.tipo_canon_alquiler == "fijo_y_variable_venta_bruta" ||  contrato.tipo_canon_alquiler == "fijo_y_variable_venta_neta"
       @canon_fijo = contrato.canon_fijo_ml
       @monto_minimo_v = contrato.monto_minimo_ventas
-
+      #raise @monto_minimo_v.inspect
       if(vmt.to_f >= @monto_minimo_v.to_f)
         @canon_x_ventas = (vmt - @monto_minimo_v)*(contrato.porc_canon_ventas/100)
       else

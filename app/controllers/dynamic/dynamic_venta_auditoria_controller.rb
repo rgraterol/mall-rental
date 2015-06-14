@@ -45,13 +45,29 @@ module Dynamic
         @tipo_canon = @contrato_alquiler.tipo_canon_alquiler.humanize.capitalize
 
         @mall = current_user.mall.id
+
         @calendario = CalendarioNoLaborable.new()
         @cantidad_dias_laborables = @calendario.cantidad_dias_laborables(@month,@year,@mall)
 
-        @suma_ventas_mes = Venta.where('extract(year from fecha) = ? AND extract(month from fecha) = ? AND tienda_id = ?', @year,@month,@tienda.id).sum(:monto_ml)
+        @venta_mensual = VentaMensual.where('anio = ? AND mes = ? AND tienda_id = ?', @year,@month,@tienda_id)
 
-        @cantidad_ventas_mes = Venta.where('extract(year from fecha) = ? AND extract(month from fecha) = ? AND tienda_id = ?', @year,@month,@tienda.id).count
-        #raise @cantidad_ventas_mes.to_i.inspect
+        if !@venta_mensual.blank?
+          @id_mensual = @venta_mensual.first.id
+          @suma_ventas_mes = VentaDiarium.where('extract(year from fecha) = ? AND extract(month from fecha) = ? AND venta_mensual_id = ?', @year,@month,@id_mensual).sum(:monto)
+          @cantidad_ventas_mes = VentaDiarium.where('extract(year from fecha) = ? AND extract(month from fecha) = ? AND venta_mensual_id = ?', @year,@month,@id_mensual).count
+          @editable_mensual = @venta_mensual.first.editable
+          @monto_venta = @venta_mensual.first.monto_bruto
+          @total_ventas = @venta_mensual.first.monto
+        else
+          @suma_ventas_mes = 0
+          @cantidad_ventas_mes = 0
+          @editable_mensual = true
+          @monto_venta = 0
+          @total_ventas = 0
+          #raise @cantidad_ventas_mes.to_i.inspect
+        end
+
+
         @canons = @contrato_alquiler.calculate_canon(@contrato_alquiler,@suma_ventas_mes)
         @canon_fijo = @canons['canon_fijo']
         @canon_x_ventas = @canons['canon_x_ventas']
@@ -62,14 +78,12 @@ module Dynamic
           @actualizada = true
         end
 
-
-
-
         @recibos_cobro = false
         @recibos_cobro_tienda = PagoAlquiler.where('anio_alquiler = ? AND mes_alquiler = ? AND tienda_id = ?', @year,@month,@tienda.id)
         if !@recibos_cobro_tienda.blank?
           @recibos_cobro = true
         end
+
         @suma_canon_ventas += @canon_x_ventas
         @suma_canon_fijo += @canon_fijo
         @total_ventas += @suma_ventas_mes
@@ -88,6 +102,8 @@ module Dynamic
             'recibos_cobro' => @recibos_cobro,
             'dias_loborables' => @cantidad_dias_laborables,
             'cantidad_ventas' => @cantidad_ventas_mes,
+            'editable_mensual' => @editable_mensual,
+            'monto_venta' => @monto_venta,
         }
 
         @array_tienda.push(@obj)
