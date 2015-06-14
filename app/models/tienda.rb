@@ -108,7 +108,7 @@ class Tienda < ActiveRecord::Base
     if criterio == 'tiendas'
       mall.tiendas.joins(:nivel_mall, :actividad_economica, :tipo_local, :contrato_alquilers).by_nivel_mall(nivel_mall_id).by_actividad_economica(actividad_economica_id).by_rango_contrato(fecha_init, fecha_end).by_tipo_local(tipo_local_id).each do |tienda|
         hash_stats = Hash.new
-        hash_stats[:venta_diarias_2] = tienda.venta_diariums.where(fecha: fecha_init.. fecha_end).sum(:monto_ml)
+        hash_stats[:venta_diarias_2] = tienda.venta_diariums.where(fecha: fecha_init.. fecha_end).sum(:monto_bruto)
         hash_stats[:canon_fijo_ml] = tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_canon_fijo_ml)
         hash_stats[:porc_canon] = tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_porc_ventas_ml)
         hash_stats[:total] = tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_alquiler_ml)
@@ -124,7 +124,7 @@ class Tienda < ActiveRecord::Base
         total = 0
         total_usd = 0
         nivel_mall.tiendas.joins(:nivel_mall, :actividad_economica, :tipo_local, :contrato_alquilers).by_nivel_mall(nivel_mall_id).by_actividad_economica(actividad_economica_id).by_rango_contrato(fecha_init, fecha_end).by_tipo_local(tipo_local_id).each do |tienda|
-          ventas = ventas + tienda.venta_diariums.where(fecha: fecha_init.. fecha_end).sum(:monto_ml)
+          ventas = ventas + tienda.venta_diariums.where(fecha: fecha_init.. fecha_end).sum(:monto_bruto)
           canon_fijo = canon_fijo + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_canon_fijo_ml)
           porc_canon = porc_canon + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_porc_ventas_ml)
           total = total + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_alquiler_ml)
@@ -151,7 +151,7 @@ class Tienda < ActiveRecord::Base
           porc_canon = porc_canon + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_porc_ventas_ml)
           total = total + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_alquiler_ml)
           total_usd = total_usd + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_alquiler_usd)
-          ventas = ventas + tienda.venta_diariums.where(fecha: fecha_init.. fecha_end).sum(:monto_ml)
+          ventas = ventas + tienda.venta_diariums.where(fecha: fecha_init.. fecha_end).sum(:monto_bruto)
         end
         hash_stats = Hash.new
         hash_stats[:canon_fijo_ml] = canon_fijo
@@ -175,7 +175,7 @@ class Tienda < ActiveRecord::Base
           porc_canon = porc_canon + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_porc_ventas_ml)
           total = total + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_alquiler_ml)
           total_usd = total_usd + tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_alquiler_usd)
-          ventas = ventas + tienda.venta_diariums.where(fecha: fecha_init.. fecha_end).sum(:monto_ml)
+          ventas = ventas + tienda.venta_diariums.where(fecha: fecha_init.. fecha_end).sum(:monto_bruto)
         end
         hash_stats = Hash.new
         hash_stats[:canon_fijo_ml] = canon_fijo

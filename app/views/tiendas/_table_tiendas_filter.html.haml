@@ -39,7 +39,7 @@
               %td= tienda.local.area_planta
               %td= tienda.arrendatario.nombre
               %td= tienda.arrendatario.rif
-              %td= tienda.contrato_alquilers.last.tipo_canon_alquiler.tipo.humanize.titleize
+              %td= tienda.contrato_alquilers.last.tipo_canon_alquiler.tipo.humanize.titleize rescue ''
               %td= tienda.contrato_alquilers.last.fecha_inicio_fix
               %td= tienda.contrato_alquilers.last.fecha_fin_fix
               %td= tienda.vencido?
