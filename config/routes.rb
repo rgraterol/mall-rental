@@ -120,6 +120,8 @@ Myapp::Application.routes.draw do
 
   get 'notificar_tiendas_no_actualizadas', to:  'mail_notifications#mf_notify_tiendas_no_actualizadas'
 
+  get 'envio_recibos_cobro', to:  'mail_notifications#mf_send_recibos_cobro'
+
   #ESTADISTICAS
   get 'estadisticas/intermensuales_ventas_alquiler', to: 'estadisticas#mf_intermensuales_vxa'
   post 'estadisticas/intermensuales', to: 'estadisticas#filtro_intermensuales'

@@ -21,7 +21,6 @@ $(".actualizar_ventas").on "change", ->
       tienda_id: $("#tienda_id").val()
     before_send: $.blockUI({message: 'Por favor espere...'})
     success: (data) ->
-      console.log(data)
       suma = data[0]['suma']
       $("#total_ventas").val(suma)
       $("#total_ventas").number(true,2,',','.')
@@ -319,7 +318,9 @@ $(".actualizar_auditoria_ventas").on "change", ->
       month: $("#venta_diaria_select_month").val()
     before_send: $.blockUI({message: 'Por favor espere...'})
     success: (data) ->
-      $("#total_ventas_mes").val(data[0]['total_ventas'])
+      value = data[0]['total_ventas']
+      $("#total_ventas_mes").val(value)
+      $("#total_ventas_mes").number(true,2,',','.')
       $("#monto_canon_fijo").val(data[0]['suma_canon_fijo'])
       $("#monto_canon_x_venta").val(data[0]['suma_canon_ventas'])
       $("#total_canon").val(data[0]['total'])
@@ -386,7 +387,7 @@ $("#btn-send-recibos").on "click", ->
   mes_hoy = now.getMonth()+1
 
   year = $("#date_lapso_year option:selected").val()
-  month = $("#ventas_select_month option:selected").val()
+  month = $("#venta_diaria_select_month option:selected").val()
   if ((String(year) == String(anio_hoy)) and (String(month) == String(mes_hoy)))
     $.blockUI({
       message: 'Esta opcion es valida solo para meses anteriores',
@@ -409,7 +410,7 @@ $("#btn-send-recibos").on "click", ->
           async: false
           data:
             year: $("#date_lapso_year").val()
-            month: $("#ventas_select_month").val()
+            month: $("#venta_diaria_select_month").val()
             tiendas: tiendas
           success: (data) ->
             if data[0]['result']

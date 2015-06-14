@@ -43,7 +43,12 @@ module Dynamic
         @contrato_alquiler = ContratoAlquiler.find_by(tienda: @tienda)
 
         @tipo_canon = @contrato_alquiler.tipo_canon_alquiler.humanize.capitalize
-
+        @tipo_canon_h = @contrato_alquiler.tipo_canon_alquiler
+        if @tipo_canon_h == 'fijo_y_variable_venta_neta' || @tipo_canon_h == 'variableVN'
+          @campo_suma = :monto_neto
+        else
+          @campo_suma = :monto_bruto
+        end
         @mall = current_user.mall.id
 
         @calendario = CalendarioNoLaborable.new()
@@ -53,18 +58,21 @@ module Dynamic
 
         if !@venta_mensual.blank?
           @id_mensual = @venta_mensual.first.id
-          @suma_ventas_mes = VentaDiarium.where('extract(year from fecha) = ? AND extract(month from fecha) = ? AND venta_mensual_id = ?', @year,@month,@id_mensual).sum(:monto)
+          @suma_ventas_mes = VentaDiarium.where('extract(year from fecha) = ? AND extract(month from fecha) = ? AND venta_mensual_id = ?', @year,@month,@id_mensual).sum(@campo_suma)
           @cantidad_ventas_mes = VentaDiarium.where('extract(year from fecha) = ? AND extract(month from fecha) = ? AND venta_mensual_id = ?', @year,@month,@id_mensual).count
           @editable_mensual = @venta_mensual.first.editable
-          @monto_venta = @venta_mensual.first.monto_bruto
-          @total_ventas = @venta_mensual.first.monto
+          if @tipo_canon_h == 'fijo_y_variable_venta_neta' || @tipo_canon_h == 'variableVN'
+            @monto_venta = @venta_mensual.first.monto_neto
+          else
+            @monto_venta = @venta_mensual.first.monto_bruto
+          end
+
+
         else
           @suma_ventas_mes = 0
           @cantidad_ventas_mes = 0
           @editable_mensual = true
           @monto_venta = 0
-          @total_ventas = 0
-          #raise @cantidad_ventas_mes.to_i.inspect
         end
 
 
@@ -113,7 +121,6 @@ module Dynamic
       @total_t = ActionController::Base.helpers.number_to_currency(@total_s, separator: ',', delimiter: '.', format: "%n %u", unit: "")
       @suma_canon_ventas = ActionController::Base.helpers.number_to_currency(@suma_canon_ventas, separator: ',', delimiter: '.', format: "%n %u", unit: "")
       @suma_canon_fijo = ActionController::Base.helpers.number_to_currency(@suma_canon_fijo, separator: ',', delimiter: '.', format: "%n %u", unit: "")
-      @total_ventas = ActionController::Base.helpers.number_to_currency(@total_ventas, separator: ',', delimiter: '.', format: "%n %u", unit: "")
       render json: [ result: true, cont: @cantidad_dias_laborables, tiendas: @array_tienda, suma_canon_ventas: @suma_canon_ventas, suma_canon_fijo: @suma_canon_fijo, total: @total_t, total_ventas: @total_ventas, tiendas_cont: @contrato_alquiler, mes: @month]
     end
   end
