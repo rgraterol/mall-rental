@@ -91,6 +91,8 @@ Myapp::Application.routes.draw do
   get 'ventas_tiendas/:tienda_id' => 'venta_diaria#index', as: :ventas_tienda
   get 'ventas_tiendas/:tienda_id/:month' => 'venta_diaria#index', as: :ventas_tienda_mes
   get 'ventas_mall_tiendas' => 'venta_diaria#mall_tiendas', as: :ventas_mall_tiendas
+  get 'ventas_mensuales_mall' => 'venta_diaria#mensuales', as: :ventas_mensuales_mall
+  get 'ventas_mes_tiendas' => 'venta_diaria#index', as: :ventas_mes_tienda
 
 
   get 'pago_alquilers/new_transferencia' => 'pago_alquilers#new_transferencia', as: :registrar_pago_transferencia
@@ -107,7 +109,7 @@ Myapp::Application.routes.draw do
     post 'dynamic_venta_diaria/venta'
     post 'dynamic_venta_diaria/guardar_ventas'
     post 'dynamic_venta_auditoria/auditoria'
-    post 'dynamic_ventas_mes/venta_diarias_2'
+    post 'dynamic_ventas_mes/ventas'
     post 'dynamic_pago_alquilers/recibos_cobro'
     post 'dynamic_pago_alquilers/actualizar_pagos'
     post "/dynamic_pago_alquilers_mensuales/pagos"

@@ -9,6 +9,7 @@ module Dynamic
       @suma_canon_ventas = 0
       @suma_canon_fijo = 0
       @total_ventas = 0
+      @suma_monto_venta_bruto = 0
 
       @locales = Local.valid_locals(current_user).all
 
@@ -66,13 +67,17 @@ module Dynamic
           else
             @monto_venta = @venta_mensual.first.monto_bruto
           end
-
-
+          @monto_venta_bruto = @venta_mensual.first.monto_bruto
+          if @venta_mensual.first.monto_bruto.nil?
+            @monto_venta_bruto = 0
+          end
+          @suma_monto_venta_bruto += @monto_venta_bruto
         else
           @suma_ventas_mes = 0
           @cantidad_ventas_mes = 0
           @editable_mensual = true
           @monto_venta = 0
+          @monto_venta_bruto = 0
         end
 
 
@@ -111,7 +116,8 @@ module Dynamic
             'dias_loborables' => @cantidad_dias_laborables,
             'cantidad_ventas' => @cantidad_ventas_mes,
             'editable_mensual' => @editable_mensual,
-            'monto_venta' => @monto_venta,
+            'monto_venta' => ActionController::Base.helpers.number_to_currency(@monto_venta, separator: ',', delimiter: '.', format: "%n %u", unit: ""),
+            'monto_venta_bruto' =>  ActionController::Base.helpers.number_to_currency(@monto_venta_bruto, separator: ',', delimiter: '.', format: "%n %u", unit: ""),
         }
 
         @array_tienda.push(@obj)
@@ -121,7 +127,8 @@ module Dynamic
       @total_t = ActionController::Base.helpers.number_to_currency(@total_s, separator: ',', delimiter: '.', format: "%n %u", unit: "")
       @suma_canon_ventas = ActionController::Base.helpers.number_to_currency(@suma_canon_ventas, separator: ',', delimiter: '.', format: "%n %u", unit: "")
       @suma_canon_fijo = ActionController::Base.helpers.number_to_currency(@suma_canon_fijo, separator: ',', delimiter: '.', format: "%n %u", unit: "")
-      render json: [ result: true, cont: @cantidad_dias_laborables, tiendas: @array_tienda, suma_canon_ventas: @suma_canon_ventas, suma_canon_fijo: @suma_canon_fijo, total: @total_t, total_ventas: @total_ventas, tiendas_cont: @contrato_alquiler, mes: @month]
+
+      render json: [ result: true, cont: @cantidad_dias_laborables, tiendas: @array_tienda, suma_canon_ventas: @suma_canon_ventas, suma_canon_fijo: @suma_canon_fijo, total: @total_t, total_ventas: @total_ventas, tiendas_cont: @contrato_alquiler, mes: @month, total_ventas_bruto: @suma_monto_venta_bruto]
     end
   end
 end

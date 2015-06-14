@@ -10,6 +10,7 @@ jQuery(document).ready ($) ->
   $(".actualizar_auditoria_ventas").change()
   $(".actualizar_ventas_mes").change()
 
+
 $(".actualizar_ventas").on "change", ->
   $.ajax
     type: "POST"
@@ -321,6 +322,9 @@ $(".actualizar_auditoria_ventas").on "change", ->
       value = data[0]['total_ventas']
       $("#total_ventas_mes").val(value)
       $("#total_ventas_mes").number(true,2,',','.')
+      value2 = data[0]['total_ventas_bruto']
+      $("#total_ventas_mes_bruto").val(value2)
+      $("#total_ventas_mes_bruto").number(true,2,',','.')
       $("#monto_canon_fijo").val(data[0]['suma_canon_fijo'])
       $("#monto_canon_x_venta").val(data[0]['suma_canon_ventas'])
       $("#total_canon").val(data[0]['total'])
@@ -337,24 +341,25 @@ $(".actualizar_auditoria_ventas").on "change", ->
 
         $("#tbody_auditoria_ventas").append("<tr><td>"+element.tienda+"</td><td>"+element.actividad_economica+"</td>" +
           "<td>"+element.local+"</td>" +
-          "<td>"+element.tipo_canon+"</td><td>"+element.canon_fijo+"</td>" +
-          "<td>"+element.ventas_mes+"</td><td>"+element.canon_x_ventas+"</td>" +
-          "<td>"+element.total_canon+"</td>" +
+          "<td>"+element.tipo_canon+"</td><td class='clase_monto'>"+element.canon_fijo+"</td>" +
+          "<td class='clase_monto'>"+element.ventas_mes+"</td><td class='clase_monto'>"+element.canon_x_ventas+"</td>" +
+          "<td class='clase_monto'>"+element.total_canon+"</td>" +
           "<td><input type='checkbox' disabled='disabled' name='ventas_actualizadas' value='"+element.tienda_id+"' "+@cadena_check+" /></td>" +
           "<td><input type='checkbox' name='recibo_cobro_"+element.tienda_id+"' disabled='disabled' "+@cadena_recibo+" /></td>" +
           "<td><a href='/ventas_tiendas/"+element.tienda_id+"/"+data[0]['mes']+"'>Ver Ventas diarias</a></td></tr>")
 
         $("#tbody_mall_ventas").append("<tr><td>"+element.tienda+"</td><td>"+element.actividad_economica+"</td>" +
           "<td>"+element.local+"</td><td>"+element.nivel_ubicacion+"</td>" +
-          "<td>"+element.tipo_canon+"</td><td>"+element.monto_venta+"</td>" +
-          "<td>"+element.canon_fijo+"</td><td>"+element.canon_x_ventas+"</td>" +
-          "<td>"+element.total_canon+"</td>" +
+          "<td>"+element.tipo_canon+"</td><td class='clase_monto'>"+element.monto_venta_bruto+"</td>" +
+          "<td class='clase_monto'>"+element.canon_fijo+"</td><td class='clase_monto'>"+element.canon_x_ventas+"</td>" +
+          "<td class='clase_monto'>"+element.total_canon+"</td>" +
           "<td><a href='/ventas_tiendas/"+element.tienda_id+"/"+data[0]['mes']+"'>Ver Ventas diarias</a></td></tr>")
 
     error: (data)->
       console.log(data)
     complete: ->
       $.unblockUI()
+
 $(".actualizar_ventas_mes").on "change", ->
   $.ajax
     type: "POST"
@@ -367,9 +372,9 @@ $(".actualizar_ventas_mes").on "change", ->
       $("#tbody-ventas-mall").empty()
       meses = ['Enero', 'Febrero', 'Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
       mes_fin = data[0]['mes_actual']-1
-
+      console.log(data)
       for num in [0..mes_fin]
-        $("#tbody-ventas-mall").append("<tr><th>"+meses[num]+"</th><td>"+data[0]['ventas'][num].ventas+"</td><td>"+data[0]['ventas'][num].canon_fijo+"</td><td>"+data[0]['ventas'][num].canon_x_ventas+"</td><td>"+data[0]['ventas'][num].total_mes_canon+"</td></tr>")
+        $("#tbody-ventas-mall").append("<tr><th>"+meses[num]+"</th><td>"+data[0]['ventas'][num].venta_mensual+"</td><td>"+data[0]['ventas'][num].canon_fijo+"</td><td>"+data[0]['ventas'][num].canon_x_ventas+"</td><td>"+data[0]['ventas'][num].total_mes_canon+"</td></tr>")
 
       $("#suma_total").text(data[0]['suma_total'])
       $("#total_canon_fijo").text(data[0]['total_canon_fijo'])
@@ -380,6 +385,7 @@ $(".actualizar_ventas_mes").on "change", ->
       console.log(data)
     complete: ->
       $.unblockUI()
+
 
 $("#btn-send-recibos").on "click", ->
   now = new Date()
