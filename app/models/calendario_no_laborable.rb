@@ -7,7 +7,9 @@
 #  motivo     :string(255)
 #  created_at :datetime
 #  updated_at :datetime
+#  mall_id    :integer
 #
+
 
 class CalendarioNoLaborable < ActiveRecord::Base
   validates :motivo, presence: true

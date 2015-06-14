@@ -4,6 +4,7 @@ class ContratoAlquilersController < ApplicationController
   before_action :set_tienda_aux, only: :update
   before_action :set_tienda, only: [:index, :new, :create, :destroy, :show, :edit]
   before_action :set_contrato_alquiler, only: [:destroy, :show, :edit, :update]
+  before_action :check_user_mall
 
   # GET /contrato_alquilers
   # GET /contrato_alquilers.json
@@ -47,6 +48,7 @@ class ContratoAlquilersController < ApplicationController
         format.html { redirect_to contrato_alquilers_path(tienda: @tienda.nombre, id: @tienda.id), notice: 'Contrato de alquiler actualizado satisfactoriamente.'  }
         format.json { head :no_content }
       else
+        puts @contrato_alquiler.errors.inspect
         format.html { render action: 'edit' }
         format.json { render json: @contrato_alquiler.errors, status: :unprocessable_entity }
       end
@@ -80,6 +82,6 @@ class ContratoAlquilersController < ApplicationController
     end
 
     def contrato_alquiler_params
-      params.require(:contrato_alquiler).permit(:nro_contrato, :fecha_inicio, :fecha_fin, :archivo_contrato, :canon_fijo_ml, :monto_minimo_ventas, :canon_fijo_usd, :porc_canon_ventas, :estado_contrato, :tipo_canon_alquiler, :tienda_id)
+      params.require(:contrato_alquiler).permit(:nro_contrato, :fecha_inicio, :fecha_fin, :archivo_contrato, :canon_fijo_ml, :monto_minimo_ventas, :canon_fijo_usd, :porc_canon_ventas, :estado_contrato, :tipo_canon_alquiler_id, :tienda_id, :requerida_venta)
     end
 end

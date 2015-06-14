@@ -1,4 +1,4 @@
-= form_for @role, html: {class: 'form-horizontal m-t'} do |f|
+= form_for @role, html: {class: 'form-horizontal m-t', id: 'role_form'} do |f|
   - if @role.errors.any?
     #error_explanation
       %h2
@@ -17,6 +17,11 @@
       Tipo de Rol:
     .col-sm-10
       = f.select(:role_type, Role.valid_role_types.map { |x| [x.humanize.titleize, x]}, {include_blank: 'Seleccione un Tipo de Rol'}, class: 'form-control')
+  .form-group
+    = f.label :tipo_servicio_id, class: 'col-sm-2 control-label' do
+      Tipo de Servicio:
+    .col-sm-10
+      = f.select :tipo_servicio_id, options_from_collection_for_select(TipoServicio.all, :id, :tipo_humanize, selected: f.object.tipo_servicio_id.present? ? f.object.tipo_servicio_id : nil) ,{include_blank: 'Seleccione un Tipo de Servicio para el Rol'}, {class: 'form-control'}
   .form-group
     %br
       %table.table.table-striped

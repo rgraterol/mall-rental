@@ -44,15 +44,30 @@
               .col-sm-1
                 %span.fa-stack
                   %i#loading_actividad_economica.fa.fa-2x.fa-spinner.fa-spin
+          .form-group
+            = f.label :monto_garantia, class: 'col-sm-2 control-label' do
+              Monto del depósito de garantía en Bs:
+            .col-sm-10
+              = f.text_field :monto_garantia, class: 'form-control', id: 'tienda_monto_garantia'
+          .form-group
+            = f.label :monto_garantia_usd, class: 'col-sm-2 control-label' do
+              Monto del depósito de garantía en $:
+            .col-sm-10
+              = f.text_field :monto_garantia_usd, readonly: true, class: 'form-control', id: 'tienda_monto_garantia_usd'
+          .form-group
+            = f.label :codigo_contable, class: 'col-sm-2 control-label' do
+              Código Contable:
+            .col-sm-10
+              = f.text_field :codigo_contable, class: 'form-control', id: 'tienda_codigo_contable'
     .col-lg-6
       .ibox.float-e-margins
         .ibox-content.border-bottom.form-horizontal
           = f.fields_for :contrato_alquilers, @contrato_alquiler do |c|
             .form-group
-              = c.label :tipo_canon_alquiler, class: 'col-sm-3 control-label' do
+              = c.label :tipo_canon_alquiler_id, class: 'col-sm-3 control-label' do
                 Tipo Canon Alquiler:
               .col-sm-9
-                = c.select :tipo_canon_alquiler, ContratoAlquiler.tipo_canon_alquilers.keys.to_a.map { |x| [x.humanize.titleize, x]}, {selected: c.object.tipo_canon_alquiler || nil, include_blank: 'Seleccione un Tipo de Canon de Alquiler'}, {class: 'form-control tipo_canon_alquiler_required', id: 'select_canon_alquiler'}
+                = c.select :tipo_canon_alquiler_id, options_from_collection_for_select(TipoCanonAlquiler.all, :id, :tipo_nombre, selected: c.object.tipo_canon_alquiler_id || nil), {include_blank: 'Seleccione un Tipo de Canon de Alquiler'}, {class: 'form-control tipo_canon_alquiler_required', id: 'select_canon_alquiler'}
             .form-group
               = c.label :fecha_inicio, class: 'col-sm-3 control-label' do
                 Fecha Inicio del Contrato:

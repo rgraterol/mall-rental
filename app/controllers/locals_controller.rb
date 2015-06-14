@@ -1,6 +1,7 @@
 class LocalsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
+  before_action :check_user_mall
 
   before_action :set_local, only: [:show, :edit, :update, :destroy]
   helper_method :valid_locals

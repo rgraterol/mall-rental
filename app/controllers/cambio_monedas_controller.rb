@@ -1,6 +1,6 @@
 class CambioMonedasController < ApplicationController
   before_action :set_cambio_moneda, only: [:show, :edit, :update, :destroy]
-
+  before_action :check_user_mall
   # GET /cambio_monedas
   # GET /cambio_monedas.json
   def index

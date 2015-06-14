@@ -2,6 +2,7 @@ class ArrendatariosController < ApplicationController
   before_action :authenticate_user!
   before_action :set_arrendatario, only: [:edit, :show, :update, :destroy]
   load_and_authorize_resource
+  before_action :check_user_mall
 
   respond_to :html
 
@@ -60,6 +61,6 @@ class ArrendatariosController < ApplicationController
     end
 
     def arrendatario_params
-      params.require(:arrendatario).permit(:nombre, :rif, :direccion, :telefono, :nombre_rl, :cedula_rl, :email_rl, :telefono_rl)
+      params.require(:arrendatario).permit(:nombre, :rif, :direccion, :telefono, :nombre_rl, :cedula_rl, :email_rl, :telefono_rl, :registro_mercantil)
     end
 end

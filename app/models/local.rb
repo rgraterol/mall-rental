@@ -6,14 +6,17 @@
 #  foto              :string(255)
 #  nro_local         :string(255)
 #  ubicacion_pasillo :string(255)
-#  area              :decimal(, )
-#  propiedad_mall    :boolean
 #  tipo_local_id     :integer
 #  nivel_mall_id     :integer
 #  mall_id           :integer
 #  created_at        :datetime
 #  updated_at        :datetime
+#  area_planta       :decimal(, )      default(0.0)
+#  area_terraza      :decimal(, )      default(0.0)
+#  area_mezanina     :decimal(, )      default(0.0)
+#  tipo_estado_local :integer
 #
+
 
 class Local < ActiveRecord::Base
   belongs_to :mall
@@ -33,6 +36,6 @@ class Local < ActiveRecord::Base
   end
 
   def self.valid_tipo_estado_local
-    %w[Disponible En_Reparacion Vendido]
+    %w[Disponible Alquilado En_Reparacion Vendido]
   end
 end

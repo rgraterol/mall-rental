@@ -58,12 +58,12 @@
           = link_to bancos_path do
             %i.fa.fa-bank
             %span.nav-label Bancos
-      - if can? :manage, CambioMoneda
+      - if (can? :manage, CambioMoneda) && current_user.mall_id.present?
         %li{class: is_active_controller('cambio_monedas')}
           = link_to cambio_monedas_path do
             %i.fa.fa-money
             %span.nav-label Cambio de Moneda
-      -if can? :manage, CuentaBancarium
+      -if (can? :manage, CuentaBancarium) && current_user.mall_id.present?
         %li{class: is_active_controller('cuenta_bancarias')}
           = link_to cuenta_bancaria_path do
             %i.fa.fa-file-text
@@ -73,27 +73,27 @@
           = link_to malls_path do
             %i.fa.fa-building-o
             %span.nav-label Malls
-      - if can? :manage, CalendarioNoLaborable
+      - if (can? :manage, CalendarioNoLaborable) && current_user.mall_id.present?
         %li{class: is_active_controller('calendario_no_laborables')}
           = link_to calendario_no_laborables_path do
             %i.fa.fa-calendar
             %span.nav-label Calendario No Laboral
-      - if can? :index, :mall_user
+      - if (can? :index, :mall_user) && current_user.mall_id.present?
         %li{class: is_active_controller('users/mall_users')}
           = link_to mall_users_path do
             %i.fa.fa-users
             %span.nav-label Usuarios Mall
-      - if can? :index, Arrendatario
+      - if (can? :index, Arrendatario) && current_user.mall_id.present?
         %li{class: is_active_controller('arrendatarios')}
           = link_to arrendatarios_path do
             %i.fa.fa-server
             %span.nav-label Arrendatarios
-      - if can? :index, Local
+      - if (can? :index, Local) && current_user.mall_id.present?
         %li
           = link_to local_index_path do
             %i.fa.fa-bars
             %span.nav-label Locales
-      - if can? :index, Tienda
+      - if (can? :index, Tienda) && current_user.mall_id.present?
         %li{class: is_active_controller('tiendas')}
           %a{href: '#'}
             %i.fa.fa-shopping-cart
@@ -103,8 +103,10 @@
             %li{class: is_active_action('index')}= link_to 'Visualizar Tiendas', tiendas_path
             - if can? :new, Tienda
               %li{class: is_active_action('new')}= link_to 'Nueva Tienda', new_tienda_path
+
       - if can? :index, VentaDiarium
         %li{class: is_active_controller('venta_diaria')}
+
           %a{href: '#'}
             %i.fa.fa-usd
             %span.nav-label Ventas
@@ -117,7 +119,7 @@
               %li{class: is_active_action('mall_tiendas')}= link_to 'Ventas del Mall x Tienda', ventas_mall_tiendas_path
             - if can? :ventas_mensuales, VentaDiarium
               %li{class: is_active_action('mensuales')}= link_to 'Ventas Mensuales del Mall', ventas_mensuales_mall_path
-      - if can? :index, PagoAlquiler
+      - if can? :index, PagoAlquiler && current_user.mall_id.present?
         %li{class: is_active_controller('pago_alquilers')}
           %a{href: '#'}
             %i.fa.fa-cc-visa
@@ -133,7 +135,7 @@
             - if can? :pagos_mensuales, PagoAlquiler
               %li{class: is_active_action('pagos_mensuales')}= link_to 'Reporte de Pagos Mensuales', pagos_mensuales_mall_path
 
-      - if can? :manage, :estadisticas
+      - if (can? :manage, :estadisticas) && current_user.mall_id.present?
         %li{class: is_active_controller('estadisticas')}
           %a{href: '#'}
             %i.fa.fa-bar-chart

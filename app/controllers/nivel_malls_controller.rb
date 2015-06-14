@@ -1,6 +1,7 @@
 class NivelMallsController < ApplicationController
   before_action :set_nivel_mall, only: [:show, :edit, :update, :destroy]
   respond_to :html, :js
+  before_action :check_user_mall
 
   # GET /nivel_malls
   # GET /nivel_malls.json

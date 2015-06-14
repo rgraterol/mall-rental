@@ -26,6 +26,8 @@
 #
 
 
+
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -45,6 +47,18 @@ class User < ActiveRecord::Base
 
   validates :username, presence: {message: 'es obligatorio'},
             uniqueness: {message: 'ya en uso.'}
+  validates :email, presence: {message: 'Email Obligatorio'}
+  validates :name, presence: {message: 'Nombre Obligatorio'}
+  validates :role_id, presence: {message: 'Rol Obligatorio'}
+  validate :admin
+
+  def admin
+    if Role.find_by(id: role_id) != Role.find(1)
+      if mall_id.nil?
+        errors.add(:mall_id, "Debe asignar un mall al usuario")
+      end
+    end
+  end
 
   def self.mall_admins
     User.joins(:role).where(roles: {role_type: Role.role_types[:administrador_cliente]})

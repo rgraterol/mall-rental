@@ -7,7 +7,9 @@
 #  cambio_ml_x_usd :decimal(, )
 #  created_at      :datetime
 #  updated_at      :datetime
+#  mall_id         :integer
 #
+
 
 class CambioMoneda < ActiveRecord::Base
   validates :cambio_ml_x_usd, numericality: true, presence: true

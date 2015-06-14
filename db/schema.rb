@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20150614140328) do
     t.integer  "mall_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "registro_mercantil"
   end
 
   add_index "arrendatarios", ["mall_id"], name: "index_arrendatarios_on_mall_id", using: :btree
@@ -100,16 +101,16 @@ ActiveRecord::Schema.define(version: 20150614140328) do
     t.date     "fecha_inicio"
     t.date     "fecha_fin"
     t.string   "archivo_contrato"
-    t.decimal  "canon_fijo_ml"
-    t.decimal  "canon_fijo_usd"
-    t.decimal  "porc_canon_ventas"
-    t.decimal  "monto_minimo_ventas"
+    t.decimal  "canon_fijo_ml",          precision: 30, scale: 2, default: 0.0
+    t.decimal  "canon_fijo_usd",         precision: 30, scale: 2, default: 0.0
+    t.decimal  "porc_canon_ventas",      precision: 30, scale: 2, default: 0.0
+    t.decimal  "monto_minimo_ventas",    precision: 30, scale: 2, default: 0.0
     t.boolean  "estado_contrato"
-    t.integer  "tipo_canon_alquiler"
     t.integer  "tienda_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "requerida_venta"
+    t.integer  "tipo_canon_alquiler_id"
   end
 
   add_index "contrato_alquilers", ["tienda_id"], name: "index_contrato_alquilers_on_tienda_id", using: :btree
@@ -203,6 +204,13 @@ ActiveRecord::Schema.define(version: 20150614140328) do
   add_index "malls", ["cuenta_bancarium_id"], name: "index_malls_on_cuenta_bancarium_id", using: :btree
   add_index "malls", ["pai_id"], name: "index_malls_on_pai_id", using: :btree
 
+  create_table "malls_roles", id: false, force: true do |t|
+    t.integer "role_id"
+    t.integer "mall_id"
+  end
+
+  add_index "malls_roles", ["mall_id", "role_id"], name: "index_malls_roles_on_mall_id_and_role_id", using: :btree
+
   create_table "monedas", force: true do |t|
     t.string   "nombre"
     t.datetime "created_at"
@@ -245,6 +253,10 @@ ActiveRecord::Schema.define(version: 20150614140328) do
     t.boolean  "conciliado",              default: true
   end
 
+  add_index "pago_alquilers", ["contrato_alquiler_id"], name: "index_pago_alquilers_on_contrato_alquiler_id", using: :btree
+  add_index "pago_alquilers", ["cuenta_bancarium_id"], name: "index_pago_alquilers_on_cuenta_bancarium_id", using: :btree
+  add_index "pago_alquilers", ["tienda_id"], name: "index_pago_alquilers_on_tienda_id", using: :btree
+
   create_table "pais", force: true do |t|
     t.string   "nombre"
     t.integer  "idioma_id"
@@ -284,11 +296,14 @@ ActiveRecord::Schema.define(version: 20150614140328) do
   add_index "plantilla_contrato_alquilers", ["tipo_canon_alquiler_id"], name: "index_plantilla_contrato_alquilers_on_tipo_canon_alquiler_id", using: :btree
 
   create_table "roles", force: true do |t|
-    t.string   "name",       limit: 50, default: "", null: false
-    t.integer  "role_type",             default: 0,  null: false
+    t.string   "name",             limit: 50, default: "", null: false
+    t.integer  "role_type",                   default: 0,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tipo_servicio_id"
   end
+
+  add_index "roles", ["tipo_servicio_id"], name: "index_roles_on_tipo_servicio_id", using: :btree
 
   create_table "tiendas", force: true do |t|
     t.string   "nombre"
@@ -301,6 +316,9 @@ ActiveRecord::Schema.define(version: 20150614140328) do
     t.integer  "arrendatario_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "monto_garantia",            precision: 30, scale: 2
+    t.decimal  "monto_garantia_usd",        precision: 30, scale: 2
+    t.string   "codigo_contable"
   end
 
   add_index "tiendas", ["actividad_economica_id"], name: "index_tiendas_on_actividad_economica_id", using: :btree
@@ -314,6 +332,12 @@ ActiveRecord::Schema.define(version: 20150614140328) do
   end
 
   create_table "tipo_locals", force: true do |t|
+    t.string   "tipo"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tipo_servicios", force: true do |t|
     t.string   "tipo"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -355,6 +379,7 @@ ActiveRecord::Schema.define(version: 20150614140328) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
+  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   create_table "venta_diaria", force: true do |t|
     t.date     "fecha"
