@@ -2,10 +2,13 @@
 #= require jasny/jasny-bootstrap
 #= require bootstrapValidator/bootstrapValidator.js
 #= require jquery.blockUI.js
+#= require jquery.number.js
 
 jQuery(document).ready ($) ->
 
   $(".actualizar_pagos_mensuales").change()
+  $(".monto_numerico").number(true,2,',','.')
+
   $('#fecha_pago').datepicker
     keyboardNavigation: false
     forceParse: false
@@ -190,3 +193,80 @@ $(".actualizar_pagos_mensuales").on "change", ->
     complete: ->
       $.unblockUI()
 
+$(".tbody_facturas_pendientes").on
+  click:->
+    if $('input',this).length == 0
+      valor = $(this).text()
+      fecha = $(this).attr('fecha')
+      id = $(this).attr('campo')
+      $(this).text('')
+      $(this).append("<input  type='text' value='"+valor+"' id='venta_"+id+"' valor='"+valor+"' codigo='"+fecha+"' campo='"+id+"'></input>")
+      $('input',this).number(true,2,',','.')
+      $('input',this).focus()
+  ".editar_monto_pago"
+
+$(".tbody_facturas_pendientes").on
+  blur:->
+    if ($(this).val() != '')
+      $(this).parent().attr('valor',$(this).val())
+      $(this).parent().addClass('campo_editar')
+      monto = $(this).number(true,2,',','.')
+      $(this).parent().number(monto.val(),2,',','.')
+      $(this).remove()
+    else
+      $(this).parent().text($(this).val())
+      $(this).remove()
+  ".editar_monto_pago input"
+
+$(".tbody_facturas_pendientes").on
+  click:->
+    campo = $(this).attr('campo')
+    valor = $(this).val()
+    factura = $("#monto_factura_"+campo).text()
+    monto = $("#monto_factura_"+campo).attr('valor_campo')
+    if valor == 'total'
+      $("#monto_pago_"+campo).text(factura)
+      $("#monto_pago_"+campo).attr('valor',monto)
+     # $('#pago_alquiler_detalle_pago_alquilers_attributes_0_monto_fact').val(monto)
+      calcular_a_pagar(campo)
+    else
+      $("#monto_pago_"+campo).addClass('editar_monto_pago')
+      campo_monto_pago = $("#monto_pago_"+campo)
+      valor = campo_monto_pago.text()
+      valor = $.trim(valor)
+      campo_monto_pago.text('')
+      campo_monto_pago.append("<input  type='text' value='"+valor+"' id='pago_"+campo+"' valor='"+valor+"' campo='"+campo+"'></input>")
+  ".alquiler_pago"
+
+$(".tbody_facturas_pendientes").on
+  keyup:->
+    campo = $(this).attr('campo')
+    elemento = $('#monto_pago_'+campo)
+    factura = $("#monto_factura_"+campo).text()
+    monto_factura = $("#monto_factura_"+campo).attr('valor_campo')
+    if parseFloat($(this).val()) < parseFloat(monto_factura)
+      elemento.attr('valor',$(this).val())
+      $('#pago_alquiler_detalle_pago_alquilers_attributes_0_monto_fact').val($(this).val())
+      calcular_a_pagar(campo)
+    else
+      if parseFloat($(this).val()) == parseFloat(monto_factura)
+        alert('El monto de abono no debe ser igual al total de la factura')
+      else
+        if parseFloat($(this).val()) > parseFloat(monto_factura)
+          alert('El monto de abono no debe ser mayor al de la factura')
+      $(this).val($(this).val().substring(0, $(this).val().length-1))
+  ".editar_monto_pago input"
+
+calcular_a_pagar = (campo) ->
+  suma = parseFloat(0)
+
+  for element, index in $('.monto_pago')
+    valor = $("#"+element.id).attr('valor')
+    $('#pago_alquiler_detalle_pago_alquilers_attributes_'+index+'_monto_fact').val(valor)
+    if valor != ''
+      suma += parseFloat(valor)
+  $("#total_a_pagar").val(suma)
+  monto = $("#total_a_pagar").number(true,2,',','.')
+  $("#total_a_pagar").number(monto.val(),2,',','.')
+  $("#monto_transferido").val(suma)
+  $("#pago_alquiler_monto").val(suma)

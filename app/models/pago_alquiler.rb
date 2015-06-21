@@ -32,10 +32,19 @@
 class PagoAlquiler < ActiveRecord::Base
   belongs_to :cuenta_bancarium
   has_many :detalle_pago_alquilers
+  has_many :factura_alquilers, through: :detalle_pago_alquilers
+
+  before_create :set_missing_attributes_create
+  accepts_nested_attributes_for :detalle_pago_alquilers, allow_destroy: true
 
   enum tipo_pago: [:Cheque, :Transferencia, :Efectivo]
 
   def self.valid_forma_pago
     %w[Cheque Efectivo]
+  end
+
+  def set_missing_attributes_create
+    self.nro_recibo = NroRecibo.get_numero_recibo
+    self.monto_usd = self.monto / CambioMoneda.last.cambio_ml_x_usd
   end
 end
