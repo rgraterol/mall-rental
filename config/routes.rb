@@ -36,6 +36,9 @@ Myapp::Application.routes.draw do
   end
 
   resources :roles
+  get 'mall_roles', to: 'roles#assign_role_mall', as: :assign_role_mall
+  post 'set_mall', to: 'roles#set_mall', as: :set_mall
+  post 'save_mall_roles', to: 'roles#save_mall_roles', as: :save_mall_roles
 
   resources :locals
 

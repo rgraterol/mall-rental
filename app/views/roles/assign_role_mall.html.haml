@@ -1,0 +1,22 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Asignar Roles a Mall
+      %i.fa.fa-key
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Asignar Roles a Mall
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            Seleccione un Mall
+        .ibox-content
+          = select :mall_id, :mall_id, options_from_collection_for_select(Mall.all, :id, :nombre), {include_blank: 'Seleccione un Mall'}, class: 'form-control'
+
+  %div#mall_assing

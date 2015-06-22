@@ -48,6 +48,7 @@
               %li{class: is_active_action('index')}= link_to 'Visualizar Roles', roles_path
             - if can? :new, Role
               %li{class: is_active_action('new')}= link_to 'Nuevo Rol', new_role_path
+            %li{class: is_active_action('assign_role_mall')}= link_to 'Asignar Roles a Mall', assign_role_mall_path
       - if can? :manage, Pai
         %li{class: is_active_controller('pais')}
           = link_to pais_path do
