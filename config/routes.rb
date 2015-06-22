@@ -80,25 +80,16 @@ Myapp::Application.routes.draw do
   resources :contrato_alquilers
 
 
-=begin
+  get 'venta_diaria_bruta' => 'venta_diaria#index', as: :venta_diaria_bruta
+  get 'venta_diaria_bruta/:tienda_id' => 'venta_diaria#index', as: :venta_diaria_tienda
   get 'cobranza_alquiler' => 'venta_diaria#cobranza', as: :cobranza_alquiler
-
   get 'ventas_tiendas/:tienda_id' => 'venta_diaria#index', as: :ventas_tienda
-
   get 'ventas_tiendas/:tienda_id/:month' => 'venta_diaria#index', as: :ventas_tienda_mes
-
+  get 'ventas_mall_tiendas' => 'venta_diaria#mall_tiendas', as: :ventas_mall_tiendas
+  get 'ventas_mall_tiendas/:acceso/:month' => 'venta_diaria#mall_tiendas'
+  get 'ventas_mensuales_mall' => 'venta_diaria#mensuales', as: :ventas_mensuales_mall
   get 'ventas_mes_tiendas' => 'venta_diaria#index', as: :ventas_mes_tienda
 
-  get 'ventas_mall_tiendas' => 'venta_diaria#mall_tiendas', as: :ventas_mall_tiendas
-
-  get 'ventas_mall_tiendas/:acceso/:month' => 'venta_diaria#mall_tiendas'
-
-  get 'ventas_mensuales_mall' => 'venta_diaria#mensuales', as: :ventas_mensuales_mall
-=end
-
-  get 'venta_diaria_bruta' => 'venta_diaria#index', as: :venta_diaria_bruta
-
-  get 'venta_diaria_bruta/:tienda_id' => 'venta_diaria#index', as: :venta_diaria_tienda
 
   get 'pago_alquilers/new_transferencia' => 'pago_alquilers#new_transferencia', as: :registrar_pago_transferencia
   post '/pago_alquilers/create' =>  'pago_alquilers#create'
@@ -114,7 +105,7 @@ Myapp::Application.routes.draw do
     post 'dynamic_venta_diaria/venta'
     post 'dynamic_venta_diaria/guardar_ventas'
     post 'dynamic_venta_auditoria/auditoria'
-    post 'dynamic_ventas_mes/venta_diarias_2'
+    post 'dynamic_ventas_mes/ventas'
     post 'dynamic_pago_alquilers/recibos_cobro'
     post 'dynamic_pago_alquilers/actualizar_pagos'
     post "/dynamic_pago_alquilers_mensuales/pagos"
@@ -126,6 +117,8 @@ Myapp::Application.routes.draw do
   get 'notificar_usuarios_mall', to: 'mail_notifications#mf_notify_tiendas_mall'
 
   get 'notificar_tiendas_no_actualizadas', to:  'mail_notifications#mf_notify_tiendas_no_actualizadas'
+
+  get 'envio_recibos_cobro', to:  'mail_notifications#mf_send_recibos_cobro'
 
   #ESTADISTICAS
   get 'estadisticas/intermensuales_ventas_alquiler', to: 'estadisticas#mf_intermensuales_vxa'

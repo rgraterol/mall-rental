@@ -24,7 +24,7 @@
           %br
           .row
             .col-md-3.text-right.col-md-offset-6
-              = button_tag 'Enviar Recibos de Cobro', class: 'btn btn-mall btn-block', id: 'btn-send-recibos'
+              = button_tag 'Enviar Recibos de Cobro&Factura', class: 'btn btn-mall btn-block', id: 'btn-send-recibos'
             .col-md-3
               = link_to notificar_tiendas_no_actualizadas_path, class: 'btn btn-danger pull-right' do
                 Notificar Tiendas No Actualizadas
@@ -48,13 +48,13 @@
                     %th.text-center{width: '15%'}
                       Monto Venta
                     %th.text-center{width: '15%'}
-                      Canon x Ventas
+                      Canon Variable
                     %th.text-center{width: '15%'}
                       Total Canon
                     %th.text-center{width: '5%'}
                       Actualizada
                     %th.text-center{width: '5%'}
-                      Recibo Cobro
+                      Recibo Cobro & Factura
                     %th.text-center{width: '6%'}
                       Acciones
                 %tbody#tbody_auditoria_ventas

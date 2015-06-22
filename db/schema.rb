@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150606210335) do
+ActiveRecord::Schema.define(version: 20150614140328) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,24 @@ ActiveRecord::Schema.define(version: 20150606210335) do
     t.datetime "updated_at"
   end
 
+  create_table "cobranza_alquilers", force: true do |t|
+    t.string   "nro_recibo"
+    t.date     "fecha_recibo_cobro"
+    t.integer  "anio_alquiler"
+    t.integer  "mes_alquiler"
+    t.float    "monto_canon_fijo",     default: 0.0
+    t.float    "monto_canon_variable", default: 0.0
+    t.float    "monto_alquiler"
+    t.float    "monto_alquiler_usd"
+    t.boolean  "facturado",            default: true
+    t.float    "saldo_deudor"
+    t.integer  "tienda_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "cobranza_alquilers", ["tienda_id"], name: "index_cobranza_alquilers_on_tienda_id", using: :btree
+
   create_table "contrato_alquilers", force: true do |t|
     t.string   "nro_contrato"
     t.date     "fecha_inicio"
@@ -111,6 +129,17 @@ ActiveRecord::Schema.define(version: 20150606210335) do
   add_index "cuenta_bancaria", ["banco_id"], name: "index_cuenta_bancaria_on_banco_id", using: :btree
   add_index "cuenta_bancaria", ["mall_id"], name: "index_cuenta_bancaria_on_mall_id", using: :btree
 
+  create_table "detalle_pago_alquilers", force: true do |t|
+    t.float    "monto",               default: 0.0
+    t.integer  "pago_alquiler_id"
+    t.integer  "factura_alquiler_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "detalle_pago_alquilers", ["factura_alquiler_id"], name: "index_detalle_pago_alquilers_on_factura_alquiler_id", using: :btree
+  add_index "detalle_pago_alquilers", ["pago_alquiler_id"], name: "index_detalle_pago_alquilers_on_pago_alquiler_id", using: :btree
+
   create_table "documento_ventas", force: true do |t|
     t.string   "titulo"
     t.string   "nombre"
@@ -120,6 +149,20 @@ ActiveRecord::Schema.define(version: 20150606210335) do
   end
 
   add_index "documento_ventas", ["venta_mensual_id"], name: "index_documento_ventas_on_venta_mensual_id", using: :btree
+
+  create_table "factura_alquilers", force: true do |t|
+    t.date     "fecha"
+    t.string   "nro_factura"
+    t.float    "monto_factura",        default: 0.0
+    t.float    "monto_abono",          default: 0.0
+    t.float    "saldo_deudor"
+    t.boolean  "canon_fijo"
+    t.integer  "cobranza_alquiler_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "factura_alquilers", ["cobranza_alquiler_id"], name: "index_factura_alquilers_on_cobranza_alquiler_id", using: :btree
 
   create_table "idiomas", force: true do |t|
     t.string   "nombre"
@@ -197,27 +240,17 @@ ActiveRecord::Schema.define(version: 20150606210335) do
 
   create_table "pago_alquilers", force: true do |t|
     t.string   "nro_recibo"
-    t.date     "fecha_recibo_cobro"
-    t.integer  "anio_alquiler"
-    t.integer  "mes_alquiler"
-    t.decimal  "monto_canon_fijo_ml"
-    t.decimal  "monto_porc_ventas_ml"
-    t.decimal  "monto_alquiler_ml"
-    t.decimal  "monto_alquiler_usd"
-    t.boolean  "pagado"
-    t.date     "fecha_pago"
+    t.date     "fecha"
     t.string   "nro_cheque_confirmacion"
     t.string   "archivo_transferencia"
-    t.string   "nombre_banco"
-    t.boolean  "facturado"
-    t.string   "nro_factura"
-    t.date     "fecha_factura"
+    t.string   "banco_emisor"
     t.integer  "tipo_pago"
-    t.integer  "contrato_alquiler_id"
-    t.integer  "tienda_id"
-    t.integer  "cuenta_bancarium_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "cuenta_bancaria_id"
+    t.decimal  "monto"
+    t.decimal  "monto_usd"
+    t.boolean  "conciliado",              default: true
   end
 
   add_index "pago_alquilers", ["contrato_alquiler_id"], name: "index_pago_alquilers_on_contrato_alquiler_id", using: :btree

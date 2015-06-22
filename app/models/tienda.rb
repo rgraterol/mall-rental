@@ -35,7 +35,7 @@ class Tienda < ActiveRecord::Base
   has_many :venta_diariums, through: :venta_mensuals
   has_many :user_tiendas, dependent: :destroy
   has_many :users, through: :user_tiendas
-  has_many :pago_alquilers
+  has_many :cobranza_alquilers
 
   after_create :set_missing_attributes
   before_update :set_missing_attributes_update
@@ -136,7 +136,7 @@ class Tienda < ActiveRecord::Base
         hash_stats[:total] = total
         hash_stats[:total_usd] = total_usd
         hash_stats[:criterio] = nivel_mall.nombre
-        hash_stats[:venta_diarias_2] = ventas
+        hash_stats[:venta_diarias] = ventas
         estadisticas << hash_stats
       end
     elsif criterio == 'actividad_economica'

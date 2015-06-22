@@ -7,7 +7,8 @@ class PagoAlquilersController < ApplicationController
   def index
 
     @tiendas = current_user.mall.tiendas
-    @pago_alquilers = Array.new
+    #@cobranza_alquilers = CobranzaAlquiler.all
+    @cobranza_alquilers = Array.new
     @today = Time.now
     @year = @today.strftime("%Y")
     @month = @today.strftime("%-m").to_i-1
@@ -16,19 +17,19 @@ class PagoAlquilersController < ApplicationController
     @suma_monto_pagado = 0
 
     @tiendas.each do |tienda|
-      @pago_alq = PagoAlquiler.where('extract(year from fecha_recibo_cobro) = ? AND extract(month from fecha_recibo_cobro) = ? AND tienda_id = ?', @year,@month,tienda.id)
+      @cobranza_alq = CobranzaAlquiler.where('anio_alquiler = ? AND mes_alquiler = ? AND tienda_id = ?', @year,@month,tienda.id)
 
-      if !@pago_alq.blank?
-        @pago_alquilers.push(@pago_alq)
-        @pago_alquilers.each do |pago|
-          @suma_x_cobrar += pago.where('pagado = ?', FALSE).sum(:monto_alquiler_ml)
-          @suma_monto_alquiler += pago.sum(:monto_alquiler_ml)
-          @suma_monto_pagado += pago.where('pagado = ?', TRUE).sum(:monto_alquiler_ml)
+      if !@cobranza_alq.blank?
+        @cobranza_alquilers.push(@cobranza_alq)
+        @cobranza_alquilers.each do |cobranza|
+          @suma_x_cobrar += cobranza.where('saldo_deudor != ?',0).sum(:monto_alquiler)
+          @suma_monto_alquiler += cobranza.sum(:monto_alquiler)
+          @suma_monto_pagado += (@suma_monto_alquiler - @suma_x_cobrar)
         end
       end
     end
 
-    @suma_x_cob = ActionController::Base.helpers.number_to_currency(@suma_x_cobrar, separator: ',', delimiter: '.', format: "%n %u", unit: "")
+    @suma_x_cobrar = ActionController::Base.helpers.number_to_currency(@suma_x_cobrar, separator: ',', delimiter: '.', format: "%n %u", unit: "")
     @suma_monto_pag = ActionController::Base.helpers.number_to_currency(@suma_monto_pagado, separator: ',', delimiter: '.', format: "%n %u", unit: "")
     @suma_monto_alq = ActionController::Base.helpers.number_to_currency(@suma_monto_alquiler, separator: ',', delimiter: '.', format: "%n %u", unit: "")
 
@@ -45,6 +46,7 @@ class PagoAlquilersController < ApplicationController
     if @tienda.blank?
       authorize! :index, root_url, :message => "Debe tener una tienda asignada."
     end
+    @local = Local.find(@tienda.local_id)
     @pago_alquiler = PagoAlquiler.new
   end
 
