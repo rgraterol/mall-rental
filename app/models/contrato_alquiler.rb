@@ -32,7 +32,6 @@ class ContratoAlquiler < ActiveRecord::Base
   #TODO Validaciones
   validates :archivo_contrato, presence: true
   validates :tipo_canon_alquiler_id, presence: true
-  validates :tienda_id, presence: true
 
   mount_uploader :archivo_contrato, FileUploader
 

@@ -31,7 +31,9 @@ class Mall < ActiveRecord::Base
   belongs_to :cuenta_bancarium
   belongs_to :cambio_moneda
   belongs_to :calendario_no_laborable
+
   has_and_belongs_to_many :roles
+  accepts_nested_attributes_for :roles
 
   has_many :plantilla_contrato_alquilers
 

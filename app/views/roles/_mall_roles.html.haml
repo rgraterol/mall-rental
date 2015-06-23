@@ -1,0 +1,27 @@
+- if @mall.nil?
+  No se encontro el mall.
+- else
+  = form_for @mall, url: {action: :save_mall_roles}, method: :post, html: {class: 'form-horizontal'} do |f|
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            Roles
+            = @mall.nombre
+            = hidden_field_tag :id, @mall.id
+        .ibox-content.border-bottom
+          .row
+            .col-md-12
+              .table-mall-role
+                %table.table.table-bordered.table-striped
+                  %tbody
+                    = f.collection_check_boxes(:role_ids, Role.all_valids, :id, :name) do |r|
+                      %tr
+                        %td= r.object.name
+                        %td
+                          =  r.check_box
+          %br
+          .row
+            .col-sm-3.col-sm-offset-9
+              = f.button class: 'btn btn-mall btn-block' do
+                Guardar

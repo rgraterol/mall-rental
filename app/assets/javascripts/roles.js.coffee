@@ -20,3 +20,15 @@ jQuery(document).ready ($) ->
         validators:
           notEmpty:
             message: 'Tipo de Servicio es Obligatorio.'
+
+  $('#mall_id_mall_id').change ->
+    if $(this).val() != ''
+      $.ajax
+        type: "POST"
+        url: "/set_mall"
+        dataType: "HTML"
+        data:
+          mall_id: $(this).val()
+        success: (data) ->
+          $('#mall_assing').empty()
+          $('#mall_assing').append(data)
