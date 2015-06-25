@@ -120,7 +120,7 @@
               %li{class: is_active_action('mall_tiendas')}= link_to 'Ventas del Mall x Tienda', ventas_mall_tiendas_path
             - if can? :ventas_mensuales, VentaDiarium
               %li{class: is_active_action('mensuales')}= link_to 'Ventas Mensuales del Mall', ventas_mensuales_mall_path
-      - if can? :index, PagoAlquiler && current_user.mall_id.present?
+      - if can? :index, PagoAlquiler #&& current_user.mall_id.present?
 
         %li{class: is_active_controller('pago_alquilers')}
           %a{href: '#'}

@@ -113,5 +113,55 @@ module Dynamic
       @suma_monto_pagado = ActionController::Base.helpers.number_to_currency(@suma_monto_pagado, separator: ',', delimiter: '.', format: "%n %u", unit: "")
       render json: [pago_alquilers: @pago_alquilers, result: true, suma: @suma, cont: @cont, suma_x_cobrar: @suma_x_cobrar, suma_monto_pagado: @suma_monto_pagado]
     end
+
+    def facturas_tiendas
+
+      @tienda_id = params[:tienda_id]
+=begin
+
+      @facturas_arr = Array.new
+      @total_x_pagar = 0
+      @cobranza_alquiler = CobranzaAlquiler.where(tienda_id: @tienda_id)
+
+      if !@cobranza_alquiler.blank?
+        @cobranza_alquiler.each do |cobranza|
+          @facturas = cobranza.factura_alquilers.where("saldo_deudor > ?", 0)
+
+
+          @facturas.each do |factura|
+            @entro = factura.inspect
+
+            @obj = {
+                "cobranza" => cobranza,
+                "factura" => factura,
+                "monto_v" => ActionController::Base.helpers.number_to_currency(factura.saldo_deudor , separator: ',', delimiter: '.', format: "%n %u", unit: ""),
+                "monto" => factura.saldo_deudor,
+            }
+
+            @total_x_pagar += factura.saldo_deudor
+
+            @facturas_arr.push(@obj)
+
+
+          end
+
+        end
+
+      end
+=begin
+
+      @pago_alquiler = PagoAlquiler.new
+      @facturas = Array.new()
+      @detalle_pago_alquiler = @pago_alquiler.detalle_pago_alquilers.build
+      @total_x_pagar_v = ActionController::Base.helpers.number_to_currency(@total_x_pagar , separator: ',', delimiter: '.', format: "%n %u", unit: "")
+
+     # render json: [factura_alquilers: @facturas_array]
+
+=end
+
+
+    render json: [id: @tienda_id]
+
+    end
   end
 end

@@ -227,7 +227,6 @@ $(".tbody_facturas_pendientes").on
     if valor == 'total'
       $("#monto_pago_"+campo).text(factura)
       $("#monto_pago_"+campo).attr('valor',monto)
-     # $('#pago_alquiler_detalle_pago_alquilers_attributes_0_monto_fact').val(monto)
       calcular_a_pagar(campo)
     else
       $("#monto_pago_"+campo).addClass('editar_monto_pago')
@@ -270,3 +269,20 @@ calcular_a_pagar = (campo) ->
   $("#total_a_pagar").number(monto.val(),2,',','.')
   $("#monto_transferido").val(suma)
   $("#pago_alquiler_monto").val(suma)
+
+
+$("#form_registro_pago_cheque").on
+  change:->
+    #$('#tbody_facturas_pendientes').empty()
+    id = $('.tabla_fact_tienda').val()
+    $.ajax
+      type: "POST"
+      url: "/dynamic_pago_alquilers/facturas_tiendas"
+      dataType: "JSON"
+      data:
+        tienda_id: $('.tabla_fact_tienda').val()
+      success: (data) ->
+       window.location.href = '/pago_alquilers/facturas_tiendas/'+id
+      complete: ->
+        a = 1
+  ".tabla_fact_tienda"
