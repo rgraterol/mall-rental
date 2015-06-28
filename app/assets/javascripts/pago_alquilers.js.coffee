@@ -3,6 +3,7 @@
 #= require bootstrapValidator/bootstrapValidator.js
 #= require jquery.blockUI.js
 #= require jquery.number.js
+#= require moment
 
 jQuery(document).ready ($) ->
 
@@ -53,17 +54,20 @@ jQuery(document).ready ($) ->
       validating: 'fa fa-refresh'
     live: 'submitted'
     fields:
-      "pago_alquiler[tienda]":
+      "tienda[id]":
         validators:
           notEmpty:
             message: 'Debe seleccionar una tienda'
-      "pago_alquiler[monto_alquiler_ml]":
+      "monto_campo":
         validators:
-          notEmpty:
-            message: 'Debe ingresar el monto de la transferencia'
-          numeric:
-            message: 'El valor debe ser numerico'
-      "pago_alquiler[fecha_pago]":
+          callback:
+            message: 'Debe seleccionar el monto del pago'
+            callback: (value, validator, $field) ->
+              if $("#pago_alquiler_monto").val() == '' || $("#pago_alquiler_monto").val() <= 0
+                false
+              else
+                true
+      "pago_alquiler[fecha]":
         validators:
           notEmpty:
             message: 'Debe ingresar la fecha de pago'
@@ -71,11 +75,11 @@ jQuery(document).ready ($) ->
         validators:
           notEmpty:
             message: 'Debe ingresar el numero del cheque'
-      "pago_alquiler[cuenta_bancarium_id]":
+      "pago_alquiler[cuenta_bancaria_id]":
         validators:
           notEmpty:
-            message: 'Debe seleccionar la cuenta bancaria'
-      "pago_alquiler[nombre_banco]":
+            message: 'Debe seleccionar la cuenta bancaria a depositar'
+      "pago_alquiler[banco_emisor]":
         validators:
           notEmpty:
             message: 'Debe ingresar el nombre del banco del cheque'
@@ -90,7 +94,6 @@ jQuery(document).ready ($) ->
                 false
               else
                 true
-
 
 $("#pago_alquiler_tipo_pago").on "change", ->
   if (this.value) != 'Cheque'
@@ -113,7 +116,7 @@ $(".actualizar_pagos_alquiler").on "change", ->
     success: (data) ->
 
       $("#tbody_pagos_alquiler").empty()
-      console.log(data)
+
       if data[0]['cont'] > 0
         for element, index in data[0]['pago_alquilers']
 
@@ -268,6 +271,12 @@ calcular_a_pagar = (campo) ->
   monto = $("#total_a_pagar").number(true,2,',','.')
   $("#total_a_pagar").number(monto.val(),2,',','.')
   $("#monto_transferido").val(suma)
+  $("#monto_cheque").val(suma)
+  console.log( $("#btn_guardar").val())
+  $('#form_registro_pago_cheque').data('bootstrapValidator').updateStatus('monto_campo', 'VALID', null);
+  #$('#form_registro_pago_cheque').bootstrapValidator('removeField', 'monto_campo');
+  #$("#btn_guardar").prop('disabled',false)
+
   $("#pago_alquiler_monto").val(suma)
 
 
@@ -281,8 +290,9 @@ $("#form_registro_pago_cheque").on
       dataType: "JSON"
       data:
         tienda_id: $('.tabla_fact_tienda').val()
+      before_send: $.blockUI({message: 'Por favor espere...'})
       success: (data) ->
        window.location.href = '/pago_alquilers/facturas_tiendas/'+id
       complete: ->
-        a = 1
+        $.unblockUI()
   ".tabla_fact_tienda"
