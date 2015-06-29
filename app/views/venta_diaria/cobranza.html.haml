@@ -23,9 +23,9 @@
                   = select_month(Date.today, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'select_month', :prefix => 'venta_diaria'}, :class => 'actualizar_auditoria_ventas')
           %br
           .row
-            .col-md-3.text-right.col-md-offset-6
+            .col-md-4.text-right.col-md-offset-4
               = button_tag 'Enviar Recibos de Cobro&Factura', class: 'btn btn-mall btn-block', id: 'btn-send-recibos'
-            .col-md-3
+            .col-md-4.text-left
               = link_to notificar_tiendas_no_actualizadas_path, class: 'btn btn-danger pull-right' do
                 Notificar Tiendas No Actualizadas
                 %i.fa.fa-envelope

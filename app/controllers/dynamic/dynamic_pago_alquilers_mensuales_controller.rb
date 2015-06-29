@@ -43,7 +43,7 @@ module Dynamic
           @cobranza_alquiler = CobranzaAlquiler.find_by('anio_alquiler = ? AND mes_alquiler = ? AND tienda_id = ?',@year,@k,tienda.id)
 
           if !(@cobranza_alquiler.blank?)
-              @cobranza += @cobranza_alquiler.monto_alquiler
+              @cobranza = @cobranza_alquiler.monto_alquiler
               @result = true
               if @cobranza_alquiler.saldo_deudor == 0
                 @total_pagado += @cobranza_alquiler.monto_alquiler

@@ -341,7 +341,7 @@ $(".actualizar_auditoria_ventas").on "change", ->
 
         $("#tbody_auditoria_ventas").append("<tr><td>"+element.tienda+"</td><td>"+element.actividad_economica+"</td>" +
           "<td>"+element.local+"</td>" +
-          "<td>"+element.tipo_canon+"</td><td class='clase_monto'>"+element.canon_fijo+"</td>" +
+          "<td>"+element.tipo_canon.tipo+"</td><td class='clase_monto'>"+element.canon_fijo+"</td>" +
           "<td class='clase_monto'>"+element.ventas_mes+"</td><td class='clase_monto'>"+element.canon_x_ventas+"</td>" +
           "<td class='clase_monto'>"+element.total_canon+"</td>" +
           "<td><input type='checkbox' disabled='disabled' name='ventas_actualizadas' value='"+element.tienda_id+"' "+@cadena_check+" /></td>" +
@@ -350,7 +350,7 @@ $(".actualizar_auditoria_ventas").on "change", ->
 
         $("#tbody_mall_ventas").append("<tr><td>"+element.tienda+"</td><td>"+element.actividad_economica+"</td>" +
           "<td>"+element.local+"</td><td>"+element.nivel_ubicacion+"</td>" +
-          "<td>"+element.tipo_canon+"</td><td class='clase_monto'>"+element.monto_venta_bruto+"</td>" +
+          "<td>"+element.tipo_canon.tipo+"</td><td class='clase_monto'>"+element.monto_venta_bruto+"</td>" +
           "<td class='clase_monto'>"+element.canon_fijo+"</td><td class='clase_monto'>"+element.canon_x_ventas+"</td>" +
           "<td class='clase_monto'>"+element.total_canon+"</td>" +
           "<td><a href='/ventas_tiendas/"+element.tienda_id+"/"+data[0]['mes']+"'>Ver Ventas diarias</a></td></tr>")

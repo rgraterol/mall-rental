@@ -18,8 +18,8 @@ module Dynamic
         @tienda_locals = Tienda.where("local_id= ? AND abierta= ?", local.id, true).first
         if !@tienda_locals.blank?
           @contrato_alquiler = ContratoAlquiler.where(tienda_id: (@tienda_locals.id))
-
-          if @contrato_alquiler.first.tipo_canon_alquiler.humanize.capitalize != 'exonerado'
+          #raise @contrato_alquiler.first.tipo_canon_alquiler.tipo.inspect
+          if @contrato_alquiler.first.tipo_canon_alquiler.tipo != 'exonerado'
             @obj = {
                 'tienda' => @tienda_locals,
                 'local' => local,
@@ -43,8 +43,8 @@ module Dynamic
         @local_n = @local.nro_local
         @contrato_alquiler = ContratoAlquiler.find_by(tienda: @tienda)
 
-        @tipo_canon = @contrato_alquiler.tipo_canon_alquiler.humanize.capitalize
-        @tipo_canon_h = @contrato_alquiler.tipo_canon_alquiler
+        @tipo_canon = @contrato_alquiler.tipo_canon_alquiler
+        @tipo_canon_h = @contrato_alquiler.tipo_canon_alquiler.tipo
         if @tipo_canon_h == 'fijo_y_variable_venta_neta' || @tipo_canon_h == 'variableVN'
           @campo_suma = :monto_neto
         else
@@ -92,7 +92,7 @@ module Dynamic
         end
 
         @recibos_cobro = false
-        @recibos_cobro_tienda = PagoAlquiler.where('anio_alquiler = ? AND mes_alquiler = ? AND tienda_id = ?', @year,@month,@tienda.id)
+        @recibos_cobro_tienda = CobranzaAlquiler.where('anio_alquiler = ? AND mes_alquiler = ? AND tienda_id = ?', @year,@month,@tienda.id)
         if !@recibos_cobro_tienda.blank?
           @recibos_cobro = true
         end

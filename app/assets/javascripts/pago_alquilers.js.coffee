@@ -3,11 +3,12 @@
 #= require bootstrapValidator/bootstrapValidator.js
 #= require jquery.blockUI.js
 #= require jquery.number.js
-#= require moment
+
 
 jQuery(document).ready ($) ->
 
   $(".actualizar_pagos_mensuales").change()
+
   $(".monto_numerico").number(true,2,',','.')
 
   $('#fecha_pago').datepicker
@@ -114,25 +115,25 @@ $(".actualizar_pagos_alquiler").on "change", ->
       year: $("#date_lapso_year").val()
       month: $("#pagos_alquiler_select_month").val()
     success: (data) ->
-
       $("#tbody_pagos_alquiler").empty()
 
       if data[0]['cont'] > 0
-        for element, index in data[0]['pago_alquilers']
+        for element, index in data[0]['cobranza_alquilers']
 
           @cadena_check = ''
           @cadena_check_2 = ''
+          console.log(element)
+          if element.monto_x_cobrar == 0
+            @cadena_check = "checked title='Pago Realizado Completo'"
+            @cancelado = true
+            @abonado = false
+          else
+            @cadena_check_2 = "checked title='Pago Abonado'"
+            @cancelado = false
+            @abonado = true
 
-          if element.pago.pagado
-            @cadena_check = "checked title='Pago Realizado'"
-          if element.pago.facturado
-            @cadena_check_2 = "checked title='Pago Facturado'"
-
-          nro = if element.pago.nro_cheque_confirmacion then element.pago.nro_cheque_confirmacion else ''
-          fecha = if element.pago.fecha_pago then element.pago.fecha_pago else ''
-          facturado = if element.pago.facturado then true else false
-          nro_fact = if element.pago.nro_factura then element.nro_factura else ''
-          fecha_fact = if element.pago.fecha_factura then element.fecha_factura else ''
+          nro = element.nro_recibo
+          fecha = element.fecha
           monto = element.monto_pagado
 
           $("#monto_cobrar").val(data[0].suma_x_cobrar)
@@ -141,24 +142,19 @@ $(".actualizar_pagos_alquiler").on "change", ->
 
           $("#tbody_pagos_alquiler").append("<tr>" +
             "<td>"+element.tienda+"</td>"+
-            "<td class='text-center'>"+element.pago.nro_recibo+"</td>"+
-            "<td>"+element.pago.fecha_recibo_cobro+"</td>"+
-            "<td class='text-right'>"+element.monto_alquiler+"</td>"+
-            "<td class='text-center'><input type='checkbox' disabled='disabled' name='alquiler_pagado' value='"+element.pago.pagado+"' "+@cadena_check+" /></td>"+
-            "<td class='text-right'>"+monto+"</td>"+
-            "<td>"+element.tipo_pago+"</td>"+
+            "<td class='text-center'>"+nro+"</td>"+
             "<td>"+fecha+"</td>"+
-            "<td>"+nro+"</td>"+
-            "<td>"+element.banco+"</td>"+
-            "<td class='text-center'><input type='checkbox' disabled='disabled' name='pago_facturado' value='"+facturado+"' "+@cadena_check_2+" /></td>"+
-            "<td>"+nro_fact+"</td>"+
-            "<td>"+fecha_fact+"</td>"+
+            "<td class='text-right'>"+element.monto_alquiler+"</td>"+
+            "<td class='text-center'><input type='checkbox' disabled='disabled' name='alquiler_pagado_completo' value='"+@cancelado+"' "+@cadena_check+" /></td>"+
+            "<td class='text-center'><input type='checkbox' disabled='disabled' name='alquiler_pagado_abonado' value='"+@abonado+"' "+@cadena_check_2+" /></td>"+
+            "<td class='text-right'>"+monto+"</td>"+
+            "<td class='text-right'>"+element.saldo_deudor+"</td>"+
             "</tr>")
           $("#tfoot_pagos_alquiler").show()
       else
         $("#monto_cobrar").val('0,00')
         $("#tfoot_pagos_alquiler").hide()
-        $("#tbody_pagos_alquiler").append("<tr><td colspan=13 class='text-center'>No existen registros de pago para este periodo</td></tr>")
+        $("#tbody_pagos_alquiler").append("<tr><td colspan=8 class='text-center'>No existen registros de pago para este periodo</td></tr>")
 
     error: (data)->
       console.log(data)

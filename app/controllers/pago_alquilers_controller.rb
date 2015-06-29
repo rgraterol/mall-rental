@@ -11,7 +11,7 @@ class PagoAlquilersController < ApplicationController
     @cobranza_alquilers = Array.new
     @today = Time.now
     @year = @today.strftime("%Y")
-    @month = @today.strftime("%-m").to_i-1
+    @month = @today.strftime("%-m").to_i
     @suma_x_cobrar = 0
     @suma_monto_alquiler = 0
     @suma_monto_pagado = 0
@@ -22,7 +22,7 @@ class PagoAlquilersController < ApplicationController
       if !@cobranza_alq.blank?
         @cobranza_alquilers.push(@cobranza_alq)
         @cobranza_alquilers.each do |cobranza|
-          @suma_x_cobrar += cobranza.where('saldo_deudor != ?',0).sum(:monto_alquiler)
+          @suma_x_cobrar += cobranza.where('saldo_deudor != ?',0).sum(:saldo_deudor)
           @suma_monto_alquiler += cobranza.sum(:monto_alquiler)
           @suma_monto_pagado += (@suma_monto_alquiler - @suma_x_cobrar)
         end
@@ -32,6 +32,7 @@ class PagoAlquilersController < ApplicationController
     @suma_x_cobrar = ActionController::Base.helpers.number_to_currency(@suma_x_cobrar, separator: ',', delimiter: '.', format: "%n %u", unit: "")
     @suma_monto_pag = ActionController::Base.helpers.number_to_currency(@suma_monto_pagado, separator: ',', delimiter: '.', format: "%n %u", unit: "")
     @suma_monto_alq = ActionController::Base.helpers.number_to_currency(@suma_monto_alquiler, separator: ',', delimiter: '.', format: "%n %u", unit: "")
+
 
   end
 
