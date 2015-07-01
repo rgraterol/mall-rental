@@ -4,15 +4,6 @@ class EstadisticasController < ApplicationController
   before_action :check_user_mall
 
   def mf_intermensuales_vxa
-    # @estadisticas = Hash.new
-    # @estadisticas[:canon_fijo] = Array.new
-    # @estadisticas[:porc_ventas] = Array.new
-    # current_user.mall.tiendas.each do |tienda|
-    #   tienda.contrato_alquilers.each do |contrato|
-    #     @estadisticas[:porc_ventas] << contrato.ventas.sum(:monto_ml) * contrato.porc_canon_ventas if contrato.porc_canon_ventas.present?
-    #     @estadisticas[:canon_fijo] << contrato.ventas.count * contrato.canon_fijo_ml if contrato.canon_fijo_ml.present?
-    #   end
-    # end
   end
 
   def filtro_intermensuales
@@ -21,9 +12,12 @@ class EstadisticasController < ApplicationController
   end
 
   def mf_mensuales_vxa
+    @estadisticas = Tienda.estadisticas_mensuales(current_user.mall, current_user.mall.contrato_alquilers.first.fecha_inicio.year)
   end
 
   def filtro_mensuales
+    @estadisticas = Tienda.estadisticas_mensuales(current_user.mall, params[:year])
+    render partial: 'table_mensuales_vxa'
   end
 
 
