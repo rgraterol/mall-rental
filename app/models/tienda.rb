@@ -109,10 +109,9 @@ class Tienda < ActiveRecord::Base
       mall.tiendas.joins(:nivel_mall, :actividad_economica, :tipo_local, :contrato_alquilers).by_nivel_mall(nivel_mall_id).by_actividad_economica(actividad_economica_id).by_rango_contrato(fecha_init, fecha_end).by_tipo_local(tipo_local_id).each do |tienda|
         hash_stats = Hash.new
         hash_stats[:venta_diarias_2] = tienda.venta_diariums.where(fecha: fecha_init.. fecha_end).sum(:monto_bruto)
-        hash_stats[:canon_fijo_ml] = tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_canon_fijo_ml)
-        hash_stats[:porc_canon] = tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_porc_ventas_ml)
-        hash_stats[:total] = tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_alquiler_ml)
-        hash_stats[:total_usd] = tienda.pago_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_alquiler_usd)
+        hash_stats[:canon_fijo_ml] = tienda.cobranza_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_canon_fijo)
+        hash_stats[:porc_canon] = tienda.cobranza_alquilers.where(fecha_recibo_cobro: fecha_init.. fecha_end).sum(:monto_canon_variable)
+        hash_stats[:total] = hash_stats[:canon_fijo_ml] + hash_stats[:porc_canon]
         hash_stats[:criterio] = tienda.nombre
         estadisticas << hash_stats
       end
