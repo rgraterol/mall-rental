@@ -98,11 +98,11 @@ class Tienda < ActiveRecord::Base
 
   #TODO MOVER A UN LUGAR MAS ADECUADO
   def self.estadisticas(mall, fecha_init, fecha_end, nivel_mall_id, actividad_economica_id, tipo_local_id, criterio )
-    puts "FECHA INICIO"
-    puts fecha_init.split("/")
-
-    puts "FECHA FIN"
-    puts fecha_end
+    # puts "FECHA INICIO"
+    # puts fecha_init.split("/")
+    #
+    # puts "FECHA FIN"
+    # puts fecha_end
 
     estadisticas = Array.new
     if criterio == 'tiendas'
@@ -117,7 +117,7 @@ class Tienda < ActiveRecord::Base
         estadisticas << hash_stats
       end
     elsif criterio == 'nivel_mall'
-      mall.nivel_mall_stats(nivel_mall_id).each do |nivel_mall|
+       mall.nivel_mall_stats(nivel_mall_id).each do |nivel_mall|
         canon_fijo = 0
         porc_canon = 0
         ventas = 0
