@@ -1,11 +1,11 @@
 class NroRecibosCobro < ActiveRecord::Base
   def self.get_numero_recibo
-    consulta = NroReciboCobro.last
+    consulta = NroRecibosCobro.last
     if consulta.nil?
-      old = NroReciboCobro.create!(numero: 1)
+      old = NroRecibosCobro.create!(numero: 1)
     else
-      old = NroReciboCobro.last.numero
-      NroReciboCobro.create!(numero: old+1)
+      old = NroRecibosCobro.last.numero
+      NroRecibosCobro.create!(numero: old+1)
     end
     return old
   end

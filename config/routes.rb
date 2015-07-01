@@ -115,6 +115,7 @@ Myapp::Application.routes.draw do
     post 'dynamic_add_nivel_mall/guardar'
     post 'dynamic_filter_locals/actualizar'
     post 'dynamic_pago_alquilers/facturas_tiendas'
+    post 'dynamic_venta_diaria/cerrar_ventas_mes'
   end
 
   #CONTROLADOR DE NOTIFICACIONES MAILERS

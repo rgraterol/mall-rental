@@ -56,7 +56,8 @@ $(".actualizar_ventas").on "change", ->
         $("#tbody_venta_bruta").append("<tr><td>"+element.fecha+"</td><td id='mount_"+element.dia+"' class='"+@clase+"' identificador='"+element.id+"'  opcion='"+@opcion+"' title='"+@title+"' fecha='"+element.fecha+"' campo='"+element.dia+"' valor='"+element.monto+"'>"+element.monto+"</td><td id='nota_credito_"+element.dia+"' class='"+@clase_2+"' opcion='"+@opcion+"' identificador='"+element.id+"' title='"+@title+"' fecha='"+element.fecha+"' campo='"+element.dia+"' valor='"+element.monto_notas_credito+"'>"+element.monto_notas_credito+"</td><td id='venta_bruta_"+element.dia+"' class='clase_total' campo='"+element.dia+"' valor='"+element.monto_venta_bruta+"'>"+element.monto_venta_bruta+"</td></tr>")
         $("#tbody_venta_neta").append("<tr><td>"+element.fecha+"</td><td id='mount_"+element.dia+"' class='"+@clase+"' identificador='"+element.id+"' opcion='"+@opcion+"' title='"+@title+"' fecha='"+element.fecha+"' campo='"+element.dia+"' valor='"+element.monto+"'>"+element.monto+"</td><td id='nota_credito_"+element.dia+"' class='"+@clase_2+"' opcion='"+@opcion+"' identificador='"+element.id+"' title='"+@title+"' fecha='"+element.fecha+"' campo='"+element.dia+"' valor='"+element.monto_notas_credito+"'>"+element.monto_notas_credito+"</td><td id='venta_bruta_"+element.dia+"' class='clase_total' campo='"+element.dia+"' valor='"+element.monto_venta_bruta+"'>"+element.monto_venta_bruta+"</td><td id='costo_venta_"+element.dia+"' opcion='"+@opcion+"' campo='"+element.dia+"' class='"+@clase_3+"' identificador='"+element.id+"' valor='"+element.monto_costo_venta+"' >"+element.monto_costo_venta+"</td><td id='venta_neta_"+element.dia+"' class='clase_total' valor='"+element.monto_venta_neta+"' campo='"+element.dia+"'>"+element.monto_venta_neta+"</td></tr>")
 
-        $('#mount_'+element.dia).number(element.monto,2,',','.')
+        if !element.no_laborable
+          $('#mount_'+element.dia).number(element.monto,2,',','.')
         $('#nota_credito_'+element.dia).number(element.monto_notas_credito,2,',','.')
         $('#venta_bruta_'+element.dia).number(element.monto_venta_bruta,2,',','.')
         $('#costo_venta_'+element.dia).number(element.monto_costo_venta,2,',','.')
@@ -334,7 +335,7 @@ $(".actualizar_auditoria_ventas").on "change", ->
       for element, index in data[0]['tiendas']
         @cadena_check = "title='Falta Registrar Ventas'"
         @cadena_recibo =  "title='Falta Enviarle Recibo de Cobro'"
-        if !element.editable_mensual
+        if element.editable_mensual
           @cadena_check = "checked title='Ventas Actualizadas'"
         if element.recibos_cobro
           @cadena_recibo = "checked title='Recibo Cobro Enviado'"
@@ -441,4 +442,57 @@ $("#btn-send-recibos").on "click", ->
         message: 'No hay tiendas actualizadas para enviar recibos de cobro',
       });
       setTimeout($.unblockUI, 2000);
+
+$("#btn_cerrar_mes_venta").on "click", ->
+  if confirm('¿Está seguro de cerrar las ventas del mes?')
+    year = $("#date_lapso_year").val()
+    month = $("#venta_diaria_select_month").val()
+    tienda = $("#tienda_id").val()
+
+    $.ajax
+      type: "POST"
+      url: "/dynamic_venta_diaria/cerrar_ventas_mes"
+      dataType: "JSON"
+      async: false
+      data:
+        year: year
+        month: month
+        tienda: tienda
+      success: (data) ->
+        console.log(data)
+        if data[0]['result'] == 1
+          mensaje = 'mensaje_cierre'
+        else
+          mensaje = 'mensaje_ya_cerro'
+
+        $.blockUI({
+          message: $('div.growlUI.'+mensaje),
+          fadeIn: 700,
+          fadeOut: 700,
+          timeout: 3000,
+          showOverlay: false,
+          centerY: false,
+          css: {
+            width: '350px',
+            top: '40px',
+            left: '',
+            right: '10px',
+            border: 'none',
+            padding: '5px',
+            backgroundColor: '#000',
+            '-webkit-border-radius': '10px',
+            '-moz-border-radius': '10px',
+            opacity: .6,
+            color: '#fff'
+          }
+        });
+        if data[0]['result'] == 1
+          run = () ->
+            $(".actualizar_ventas").change()
+          setTimeout(run, 3000)
+      error: (data)->
+        #$.unblockUI()
+        console.log(data)
+      complete: ->
+        a=1
 

@@ -11,31 +11,54 @@ module Dynamic
       @tiendas.each do |tienda|
         @tiend = Tienda.where(id: tienda)
         @contrato_alquiler = ContratoAlquiler.find_by(tienda: tienda)
+
         @contrato_a = ContratoAlquiler.find_by(tienda: tienda)
-        @tipo_canon = @contrato_alquiler.tipo_canon_alquiler.humanize.capitalize
+        @tipo_canon = @contrato_alquiler.tipo_canon_alquiler.tipo
 
 
-        @nro_recibo = NroRecibo.get_numero_recibo.to_s
-        @nro_recibo = @nro_recibo.to_s.rjust(4, '0')
+        @nro_rec = NroRecibosCobro.get_numero_recibo.to_s
+        @nro_recibo = @nro_rec.to_s.rjust(4, '0')
 
         @fecha_recibo = Date.today
         @anio_alquiler = @year
         @mes_alquiler = @month
 
         @canons = @contrato_alquiler.calculate_canon(@contrato_a,@suma_ventas_mes)
-        @monto_canon_fijo_ml = @canons['canon_fijo']
+        @monto_canon_fijo = @canons['canon_fijo']
         @monto_porc_ventas = @canons['canon_x_ventas']
         @monto_alquiler = @canons['canon_alquiler']
         @monto_alquiler_usd = @monto_alquiler/CambioMoneda.last.cambio_ml_x_usd
         @pagado = false
 
-        @pago = PagoAlquiler.new(nro_recibo: @nro_recibo, fecha_recibo_cobro: @fecha_recibo,
+        @cobranza = CobranzaAlquiler.new(nro_recibo: @nro_recibo, fecha_recibo_cobro: @fecha_recibo,
                            anio_alquiler: @anio_alquiler, mes_alquiler: @mes_alquiler,
-                           monto_canon_fijo_ml: @monto_canon_fijo_ml, monto_porc_ventas_ml: @monto_porc_ventas,
-                           monto_alquiler_ml: @monto_alquiler, monto_alquiler_usd: @monto_alquiler_usd, pagado: @pagado,
+                           monto_canon_fijo: @monto_canon_fijo, monto_canon_variable: @monto_porc_ventas,
+                           monto_alquiler: @monto_alquiler, monto_alquiler_usd: @monto_alquiler_usd, saldo_deudor: @monto_alquiler,
                            tienda_id: tienda)
-        if @pago.save
+        if @cobranza.save
           @result = true
+
+
+          if @monto_canon_fijo.nil?
+            @monto_canon_fijo = 0
+          end
+          if @monto_canon_fijo > 0
+            @nro_factura = NroFactura.get_numero_factura
+            @factura = FacturaAlquiler.new(fecha: @fecha_recibo, nro_factura: @nro_factura, monto_factura: @monto_canon_fijo,
+                                            saldo_deudor: @monto_canon_fijo, canon_fijo: true, cobranza_alquiler_id: @cobranza.id)
+            @factura.save
+          end
+
+          if @monto_canon_variable.nil?
+            @monto_canon_variable = 0
+          end
+
+          if @monto_canon_variable > 0
+            @nro_factura1 = NroFactura.get_numero_factura
+            @factura1 = FacturaAlquiler.new(fecha: @fecha_recibo, nro_factura: @nro_factura1, monto_factura: @monto_canon_variable,
+                                           saldo_deudor: @monto_canon_variable, canon_fijo: false, cobranza_alquiler_id: @cobranza.id)
+            @factura1.save
+          end
         end
 
         @ventas = VentaMensual.where('anio = ? AND mes = ? AND tienda_id = ?', @year,@month,@tienda_id)
