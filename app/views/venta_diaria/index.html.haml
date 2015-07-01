@@ -19,6 +19,15 @@
   =image_tag 'btn-warning.png', class: 'img-circle', width: '20px'
   No hay elementos para Guardar
 
+.div.growlUI.mensaje_cierre
+  =image_tag 'check48.png', class: 'img-circle', width: '20px'
+  Cierre de Ventas del Mes se ejecuto Correctamente
+
+.div.growlUI.mensaje_ya_cerro
+  =image_tag 'btn-warning.png', class: 'img-circle', width: '20px'
+  Esta Tienda ya tiene el cierre de ventas para este mes
+
+
 .wrapper.wrapper-content.animated.fadeInRight
   .row
     .col-lg-12
@@ -75,4 +84,4 @@
             .col-md-3.col-md-offset-2
               = button_tag "Subir Documentos de Soporte", class: "btn btn-danger btn-block", id: "btn_up_documento_venta", disabled:'disabled'
             .col-md-3
-              = link_to "Cerrar el mes de ventas",{}, class: "btn btn-danger btn-block btn_cerrar_venta"
+              = button_tag 'Cerrar el mes de ventas', class: "btn btn-danger btn-block btn_cerrar_venta", id: "btn_cerrar_mes_venta", type: "button"
