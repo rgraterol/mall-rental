@@ -50,7 +50,7 @@
               .col-sm-10
                 %table
                   %tbody
-                  = f.collection_radio_buttons :role_id, Role.all_valids, :id, :name do |r|
+                  = f.collection_radio_buttons :role_id, @roles , :id, :name do |r|
                     %tr
                       %td= r.label
                       &nbsp;
