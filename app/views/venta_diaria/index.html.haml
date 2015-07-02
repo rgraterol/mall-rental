@@ -1,0 +1,87 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Ventas Diarias de la tienda
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      -if @ventas_mall
+        %li
+          = link_to 'Ventas del Mall', ventas_mall_tiendas_path
+      %li
+        Ventas Diarias de la tienda
+
+.div.growlUI.save
+  =image_tag 'check48.png', class: 'img-circle', width: '20px'
+  Venta Guardada Exitosamente
+
+.div.growlUI.mensaje
+  =image_tag 'btn-warning.png', class: 'img-circle', width: '20px'
+  No hay elementos para Guardar
+
+.div.growlUI.mensaje_cierre
+  =image_tag 'check48.png', class: 'img-circle', width: '20px'
+  Cierre de Ventas del Mes se ejecuto Correctamente
+
+.div.growlUI.mensaje_ya_cerro
+  =image_tag 'btn-warning.png', class: 'img-circle', width: '20px'
+  Esta Tienda ya tiene el cierre de ventas para este mes
+
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-md-3
+              .col-md-5
+                = form_tag(@lapso_year, :html => { :class => "form-horizontal" } ) do |f|
+                  = select_year(Date.today, options = { :start_year => Time.now.year, :end_year => Time.now.year - 5, :field_name => 'lapso_year'}, :class => 'actualizar_ventas')
+              .col-md-5
+                = form_tag(@lapso_month, :html => { :class => "form-horizontal" } ) do |f|
+                  = select_month(@month || Date.today, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'select_month', :prefix => 'venta_diaria'}, :class => 'actualizar_ventas')
+
+            .col-md-4
+              .form-group
+                .col-md-4
+                  = label_tag :tienda do
+                    Tienda:
+                .col-md-8
+                  = hidden_field_tag :tienda_id, @tienda.id
+                  = text_field_tag :tienda, @tienda.nombre, autofocus: true, class: 'form-control', readonly: 'readonly'
+            .col-md-4
+              .form-group
+                .col-md-4
+                  = label_tag :nro_local do
+                    Nro. de Local:
+                .col-md-8
+                  = text_field_tag :nro_local, @local.nro_local, class: 'form-control', readonly: 'readonly'
+          .row
+            .col-md-4.col-sm-offset-3
+              .form-group
+                .col-md-4
+                  = label_tag :total_ventas do
+                    Total Ventas:
+                .col-md-8
+                  -@suma = number_with_precision(0, precision: 2, separator: ',', delimiter: '.')
+                  = text_field_tag :total_ventas, @suma, autofocus: true, class: 'form-control', placeholder:'Cargando Monto...', readonly: 'readonly'
+            .col-md-4
+              .form-group
+                .col-md-4
+                  = label_tag :canon_alquiler do
+                    Canon Alquiler:
+                .col-md-8
+                  = text_field_tag :canon_alquiler, number_with_precision(@contrato_alquiler.last.canon_fijo_ml, precision: 2, separator: ',', delimiter: '.'), autofocus: true, class: 'form-control', readonly: 'readonly'
+          = render @render
+
+          %br
+          .row
+            .col-md-2
+              = button_tag 'Guardar', class: 'btn btn-mall btn-block', id: 'btn_save_venta'
+            .col-md-2
+              = button_tag 'Cancelar', class: "btn btn-warning btn-block", id: "btn_cancelar_venta", type: "button"
+            .col-md-3.col-md-offset-2
+              = button_tag "Subir Documentos de Soporte", class: "btn btn-danger btn-block", id: "btn_up_documento_venta", disabled:'disabled'
+            .col-md-3
+              = button_tag 'Cerrar el mes de ventas', class: "btn btn-danger btn-block btn_cerrar_venta", id: "btn_cerrar_mes_venta", type: "button"

@@ -2,21 +2,24 @@
 #
 # Table name: contrato_alquilers
 #
-#  id                  :integer          not null, primary key
-#  nro_contrato        :string(255)
-#  fecha_inicio        :date
-#  fecha_fin           :date
-#  archivo_contrato    :string(255)
-#  canon_fijo_ml       :decimal(, )
-#  canon_fijo_usd      :decimal(, )
-#  porc_canon_ventas   :decimal(, )
-#  monto_minimo_ventas :decimal(, )
-#  estado_contrato     :boolean
-#  tipo_canon_alquiler :integer
-#  tienda_id           :integer
-#  created_at          :datetime
-#  updated_at          :datetime
+#  id                     :integer          not null, primary key
+#  nro_contrato           :string(255)
+#  fecha_inicio           :date
+#  fecha_fin              :date
+#  archivo_contrato       :string(255)
+#  canon_fijo_ml          :decimal(30, 2)   default(0.0)
+#  canon_fijo_usd         :decimal(30, 2)   default(0.0)
+#  porc_canon_ventas      :decimal(30, 2)   default(0.0)
+#  monto_minimo_ventas    :decimal(30, 2)   default(0.0)
+#  estado_contrato        :boolean
+#  tienda_id              :integer
+#  created_at             :datetime
+#  updated_at             :datetime
+#  requerida_venta        :boolean
+#  tipo_canon_alquiler_id :integer
 #
+
+
 
 class ContratoAlquiler < ActiveRecord::Base
   before_create :set_missing_attributes_create
@@ -24,25 +27,28 @@ class ContratoAlquiler < ActiveRecord::Base
   belongs_to :tienda
   has_many :ventas, through: :tienda
   has_one :mall, through: :tienda
+  belongs_to :tipo_canon_alquiler
 
   #TODO Validaciones
-  # validates :tipo_canon_alquiler, :archivo_contrato, presence: true
+  validates :archivo_contrato, presence: true
+  validates :tipo_canon_alquiler_id, presence: true
 
   mount_uploader :archivo_contrato, FileUploader
 
-  enum tipo_canon_alquiler: [:fijo, :variable, :fijo_y_variable_venta_bruta, :fijo_y_variable_venta_neta, :exento]
+  # enum tipo_canon_alquiler: [:fijo, :variableVB, :variableVN, :fijo_y_variable_venta_bruta, :fijo_y_variable_venta_neta, :exonerado]
+
 
   def clean_canon_alquiler
-    if self.tipo_canon_alquiler == "fijo"
+    if self.tipo_canon_alquiler.tipo == "fijo"
       self.canon_fijo_usd = self.canon_fijo_ml / CambioMoneda.last.cambio_ml_x_usd
       self.porc_canon_ventas = 0
       self.monto_minimo_ventas = 0
-    elsif self.tipo_canon_alquiler == "variable"
+    elsif self.tipo_canon_alquiler.tipo == "variable_venta_bruta" || self.tipo_canon_alquiler.tipo == "variable_venta_neta"
       self.canon_fijo_ml = 0
       self.canon_fijo_usd = 0
       self.monto_minimo_ventas = 0
       self.requerida_venta = true
-    elsif self.tipo_canon_alquiler == "fijo_y_variable_venta_bruta" ||  self.tipo_canon_alquiler == "fijo_y_variable_venta_neta"
+    elsif self.tipo_canon_alquiler.tipo == "fijo_y_variable_venta_bruta" ||  self.tipo_canon_alquiler.tipo == "fijo_y_variable_venta_neta"
       self.canon_fijo_usd = self.canon_fijo_ml / CambioMoneda.last.cambio_ml_x_usd
       self.monto_minimo_ventas = self.canon_fijo_ml / (self.porc_canon_ventas / 100)
       self.requerida_venta = true
@@ -81,27 +87,28 @@ class ContratoAlquiler < ActiveRecord::Base
     if self.archivo_contrato.url.nil?
       return false
     else
-      return true if self.archivo_contrato.url.split('.').last == 'pdf' || !(self.archivo_contrato.url.nil?)
+      return true if self.archivo_contrato.url.split('.').last == 'pdf'
       return false
     end
   end
+  #enum tipo_canon_alquiler: [:fijo, :variableVB, :variableVN, :fijo_y_variable_venta_bruta, :fijo_y_variable_venta_neta, :exonerado]
 
   def calculate_canon(contrato,vmt)
-
-    if contrato.tipo_canon_alquiler == 'fijo'
+    tipo_contrato = contrato.tipo_canon_alquiler.tipo
+    if tipo_contrato == 'fijo'
       @canon_fijo = contrato.canon_fijo_ml
       @canon_x_ventas = 0
-    elsif contrato.tipo_canon_alquiler == "variable"
+    elsif tipo_contrato == "variableVB"
       @monto_minimo_v = contrato.canon_fijo_ml/(contrato.porc_canon_ventas / 100)
       if vmt >= @monto_minimo_v
         @canon_x_ventas = (vmt - @monto_minimo_v)*(contrato.porc_canon_ventas/100)
       else
         @canon_x_ventas = 0
       end
-    elsif contrato.tipo_canon_alquiler == "fijo_y_variable_venta_bruta" ||  contrato.tipo_canon_alquiler == "fijo_y_variable_venta_neta"
+    elsif tipo_contrato == "fijo_y_variable_venta_bruta" ||  tipo_contrato == "fijo_y_variable_venta_neta"
       @canon_fijo = contrato.canon_fijo_ml
       @monto_minimo_v = contrato.monto_minimo_ventas
-
+      #raise @monto_minimo_v.inspect
       if(vmt.to_f >= @monto_minimo_v.to_f)
         @canon_x_ventas = (vmt - @monto_minimo_v)*(contrato.porc_canon_ventas/100)
       else

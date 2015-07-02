@@ -56,7 +56,7 @@ jQuery(document).ready ($) ->
       url: "/estadisticas/mensuales"
       dataType: "HTML"
       data:
-        ano: $('#mensuales_ano_select').val()
+        year: $('#mensuales_ano_select').val()
       success: (data) ->
         html = $('#table_mensuales')
         html.empty()

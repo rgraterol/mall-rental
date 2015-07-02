@@ -12,6 +12,7 @@
 #  updated_at          :datetime
 #
 
+
 class CanonAlquiler < ActiveRecord::Base
   validates :monto_minimo_ventas, numericality: { greater_than_or_equal_to: 0 }
   validates :canon_fijo_ml, numericality: { greater_than_or_equal_to: 0 }

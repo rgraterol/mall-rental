@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150603152713) do
+ActiveRecord::Schema.define(version: 20150701054424) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,21 +78,40 @@ ActiveRecord::Schema.define(version: 20150603152713) do
     t.datetime "updated_at"
   end
 
+  create_table "cobranza_alquilers", force: true do |t|
+    t.string   "nro_recibo"
+    t.date     "fecha_recibo_cobro"
+    t.integer  "anio_alquiler"
+    t.integer  "mes_alquiler"
+    t.float    "monto_canon_fijo",     default: 0.0
+    t.float    "monto_canon_variable", default: 0.0
+    t.float    "monto_alquiler"
+    t.float    "monto_alquiler_usd"
+    t.boolean  "facturado",            default: true
+    t.float    "saldo_deudor"
+    t.integer  "tienda_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "cobranza_alquilers", ["tienda_id"], name: "index_cobranza_alquilers_on_tienda_id", using: :btree
+
   create_table "contrato_alquilers", force: true do |t|
     t.string   "nro_contrato"
     t.date     "fecha_inicio"
     t.date     "fecha_fin"
     t.string   "archivo_contrato"
-    t.decimal  "canon_fijo_ml",       precision: 30, scale: 2, default: 0.0
-    t.decimal  "canon_fijo_usd",      precision: 30, scale: 2, default: 0.0
-    t.decimal  "porc_canon_ventas",   precision: 30, scale: 2, default: 0.0
-    t.decimal  "monto_minimo_ventas", precision: 30, scale: 2, default: 0.0
+    t.decimal  "canon_fijo_ml"
+    t.decimal  "canon_fijo_usd"
+    t.decimal  "porc_canon_ventas"
+    t.decimal  "monto_minimo_ventas"
     t.boolean  "estado_contrato"
     t.integer  "tipo_canon_alquiler"
     t.integer  "tienda_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "requerida_venta"
+    t.integer  "tipo_canon_alquiler_id"
   end
 
   add_index "contrato_alquilers", ["tienda_id"], name: "index_contrato_alquilers_on_tienda_id", using: :btree
@@ -110,6 +129,41 @@ ActiveRecord::Schema.define(version: 20150603152713) do
 
   add_index "cuenta_bancaria", ["banco_id"], name: "index_cuenta_bancaria_on_banco_id", using: :btree
   add_index "cuenta_bancaria", ["mall_id"], name: "index_cuenta_bancaria_on_mall_id", using: :btree
+
+  create_table "detalle_pago_alquilers", force: true do |t|
+    t.float    "monto",               default: 0.0
+    t.integer  "pago_alquiler_id"
+    t.integer  "factura_alquiler_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "detalle_pago_alquilers", ["factura_alquiler_id"], name: "index_detalle_pago_alquilers_on_factura_alquiler_id", using: :btree
+  add_index "detalle_pago_alquilers", ["pago_alquiler_id"], name: "index_detalle_pago_alquilers_on_pago_alquiler_id", using: :btree
+
+  create_table "documento_ventas", force: true do |t|
+    t.string   "titulo"
+    t.string   "nombre"
+    t.integer  "venta_mensual_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "documento_ventas", ["venta_mensual_id"], name: "index_documento_ventas_on_venta_mensual_id", using: :btree
+
+  create_table "factura_alquilers", force: true do |t|
+    t.date     "fecha"
+    t.string   "nro_factura"
+    t.float    "monto_factura",        default: 0.0
+    t.float    "monto_abono",          default: 0.0
+    t.float    "saldo_deudor"
+    t.boolean  "canon_fijo"
+    t.integer  "cobranza_alquiler_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "factura_alquilers", ["cobranza_alquiler_id"], name: "index_factura_alquilers_on_cobranza_alquiler_id", using: :btree
 
   create_table "idiomas", force: true do |t|
     t.string   "nombre"
@@ -151,6 +205,13 @@ ActiveRecord::Schema.define(version: 20150603152713) do
   add_index "malls", ["cuenta_bancarium_id"], name: "index_malls_on_cuenta_bancarium_id", using: :btree
   add_index "malls", ["pai_id"], name: "index_malls_on_pai_id", using: :btree
 
+  create_table "malls_roles", id: false, force: true do |t|
+    t.integer "role_id"
+    t.integer "mall_id"
+  end
+
+  add_index "malls_roles", ["mall_id", "role_id"], name: "index_malls_roles_on_mall_id_and_role_id", using: :btree
+
   create_table "monedas", force: true do |t|
     t.string   "nombre"
     t.datetime "created_at"
@@ -166,7 +227,19 @@ ActiveRecord::Schema.define(version: 20150603152713) do
 
   add_index "nivel_malls", ["mall_id"], name: "index_nivel_malls_on_mall_id", using: :btree
 
+  create_table "nro_facturas", force: true do |t|
+    t.integer  "numero"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "nro_recibos", force: true do |t|
+    t.integer  "numero"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "nro_recibos_cobros", force: true do |t|
     t.integer  "numero"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -180,32 +253,18 @@ ActiveRecord::Schema.define(version: 20150603152713) do
 
   create_table "pago_alquilers", force: true do |t|
     t.string   "nro_recibo"
-    t.date     "fecha_recibo_cobro"
-    t.integer  "anio_alquiler"
-    t.integer  "mes_alquiler"
-    t.decimal  "monto_canon_fijo_ml"
-    t.decimal  "monto_porc_ventas_ml"
-    t.decimal  "monto_alquiler_ml"
-    t.decimal  "monto_alquiler_usd"
-    t.boolean  "pagado"
-    t.date     "fecha_pago"
+    t.date     "fecha"
     t.string   "nro_cheque_confirmacion"
     t.string   "archivo_transferencia"
-    t.string   "nombre_banco"
-    t.boolean  "facturado"
-    t.string   "nro_factura"
-    t.date     "fecha_factura"
+    t.string   "banco_emisor"
     t.integer  "tipo_pago"
-    t.integer  "contrato_alquiler_id"
-    t.integer  "tienda_id"
-    t.integer  "cuenta_bancarium_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "cuenta_bancaria_id"
+    t.decimal  "monto"
+    t.decimal  "monto_usd"
+    t.boolean  "conciliado",              default: true
   end
-
-  add_index "pago_alquilers", ["contrato_alquiler_id"], name: "index_pago_alquilers_on_contrato_alquiler_id", using: :btree
-  add_index "pago_alquilers", ["cuenta_bancarium_id"], name: "index_pago_alquilers_on_cuenta_bancarium_id", using: :btree
-  add_index "pago_alquilers", ["tienda_id"], name: "index_pago_alquilers_on_tienda_id", using: :btree
 
   create_table "pais", force: true do |t|
     t.string   "nombre"
@@ -246,11 +305,14 @@ ActiveRecord::Schema.define(version: 20150603152713) do
   add_index "plantilla_contrato_alquilers", ["tipo_canon_alquiler_id"], name: "index_plantilla_contrato_alquilers_on_tipo_canon_alquiler_id", using: :btree
 
   create_table "roles", force: true do |t|
-    t.string   "name",       limit: 50, default: "", null: false
-    t.integer  "role_type",             default: 0,  null: false
+    t.string   "name",             limit: 50, default: "", null: false
+    t.integer  "role_type",                   default: 0,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tipo_servicio_id"
   end
+
+  add_index "roles", ["tipo_servicio_id"], name: "index_roles_on_tipo_servicio_id", using: :btree
 
   create_table "tiendas", force: true do |t|
     t.string   "nombre"
@@ -279,6 +341,12 @@ ActiveRecord::Schema.define(version: 20150603152713) do
   end
 
   create_table "tipo_locals", force: true do |t|
+    t.string   "tipo"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tipo_servicios", force: true do |t|
     t.string   "tipo"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -320,18 +388,40 @@ ActiveRecord::Schema.define(version: 20150603152713) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
-  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
-  create_table "ventas", force: true do |t|
-    t.datetime "fecha"
-    t.decimal  "monto_ml",   precision: 12, scale: 2
-    t.decimal  "monto_usd",  precision: 12, scale: 2
+  create_table "venta_diaria", force: true do |t|
+    t.date     "fecha"
+    t.float    "monto"
+    t.float    "monto_notas_credito", default: 0.0
+    t.float    "monto_bruto"
+    t.float    "monto_bruto_usd"
+    t.float    "monto_costo_venta",   default: 0.0
+    t.float    "monto_neto",          default: 0.0
+    t.float    "monto_neto_usd",      default: 0.0
+    t.boolean  "editable",            default: true
+    t.integer  "venta_mensual_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "venta_diaria", ["venta_mensual_id"], name: "index_venta_diaria_on_venta_mensual_id", using: :btree
+
+  create_table "venta_mensuals", force: true do |t|
+    t.integer  "anio"
+    t.integer  "mes"
+    t.float    "monto"
+    t.float    "monto_notas_credito", default: 0.0
+    t.float    "monto_bruto"
+    t.float    "monto_bruto_USD"
+    t.float    "monto_costo_venta",   default: 0.0
+    t.float    "monto_neto",          default: 0.0
+    t.float    "monto_neto_USD",      default: 0.0
+    t.boolean  "editable",            default: true
     t.integer  "tienda_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "editable",                            default: true
   end
 
-  add_index "ventas", ["tienda_id"], name: "index_ventas_on_tienda_id", using: :btree
+  add_index "venta_mensuals", ["tienda_id"], name: "index_venta_mensuals_on_tienda_id", using: :btree
 
 end

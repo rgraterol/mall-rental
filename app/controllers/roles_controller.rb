@@ -64,6 +64,25 @@ class RolesController < ApplicationController
     end
   end
 
+  def assign_role_mall
+
+  end
+
+  def set_mall
+    @mall = Mall.find_by(id: params[:mall_id])
+    render partial: 'mall_roles'
+  end
+
+  def save_mall_roles
+    @mall = Mall.find_by(id: params_id)
+    puts role_mall_params
+    if @mall.update(role_mall_params)
+      redirect_to assign_role_mall_path, notice: "Roles para el mall #{@mall.nombre} asignados satisfactoriamente"
+    else
+      redirect_to assign_role_mall_path, alert: "Error asignando los roles."
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_role
@@ -72,6 +91,10 @@ class RolesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def role_params
-      params.require(:role).permit(:name, :role_type, permission_ids: [])
+      params.require(:role).permit(:name, :role_type, :tipo_servicio_id, permission_ids: [])
+    end
+
+    def role_mall_params
+      params.require(:mall).permit(role_ids: [])
     end
 end

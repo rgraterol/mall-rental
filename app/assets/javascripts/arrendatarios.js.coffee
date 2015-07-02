@@ -18,39 +18,39 @@ jQuery(document).ready ->
       "arrendatario[nombre]":
         validators:
           notEmpty:
-            message: "Nombre de la empresa es Obligatorio"
+            message: "El nombre de la empresa es obligatorio"
       "arrendatario[rif]":
         validators:
           notEmpty:
-            message: "RIF de la empresa es Obligatorio"
+            message: "El documento de identidad de la empresa es obligatorio"
       "arrendatario[direccion]":
         validators:
           notEmpty:
-            message: "Dirección de la empresa es Obligatorio"
+            message: "La dirección de la empresa es obligatoria"
       "arrendatario[telefono]":
         validators:
           notEmpty:
-            message: "Teléfono de la empresa es Obligatorio"
+            message: "El teléfono de la empresa es obligatorio"
       "arrendatario[nombre_rl]":
         validators:
           notEmpty:
-            message: "Nombre del representante legal es Obligatorio"
+            message: "El nombre del representante legal es obligatorio"
       "arrendatario[cedula_rl]":
         validators:
           notEmpty:
-            message: "Cédula del representante legal es Obligatorio"
+            message: "El documento de identidad del representante legal es obligatorio"
       "arrendatario[email_rl]":
         validators:
           notEmpty:
-            message: "Email del representante legal es Obligatorio"
+            message: "El e-mail del representante legal es obligatorio"
       "arrendatario[telefono_rl]":
         validators:
           notEmpty:
-            message: "Teléfono del representante legal es Obligatorio"
+            message: "El teléfono del representante legal es obligatorio"
       "arrendatario[registro_mercantil]":
         validators:
           notEmpty:
-            message: "Inscripción en el Registro Mercantil del representante legal es Obligatorio"
+            message: "La inscripción del registro Mercantil de la empresa es obligatoria"
 
 
   $('#table_inquilinos_index').dataTable

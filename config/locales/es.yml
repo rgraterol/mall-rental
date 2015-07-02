@@ -120,6 +120,7 @@ es:
     errors:
       format: ! '%{attribute} %{message}'
       messages:
+        uniqueness: ya existe
         accepted: debe ser aceptado
         blank: no puede estar en blanco
         confirmation: no coincide con la confirmación
@@ -218,13 +219,13 @@ es:
   destroy: 'Eliminar'
   new: 'Nuevo'
   add: 'Agregar'
-  are_you_sure: '¿Estas seguro?'
+  are_you_sure: '¿Estás seguro?'
   config: 'Configuración'
   exit: 'Salir'
   back: 'Atrás'
   devise:
     confirmations:
-      confirmed: "Tu Dirección de Correo ha sido confirmada exitosamente."
+      confirmed: "La Dirección de Correo ha sido confirmada exitosamente."
       send_instructions: "Usted recibirá un correo electrónico con instrucciones sobre cómo confirmar su dirección de correo electrónico en unos minutos. Revise su carpeta de SPAM si no lo ha visto."
       send_paranoid_instructions: "Si existe su dirección de correo electrónico en nuestra base de datos, usted recibirá un correo electrónico con instrucciones sobre cómo confirmar su dirección de correo electrónico en unos minutos."
     failure:
@@ -287,12 +288,7 @@ es:
         one: "Error:"
         other: "Error:"
   survey:
-    tipo_servicio_medicos:
-      certificado_medico: "Certificado Médico"
-      certificado_psicologico: "Certificado Psicológico"
-      consulta_medica: "Consulta Médica"
-      examen_especializado: "Exámen Especializado"
-      otro: "Otro.."
+
   will_paginate:
     previous_label: "&#8592; Página anterior"
     next_label: "Página siguiente &#8594;"

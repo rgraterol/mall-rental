@@ -1,0 +1,2 @@
+module VentaMensualsHelper
+end

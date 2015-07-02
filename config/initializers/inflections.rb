@@ -20,9 +20,6 @@ ActiveSupport::Inflector.inflections(:es) do |inflect|
   inflect.irregular('el', 'los')
 end
 
-ActiveSupport::Inflector.inflections do |inflect|
-  inflect.irregular('venta', 'ventas')
-end
 
 # These inflection rules are supported but not enabled by default:
 # ActiveSupport::Inflector.inflections(:en) do |inflect|

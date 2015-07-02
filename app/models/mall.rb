@@ -2,23 +2,26 @@
 #
 # Table name: malls
 #
-#  id               :integer          not null, primary key
-#  nombre           :string(255)
-#  abreviado        :string(255)
-#  rif              :string(255)
-#  direccion_fiscal :string(255)
-#  telefono         :string(255)
-#  pai_id           :integer
-#  created_at       :datetime
-#  updated_at       :datetime
+#  id                  :integer          not null, primary key
+#  nombre              :string(255)
+#  abreviado           :string(255)
+#  rif                 :string(255)
+#  direccion_fiscal    :string(255)
+#  telefono            :string(255)
+#  pai_id              :integer
+#  cuenta_bancarium_id :integer
+#  created_at          :datetime
+#  updated_at          :datetime
 #
+
+
 
 class Mall < ActiveRecord::Base
   has_many :nivel_malls, dependent: :destroy
   belongs_to :pai
   has_many :actividad_economicas, dependent: :destroy
   has_many :users
-  has_many :roles, through: :users
+  # has_many :roles, through: :users
   has_many :locals, dependent: :destroy
   has_many :tipo_locals, through: :locals,dependent: :destroy
   has_many :arrendatarios, dependent: :destroy
@@ -28,7 +31,12 @@ class Mall < ActiveRecord::Base
   belongs_to :cuenta_bancarium
   belongs_to :cambio_moneda
   belongs_to :calendario_no_laborable
+
+  has_and_belongs_to_many :roles
+  accepts_nested_attributes_for :roles
+
   has_many :plantilla_contrato_alquilers
+
 
   validates :nombre, :abreviado, :rif, :direccion_fiscal, :telefono, :cuenta_bancarium, presence: true
   validates :rif, uniqueness: true

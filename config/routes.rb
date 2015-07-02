@@ -1,5 +1,11 @@
 Myapp::Application.routes.draw do
 
+  resources :venta_diaria
+
+  resources :documento_ventas
+
+  resources :venta_mensuals
+
   resources :plantilla_contrato_alquilers
 
   resources :cuenta_bancaria
@@ -30,6 +36,9 @@ Myapp::Application.routes.draw do
   end
 
   resources :roles
+  get 'mall_roles', to: 'roles#assign_role_mall', as: :assign_role_mall
+  post 'set_mall', to: 'roles#set_mall', as: :set_mall
+  post 'save_mall_roles', to: 'roles#save_mall_roles', as: :save_mall_roles
 
   resources :locals
 
@@ -68,24 +77,19 @@ Myapp::Application.routes.draw do
   resources :tiendas
   post 'tiendas/mf_dynamic_filter'
 
-  resources :ventas
-
   resources :contrato_alquilers
 
 
-  get 'cobranza_alquiler' => 'ventas#cobranza', as: :cobranza_alquiler
+  get 'venta_diaria_bruta'                 => 'venta_diaria#index',           as: :venta_diaria_bruta
+  get 'venta_diaria_bruta/:tienda_id'      => 'venta_diaria#index',           as: :venta_diaria_tienda
+  get 'cobranza_alquiler'                  => 'venta_diaria#mf_cobranza',     as: :cobranza_alquiler
+  get 'ventas_tiendas/:tienda_id'          => 'venta_diaria#index',           as: :ventas_tienda
+  get 'ventas_tiendas/:tienda_id/:month'   => 'venta_diaria#index',           as: :ventas_tienda_mes
+  get 'ventas_mall_tiendas'                => 'venta_diaria#mf_mall_tiendas', as: :ventas_mall_tiendas
+  get 'ventas_mall_tiendas/:acceso/:month' => 'venta_diaria#mf_mall_tiendas'
+  get 'ventas_mensuales_mall'              => 'venta_diaria#mf_mensuales',    as: :ventas_mensuales_mall
+  get 'ventas_mes_tiendas'                 => 'venta_diaria#index',           as: :ventas_mes_tienda
 
-  get 'ventas_tiendas/:tienda_id' => 'ventas#index', as: :ventas_tienda
-
-  get 'ventas_tiendas/:tienda_id/:month' => 'ventas#index', as: :ventas_tienda_mes
-
-  get 'ventas_mes_tiendas' => 'ventas#index', as: :ventas_mes_tienda
-
-  get 'ventas_mall_tiendas' => 'ventas#mall_tiendas', as: :ventas_mall_tiendas
-
-  get 'ventas_mall_tiendas/:acceso/:month' => 'ventas#mall_tiendas'
-
-  get 'ventas_mensuales_mall' => 'ventas#mensuales', as: :ventas_mensuales_mall
 
   get 'pago_alquilers/new_transferencia' => 'pago_alquilers#new_transferencia', as: :registrar_pago_transferencia
   post '/pago_alquilers/create' =>  'pago_alquilers#create'
@@ -93,6 +97,9 @@ Myapp::Application.routes.draw do
   post '/pago_alquilers/create_cheque' =>  'pago_alquilers#create_cheque'
   get 'pago_alquilers/:id' => 'pago_alquilers#show', as: :mostrar_recibo_pago
   get 'pagos_mensuales_mall' => 'pago_alquilers#pagos_mensuales', as: :pagos_mensuales_mall
+  get 'pago_alquilers/facturas_tiendas/:id' => 'pago_alquilers#facturas_tiendas'
+  get 'pago_alquilers/new_cheque_efectivo/:id' => 'pago_alquilers#new_cheque_efectivo'
+
 
   resources :pago_alquilers
 
@@ -107,12 +114,16 @@ Myapp::Application.routes.draw do
     post "/dynamic_pago_alquilers_mensuales/pagos"
     post 'dynamic_add_nivel_mall/guardar'
     post 'dynamic_filter_locals/actualizar'
+    post 'dynamic_pago_alquilers/facturas_tiendas'
+    post 'dynamic_venta_diaria/cerrar_ventas_mes'
   end
 
   #CONTROLADOR DE NOTIFICACIONES MAILERS
   get 'notificar_usuarios_mall', to: 'mail_notifications#mf_notify_tiendas_mall'
 
   get 'notificar_tiendas_no_actualizadas', to:  'mail_notifications#mf_notify_tiendas_no_actualizadas'
+
+  get 'envio_recibos_cobro', to:  'mail_notifications#mf_send_recibos_cobro'
 
   #ESTADISTICAS
   get 'estadisticas/intermensuales_ventas_alquiler', to: 'estadisticas#mf_intermensuales_vxa'

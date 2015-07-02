@@ -15,7 +15,7 @@
     .form-group
       = label 'Año', 'Año', class: 'col-sm-2 control-label'
       .col-sm-5
-        = select_year Date.today, {start_year: current_user.mall.tiendas.first.contrato_alquilers.first.fecha_inicio.year, end_year: Date.today.year}, {class: 'form-control', id: 'mensuales_ano_select'}
+        = select_year Date.today, {start_year: (current_user.mall.contrato_alquilers.first.fecha_inicio.year rescue Date.today.year) , end_year: Date.today.year}, {class: 'form-control', id: 'mensuales_ano_select'}
   %div#table_mensuales
     = render 'table_mensuales_vxa'
 

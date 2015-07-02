@@ -20,43 +20,39 @@ jQuery(document).ready ($) ->
       valid: 'fa fa-check ',
       invalid: 'fa fa-times',
       validating: 'fa fa-refresh'
-    live: 'submitted'
+    live: 'enabled'
     fields:
       "tienda[local_id]":
         validators:
           notEmpty:
-            message: "Local es Obligatorio"
+            message: "El local es obligatorio"
       "tienda[arrendatario_id]":
         validators:
           notEmpty:
-            message: "Arrendatario es Obligatorio"
+            message: "El arrendatario es obligatorio"
       "tienda[actividad_economica_id]":
         validators:
           notEmpty:
-            message: "Actividad Económica es Obligatoria"
+            message: "La actividad económica es obligatoria"
       "tienda[monto_garantia]":
         validators:
           notEmpty:
-            message: "Monto del depósito de garantía es Obligatorio"
-      "tienda[codigo_contable]":
-        validators:
-          notEmpty:
-            message: "Código Contable es Obligatorio"
+            message: "El monto del depósito de garantía es obligatorio"
       tipo_canon_alquiler_required:
         selector: '.tipo_canon_alquiler_required'
         validators:
           notEmpty:
-            message: "Tipo Canon Alquiler es Obligatorio"
+            message: "El tipo de canon de alquiler es obligatorio"
       canon_fijo_ml:
         selector: '.canon_fijo_ml'
         validators:
           numeric:
             message: 'Debe ser un valor numerico, decimales separados por punto'
           callback:
-            message: 'Canón Fijo en Bs. obligatorio para tipo Canón Fijos'
+            message: 'Canón fijo en moneda local obligatorio'
             callback: (value, validator, $field) ->
               canon = $('#select_canon_alquiler').val()
-              if (canon == 'canon_fijo' or canon == 'fijo_y_variable_venta_bruta' or canon == 'fijo_y_variable_venta_neta') and value == ''
+              if (canon == '1' or canon == '4' or canon == '5') and (value == '' || value == '0.0')
                 false
               else
                 true
@@ -64,12 +60,12 @@ jQuery(document).ready ($) ->
         selector: '.porc_canon_ventas'
         validators:
           numeric:
-            message: 'Debe ser un valor numerico, decimales separados por punto'
+            message: 'Debe ser un valor numérico, decimales separados por punto'
           callback:
-            message: '% Canón por Ventas obligatorio para tipo de Canón Variables'
+            message: '% Canón por ventas es obligatorio'
             callback: (value, validator, $field) ->
               canon = $('#select_canon_alquiler').val()
-              if (canon == 'porcentaje_de_ventas' or canon == 'fijo_y_variable_venta_bruta' or canon == 'fijo_y_variable_venta_neta') and value == ''
+              if (canon == '2' or canon == '3' or canon == '4' or canon == '5') and (value == '' || value == '0.0')
                 false
               else
                 true
@@ -138,20 +134,20 @@ jQuery(document).ready ($) ->
           $('#loading_actividad_economica').hide()
 
   $('#select_canon_alquiler').change ->
-    if $(this).val() == 'fijo'
+    if $(this).val() == '1'
       $('#canon_fijo').show()
       $('#canon_fijo').find(':input').prop('disabled', false);
       $('#canon_porcentaje').hide()
       $('#canon_porcentaje').find(':input').prop('disabled', true);
       $('#requerida_venta_check').prop('disabled', false).prop('checked', true);
-    else if ($(this).val() == 'fijo_y_variable_venta_bruta' || $(this).val() == 'fijo_y_variable_venta_neta')
+    else if ($(this).val() == '4' || $(this).val() == '5')
       $('#canon_fijo').show()
       $('#canon_fijo').find(':input').prop('disabled', false);
       $('#canon_porcentaje').show()
       $('#canon_porcentaje').find(':input').prop('disabled', false);
       $('#requerida_venta_check').prop('disabled', true).prop('checked', true);
       calcular_monto_minimo_venta()
-    else if $(this).val() == 'variable'
+    else if ($(this).val() == '2' || $(this).val() == '3')
       $('#canon_fijo').hide()
       $('#canon_fijo').find(':input').prop('disabled', true);
       $('#canon_porcentaje').show()
