@@ -48,7 +48,7 @@
             = f.label :monto_garantia, class: 'col-sm-2 control-label' do
               Depósito Garantía (ML):
             .col-sm-10
-              = f.text_field :monto_garantia, class: 'form-control', id: 'tienda_monto_garantia'
+              = f.text_field :monto_garantia, class: 'form-control numeric', id: 'tienda_monto_garantia'
           .form-group
             = f.label :monto_garantia_usd, class: 'col-sm-2 control-label' do
               Depósito Garantía ($):
@@ -83,7 +83,7 @@
                 = c.label :canon_fijo_ml, class: 'col-sm-3 control-label' do
                   Canón Fijo (ML):
                 .col-sm-8
-                  = c.text_field :canon_fijo_ml, class: 'form-control numeric_contrato_alquiler canon_fijo_ml', id: 'canon_fijo_tienda'
+                  = c.text_field :canon_fijo_ml, class: 'form-control numeric_contrato_alquiler canon_fijo_ml numeric', id: 'canon_fijo_tienda'
                 .col-sm-1.text-left
                   %span Bs.
               .form-group
