@@ -48,7 +48,7 @@ module Dynamic
                                             saldo_deudor: @monto_canon_fijo, canon_fijo: true, cobranza_alquiler_id: @cobranza.id)
             @factura.save
           end
-
++
           if @monto_canon_variable.nil?
             @monto_canon_variable = 0
           end
