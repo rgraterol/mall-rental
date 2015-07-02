@@ -22,4 +22,4 @@
                       %td= estadistica[:canon_fijo_ml] || '0'
                       %td= estadistica[:porc_canon] || '0'
                       %td= estadistica[:total] || 0
-                      %td= estadistica[:total_usd].round(2) || 0
+                      %td= estadistica[:total] * CambioMoneda.last.cambio_ml_x_usd

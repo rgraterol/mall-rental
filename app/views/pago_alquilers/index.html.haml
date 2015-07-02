@@ -20,7 +20,7 @@
                   = select_year(Date.today, options = { :start_year => Time.now.year, :end_year => Time.now.year - 5, :field_name => 'lapso_year'}, :class => 'actualizar_pagos_alquiler')
               .col-md-5
                 = form_tag(@lapso_month, :html => { :class => "form-horizontal" } ) do |f|
-                  = select_month(Date.today - 1.month, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'select_month', :prefix => 'pagos_alquiler'}, :class => 'actualizar_pagos_alquiler')
+                  = select_month(Date.today, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'select_month', :prefix => 'pagos_alquiler'}, :class => 'actualizar_pagos_alquiler')
           %br
           .row
             .col-md-12
@@ -34,21 +34,21 @@
                       Pago
                 %thead
                   %tr
-                    %th.text-center{width: '9%'}
+                    %th.text-center{width: '10%'}
                       Tienda
-                    %th.text-center{width: '5%'}
+                    %th.text-center{width: '8%'}
                       Nro Recibo
-                    %th.text-center{width: '8%'}
+                    %th.text-center{width: '15%'}
                       Fecha Cobro
-                    %th.text-center{width: '14%'}
+                    %th.text-center{width: '18%'}
                       Monto
-                    %th.text-center{width: '5%'}
-                      Cancelado
-                    %th.text-center{width: '14%'}
-                      Abonado
                     %th.text-center{width: '6%'}
+                      Cancelado
+                    %th.text-center{width: '6%'}
+                      Abonado
+                    %th.text-center{width: '18%'}
                       Monto Pago
-                    %th.text-center{width: '8%'}
+                    %th.text-center{width: '18%'}
                       Monto x Cobrar
                 %tbody#tbody_pagos_alquiler
                   - if !@cobranza_alquilers.blank?
@@ -83,9 +83,9 @@
                           %td{ :class => 'text-center' }
                             = check_box_tag 'alquiler_pago', 'Pago Realizado', @abonado, disabled: true
                           %td{ :class => 'text-right' }
-                            = @monto_pagado
+                            = ActionController::Base.helpers.number_to_currency(@monto_pagado, separator: ',', delimiter: '.', format: "%n %u", unit: "")
                           %td{ :class => 'text-right' }
-                            = @monto_x_cobrar
+                            = ActionController::Base.helpers.number_to_currency(@monto_x_cobrar, separator: ',', delimiter: '.', format: "%n %u", unit: "")
                   - else
                     %tr
                       %td.text-center{colspan: 8}= 'No existen registros de pago para este periodo'

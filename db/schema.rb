@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150621162806) do
+ActiveRecord::Schema.define(version: 20150701054424) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -226,6 +226,12 @@ ActiveRecord::Schema.define(version: 20150621162806) do
   end
 
   add_index "nivel_malls", ["mall_id"], name: "index_nivel_malls_on_mall_id", using: :btree
+
+  create_table "nro_facturas", force: true do |t|
+    t.integer  "numero"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "nro_recibos", force: true do |t|
     t.integer  "numero"

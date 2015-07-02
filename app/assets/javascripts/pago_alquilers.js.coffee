@@ -4,9 +4,11 @@
 #= require jquery.blockUI.js
 #= require jquery.number.js
 
+
 jQuery(document).ready ($) ->
 
   $(".actualizar_pagos_mensuales").change()
+
   $(".monto_numerico").number(true,2,',','.')
 
   $('#fecha_pago').datepicker
@@ -53,17 +55,20 @@ jQuery(document).ready ($) ->
       validating: 'fa fa-refresh'
     live: 'submitted'
     fields:
-      "pago_alquiler[tienda]":
+      "tienda[id]":
         validators:
           notEmpty:
             message: 'Debe seleccionar una tienda'
-      "pago_alquiler[monto_alquiler_ml]":
+      "monto_campo":
         validators:
-          notEmpty:
-            message: 'Debe ingresar el monto de la transferencia'
-          numeric:
-            message: 'El valor debe ser numerico'
-      "pago_alquiler[fecha_pago]":
+          callback:
+            message: 'Debe seleccionar el monto del pago'
+            callback: (value, validator, $field) ->
+              if $("#pago_alquiler_monto").val() == '' || $("#pago_alquiler_monto").val() <= 0
+                false
+              else
+                true
+      "pago_alquiler[fecha]":
         validators:
           notEmpty:
             message: 'Debe ingresar la fecha de pago'
@@ -71,11 +76,11 @@ jQuery(document).ready ($) ->
         validators:
           notEmpty:
             message: 'Debe ingresar el numero del cheque'
-      "pago_alquiler[cuenta_bancarium_id]":
+      "pago_alquiler[cuenta_bancaria_id]":
         validators:
           notEmpty:
-            message: 'Debe seleccionar la cuenta bancaria'
-      "pago_alquiler[nombre_banco]":
+            message: 'Debe seleccionar la cuenta bancaria a depositar'
+      "pago_alquiler[banco_emisor]":
         validators:
           notEmpty:
             message: 'Debe ingresar el nombre del banco del cheque'
@@ -90,7 +95,6 @@ jQuery(document).ready ($) ->
                 false
               else
                 true
-
 
 $("#pago_alquiler_tipo_pago").on "change", ->
   if (this.value) != 'Cheque'
@@ -111,25 +115,25 @@ $(".actualizar_pagos_alquiler").on "change", ->
       year: $("#date_lapso_year").val()
       month: $("#pagos_alquiler_select_month").val()
     success: (data) ->
-
       $("#tbody_pagos_alquiler").empty()
-      console.log(data)
+
       if data[0]['cont'] > 0
-        for element, index in data[0]['pago_alquilers']
+        for element, index in data[0]['cobranza_alquilers']
 
           @cadena_check = ''
           @cadena_check_2 = ''
+          console.log(element)
+          if element.monto_x_cobrar == 0
+            @cadena_check = "checked title='Pago Realizado Completo'"
+            @cancelado = true
+            @abonado = false
+          else
+            @cadena_check_2 = "checked title='Pago Abonado'"
+            @cancelado = false
+            @abonado = true
 
-          if element.pago.pagado
-            @cadena_check = "checked title='Pago Realizado'"
-          if element.pago.facturado
-            @cadena_check_2 = "checked title='Pago Facturado'"
-
-          nro = if element.pago.nro_cheque_confirmacion then element.pago.nro_cheque_confirmacion else ''
-          fecha = if element.pago.fecha_pago then element.pago.fecha_pago else ''
-          facturado = if element.pago.facturado then true else false
-          nro_fact = if element.pago.nro_factura then element.nro_factura else ''
-          fecha_fact = if element.pago.fecha_factura then element.fecha_factura else ''
+          nro = element.nro_recibo
+          fecha = element.fecha
           monto = element.monto_pagado
 
           $("#monto_cobrar").val(data[0].suma_x_cobrar)
@@ -138,24 +142,19 @@ $(".actualizar_pagos_alquiler").on "change", ->
 
           $("#tbody_pagos_alquiler").append("<tr>" +
             "<td>"+element.tienda+"</td>"+
-            "<td class='text-center'>"+element.pago.nro_recibo+"</td>"+
-            "<td>"+element.pago.fecha_recibo_cobro+"</td>"+
-            "<td class='text-right'>"+element.monto_alquiler+"</td>"+
-            "<td class='text-center'><input type='checkbox' disabled='disabled' name='alquiler_pagado' value='"+element.pago.pagado+"' "+@cadena_check+" /></td>"+
-            "<td class='text-right'>"+monto+"</td>"+
-            "<td>"+element.tipo_pago+"</td>"+
+            "<td class='text-center'>"+nro+"</td>"+
             "<td>"+fecha+"</td>"+
-            "<td>"+nro+"</td>"+
-            "<td>"+element.banco+"</td>"+
-            "<td class='text-center'><input type='checkbox' disabled='disabled' name='pago_facturado' value='"+facturado+"' "+@cadena_check_2+" /></td>"+
-            "<td>"+nro_fact+"</td>"+
-            "<td>"+fecha_fact+"</td>"+
+            "<td class='text-right'>"+element.monto_alquiler+"</td>"+
+            "<td class='text-center'><input type='checkbox' disabled='disabled' name='alquiler_pagado_completo' value='"+@cancelado+"' "+@cadena_check+" /></td>"+
+            "<td class='text-center'><input type='checkbox' disabled='disabled' name='alquiler_pagado_abonado' value='"+@abonado+"' "+@cadena_check_2+" /></td>"+
+            "<td class='text-right'>"+monto+"</td>"+
+            "<td class='text-right'>"+element.saldo_deudor+"</td>"+
             "</tr>")
           $("#tfoot_pagos_alquiler").show()
       else
         $("#monto_cobrar").val('0,00')
         $("#tfoot_pagos_alquiler").hide()
-        $("#tbody_pagos_alquiler").append("<tr><td colspan=13 class='text-center'>No existen registros de pago para este periodo</td></tr>")
+        $("#tbody_pagos_alquiler").append("<tr><td colspan=8 class='text-center'>No existen registros de pago para este periodo</td></tr>")
 
     error: (data)->
       console.log(data)
@@ -227,7 +226,6 @@ $(".tbody_facturas_pendientes").on
     if valor == 'total'
       $("#monto_pago_"+campo).text(factura)
       $("#monto_pago_"+campo).attr('valor',monto)
-     # $('#pago_alquiler_detalle_pago_alquilers_attributes_0_monto_fact').val(monto)
       calcular_a_pagar(campo)
     else
       $("#monto_pago_"+campo).addClass('editar_monto_pago')
@@ -269,4 +267,28 @@ calcular_a_pagar = (campo) ->
   monto = $("#total_a_pagar").number(true,2,',','.')
   $("#total_a_pagar").number(monto.val(),2,',','.')
   $("#monto_transferido").val(suma)
+  $("#monto_cheque").val(suma)
+  console.log( $("#btn_guardar").val())
+  $('#form_registro_pago_cheque').data('bootstrapValidator').updateStatus('monto_campo', 'VALID', null);
+  #$('#form_registro_pago_cheque').bootstrapValidator('removeField', 'monto_campo');
+  #$("#btn_guardar").prop('disabled',false)
+
   $("#pago_alquiler_monto").val(suma)
+
+
+$("#form_registro_pago_cheque").on
+  change:->
+    #$('#tbody_facturas_pendientes').empty()
+    id = $('.tabla_fact_tienda').val()
+    $.ajax
+      type: "POST"
+      url: "/dynamic_pago_alquilers/facturas_tiendas"
+      dataType: "JSON"
+      data:
+        tienda_id: $('.tabla_fact_tienda').val()
+      before_send: $.blockUI({message: 'Por favor espere...'})
+      success: (data) ->
+       window.location.href = '/pago_alquilers/facturas_tiendas/'+id
+      complete: ->
+        $.unblockUI()
+  ".tabla_fact_tienda"

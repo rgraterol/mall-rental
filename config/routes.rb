@@ -97,6 +97,9 @@ Myapp::Application.routes.draw do
   post '/pago_alquilers/create_cheque' =>  'pago_alquilers#create_cheque'
   get 'pago_alquilers/:id' => 'pago_alquilers#show', as: :mostrar_recibo_pago
   get 'pagos_mensuales_mall' => 'pago_alquilers#pagos_mensuales', as: :pagos_mensuales_mall
+  get 'pago_alquilers/facturas_tiendas/:id' => 'pago_alquilers#facturas_tiendas'
+  get 'pago_alquilers/new_cheque_efectivo/:id' => 'pago_alquilers#new_cheque_efectivo'
+
 
   resources :pago_alquilers
 
@@ -111,6 +114,8 @@ Myapp::Application.routes.draw do
     post "/dynamic_pago_alquilers_mensuales/pagos"
     post 'dynamic_add_nivel_mall/guardar'
     post 'dynamic_filter_locals/actualizar'
+    post 'dynamic_pago_alquilers/facturas_tiendas'
+    post 'dynamic_venta_diaria/cerrar_ventas_mes'
   end
 
   #CONTROLADOR DE NOTIFICACIONES MAILERS

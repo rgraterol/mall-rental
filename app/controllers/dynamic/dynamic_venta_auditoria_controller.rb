@@ -18,8 +18,8 @@ module Dynamic
         @tienda_locals = Tienda.where("local_id= ? AND abierta= ?", local.id, true).first
         if !@tienda_locals.blank?
           @contrato_alquiler = ContratoAlquiler.where(tienda_id: (@tienda_locals.id))
-
-          if @contrato_alquiler.first.tipo_canon_alquiler.humanize.capitalize != 'exonerado'
+          #raise @contrato_alquiler.first.tipo_canon_alquiler.tipo.inspect
+          if @contrato_alquiler.first.tipo_canon_alquiler.tipo != 'exonerado'
             @obj = {
                 'tienda' => @tienda_locals,
                 'local' => local,
@@ -43,8 +43,8 @@ module Dynamic
         @local_n = @local.nro_local
         @contrato_alquiler = ContratoAlquiler.find_by(tienda: @tienda)
 
-        @tipo_canon = @contrato_alquiler.tipo_canon_alquiler.humanize.capitalize
-        @tipo_canon_h = @contrato_alquiler.tipo_canon_alquiler
+        @tipo_canon = @contrato_alquiler.tipo_canon_alquiler
+        @tipo_canon_h = @contrato_alquiler.tipo_canon_alquiler.tipo
         if @tipo_canon_h == 'fijo_y_variable_venta_neta' || @tipo_canon_h == 'variableVN'
           @campo_suma = :monto_neto
         else
@@ -62,6 +62,12 @@ module Dynamic
           @suma_ventas_mes = VentaDiarium.where('extract(year from fecha) = ? AND extract(month from fecha) = ? AND venta_mensual_id = ?', @year,@month,@id_mensual).sum(@campo_suma)
           @cantidad_ventas_mes = VentaDiarium.where('extract(year from fecha) = ? AND extract(month from fecha) = ? AND venta_mensual_id = ?', @year,@month,@id_mensual).count
           @editable_mensual = @venta_mensual.first.editable
+          if @editable_mensual == false
+            @editable = true
+          else
+            @editable = false
+          end
+
           if @tipo_canon_h == 'fijo_y_variable_venta_neta' || @tipo_canon_h == 'variableVN'
             @monto_venta = @venta_mensual.first.monto_neto
           else
@@ -75,7 +81,6 @@ module Dynamic
         else
           @suma_ventas_mes = 0
           @cantidad_ventas_mes = 0
-          @editable_mensual = true
           @monto_venta = 0
           @monto_venta_bruto = 0
         end
@@ -92,7 +97,7 @@ module Dynamic
         end
 
         @recibos_cobro = false
-        @recibos_cobro_tienda = PagoAlquiler.where('anio_alquiler = ? AND mes_alquiler = ? AND tienda_id = ?', @year,@month,@tienda.id)
+        @recibos_cobro_tienda = CobranzaAlquiler.where('anio_alquiler = ? AND mes_alquiler = ? AND tienda_id = ?', @year,@month,@tienda.id)
         if !@recibos_cobro_tienda.blank?
           @recibos_cobro = true
         end
@@ -115,7 +120,7 @@ module Dynamic
             'recibos_cobro' => @recibos_cobro,
             'dias_loborables' => @cantidad_dias_laborables,
             'cantidad_ventas' => @cantidad_ventas_mes,
-            'editable_mensual' => @editable_mensual,
+            'editable_mensual' => @editable,
             'monto_venta' => ActionController::Base.helpers.number_to_currency(@monto_venta, separator: ',', delimiter: '.', format: "%n %u", unit: ""),
             'monto_venta_bruto' =>  ActionController::Base.helpers.number_to_currency(@monto_venta_bruto, separator: ',', delimiter: '.', format: "%n %u", unit: ""),
         }
