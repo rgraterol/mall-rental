@@ -35,7 +35,7 @@ class VentaDiariaController < ApplicationController
 
   end
 
-  def cobranza
+  def mf_cobranza
 =begin
     @mall = current_user.mall
     @tiendas = Tienda.where(mall: @mall)
@@ -45,7 +45,7 @@ class VentaDiariaController < ApplicationController
 =end
   end
 
-  def mall_tiendas
+  def mf_mall_tiendas
     if !params[:acceso].nil?
       @acceso = params[:acceso]
       @month = params[:month]
@@ -54,11 +54,10 @@ class VentaDiariaController < ApplicationController
       @month = Date.new(@year.to_i,@month.to_i,1)
     else
       @acceso = 1
-
     end
   end
 
-  def  mensuales
+  def  mf_mensuales
     @mall = current_user.mall
   end
 

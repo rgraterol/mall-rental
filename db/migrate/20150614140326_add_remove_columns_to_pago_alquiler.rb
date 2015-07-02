@@ -19,6 +19,7 @@ class AddRemoveColumnsToPagoAlquiler < ActiveRecord::Migration
     rename_column :pago_alquilers, :nombre_banco, :banco_emisor
 
     remove_reference :pago_alquilers, :contrato_alquiler
-    remove_reference :pago_alquilers, :tienda
+    # remove_reference :pago_alquilers, :tienda
+    # ahsgjahsg
   end
 end

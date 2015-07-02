@@ -12,6 +12,7 @@ jQuery(document).ready ($) ->
 
 
 $(".actualizar_ventas").on "change", ->
+  console.log(".actualizar_ventas")
   $.ajax
     type: "POST"
     url: "/dynamic_venta_diaria/venta"
@@ -310,6 +311,7 @@ $("#btn_cancelar_venta").on "click", ->
 #      $(this).dialog( "close" );
 
 $(".actualizar_auditoria_ventas").on "change", ->
+  console.log(".actualizar_auditoria_ventas")
   $.ajax
     type: "POST"
     url: "/dynamic_venta_auditoria/auditoria"
@@ -361,6 +363,7 @@ $(".actualizar_auditoria_ventas").on "change", ->
       $.unblockUI()
 
 $(".actualizar_ventas_mes").on "change", ->
+  console.log(".actualizar_ventas_mes")
   $.ajax
     type: "POST"
     url: "/dynamic_ventas_mes/ventas"
