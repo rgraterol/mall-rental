@@ -12,7 +12,6 @@ jQuery(document).ready ->
       "actividad_economica[nombre]":
         validators:
           notEmpty:
-            message: 'Debe ingresar un nombre de la actividad economica'
 
   $('#form_edit_actividad_economica').bootstrapValidator
     feedbackIcons:

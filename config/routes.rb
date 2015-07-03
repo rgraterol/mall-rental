@@ -91,14 +91,14 @@ Myapp::Application.routes.draw do
   get 'ventas_mes_tiendas'                 => 'venta_diaria#index',           as: :ventas_mes_tienda
 
 
-  get 'pago_alquilers/new_transferencia' => 'pago_alquilers#new_transferencia', as: :registrar_pago_transferencia
-  post '/pago_alquilers/create' =>  'pago_alquilers#create'
-  get 'pago_alquilers/new_cheque_efectivo' => 'pago_alquilers#new_cheque_efectivo', as: :registrar_pago_cheque_efectivo
-  post '/pago_alquilers/create_cheque' =>  'pago_alquilers#create_cheque'
-  get 'pago_alquilers/:id' => 'pago_alquilers#show', as: :mostrar_recibo_pago
-  get 'pagos_mensuales_mall' => 'pago_alquilers#pagos_mensuales', as: :pagos_mensuales_mall
-  get 'pago_alquilers/facturas_tiendas/:id' => 'pago_alquilers#facturas_tiendas'
-  get 'pago_alquilers/new_cheque_efectivo/:id' => 'pago_alquilers#new_cheque_efectivo'
+  get 'pago_alquilers/mf_new_transferencia'       => 'pago_alquilers#mf_new_transferencia',   as: :registrar_pago_transferencia
+  post '/pago_alquilers/create'                   => 'pago_alquilers#create'
+  get 'pago_alquilers/mf_new_cheque_efectivo'     => 'pago_alquilers#mf_new_cheque_efectivo', as: :registrar_pago_cheque_efectivo
+  post '/pago_alquilers/create_cheque'            => 'pago_alquilers#create_cheque'
+  get 'pago_alquilers/:id'                        => 'pago_alquilers#show',                   as: :mostrar_recibo_pago
+  get 'pagos_mensuales_mall'                      => 'pago_alquilers#mf_pagos_mensuales',     as: :pagos_mensuales_mall
+  get 'pago_alquilers/mf_facturas_tiendas/:id'    => 'pago_alquilers#mf_facturas_tiendas'
+  get 'pago_alquilers/mf_new_cheque_efectivo/:id' => 'pago_alquilers#mf_new_cheque_efectivo'
 
 
   resources :pago_alquilers
@@ -114,7 +114,7 @@ Myapp::Application.routes.draw do
     post "/dynamic_pago_alquilers_mensuales/pagos"
     post 'dynamic_add_nivel_mall/guardar'
     post 'dynamic_filter_locals/actualizar'
-    post 'dynamic_pago_alquilers/facturas_tiendas'
+    post 'dynamic_pago_alquilers/mf_facturas_tiendas'
     post 'dynamic_venta_diaria/cerrar_ventas_mes'
   end
 

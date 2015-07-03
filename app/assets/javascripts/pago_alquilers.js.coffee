@@ -282,13 +282,13 @@ $("#form_registro_pago_cheque").on
     id = $('.tabla_fact_tienda').val()
     $.ajax
       type: "POST"
-      url: "/dynamic_pago_alquilers/facturas_tiendas"
+      url: "/dynamic_pago_alquilers/mf_facturas_tiendas"
       dataType: "JSON"
       data:
         tienda_id: $('.tabla_fact_tienda').val()
       before_send: $.blockUI({message: 'Por favor espere...'})
       success: (data) ->
-       window.location.href = '/pago_alquilers/facturas_tiendas/'+id
+       window.location.href = '/pago_alquilers/mf_facturas_tiendas/'+id
       complete: ->
         $.unblockUI()
   ".tabla_fact_tienda"

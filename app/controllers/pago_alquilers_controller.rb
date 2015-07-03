@@ -42,7 +42,7 @@ class PagoAlquilersController < ApplicationController
   end
 
   # GET /pago_alquilers/new
-  def new_transferencia
+  def mf_new_transferencia
     @tienda = current_user.tienda
     if @tienda.blank?
       authorize! :index, root_url, :message => "Debe tener una tienda asignada."
@@ -74,7 +74,7 @@ class PagoAlquilersController < ApplicationController
     @total_x_pagar_v = ActionController::Base.helpers.number_to_currency(@total_x_pagar , separator: ',', delimiter: '.', format: "%n %u", unit: "")
   end
 
-  def new_cheque_efectivo
+  def mf_new_cheque_efectivo
 
     @pago_alquiler = PagoAlquiler.new
     #raise @tienda_id.inspect
@@ -156,11 +156,11 @@ class PagoAlquilersController < ApplicationController
     end
   end
 
-  def facturas_tiendas
+  def mf_facturas_tiendas
 
     @tienda_id = params[:id]
 
-    redirect_to(:controller => 'pago_alquilers', :action => 'new_cheque_efectivo', id: @tienda_id)
+    redirect_to(:controller => 'pago_alquilers', :action => 'mf_new_cheque_efectivo', id: @tienda_id)
     @pago_alquiler = PagoAlquiler.new
 
 
@@ -190,7 +190,7 @@ class PagoAlquilersController < ApplicationController
     end
   end
 
-  def pagos_mensuales
+  def mf_pagos_mensuales
 
   end
 
