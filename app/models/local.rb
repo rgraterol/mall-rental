@@ -26,6 +26,7 @@ class Local < ActiveRecord::Base
   validates :tipo_local_id, :nro_local, :area_planta, :area_terraza, :area_mezanina, presence: true
   validates :area_planta, :area_terraza, :area_mezanina, numericality: true
   validates :tipo_estado_local, presence: true
+  validates :nro_local, uniqueness: true
 
   mount_uploader :foto, AvatarUploader
 

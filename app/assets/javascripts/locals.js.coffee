@@ -18,37 +18,37 @@ jQuery(document).ready ->
       "local[nro_local]":
         validators:
           notEmpty:
-            message: 'Debe ingresar un N° de Local'
+            message: 'El n° de local es obligatorio'
       "local[area_planta]":
         validators:
           notEmpty:
-            message: 'Debe ingresar el Área de la Planta'
+            message: 'El área de planta es obligatoria'
           numeric:
-            message: 'Debe ser numerico'
+            message: 'Debe ser numérico'
       "local[area_terraza]":
         validators:
           notEmpty:
-            message: 'Debe ingresar el Área de la Terraza'
+            message: 'El área de la terraza es obligatoria'
         numeric:
-          message: 'Debe ser numerico'
+          message: 'Debe ser numérico'
       "local[area_mezanina]":
         validators:
           notEmpty:
-            message: 'Debe ingresar el Área de la Mezanina'
+            message: 'El àrea de la mezanina es obligatoria'
           numeric:
-            message: 'Debe ser numerico'
+            message: 'Debe ser numérico'
       "local[nivel_mall_id]":
         validators:
           notEmpty:
-            message: 'Debe seleccionar el Nivel Ubicacion'
+            message: 'El nivel de ubicación es obligatorio'
       "local[tipo_local_id]":
         validators:
           notEmpty:
-            message: 'Debe seleccionar el Tipo de Local'
+            message: 'El tipo de local es obligatorio'
       "local[tipo_estado_local]":
         validators:
           notEmpty:
-            message: 'Debe seleccionar el Estado del Local'
+            message: 'El estado del local es obligatorio'
 
 
   $('#form_edit_local').bootstrapValidator
@@ -61,37 +61,37 @@ jQuery(document).ready ->
       "local[nro_local]":
         validators:
           notEmpty:
-            message: 'Debe ingresar un N° de Local'
+            message: 'El n° de local es obligatorio'
       "local[area_planta]":
         validators:
           notEmpty:
-            message: 'Debe ingresar el Área de la Planta'
+            message: 'El área de planta es obligatoria'
           numeric:
-            message: 'Debe ser numerico'
+            message: 'Debe ser numérico'
       "local[area_terraza]":
         validators:
           notEmpty:
-            message: 'Debe ingresar el Área de la Terraza'
+            message: 'El área de la terraza es obligatoria'
         numeric:
-          message: 'Debe ser numerico'
+          message: 'Debe ser numérico'
       "local[area_mezanina]":
         validators:
           notEmpty:
-            message: 'Debe ingresar el Área de la Mezanina'
+            message: 'El àrea de la mezanina es obligatoria'
           numeric:
-            message: 'Debe ser numerico'
+            message: 'Debe ser numérico'
       "local[nivel_mall_id]":
         validators:
           notEmpty:
-            message: 'Debe seleccionar el Nivel Ubicacion'
+            message: 'El nivel de ubicación es obligatorio'
       "local[tipo_local_id]":
         validators:
           notEmpty:
-            message: 'Debe seleccionar el Tipo de Local'
+            message: 'El tipo de local es obligatorio'
       "local[tipo_estado_local]":
         validators:
           notEmpty:
-            message: 'Debe seleccionar el Estado del Local'
+            message: 'El estado del local es obligatorio'
 
 $("#local_nivel_mall_id").append("<option value='999'>Nuevo...</option>")
 $("#local_nivel_mall_id").on "change", ->

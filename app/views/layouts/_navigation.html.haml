@@ -28,15 +28,16 @@
         = link_to profile_path do
           %i.fa.fa-user
           %span.nav-label Perfil
-      - if can? :manage, User
-        %li{class: is_active_controller('users/registrations')}
-          %a{:href => ""}
-            %i.fa.fa-database
-            %span.nav-label Mall Admins
-            %span.fa.arrow
-          %ul{:class => "nav nav-second-level #{is_active_controller('users/registrations')}"}
-            %li{class: is_active_action('index')}= link_to 'Visualizar Mall Admins', users_index_path
-            %li{class: is_active_action('new_user')}= link_to 'Nuevo Mall Admin', users_new_path
+      - if can? :index, Pai
+        %li{class: is_active_controller('pais')}
+          = link_to pais_path do
+            %i.fa.fa-map-marker
+            %span.nav-label Paises
+      - if can? :index, Mall
+        %li{class: is_active_controller('malls')}
+          = link_to malls_path do
+            %i.fa.fa-building-o
+            %span.nav-label Malls
       - if can? :index, Role
         %li{class: is_active_controller('roles')}
           %a{:href => ""}
@@ -49,79 +50,68 @@
             - if can? :new, Role
               %li{class: is_active_action('new')}= link_to 'Nuevo Rol', new_role_path
             %li{class: is_active_action('assign_role_mall')}= link_to 'Asignar Roles a Mall', assign_role_mall_path
-      - if can? :manage, Pai
-        %li{class: is_active_controller('pais')}
-          = link_to pais_path do
-            %i.fa.fa-map-marker
-            %span.nav-label Paises
-      - if can? :manage, Banco
-        %li{class: is_active_controller('bancos')}
-          = link_to bancos_path do
-            %i.fa.fa-bank
-            %span.nav-label Bancos
-      - if (can? :manage, CambioMoneda) && current_user.mall_id.present?
-        %li{class: is_active_controller('cambio_monedas')}
-          = link_to cambio_monedas_path do
-            %i.fa.fa-money
-            %span.nav-label Cambio de Moneda
-      -if (can? :manage, CuentaBancarium) && current_user.mall_id.present?
-        %li{class: is_active_controller('cuenta_bancarias')}
-          = link_to cuenta_bancaria_path do
-            %i.fa.fa-file-text
-            %span.nav-label Cuentas Bancarias
-      - if can? :index, Mall
-        %li{class: is_active_controller('malls')}
-          = link_to malls_path do
-            %i.fa.fa-building-o
-            %span.nav-label Malls
-      - if (can? :manage, CalendarioNoLaborable) && current_user.mall_id.present?
-        %li{class: is_active_controller('calendario_no_laborables')}
-          = link_to calendario_no_laborables_path do
-            %i.fa.fa-calendar
-            %span.nav-label Calendario No Laboral
-      - if (can? :index, :mall_user) && current_user.mall_id.present?
-        %li{class: is_active_controller('users/mall_users')}
-          = link_to mall_users_path do
-            %i.fa.fa-users
-            %span.nav-label Usuarios Mall
-      - if (can? :index, Arrendatario) && current_user.mall_id.present?
-        %li{class: is_active_controller('arrendatarios')}
-          = link_to arrendatarios_path do
-            %i.fa.fa-server
-            %span.nav-label Arrendatarios
+      - if can? :index, User
+        %li{class: is_active_controller('users/registrations')}
+          = link_to users_index_path do
+            %i.fa.fa-database
+            %span.nav-label Administradores Mall
       - if (can? :index, Local) && current_user.mall_id.present?
         %li
           = link_to local_index_path do
             %i.fa.fa-bars
             %span.nav-label Locales
+      - if (can? :index, Arrendatario) && current_user.mall_id.present?
+        %li{class: is_active_controller('arrendatarios')}
+          = link_to arrendatarios_path do
+            %i.fa.fa-server
+            %span.nav-label Arrendatarios
       - if (can? :index, Tienda) && current_user.mall_id.present?
         %li{class: is_active_controller('tiendas')}
-          %a{href: '#'}
+          = link_to tiendas_path do
             %i.fa.fa-shopping-cart
             %span.nav-label Tiendas
+      - if ((can? :index, Banco) || (can? :index, CuentaBancarium) || (can? :index, CambioMoneda) || (can? :manage, CalendarioNoLaborable)) && current_user.mall_id.present?
+        %li{class: is_active_controller('bancos') || is_active_controller('cuenta_bancarias') || is_active_controller('cambio_monedas') || is_active_controller('calendario_no_laborables') }
+          %a{href: '#'}
+            %i.fa.fa-cog
+            %span.nav-label Configuración
             %span.fa.arrow
-          %ul{:class => "nav nav-second-level #{is_active_controller('tiendas')}"}
-            %li{class: is_active_action('index')}= link_to 'Visualizar Tiendas', tiendas_path
-            - if can? :new, Tienda
-              %li{class: is_active_action('new')}= link_to 'Nueva Tienda', new_tienda_path
-
-      - if can? :index, VentaDiarium
+          %ul{:class => "nav nav-second-level #{is_active_controller('venta_diaria') || is_active_controller('cuenta_bancarias')}"}
+            - if can? :index, Banco
+              %li{class: is_active_action('bancos')}= link_to 'Bancos', bancos_path
+            - if can? :index, CuentaBancarium
+              %li{class: is_active_action('cuenta_bancarias')}= link_to 'Cuentas Bancarias', cuenta_bancaria_path
+            - if can? :index, CambioMoneda
+              %li{class: is_active_action('cambio_monedas')}= link_to 'Tasa de Cambio', cambio_monedas_path
+            - if can? :index, CalendarioNoLaborable
+              %li{class: is_active_action('calendario_no_laborables')}= link_to 'Calendario No Laborable', calendario_no_laborables_path
+      - if (can? :index, :mall_user) && current_user.mall_id.present?
+        %li{class: is_active_controller('users/mall_users')}
+          = link_to mall_users_path do
+            %i.fa.fa-users
+            %span.nav-label Usuarios Mall
+      - if (can? :index, VentaDiarium) && current_user.mall_id.present? && current_user.tienda.present?
         %li{class: is_active_controller('venta_diaria')}
-
+          = link_to venta_diaria_bruta_path do
+            %i.fa.fa-money
+            %span.nav-label Actualizar Ventas Diarias
+      - if ((can? :mf_ventas_mall, VentaDiarium) || (can? :mf_ventas_mensuales, VentaDiarium)) && current_user.mall_id.present?
+        %li{class: is_active_controller('venta_diaria')}
           %a{href: '#'}
             %i.fa.fa-usd
             %span.nav-label Ventas
             %span.fa.arrow
           %ul{:class => "nav nav-second-level #{is_active_controller('venta_diaria')}"}
-            %li{class: is_active_action('index')}= link_to 'Actualizacion de Ventas', venta_diaria_bruta_path
-            - if can? :cobranza, VentaDiarium
-              %li{class: is_active_action('cobranza')}= link_to 'Gestion de Cobranza', cobranza_alquiler_path
-            - if can? :ventas_mall, VentaDiarium
-              %li{class: is_active_action('mall_tiendas')}= link_to 'Ventas del Mall x Tienda', ventas_mall_tiendas_path
-            - if can? :ventas_mensuales, VentaDiarium
-              %li{class: is_active_action('mensuales')}= link_to 'Ventas Mensuales del Mall', ventas_mensuales_mall_path
-      - if can? :index, PagoAlquiler #&& current_user.mall_id.present?
-
+            - if can? :mf_ventas_mall, VentaDiarium
+              %li{class: is_active_action('mf_mall_tiendas')}= link_to 'Mall x Tienda', ventas_mall_tiendas_path
+            - if can? :mf_ventas_mensuales, VentaDiarium
+              %li{class: is_active_action('mf_mensuales')}= link_to 'Mall Mensuales', ventas_mensuales_mall_path
+      - if (can? :mf_cobranza, VentaDiarium) && current_user.mall_id.present?
+        %li{class: is_active_controller('mf_cobranza')}
+          = link_to cobranza_alquiler_path do
+            %i.fa.fa-money
+            %span.nav-label Gestión de Cobranza
+      - if can? :index, PagoAlquiler && current_user.mall_id.present?
         %li{class: is_active_controller('pago_alquilers')}
           %a{href: '#'}
             %i.fa.fa-cc-visa

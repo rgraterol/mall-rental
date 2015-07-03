@@ -16,7 +16,7 @@ banco1 = Banco.create!(nombre: 'Banesco')
 
 cuenta_banco1 = CuentaBancarium.create!(nro_cta: '0134-5254-5485255', tipo_cuenta: 'Corriente', beneficiario: 'Carlos Torres ', doc_identidad: "16417844", banco: banco1 )
 
-cc_vela = Mall.create!(nombre: 'C.C La Vela', abreviado: 'cc_vela', rif: 'V-98735638-1', direccion_fiscal: 'Porlamar - Margarita', telefono: '0285-8965425', pai: venezuela, cuenta_bancarium: cuenta_banco1)
+cc_vela = Mall.create!(nombre: 'Centro Comercial La Vela', abreviado: 'C.C La Vela', rif: 'J-31667982-1', direccion_fiscal: 'Porlamar - Margarita', telefono: '0295-8965425', pai: venezuela, cuenta_bancarium: cuenta_banco1)
 
 
 # ActividadEconomica.create!([{nombre: 'Zapateria', mall: cc_vela}, {nombre: 'Boutique', mall: cc_vela}, {nombre: 'Restaurant', mall: cc_vela}])

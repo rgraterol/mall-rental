@@ -48,13 +48,23 @@ class VentaDiariaController < ApplicationController
       @month = Date.new(@year.to_i,@month.to_i,1)
     else
       @acceso = 1
-
     end
   end
 
   def mf_mensuales
     @mall = current_user.mall
   end
+
+
+=begin
+  def mes
+
+    @tienda = current_user.mall.tiendas.first
+
+    @venta_diarias_2 = Venta.where(tienda_id: @tienda_id)
+    @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
+  end
+=end
 
   def show
 
