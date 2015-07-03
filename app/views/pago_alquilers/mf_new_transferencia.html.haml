@@ -100,11 +100,7 @@
                 = f.label :cuenta_bancaria, "Nro. Cuenta: ", class: 'col-sm-2 control-label'
                 .col-sm-10
                   .group-show
-<<<<<<< HEAD:app/views/pago_alquilers/mf_new_transferencia.html.haml
                     = f.select(:cuenta_bancarium_id,{},{include_blank: 'Seleccione la cuenta bancaria'},html_options = {class: "form-control"})  do
-=======
-                    = f.select(:cuenta_bancaria_id,{},{include_blank: 'Seleccione la cuenta bancaria'},html_options = {class: "form-control"})  do
->>>>>>> b46c709a385d3a0d54cce40d4e1a6509e773b67b:app/views/pago_alquilers/mf_new_transferencia.html.haml
                       - CuentaBancarium.all.each do |c|
                         = content_tag(:option, c.banco.nombre+'  '+c.nro_cta, value: c.id)
                       - {class: "form-control"}
