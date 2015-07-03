@@ -114,6 +114,7 @@ $(".actualizar_pagos_alquiler").on "change", ->
     data:
       year: $("#date_lapso_year").val()
       month: $("#pagos_alquiler_select_month").val()
+    before_send: $.blockUI({message: 'Por favor espere...'})
     success: (data) ->
       $("#tbody_pagos_alquiler").empty()
 
@@ -159,7 +160,7 @@ $(".actualizar_pagos_alquiler").on "change", ->
     error: (data)->
       console.log(data)
     complete: ->
-      a=1
+      $.unblockUI()
 
 $(".actualizar_pagos_mensuales").on "change", ->
   $.ajax

@@ -28,7 +28,7 @@
       = f.label :canon_fijo_ml, class: 'col-sm-2 control-label' do
         Canón Fijo en Bs.:
       .col-sm-8
-        = f.text_field :canon_fijo_ml, class: 'form-control numeric_contrato_alquiler', id: 'canon_fijo_tienda'
+        = f.text_field :canon_fijo_ml, class: 'form-control numeric_contrato_alquiler numeric', id: 'canon_fijo_tienda'
       .col-sm-2
         %span
           Bs.
@@ -36,7 +36,7 @@
       = f.label :canon_fijo_usd,  class: 'col-sm-2 control-label ' do
         Canón Fijo en $:
       .col-sm-8
-        = f.text_field :canon_fijo_usd, readonly: true , class: 'form-control numeric_contrato_alquiler canon_fijo_usd'
+        = f.text_field :canon_fijo_usd, readonly: true , class: 'form-control numeric_contrato_alquiler canon_fijo_usd numeric'
       .col-sm-2
         %span
           $

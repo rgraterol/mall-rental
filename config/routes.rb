@@ -1,5 +1,9 @@
 Myapp::Application.routes.draw do
 
+  resources :precio_servicios
+
+  resources :clientes
+
   resources :venta_diaria
 
   resources :documento_ventas
@@ -55,8 +59,6 @@ Myapp::Application.routes.draw do
   get 'nivel_malls/index/:mall_id' => 'nivel_malls#index', as: :nivel_malls_index
 
   get 'nivel_malls/new/:mall_id' => 'nivel_malls#new'
-
-  get 'nivel_malls/test_ajax' => 'nivel_malls#test_ajax'
 
   get 'actividad_economicas' => 'actividad_economicas#index', as: :actividad_economicas
 

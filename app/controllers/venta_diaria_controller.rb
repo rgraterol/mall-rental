@@ -36,13 +36,7 @@ class VentaDiariaController < ApplicationController
   end
 
   def mf_cobranza
-=begin
-    @mall = current_user.mall
-    @tiendas = Tienda.where(mall: @mall)
-    raise @tiendas.inspect
-    @venta_diarias_2 = Venta.where(tienda_id: @tienda.id)
-    @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
-=end
+
   end
 
   def mf_mall_tiendas
@@ -57,7 +51,7 @@ class VentaDiariaController < ApplicationController
     end
   end
 
-  def  mf_mensuales
+  def mf_mensuales
     @mall = current_user.mall
   end
 
@@ -77,7 +71,7 @@ class VentaDiariaController < ApplicationController
   end
 
   def new
-    @venta_diarium = VentaDiarium.new
+
   end
 
   def edit

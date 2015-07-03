@@ -2,7 +2,10 @@
 #= require input-mask/jquery.inputmask.regex.extensions.js
 #= require bootstrapValidator/bootstrapValidator
 #= require jasny/jasny-bootstrap
+#= require numeric
+
 jQuery(document).ready ->
+
   $('#contrato_alquiler_form').bootstrapValidator
     feedbackIcons:
       valid: 'fa fa-check ',
@@ -16,8 +19,6 @@ jQuery(document).ready ->
             message: 'Tipo Canon de Alquiler es Obligatorio'
       "contrato_alquiler[canon_fijo_ml]":
         validators:
-          numeric:
-            message: 'Debe ser un valor numerico, decimales separados por punto'
           callback:
             message: 'Canón Fijo en Bs. obligatorio para tipo Canón Fijos'
             callback: (value, validator, $field) ->
@@ -45,7 +46,7 @@ jQuery(document).ready ->
     regex: "[0-9.]{1,5}%"
   });
   $('#canon_fijo_tienda').inputmask("Regex", {
-    regex: "[0-9.]{1,25}%"
+    regex: "[0-9,.]{1,25}%"
   });
 
   $('#select_canon_alquiler').change ->
@@ -85,15 +86,15 @@ calcular_monto_minimo_venta = ->
     if $(this).val() == ''
       value = 0
     else
-      value = $('#canon_fijo_tienda').val()/($(this).val()/100)
-    $('#monto_minimo_tienda').val value
+      value = $('#canon_fijo_tienda').val().replace(',', '')/($(this).val()/100)
+    $('#monto_minimo_tienda').val value.toFixed(2)
 
   $('#canon_fijo_tienda').keyup ->
     if $('#porc_canon_tienda').val() == ''
       value = 0
     else
-      value = $(this).val()/($('#porc_canon_tienda').val()/100)
-      $('#monto_minimo_tienda').val value
+      value = $(this).val().replace(',', '')/($('#porc_canon_tienda').val()/100)
+      $('#monto_minimo_tienda').val value.toFixed(2)
     $.ajax
       type: "POST"
       url: "/cambio_monedas/mf_cambio_moneda/"
@@ -101,7 +102,7 @@ calcular_monto_minimo_venta = ->
       data:
         ml: $(this).val()
       success: (data) ->
-        $('.canon_fijo_usd').val(data)
+        $('.canon_fijo_usd').val(data.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"))
 
 key_up_porc_venta = ->
   $('#porc_canon_tienda').keyup ->

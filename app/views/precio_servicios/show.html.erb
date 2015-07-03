@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @precio_servicio.fecha %>
+</p>
+
+<p>
+  <strong>Precio usd:</strong>
+  <%= @precio_servicio.precio_usd %>
+</p>
+
+<%= link_to 'Edit', edit_precio_servicio_path(@precio_servicio) %> |
+<%= link_to 'Back', precio_servicios_path %>

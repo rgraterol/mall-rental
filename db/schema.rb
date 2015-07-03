@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150701054424) do
+ActiveRecord::Schema.define(version: 20150703082842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,30 @@ ActiveRecord::Schema.define(version: 20150701054424) do
     t.datetime "updated_at"
   end
 
+  create_table "clientes", force: true do |t|
+    t.string   "nombre"
+    t.string   "RIF"
+    t.string   "direccion"
+    t.string   "telefono"
+    t.string   "nombre_rl"
+    t.string   "profesion_rl"
+    t.string   "cedula_rl"
+    t.string   "email_rl"
+    t.string   "telefono_rl"
+    t.string   "nombre_contacto"
+    t.string   "profesion_contacto"
+    t.string   "cedula_contacto"
+    t.string   "email_contacto"
+    t.string   "telefono_contacto"
+    t.integer  "mall_id"
+    t.integer  "tipo_servicio_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "clientes", ["mall_id"], name: "index_clientes_on_mall_id", using: :btree
+  add_index "clientes", ["tipo_servicio_id"], name: "index_clientes_on_tipo_servicio_id", using: :btree
+
   create_table "cobranza_alquilers", force: true do |t|
     t.string   "nro_recibo"
     t.date     "fecha_recibo_cobro"
@@ -101,11 +125,12 @@ ActiveRecord::Schema.define(version: 20150701054424) do
     t.date     "fecha_inicio"
     t.date     "fecha_fin"
     t.string   "archivo_contrato"
-    t.decimal  "canon_fijo_ml",          precision: 30, scale: 2, default: 0.0
-    t.decimal  "canon_fijo_usd",         precision: 30, scale: 2, default: 0.0
-    t.decimal  "porc_canon_ventas",      precision: 30, scale: 2, default: 0.0
-    t.decimal  "monto_minimo_ventas",    precision: 30, scale: 2, default: 0.0
+    t.decimal  "canon_fijo_ml"
+    t.decimal  "canon_fijo_usd"
+    t.decimal  "porc_canon_ventas"
+    t.decimal  "monto_minimo_ventas"
     t.boolean  "estado_contrato"
+    t.integer  "tipo_canon_alquiler"
     t.integer  "tienda_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -257,15 +282,13 @@ ActiveRecord::Schema.define(version: 20150701054424) do
     t.string   "archivo_transferencia"
     t.string   "banco_emisor"
     t.integer  "tipo_pago"
-    t.integer  "cuenta_bancarium_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "cuenta_bancaria_id"
     t.decimal  "monto"
     t.decimal  "monto_usd"
     t.boolean  "conciliado",              default: true
   end
-
-  add_index "pago_alquilers", ["cuenta_bancarium_id"], name: "index_pago_alquilers_on_cuenta_bancarium_id", using: :btree
 
   create_table "pais", force: true do |t|
     t.string   "nombre"
@@ -305,6 +328,18 @@ ActiveRecord::Schema.define(version: 20150701054424) do
   add_index "plantilla_contrato_alquilers", ["mall_id"], name: "index_plantilla_contrato_alquilers_on_mall_id", using: :btree
   add_index "plantilla_contrato_alquilers", ["tipo_canon_alquiler_id"], name: "index_plantilla_contrato_alquilers_on_tipo_canon_alquiler_id", using: :btree
 
+  create_table "precio_servicios", force: true do |t|
+    t.date     "fecha"
+    t.float    "precio_usd"
+    t.integer  "tipo_servicio_id"
+    t.integer  "tipo_contrato_servicio_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "precio_servicios", ["tipo_contrato_servicio_id"], name: "index_precio_servicios_on_tipo_contrato_servicio_id", using: :btree
+  add_index "precio_servicios", ["tipo_servicio_id"], name: "index_precio_servicios_on_tipo_servicio_id", using: :btree
+
   create_table "roles", force: true do |t|
     t.string   "name",             limit: 50, default: "", null: false
     t.integer  "role_type",                   default: 0,  null: false
@@ -336,6 +371,12 @@ ActiveRecord::Schema.define(version: 20150701054424) do
   add_index "tiendas", ["local_id"], name: "index_tiendas_on_local_id", using: :btree
 
   create_table "tipo_canon_alquilers", force: true do |t|
+    t.string   "tipo"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tipo_contrato_servicios", force: true do |t|
     t.string   "tipo"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -389,7 +430,6 @@ ActiveRecord::Schema.define(version: 20150701054424) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
-  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   create_table "venta_diaria", force: true do |t|
     t.date     "fecha"

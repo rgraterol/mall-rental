@@ -10,30 +10,30 @@
   - if @tienda.contrato_alquilers.last.tipo_canon_alquiler.tipo == 'canon_fijo'
     %p
       %strong Monto Canón Fijo en Bs.:
-      = @tienda.contrato_alquilers.last.canon_fijo_ml
+      = number_with_delimiter(@tienda.contrato_alquilers.last.canon_fijo_ml)
     %p
       %strong Monto Canón Fijo en $:
-      = @tienda.contrato_alquilers.last.canon_fijo_usd
+      = number_with_delimiter(@tienda.contrato_alquilers.last.canon_fijo_usd)
   - elsif @tienda.contrato_alquilers.last.tipo_canon_alquiler.tipo == 'variable_venta_bruta' || @tienda.contrato_alquilers.last.tipo_canon_alquiler.tipo == 'variable_venta_neta'
     %p
       %strong Porcentaje Canón por Ventas:
       = @tienda.contrato_alquilers.last.porc_canon_ventas
     %p
       %strong Monto Mínimo Ventas Mensual:
-      = @tienda.contrato_alquilers.last.monto_minimo_ventas
+      = number_with_delimiter(@tienda.contrato_alquilers.last.monto_minimo_ventas)
   - else
     %p
       %strong Monto Canón Fijo en Bs:
-      = @tienda.contrato_alquilers.last.canon_fijo_ml
+      = number_with_delimiter(@tienda.contrato_alquilers.last.canon_fijo_ml)
     %p
       %strong Monto Canón Fijo en $:
-      = @tienda.contrato_alquilers.last.canon_fijo_usd
+      = number_with_delimiter(@tienda.contrato_alquilers.last.canon_fijo_usd)
     %p
       %strong Porcentaje Canón por Ventas:
       = @tienda.contrato_alquilers.last.porc_canon_ventas
     %p
       %strong Monto Mínimo Ventas Mensual:
-      = @tienda.contrato_alquilers.last.monto_minimo_ventas
+      = number_with_delimiter(@tienda.contrato_alquilers.last.monto_minimo_ventas)
   %p
     %strong Archivo Contrato;
     - if @tienda.contrato_alquilers.last.archivo_contrato_pdf?
