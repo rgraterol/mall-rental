@@ -1,0 +1,74 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nombre:</strong>
+  <%= @cliente.nombre %>
+</p>
+
+<p>
+  <strong>Rif:</strong>
+  <%= @cliente.RIF %>
+</p>
+
+<p>
+  <strong>Direccion:</strong>
+  <%= @cliente.direccion %>
+</p>
+
+<p>
+  <strong>Telefono:</strong>
+  <%= @cliente.telefono %>
+</p>
+
+<p>
+  <strong>Nombre rl:</strong>
+  <%= @cliente.nombre_rl %>
+</p>
+
+<p>
+  <strong>Profesion rl:</strong>
+  <%= @cliente.profesion_rl %>
+</p>
+
+<p>
+  <strong>Cedula rl:</strong>
+  <%= @cliente.cedula_rl %>
+</p>
+
+<p>
+  <strong>Email rl:</strong>
+  <%= @cliente.email_rl %>
+</p>
+
+<p>
+  <strong>Telefono rl:</strong>
+  <%= @cliente.telefono_rl %>
+</p>
+
+<p>
+  <strong>Nombre contacto:</strong>
+  <%= @cliente.nombre_contacto %>
+</p>
+
+<p>
+  <strong>Profesion contacto:</strong>
+  <%= @cliente.profesion_contacto %>
+</p>
+
+<p>
+  <strong>Cedula contacto:</strong>
+  <%= @cliente.cedula_contacto %>
+</p>
+
+<p>
+  <strong>Email contacto:</strong>
+  <%= @cliente.email_contacto %>
+</p>
+
+<p>
+  <strong>Telefono contacto:</strong>
+  <%= @cliente.telefono_contacto %>
+</p>
+
+<%= link_to 'Edit', edit_cliente_path(@cliente) %> |
+<%= link_to 'Back', clientes_path %>
