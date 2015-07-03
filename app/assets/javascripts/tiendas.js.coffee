@@ -10,6 +10,7 @@
 #= require jquery-ui/jquery-ui.min.js
 #= require bootstrapValidator/bootstrapValidator
 #= require jquery.blockUI.js
+#= require numeric
 
 jQuery(document).ready ($) ->
 
@@ -190,18 +191,18 @@ jQuery(document).ready ($) ->
       data:
         ml: $(this).val()
       success: (data) ->
-        $('.canon_fijo_usd').val(data)
+        $('.canon_fijo_usd').val(data.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"))
 
   $("#porc_canon_tienda").inputmask("Regex", {
     regex: "[0-9.]{1,5}%"
   });
 
   $('#canon_fijo_tienda').inputmask("Regex", {
-    regex: "[0-9.]{1,25}%"
+    regex: "[0-9,.]{1,25}%"
   });
 
   $('#tienda_monto_garantia').inputmask("Regex", {
-    regex: "[0-9.]{1,25}%"
+    regex: "[0-9,.]{1,25}%"
   });
 
   $('#tienda_monto_garantia').keyup ->
@@ -212,7 +213,7 @@ jQuery(document).ready ($) ->
       data:
         ml: $(this).val()
       success: (data) ->
-        $('#tienda_monto_garantia_usd').val(data)
+        $('#tienda_monto_garantia_usd').val(data.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"))
 
 table_index_datatable =  ->
   $('#table_tiendas_index').dataTable
@@ -268,15 +269,15 @@ calcular_monto_minimo_venta = ->
     if $(this).val() == ''
       value = 0
     else
-      value = $('#canon_fijo_tienda').val()/($(this).val()/100)
-    $('#monto_minimo_tienda').val value
+      value = $('#canon_fijo_tienda').val().replace(',', '')/($(this).val()/100)
+    $('#monto_minimo_tienda').val value.toFixed(2)
 
   $('#canon_fijo_tienda').keyup ->
     if $('#porc_canon_tienda').val() == ''
       value = 0
     else
-      value = $(this).val()/($('#porc_canon_tienda').val()/100)
-      $('#monto_minimo_tienda').val value
+      value = $(this).val().replace(',', '')/($('#porc_canon_tienda').val()/100)
+      $('#monto_minimo_tienda').val value.toFixed(2)
 
 key_up_porc_venta = ->
   $('#porc_canon_tienda').keyup ->

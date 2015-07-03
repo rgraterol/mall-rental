@@ -18,8 +18,8 @@
                   - @estadisticas.each do |estadistica|
                     %tr
                       %td= estadistica[:criterio]
-                      %td= estadistica[:venta_diaria] || '0'
-                      %td= estadistica[:canon_fijo_ml] || '0'
-                      %td= estadistica[:porc_canon] || '0'
-                      %td= estadistica[:total] || 0
-                      %td= estadistica[:total] * CambioMoneda.last.cambio_ml_x_usd
+                      %td= number_with_delimiter(estadistica[:venta_diaria]) || '0'
+                      %td= number_with_delimiter(estadistica[:canon_fijo_ml]) || '0'
+                      %td= number_with_delimiter(estadistica[:porc_canon]) || '0'
+                      %td= number_with_delimiter(estadistica[:total]) || 0
+                      %td= number_with_delimiter(estadistica[:total] * CambioMoneda.last.cambio_ml_x_usd)

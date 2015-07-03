@@ -82,6 +82,7 @@ class ContratoAlquilersController < ApplicationController
     end
 
     def contrato_alquiler_params
+      params[:contrato_alquiler][:canon_fijo_ml] = params[:contrato_alquiler][:canon_fijo_ml].gsub(',', '')
       params.require(:contrato_alquiler).permit(:nro_contrato, :fecha_inicio, :fecha_fin, :archivo_contrato, :canon_fijo_ml, :monto_minimo_ventas, :canon_fijo_usd, :porc_canon_ventas, :estado_contrato, :tipo_canon_alquiler_id, :tienda_id, :requerida_venta)
     end
 end
