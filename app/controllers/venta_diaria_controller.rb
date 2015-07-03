@@ -35,17 +35,11 @@ class VentaDiariaController < ApplicationController
 
   end
 
-  def cobranza
-=begin
-    @mall = current_user.mall
-    @tiendas = Tienda.where(mall: @mall)
-    raise @tiendas.inspect
-    @venta_diarias_2 = Venta.where(tienda_id: @tienda.id)
-    @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
-=end
+  def mf_cobranza
+
   end
 
-  def mall_tiendas
+  def mf_mall_tiendas
     if !params[:acceso].nil?
       @acceso = params[:acceso]
       @month = params[:month]
@@ -58,27 +52,16 @@ class VentaDiariaController < ApplicationController
     end
   end
 
-  def  mensuales
+  def mf_mensuales
     @mall = current_user.mall
   end
-
-
-=begin
-  def mes
-
-    @tienda = current_user.mall.tiendas.first
-
-    @venta_diarias_2 = Venta.where(tienda_id: @tienda_id)
-    @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
-  end
-=end
 
   def show
 
   end
 
   def new
-    @venta_diarium = VentaDiarium.new
+
   end
 
   def edit

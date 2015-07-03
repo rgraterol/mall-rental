@@ -1,0 +1,86 @@
+= provide(:title, "#{current_user.mall.nombre } - Clientes")
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      = current_user.mall.nombre
+      \-
+      Cliente
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Clientes', clientes_path
+      %li
+        Cliente
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-md-4
+              %h2
+                = @cliente.nombre
+            .col-md-6
+              %p
+                %b RIF:
+                = @cliente.RIF
+              %p
+                %b Dirección:
+                = @cliente.direccion
+              %p
+                %b Teléfonos:
+                = @cliente.telefono
+
+          %hr
+          .row
+            .col-md-6
+              %h2
+                Representante Legal -
+                = @cliente.nombre_rl
+              %p
+                %b Cédula:
+                = @cliente.cedula_rl
+              %p
+                %b Email:
+                = @cliente.email_rl
+              %p
+                %b Teléfonos
+                = @cliente.telefono_rl
+              %p
+                %b Profesion
+                = @cliente.profesion_rl
+            .col-md-6
+              %h2
+                Persona de Contacto -
+                = @cliente.nombre_contacto
+              %p
+                %b Cédula:
+                = @cliente.cedula_contacto
+              %p
+                %b Email:
+                = @cliente.email_contacto
+              %p
+                %b Teléfonos
+                = @cliente.telefono_contacto
+              %p
+                %b Profesion
+                = @cliente.profesion_contacto
+          %br
+          -#.row
+          -#  .col-md-12
+          -#    %p
+          -#      %b Inscripción en el Registro Mercantil:
+          -#      = @arrendatario.registro_mercantil
+
+  .row
+    .col-lg-12
+      .ibox-content
+        .row
+          .col-sm-3
+            = link_to clientes_path, class: 'btn btn-warning btn-block' do
+              Regresar
+          .col-sm-3.col-sm-offset-6
+            = link_to edit_cliente_path(@cliente), class: 'btn btn-mall btn-block' do
+              Editar

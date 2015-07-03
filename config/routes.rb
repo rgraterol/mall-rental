@@ -58,8 +58,6 @@ Myapp::Application.routes.draw do
 
   get 'nivel_malls/new/:mall_id' => 'nivel_malls#new'
 
-  get 'nivel_malls/test_ajax' => 'nivel_malls#test_ajax'
-
   get 'actividad_economicas' => 'actividad_economicas#index', as: :actividad_economicas
 
   get 'actividad_economica' => 'actividad_economicas#show'
@@ -84,23 +82,23 @@ Myapp::Application.routes.draw do
 
   get 'venta_diaria_bruta' => 'venta_diaria#index', as: :venta_diaria_bruta
   get 'venta_diaria_bruta/:tienda_id' => 'venta_diaria#index', as: :venta_diaria_tienda
-  get 'cobranza_alquiler' => 'venta_diaria#cobranza', as: :cobranza_alquiler
+  get 'cobranza_alquiler' => 'venta_diaria#mf_cobranza', as: :cobranza_alquiler
   get 'ventas_tiendas/:tienda_id' => 'venta_diaria#index', as: :ventas_tienda
   get 'ventas_tiendas/:tienda_id/:month' => 'venta_diaria#index', as: :ventas_tienda_mes
-  get 'ventas_mall_tiendas' => 'venta_diaria#mall_tiendas', as: :ventas_mall_tiendas
-  get 'ventas_mall_tiendas/:acceso/:month' => 'venta_diaria#mall_tiendas'
-  get 'ventas_mensuales_mall' => 'venta_diaria#mensuales', as: :ventas_mensuales_mall
+  get 'ventas_mall_tiendas' => 'venta_diaria#mf_mall_tiendas', as: :ventas_mall_tiendas
+  get 'ventas_mall_tiendas/:acceso/:month' => 'venta_diaria#mf_mall_tiendas'
+  get 'ventas_mensuales_mall' => 'venta_diaria#mf_mensuales', as: :ventas_mensuales_mall
   get 'ventas_mes_tiendas' => 'venta_diaria#index', as: :ventas_mes_tienda
 
 
-  get 'pago_alquilers/new_transferencia' => 'pago_alquilers#new_transferencia', as: :registrar_pago_transferencia
+  get 'pago_alquilers/new_transferencia' => 'pago_alquilers#mf_new_transferencia', as: :registrar_pago_transferencia
   post '/pago_alquilers/create' =>  'pago_alquilers#create'
-  get 'pago_alquilers/new_cheque_efectivo' => 'pago_alquilers#new_cheque_efectivo', as: :registrar_pago_cheque_efectivo
+  get 'pago_alquilers/new_cheque_efectivo' => 'pago_alquilers#mf_new_cheque_efectivo', as: :registrar_pago_cheque_efectivo
   post '/pago_alquilers/create_cheque' =>  'pago_alquilers#create_cheque'
   get 'pago_alquilers/:id' => 'pago_alquilers#show', as: :mostrar_recibo_pago
-  get 'pagos_mensuales_mall' => 'pago_alquilers#pagos_mensuales', as: :pagos_mensuales_mall
-  get 'pago_alquilers/facturas_tiendas/:id' => 'pago_alquilers#facturas_tiendas'
-  get 'pago_alquilers/new_cheque_efectivo/:id' => 'pago_alquilers#new_cheque_efectivo'
+  get 'pagos_mensuales_mall' => 'pago_alquilers#mf_pagos_mensuales', as: :pagos_mensuales_mall
+  get 'pago_alquilers/facturas_tiendas/:id' => 'pago_alquilers#mf_facturas_tiendas'
+  get 'pago_alquilers/new_cheque_efectivo/:id' => 'pago_alquilers#mf_new_cheque_efectivo'
 
 
   resources :pago_alquilers

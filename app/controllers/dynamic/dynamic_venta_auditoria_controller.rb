@@ -31,14 +31,18 @@ module Dynamic
 
 
       @array_tienda = Array.new
+
       @tiendas_mall.each do |tienda_mall|
 
         @local = tienda_mall['local']
         @tienda = tienda_mall['tienda']
 
+
+
         @datos_cobranza = Array.new
         @tienda_nombre = @tienda.nombre
         @tienda_id = @tienda.id
+
         @actividad_economica = @tienda.actividad_economica.nombre
         @local_n = @local.nro_local
         @contrato_alquiler = ContratoAlquiler.find_by(tienda: @tienda)
@@ -83,6 +87,7 @@ module Dynamic
           @cantidad_ventas_mes = 0
           @monto_venta = 0
           @monto_venta_bruto = 0
+          @editable = false
         end
 
 
