@@ -1,0 +1,14 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Gestion de Precios de Servicios
+      %i.fa.fa-money
+
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Precios de Servicios
+
+.wrapper.wrapper-content.animated.fadeInRight
+  = render 'form'

@@ -12,6 +12,7 @@ class TipoServicio < ActiveRecord::Base
   has_many :roles
   validates :tipo, inclusion: { in: ['mall','mall_rental', 'mall_condominio']}
   has_many :clientes
+  has_many :precio_servicios
 
   def tipo_humanize
     self.tipo.humanize.titleize

@@ -1,5 +1,7 @@
 Myapp::Application.routes.draw do
 
+  resources :precio_servicios
+
   resources :clientes
 
   resources :venta_diaria
