@@ -87,14 +87,14 @@ calcular_monto_minimo_venta = ->
       value = 0
     else
       value = $('#canon_fijo_tienda').val().replace(',', '')/($(this).val()/100)
-    $('#monto_minimo_tienda').val value.toFixed(2)
+    $('#monto_minimo_tienda').val value.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
 
   $('#canon_fijo_tienda').keyup ->
     if $('#porc_canon_tienda').val() == ''
       value = 0
     else
       value = $(this).val().replace(',', '')/($('#porc_canon_tienda').val()/100)
-      $('#monto_minimo_tienda').val value.toFixed(2)
+      $('#monto_minimo_tienda').val value.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
     $.ajax
       type: "POST"
       url: "/cambio_monedas/mf_cambio_moneda/"
