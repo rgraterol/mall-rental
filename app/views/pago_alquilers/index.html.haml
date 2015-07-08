@@ -20,7 +20,7 @@
                   = select_year(Date.today, options = { :start_year => Time.now.year, :end_year => Time.now.year - 5, :field_name => 'lapso_year'}, :class => 'actualizar_pagos_alquiler')
               .col-md-5
                 = form_tag(@lapso_month, :html => { :class => "form-horizontal" } ) do |f|
-                  = select_month(Date.today, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'select_month', :prefix => 'pagos_alquiler'}, :class => 'actualizar_pagos_alquiler')
+                  = select_month(@month || Date.today, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'select_month', :prefix => 'pagos_alquiler'}, :class => 'actualizar_pagos_alquiler')
           %br
           .row
             .col-md-12
@@ -51,9 +51,9 @@
                     %th.text-center{width: '18%'}
                       Monto x Cobrar
                 %tbody#tbody_pagos_alquiler
-                  - if !@cobranza_alquilers.blank?
+                  - if !@cobranza_alquilers[0][:cobranza].blank?
                     - @cobranza_alquilers.each do |cobranzas|
-                      -cobranzas.each do |cobranza|
+                      -cobranzas[:cobranza].each do |cobranza|
                         - if cobranza.saldo_deudor == 0
                           - @pagado = true
                           - @abonado = false

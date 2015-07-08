@@ -5,16 +5,23 @@ class PagoAlquilersController < ApplicationController
   # GET /pago_alquilers
   # GET /pago_alquilers.json
   def index
+    if params[:year].nil?
+      today = Time.now
+      month = today.strftime("%-m").to_i
+      year = today.strftime("%Y")
+    else
+      month = params[:month]
+      year = params[:year]
+    end
 
     tiendas = current_user.mall.tiendas
-    today = Time.now
-    year = today.strftime("%Y")
-    month = today.strftime("%-m").to_i
 
     @cobranza_alquilers = CobranzaAlquiler.get_cobranza_x_mes_tienda(tiendas,year,month)
     @suma_monto_x_cobrar = CobranzaAlquiler.saldo_deudor_x_mes(tiendas,year,month)
     @suma_monto_alquiler = CobranzaAlquiler.monto_alquiler_x_mes(tiendas,year,month)
     @suma_monto_pagado = @suma_monto_alquiler - @suma_monto_x_cobrar
+    @month = month.to_i
+
   end
 
   # GET /pago_alquilers/1

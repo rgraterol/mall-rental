@@ -39,7 +39,10 @@ class CobranzaAlquiler < ActiveRecord::Base
   def self.get_cobranza_x_mes_tienda(tiendas,year,month)
     cobranzas = Array.new
     tiendas.each do |tienda|
-      cobranzas.push(CobranzaAlquiler.where('anio_alquiler = ? AND mes_alquiler = ? AND tienda_id = ?', year,month,tienda.id))
+      hash_stats = Hash.new
+      hash_stats[:cobranza] = CobranzaAlquiler.where('anio_alquiler = ? AND mes_alquiler = ? AND tienda_id = ?', year,month,tienda.id)
+      hash_stats[:tienda] = tienda
+      cobranzas << hash_stats
     end
     return cobranzas
   end
