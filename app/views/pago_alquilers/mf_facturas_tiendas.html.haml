@@ -1,8 +1,7 @@
 .row.wrapper.border-bottom.white-bg.page-heading
   .col-lg-10
     %h2
-      Nuevo Pago Alquiler:
-      = current_user.tienda.nombre
+      Nuevo Pago Alquiler
 
     %ol.breadcrumb
       %li
@@ -35,8 +34,7 @@
                     = label_tag :tienda do
                       Tienda:
                   .col-md-3
-                    = collection_select :tienda, "id", Tienda.valid_tiendas(current_user), :id, :nombre, {include_blank: 'Seleccione una Tienda'}, {class: 'form-control tabla_fact_tienda'}
-
+                    = collection_select :tienda, "id", Tienda.valid_tiendas(current_user), :id, :nombre, {selected: @tienda_id, include_blank: 'Seleccione una Tienda'}, {class: 'form-control tabla_fact_tienda'}
             .row
               .col-md-12
                 .col-lg-2
@@ -51,26 +49,26 @@
                         %th Pago Total
                         %th Abono
                         %th Monto
-                    %tbody#tbody_facturas_pendientes
-                      - if !@facturas_arr.blank?
-                        - @facturas_arr.each do |facturas|
+                    %tbody.tbody_facturas_pendientes
+                      - if !@facturas_x_pagar.blank?
+                        - @facturas_x_pagar.each do |facturas|
                           %tr
-                            - @id_fact = facturas['factura'].id
+                            - @id_fact = facturas[:factura].id
                             %td
-                              = facturas['factura'].fecha.strftime("%d-%m-%Y")
+                              = facturas[:factura].fecha.strftime("%d-%m-%Y")
                             %td
-                              = facturas['cobranza'].nro_recibo
-                            %td.monto_factura{id: 'monto_factura_'+@id_fact.to_s, valor_campo: facturas['monto']}
-                              = facturas['monto_v']
+                              = facturas[:cobranza].nro_recibo
+                            %td.monto_factura{id: 'monto_factura_'+@id_fact.to_s, valor_campo: facturas[:monto_aux]}
+                              = number_with_delimiter(facturas[:monto_aux])
                             %td
-                              = radio_button_tag 'alquiler_pago','total',false, class: 'alquiler_pago', campo: @id_fact.to_s
+                              = radio_button_tag 'alquiler_pago_'+@id_fact.to_s,'total',false, class: 'alquiler_pago', campo: @id_fact.to_s
                             %td
-                              = radio_button_tag 'alquiler_pago','abono',false, class: 'alquiler_pago', campo: @id_fact.to_s
+                              = radio_button_tag 'alquiler_pago_'+@id_fact.to_s,'abono',false, class: 'alquiler_pago', campo: @id_fact.to_s
                             %td.monto_pago{id: 'monto_pago_'+@id_fact.to_s, valor: 0, campo: @id_fact.to_s}
-                              = f.fields_for :detalle_pago_alquilers, @pago_alquiler.detalle_pago_alquilers.build do |c|
-                                = c.hidden_field :monto_fact, :value => 0
-                                = c.hidden_field :factura_alquiler_id, :value => facturas['factura'].id
-                                = c.hidden_field :cobranza_alquiler_id, :value => facturas['cobranza'].id
+                            = f.fields_for :detalle_pago_alquilers, @pago_alquiler.detalle_pago_alquilers.build do |c|
+                              = c.hidden_field :'monto_fact', :value => 0
+                              = c.hidden_field :factura_alquiler_id, :value => facturas[:factura].id
+                              = c.hidden_field :cobranza_alquiler_id, :value => facturas[:cobranza].id
                       - else
                         %tr
                           %td.text-center{colspan: 6}
@@ -82,15 +80,39 @@
                       %td{colspan: 2, style: "text-align: right"}
                         Por Pagar
                       %td.total_x_pagar
-                        = text_field_tag :total_x_pagar, @total_x_pagar_v, class: 'form-control', readonly: 'readonly'
+                        = text_field_tag :total_x_pagar, number_with_delimiter(@total_x_pagar), class: 'form-control', readonly: 'readonly'
                       %td{colspan: 2, style: "text-align: right"}
                         Total a Pagar
                       %td.total_a_pagar
                         = text_field_tag :total_a_pagar, '', class: 'form-control', readonly: 'readonly', campo: @id_fact.to_s
-
-                %br
+            .row
+              .col-md-12
                 .form-group
-                  = f.label :cuenta_bancaria, "Nro. Cuenta: ", class: 'col-sm-2 control-label'
+                  = label_tag :monto_campo,class: 'col-sm-2 control-label' do
+                    Monto a Pagar:
+                  .col-sm-10
+                    = text_field_tag :monto_campo,{},class: 'form-control monto_numerico', readonly: 'readonly', id: 'monto_cheque'
+                .form-group
+                  = f.label :fecha, "Fecha de Pago:", class: 'col-sm-2 control-label'
+                  .col-sm-10
+                    #datepicker.input-daterange.input-group
+                      = f.text_field :fecha,class: 'input-sm form-control',:value => "#{Date.today.strftime("%d/%m/%Y")}",  id: 'fecha_pago'
+                .form-group
+                  = f.label :tipo_pago, "Forma de Pago: ", class: 'col-sm-2 control-label'
+                  .col-sm-10
+                    = f.select(:tipo_pago, PagoAlquiler.valid_forma_pago.map { |x| [x.humanize.titleize, x]}, {selected: f.object.tipo_pago, include_blank: 'Seleccione una Forma de Pago'}, html_options = {class: 'form-control'})
+                %div#rowNumero{style: (f.object.tipo_pago == 'Cheque') ? '' : 'display:none'}
+                  .form-group
+                    = f.label :nro_cheque_confirmacion, "Nro Cheque:", class: 'col-sm-2 control-label'
+                    .col-sm-10
+                      = f.text_field :nro_cheque_confirmacion, class: "form-control", id: 'input_cheque_nro_confirmacion'
+                %div#rowBanco{style: (f.object.tipo_pago == 'Cheque') ? '' : 'display:none'}
+                  .form-group
+                    = f.label :banco_emisor, "Cheque del Banco:", class: 'col-sm-2 control-label'
+                    .col-sm-10
+                      = f.text_field :banco_emisor, class: "form-control"
+                .form-group
+                  = f.label :cuenta_bancaria, "Nro. Cuenta a Depositar: ", class: 'col-sm-2 control-label'
                   .col-sm-10
                     .group-show
                       = f.select(:cuenta_bancaria_id,{},{include_blank: 'Seleccione la cuenta bancaria'},html_options = {class: "form-control"})  do
@@ -98,28 +120,6 @@
                           = content_tag(:option, c.banco.nombre+'  '+c.nro_cta, value: c.id)
                         - {class: "form-control"}
                 .form-group
-                  = label_tag :monto_campo,class: 'col-sm-2 control-label' do
-                    Monto Transferido (Total a pagar):
-                  .col-sm-10
-                    = text_field_tag :monto_campo,{},class: 'form-control monto_numerico', readonly: 'readonly', id: 'monto_transferido'
-                .form-group
-                  = f.label :fecha, "Fecha Transferencia:", class: 'col-sm-2 control-label'
-                  .col-sm-10
-                    = f.text_field :fecha, class: "input-sm form-control", id: 'fecha_pago'
-                .form-group
-                  = f.label :nro_cheque_confirmacion, "Nro Confirmacion:", class: 'col-sm-2 control-label'
-                  .col-sm-10
-                    = f.text_field :nro_cheque_confirmacion, class: "form-control"
-                -#.form-group
-                -#  = f.label :banco_emisor, "Nombre del Banco Emisor:", class: 'col-sm-2 control-label'
-                -#  .col-sm-10
-                -#    = f.text_field :banco_emisor, class: "form-control"
-                .form-group
-                  = f.label :archivo_transferencia, 'Copia de la Transferencia: ', class: 'col-sm-2 control-label'
-                  .col-sm-10
-                    = render 'shared/file_upload_generic', f: f, field: :archivo_transferencia, name_file: f.object.archivo_transferencia || nil
-                .form-group
                   .col-sm-3.col-sm-offset-9
                     = f.hidden_field :monto, :value => 0
-                    = f.hidden_field :tipo_pago, :value => 'Transferencia'
-                    = f.submit "Guardar", class: "btn btn-warning btn-block"
+                    = f.submit "Guardar", id: "btn_guardar", class: "btn btn-warning btn-block"

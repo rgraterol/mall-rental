@@ -124,7 +124,7 @@ module Dynamic
       render json: [cobranza_alquilers: @cobranza_alquilers, result: true, suma: @suma_alquiler, cont: @cont, suma_x_cobrar: @suma_x_cobrar, suma_monto_pagado: @suma_monto_pagado]
     end
 
-    def facturas_tiendas
+    def mf_facturas_tiendas
       @tienda_id = params[:tienda_id]
       render json: [id: @tienda_id]
     end

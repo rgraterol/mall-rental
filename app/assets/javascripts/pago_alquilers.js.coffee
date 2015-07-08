@@ -137,7 +137,7 @@ $(".actualizar_pagos_alquiler").on "change", ->
           fecha = element.fecha
           monto = element.monto_pagado
 
-          $("#monto_cobrar").val(data[0].suma_x_cobrar)
+          $("#input_suma_monto_x_cobrar").val(data[0].suma_x_cobrar)
           $("#input_suma_monto_alquiler").val(data[0].suma)
           $("#input_suma_monto_pagado").val(data[0].suma_monto_pagado)
 
@@ -153,7 +153,7 @@ $(".actualizar_pagos_alquiler").on "change", ->
             "</tr>")
           $("#tfoot_pagos_alquiler").show()
       else
-        $("#monto_cobrar").val('0,00')
+        $("#input_suma_monto_x_cobrar").val('0,00')
         $("#tfoot_pagos_alquiler").hide()
         $("#tbody_pagos_alquiler").append("<tr><td colspan=8 class='text-center'>No existen registros de pago para este periodo</td></tr>")
 
@@ -279,17 +279,22 @@ calcular_a_pagar = (campo) ->
 
 $("#form_registro_pago_cheque").on
   change:->
-    #$('#tbody_facturas_pendientes').empty()
+    $('.tbody_facturas_pendientes').empty()
     id = $('.tabla_fact_tienda').val()
     $.ajax
       type: "POST"
-      url: "/dynamic_pago_alquilers/mf_facturas_tiendas"
-      dataType: "JSON"
+      #url: "/dynamic_pago_alquilers/mf_facturas_tiendas"
+      url: "/pago_alquilers/facturas_tiendas"
+      dataType: "HTML"
       data:
-        tienda_id: $('.tabla_fact_tienda').val()
+        tienda_id: id
       before_send: $.blockUI({message: 'Por favor espere...'})
       success: (data) ->
-       window.location.href = '/pago_alquilers/mf_facturas_tiendas/'+id
+        html = $('#wrapper')
+        html.empty()
+        html.append(data)
+      error: (data)->
+        console.log(data)
       complete: ->
         $.unblockUI()
   ".tabla_fact_tienda"

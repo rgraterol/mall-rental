@@ -6,34 +6,15 @@ class PagoAlquilersController < ApplicationController
   # GET /pago_alquilers.json
   def index
 
-    @tiendas = current_user.mall.tiendas
-    #@cobranza_alquilers = CobranzaAlquiler.all
-    @cobranza_alquilers = Array.new
-    @today = Time.now
-    @year = @today.strftime("%Y")
-    @month = @today.strftime("%-m").to_i
-    @suma_x_cobrar = 0
-    @suma_monto_alquiler = 0
-    @suma_monto_pagado = 0
+    tiendas = current_user.mall.tiendas
+    today = Time.now
+    year = today.strftime("%Y")
+    month = today.strftime("%-m").to_i
 
-    @tiendas.each do |tienda|
-      @cobranza_alq = CobranzaAlquiler.where('anio_alquiler = ? AND mes_alquiler = ? AND tienda_id = ?', @year,@month,tienda.id)
-
-      if !@cobranza_alq.blank?
-        @cobranza_alquilers.push(@cobranza_alq)
-        @cobranza_alquilers.each do |cobranza|
-          @suma_x_cobrar += cobranza.where('saldo_deudor != ?',0).sum(:saldo_deudor)
-          @suma_monto_alquiler += cobranza.sum(:monto_alquiler)
-          @suma_monto_pagado += (@suma_monto_alquiler - @suma_x_cobrar)
-        end
-      end
-    end
-
-    @suma_x_cobrar = ActionController::Base.helpers.number_to_currency(@suma_x_cobrar, separator: ',', delimiter: '.', format: "%n %u", unit: "")
-    @suma_monto_pag = ActionController::Base.helpers.number_to_currency(@suma_monto_pagado, separator: ',', delimiter: '.', format: "%n %u", unit: "")
-    @suma_monto_alq = ActionController::Base.helpers.number_to_currency(@suma_monto_alquiler, separator: ',', delimiter: '.', format: "%n %u", unit: "")
-
-
+    @cobranza_alquilers = CobranzaAlquiler.get_cobranza_x_mes_tienda(tiendas,year,month)
+    @suma_monto_x_cobrar = CobranzaAlquiler.saldo_deudor_x_mes(tiendas,year,month)
+    @suma_monto_alquiler = CobranzaAlquiler.monto_alquiler_x_mes(tiendas,year,month)
+    @suma_monto_pagado = @suma_monto_alquiler - @suma_monto_x_cobrar
   end
 
   # GET /pago_alquilers/1
@@ -48,63 +29,14 @@ class PagoAlquilersController < ApplicationController
       authorize! :index, root_url, :message => "Debe tener una tienda asignada."
     end
     @local = Local.find(@tienda.local_id)
-    @facturas_array = Array.new()
-    @total_x_pagar = 0
-    @cobranza_alquiler = CobranzaAlquiler.where(tienda_id: @tienda.id)
-    if !@cobranza_alquiler.blank?
-      @cobranza_alquiler.each do |cobranza|
-        @facturas = cobranza.factura_alquilers.where("saldo_deudor > ?", 0)
-        @facturas.each do |factura|
-          @obj = {
-              "cobranza" => cobranza,
-              "factura" => factura,
-              "monto_v" => ActionController::Base.helpers.number_to_currency(factura.saldo_deudor , separator: ',', delimiter: '.', format: "%n %u", unit: ""),
-              "monto" => factura.saldo_deudor,
-          }
-          @total_x_pagar += factura.saldo_deudor
-
-          @facturas_array.push(@obj)
-        end
-      end
-
-    end
+    @facturas_x_pagar = CobranzaAlquiler.get_facturas_x_pagar(@tienda.id)
+    @total_x_pagar = CobranzaAlquiler.saldo_deudor_x_tienda(@tienda.id)
     @pago_alquiler = PagoAlquiler.new
-    @facturas = Array.new()
     @detalle_pago_alquiler = @pago_alquiler.detalle_pago_alquilers.build
-    @total_x_pagar_v = ActionController::Base.helpers.number_to_currency(@total_x_pagar , separator: ',', delimiter: '.', format: "%n %u", unit: "")
   end
 
   def mf_new_cheque_efectivo
-
     @pago_alquiler = PagoAlquiler.new
-    #raise @tienda_id.inspect
-    @tienda_id = params[:id]
-
-    @facturas_array = Array.new()
-    @total_x_pagar = 0
-    @cobranza_alquiler = CobranzaAlquiler.where(tienda_id: @tienda_id)
-    if !@cobranza_alquiler.blank?
-      @cobranza_alquiler.each do |cobranza|
-        @facturas = cobranza.factura_alquilers.where("saldo_deudor > ?", 0)
-        @facturas.each do |factura|
-          @obj = {
-              "cobranza" => cobranza,
-              "factura" => factura,
-              "monto_v" => ActionController::Base.helpers.number_to_currency(factura.saldo_deudor , separator: ',', delimiter: '.', format: "%n %u", unit: ""),
-              "monto" => factura.saldo_deudor,
-          }
-          @total_x_pagar += factura.saldo_deudor
-
-          @facturas_array.push(@obj)
-        end
-      end
-
-    end
-    @pago_alquiler = PagoAlquiler.new
-    @facturas = Array.new()
-    @detalle_pago_alquiler = @pago_alquiler.detalle_pago_alquilers.build
-    @total_x_pagar_v = ActionController::Base.helpers.number_to_currency(@total_x_pagar , separator: ',', delimiter: '.', format: "%n %u", unit: "")
-    @cantidad = @facturas_array.length
   end
 
   # GET /pago_alquilers/1/edit
@@ -114,6 +46,7 @@ class PagoAlquilersController < ApplicationController
   # POST /pago_alquilers
   # POST /pago_alquilers.json
   def create
+
     @pago_alquiler = PagoAlquiler.new(pago_alquiler_params)
     respond_to do |format|
       if @pago_alquiler.save
@@ -158,36 +91,13 @@ class PagoAlquilersController < ApplicationController
 
   def mf_facturas_tiendas
 
-    @tienda_id = params[:id]
-
-    redirect_to(:controller => 'pago_alquilers', :action => 'mf_new_cheque_efectivo', id: @tienda_id)
+    @tienda_id = params[:tienda_id]
     @pago_alquiler = PagoAlquiler.new
+    @detalle_pago_alquiler = @pago_alquiler.detalle_pago_alquilers.build
 
+    @facturas_x_pagar = CobranzaAlquiler.get_facturas_x_pagar(@tienda_id)
+    @total_x_pagar = CobranzaAlquiler.saldo_deudor_x_tienda(@tienda_id)
 
-    @facturas_arr = Array.new
-    @total_x_pagar = 0
-    @cobranza_alquiler = CobranzaAlquiler.where(tienda_id: @tienda_id)
-
-    if !@cobranza_alquiler.blank?
-      @cobranza_alquiler.each do |cobranza|
-        @facturas = cobranza.factura_alquilers.where("saldo_deudor > ?", 0)
-
-        @facturas.each do |factura|
-          @entro = factura.inspect
-
-          @obj = {
-              "cobranza" => cobranza,
-              "factura" => factura,
-              "monto_v" => ActionController::Base.helpers.number_to_currency(factura.saldo_deudor , separator: ',', delimiter: '.', format: "%n %u", unit: ""),
-              "monto" => factura.saldo_deudor,
-          }
-          @total_x_pagar += factura.saldo_deudor
-          @facturas_arr.push(@obj)
-        end
-
-      end
-
-    end
   end
 
   def mf_pagos_mensuales
@@ -227,6 +137,6 @@ class PagoAlquilersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pago_alquiler_params
-      params.require(:pago_alquiler).permit(:nro_recibo, :fecha, :monto, :monto_usd, :nro_cheque_confirmacion, :banco_emisor, :tipo_pago, :cuenta_bancaria_id, detalle_pago_alquilers_params: [:factura_alquiler_id, :monto, :pago_alquiler_id] )
+      params.require(:pago_alquiler).permit(:nro_recibo, :fecha, :monto, :monto_usd, :nro_cheque_confirmacion, :banco_emisor, :tipo_pago, :cuenta_bancarium_id, detalle_pago_alquilers_params: [:factura_alquiler_id, :monto, :pago_alquiler_id] )
     end
 end

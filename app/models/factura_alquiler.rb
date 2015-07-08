@@ -4,4 +4,9 @@ class FacturaAlquiler < ActiveRecord::Base
   belongs_to :cobranza_alquiler
 
   enum estado_factura: [:Por_Cobrar, :Cobrada, :Nula]
+
+
+  def self.get_facturas_x_pagar
+    return self.where("saldo_deudor > ?", 0)
+  end
 end
