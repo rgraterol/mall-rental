@@ -51,36 +51,36 @@
                     %th.text-center{width: '18%'}
                       Monto x Cobrar
                 %tbody#tbody_pagos_alquiler
-                  - if !@cobranza_alquilers[0][:cobranza].blank?
+                  - if !@cobranza_alquilers.blank?
                     - @cobranza_alquilers.each do |cobranzas|
-                      -cobranzas[:cobranza].each do |cobranza|
+                      -cobranzas.each do |cobranza|
                         - if cobranza.saldo_deudor == 0
                           - @pagado = true
                           - @abonado = false
-                          - @monto = cobranza.monto_alquiler
-                          - @monto_pagado = @monto
-                          - @monto_x_cobrar = 0
+                          - monto = cobranza.monto_alquiler
+                          - monto_pagado = monto
+                          - monto_x_cobrar = 0
                         - else
                           - @pagado = false
                           - @abonado = true
-                          - @monto = cobranza.monto_alquiler
-                          - @monto_x_cobrar = cobranza.saldo_deudor
-                          - @monto_pagado = @monto - @monto_x_cobrar
+                          - monto = cobranza.monto_alquiler
+                          - monto_x_cobrar = cobranza.saldo_deudor
+                          - monto_pagado = monto - monto_x_cobrar
                         %tr
                           %td= cobranza.tienda.nombre
                           %td{ :class => 'text-center' }
                             = cobranza.nro_recibo
                           %td= cobranza.fecha_recibo_cobro.strftime("%d/%m/%Y")
                           %td{ :class => 'text-right' }
-                            = number_with_delimiter(@monto)
+                            = number_with_delimiter(monto)
                           %td{ :class => 'text-center' }
                             = check_box_tag 'alquiler_pago', 'Pago Realizado', @pagado, disabled: true
                           %td{ :class => 'text-center' }
                             = check_box_tag 'alquiler_pago', 'Pago Realizado', @abonado, disabled: true
                           %td{ :class => 'text-right' }
-                            = number_with_delimiter(@monto_pagado)
+                            = number_with_delimiter(monto_pagado)
                           %td{ :class => 'text-right' }
-                            = number_with_delimiter(@monto_x_cobrar)
+                            = number_with_delimiter(monto_x_cobrar)
                   - else
                     %tr
                       %td.text-center{colspan: 8}= 'No existen registros de pago para este periodo'

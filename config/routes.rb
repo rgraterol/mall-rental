@@ -101,7 +101,8 @@ Myapp::Application.routes.draw do
   get 'pagos_mensuales_mall'                      => 'pago_alquilers#mf_pagos_mensuales',     as: :pagos_mensuales_mall
   post 'pago_alquilers/facturas_tiendas'          => 'pago_alquilers#mf_facturas_tiendas'
   get 'pago_alquilers/mf_new_cheque_efectivo/:id' => 'pago_alquilers#mf_new_cheque_efectivo'
-  post 'pago_alquilers/actualizar_pagos' => 'pago_alquilers#index'
+  post 'pago_alquilers/actualizar_pagos'          => 'pago_alquilers#index'
+  post 'pago_alquilers/pagos'                     => 'pago_alquilers#pagos'
 
   resources :pago_alquilers
 
@@ -112,7 +113,6 @@ Myapp::Application.routes.draw do
     post 'dynamic_venta_auditoria/auditoria'
     post 'dynamic_ventas_mes/ventas'
     post 'dynamic_pago_alquilers/recibos_cobro'
-    post "/dynamic_pago_alquilers_mensuales/pagos"
     post 'dynamic_add_nivel_mall/guardar'
     post 'dynamic_filter_locals/actualizar'
     post 'dynamic_pago_alquilers/mf_facturas_tiendas'

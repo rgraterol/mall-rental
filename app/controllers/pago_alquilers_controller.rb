@@ -5,6 +5,7 @@ class PagoAlquilersController < ApplicationController
   # GET /pago_alquilers
   # GET /pago_alquilers.json
   def index
+
     if params[:year].nil?
       today = Time.now
       month = today.strftime("%-m").to_i
@@ -14,11 +15,9 @@ class PagoAlquilersController < ApplicationController
       year = params[:year]
     end
 
-    tiendas = current_user.mall.tiendas
-
-    @cobranza_alquilers = CobranzaAlquiler.get_cobranza_x_mes_tienda(tiendas,year,month)
-    @suma_monto_x_cobrar = CobranzaAlquiler.saldo_deudor_x_mes(tiendas,year,month)
-    @suma_monto_alquiler = CobranzaAlquiler.monto_alquiler_x_mes(tiendas,year,month)
+    @cobranza_alquilers = CobranzaAlquiler.get_cobranza_mes_xtienda(current_user.mall,year,month)
+    @suma_monto_x_cobrar = CobranzaAlquiler.saldo_deudor_x_mes(current_user.mall,year,month)
+    @suma_monto_alquiler = CobranzaAlquiler.monto_alquiler_x_mes(current_user.mall,year,month)
     @suma_monto_pagado = @suma_monto_alquiler - @suma_monto_x_cobrar
     @month = month.to_i
 
@@ -108,7 +107,23 @@ class PagoAlquilersController < ApplicationController
   end
 
   def mf_pagos_mensuales
+    year = Time.now.strftime("%Y")
+    mall = current_user.mall
 
+    @cobranzas = CobranzaAlquiler.get_cobranza_xmes(mall,year)
+    @totales = CobranzaAlquiler.get_total_cobranzas_xmes(mall,year)
+
+
+  end
+
+  def pagos
+    year = params[:year]
+    mall = current_user.mall
+
+    @cobranzas = CobranzaAlquiler.get_cobranza_xmes(mall,year)
+    @totales = CobranzaAlquiler.get_total_cobranzas_xmes(mall,year)
+
+    render partial: 'pagos_mensuales'
   end
 
   # PATCH/PUT /pago_alquilers/1

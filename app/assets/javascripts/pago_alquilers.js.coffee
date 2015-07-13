@@ -6,7 +6,7 @@
 
 jQuery(document).ready ($) ->
 
-  $(".actualizar_pagos_mensuales").change()
+  #$(".actualizar_pagos_mensuales").change()
 
   $(".monto_numerico").number(true,2,',','.')
 
@@ -129,29 +129,16 @@ $(".actualizar_pagos_alquiler").on "change", ->
 $(".actualizar_pagos_mensuales").on "change", ->
   $.ajax
     type: "POST"
-    url: "/dynamic_pago_alquilers_mensuales/pagos"
-    dataType: "JSON"
+    url: "/pago_alquilers/pagos"
+    dataType: "HTML"
     data:
       year: $("#date_lapso_year").val()
     before_send: $.blockUI({message: 'Por favor espere...'})
     success: (data) ->
-      if !data[0]['result']
-        $(".texto_cargando").html('No se encontraron datos')
-      else
-        $("#tbody_pagos_mensuales_mall").empty()
-        meses = ['Enero', 'Febrero', 'Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
-        mes_fin = data[0]['mes_actual']-1
-
-        for num in [0..mes_fin]
-          $("#tbody_pagos_mensuales_mall").append("<tr><th>"+meses[num]+"</th><td>"+data[0]['pagos'][num].pagado_canon_fijo+"</td><td>"+data[0]['pagos'][num].pagado_canon_variable+"</td><td>"+data[0]['pagos'][num].total_facturado+"</td><td>"+data[0]['pagos'][num].total_pagado+"</td><td>"+data[0]['pagos'][num].total_pagado_usd+"</td><td>"+data[0]['pagos'][num].monto_cobrar+"</td><td><a href='/ventas_mall_tiendas/2/"+(num+1)+"'>Ver Detalles de Pagos</a></td></tr>")
-
-        $("#suma_total_facturado").text(data[0]['totales']['suma_total_facturado'])
-        $("#suma_pagado_canon_fijo").text(data[0]['totales']['suma_pagado_canon_fijo'])
-        $("#suma_pagado_canon_variable").text(data[0]['totales']['suma_pagado_canon_variable'])
-        $("#suma_total_pagado").text(data[0]['totales']['suma_total_pagado'])
-        $("#suma_total_pagado_usd").text(data[0]['totales']['suma_total_pagado_usd'])
-        $("#suma_monto_x_cobrar").text(data[0]['totales']['suma_monto_x_cobrar'])
-
+      $("#tbody_pagos_mensuales_mall").empty()
+      html = $("#tbody_pagos_mensuales_mall")
+      html.empty()
+      html.append(data)
     error: (data)->
       console.log(data)
     complete: ->
