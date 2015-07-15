@@ -73,58 +73,7 @@ module Dynamic
       render json: [data: @ventas, result: @result, tiendas: @tiendas, ventas_tiendas: @ventas_tiendas]
     end
 
-    def actualizar_pagos
-      @year = params[:year]
-      @month = params[:month]
-      @suma_x_cobrar = 0
-      @suma_monto_alquiler = 0
-      @suma_monto_pagado = 0
-      @tiendas = current_user.mall.tiendas
-      @cobranza_alquilers = Array.new
-      @tiendas.each do |tienda|
-       # @pago_alq = PagoAlquiler.find_by('extract(year from fecha_recibo_cobro) = ? AND extract(month from fecha_recibo_cobro) = ? AND tienda_id = ?', @year,@month,tienda.id)
-        @cobranza_alq = CobranzaAlquiler.where('anio_alquiler = ? AND mes_alquiler = ? AND tienda_id = ?', @year,@month,tienda.id)
-
-        if !@cobranza_alq.blank?
-          @cobranza_alq.each do |cobranza|
-            @monto_alquiler = cobranza.monto_alquiler
-            @suma_monto_alquiler += @monto_alquiler
-
-            @saldo_deudor = cobranza.saldo_deudor
-            @saldo_abonado = @monto_alquiler - @saldo_deudor
-
-            @suma_x_cobrar +=  @saldo_deudor
-            @suma_monto_pagado += @saldo_abonado
-
-            @obj = {
-                'tienda' => tienda.nombre,
-                'nro_recibo' => cobranza.nro_recibo,
-                'fecha' => cobranza.fecha_recibo_cobro.strftime("%d/%m/%Y"),
-                'monto_pagado' => ActionController::Base.helpers.number_to_currency(@saldo_abonado, separator: ',', delimiter: '.', format: "%n %u", unit: ""),
-                'monto_alquiler' => ActionController::Base.helpers.number_to_currency(@monto_alquiler, separator: ',', delimiter: '.', format: "%n %u", unit: ""),
-                'saldo_deudor' => ActionController::Base.helpers.number_to_currency(@saldo_deudor, separator: ',', delimiter: '.', format: "%n %u", unit: ""),
-                'monto_pago' => @saldo_abonado,
-                'monto_x_cobrar' => @saldo_deudor,
-            }
-            @cobranza_alquilers.push(@obj)
-          end
-        end
-      end
-
-
-      if @cobranza_alquilers.blank?
-        @cont = 0
-      else
-        @cont = @cobranza_alquilers.count
-      end
-
-      @suma_alquiler = ActionController::Base.helpers.number_to_currency(@suma_monto_alquiler, separator: ',', delimiter: '.', format: "%n %u", unit: "")
-      @suma_x_cobrar = ActionController::Base.helpers.number_to_currency(@suma_x_cobrar, separator: ',', delimiter: '.', format: "%n %u", unit: "")
-      @suma_monto_pagado = ActionController::Base.helpers.number_to_currency(@suma_monto_pagado, separator: ',', delimiter: '.', format: "%n %u", unit: "")
-      render json: [cobranza_alquilers: @cobranza_alquilers, result: true, suma: @suma_alquiler, cont: @cont, suma_x_cobrar: @suma_x_cobrar, suma_monto_pagado: @suma_monto_pagado]
-    end
-
-    def facturas_tiendas
+    def mf_facturas_tiendas
       @tienda_id = params[:tienda_id]
       render json: [id: @tienda_id]
     end

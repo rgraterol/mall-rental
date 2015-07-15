@@ -1,28 +1,29 @@
-- if !@facturas_arr.blank?
-  - @facturas_arr.each do |facturas|
+- if !@facturas_array.blank?
+  - @facturas_array.each do |facturas|
     %tr
-      - @id_fact = facturas['factura'].id
-      %td
-        = facturas['factura'].fecha.strftime("%d-%m-%Y")
-      %td
-        = facturas['cobranza'].nro_recibo
-      %td.monto_factura{id: 'monto_factura_'+@id_fact.to_s, valor_campo: facturas['monto']}
-        = facturas['monto_v']
-      %td
-        = radio_button_tag 'alquiler_pago','total',false, class: 'alquiler_pago', campo: @id_fact.to_s
-      %td
-        = radio_button_tag 'alquiler_pago','abono',false, class: 'alquiler_pago', campo: @id_fact.to_s
-      %td.monto_pago{id: 'monto_pago_'+@id_fact.to_s, valor: 0, campo: @id_fact.to_s}
-        -# = f.fields_for :detalle_pago_alquilers, @pago_alquiler.detalle_pago_alquilers.build do |c|
-        -# = hidden_field_tag :monto_fact_+@id_fact.to_s, :value => 0
-        -#= c.hidden_field :factura_alquiler_id, :value => facturas['factura'].id
-        -#= c.hidden_field :cobranza_alquiler_id, :value => facturas['cobranza'].id
+      -# @id_fact = facturas
+      -#%td
+      -#  = facturas.fecha.strftime("%d-%m-%Y")
+      -#%td
+      -#  = facturas['cobranza'].nro_recibo
+      -#%td.monto_factura{id: 'monto_factura_'+@id_fact.to_s, valor_campo: facturas['monto']}
+      -#  = facturas['monto_v']
+      -#%td
+      -#  = radio_button_tag 'alquiler_pago_'+@id_fact.to_s,'total',false, class: 'alquiler_pago', campo: @id_fact.to_s
+      -#%td
+      -#  = radio_button_tag 'alquiler_pago_'+@id_fact.to_s,'abono',false, class: 'alquiler_pago', campo: @id_fact.to_s
+      -#%td.monto_pago{id: 'monto_pago_'+@id_fact.to_s, valor: 0, campo: @id_fact.to_s}
+      -#= f.fields_for :detalle_pago_alquilers, @pago_alquiler.detalle_pago_alquilers.build do |c|
+      -#  = c.hidden_field :'monto_fact', :value => 0
+      -#  = c.hidden_field :factura_alquiler_id, :value => facturas['factura'].id
+      -#  = c.hidden_field :cobranza_alquiler_id, :value => facturas['cobranza'].id
+
 - else
   %tr
-    %td.text-center{colspan: 6}
-      %span.text-center.vacio.oculto
-        No se encontraron facturas por pagar
-      %span.text-center.cargando
-        Debe seleccionar una tienda para buscar las Facturas x Pagar
-        = @total_x_pagar
-
+    %td.text-center{colspan: 7}
+      - if @cantidad == 0 && !@tienda_id.nil?
+        %span.text-center.vacio
+          No se encontraron facturas por pagar
+      - else
+        %span.text-center
+          Debe seleccionar una tienda para buscar las Facturas x Pagar

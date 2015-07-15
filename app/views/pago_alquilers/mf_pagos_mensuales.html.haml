@@ -34,41 +34,6 @@
                     %th.text-center Total x Cobrar
                     %th.text-center Acciones
                 %tbody#tbody_pagos_mensuales_mall
-                  %tr
-                    %td.text-center Enero
-                    %td.text-center{rowspan: 12, colspan: 7,style: "vertical-align: middle"}
-                      %span.text-center.texto_cargando{style: "vertical-align: middle"}
-                        Cargando Datos...
-                  %tr
-                    %td.text-center Febrero
-                  %tr
-                    %td.text-center Marzo
-                  %tr
-                    %td.text-center Abril
-                  %tr
-                    %td.text-center Mayo
-                  %tr
-                    %td.text-center Junio
-                  %tr
-                    %td.text-center Julio
-                  %tr
-                    %td.text-center Agosto
-                  %tr
-                    %td.text-center Septiembre
-                  %tr
-                    %td.text-center Octubre
-                  %tr
-                    %td.text-center Noviembre
-                  %tr
-                    %td.text-center Diciembre
-                %tfoot#tfoot-ventas-mall
-                  %tr
-                    %td.text-center TOTAL
-                    %td#suma_pagado_canon_fijo
-                    %td#suma_pagado_canon_variable
-                    %td#suma_total_facturado
-                    %td#suma_total_pagado
-                    %td#suma_total_pagado_usd
-                    %td#suma_monto_x_cobrar
+                  = render 'pagos_mensuales'
 
 
