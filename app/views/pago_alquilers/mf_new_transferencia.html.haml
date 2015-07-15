@@ -37,15 +37,15 @@
                     = label_tag :tienda do
                       Nombre:
                   .col-md-8
-                    = hidden_field_tag :tienda_id, @tienda.id
-                    = text_field_tag :tienda, @tienda.nombre, class: 'form-control', readonly: 'readonly'
+                    = hidden_field_tag :tienda_id, current_user.tienda.id
+                    = text_field_tag :tienda, current_user.tienda.nombre, class: 'form-control', readonly: 'readonly'
               .col-md-4
                 .form-group
                   .col-md-4
                     = label_tag :nro_local do
                       Nro. de Local:
                   .col-md-8
-                    = text_field_tag :nro_local, @local.nro_local, class: 'form-control', readonly: 'readonly'
+                    = text_field_tag :nro_local, current_user.tienda.local.nro_local, class: 'form-control', readonly: 'readonly'
             .row
               .col-lg-2
                 Facturas x Pagar
@@ -62,23 +62,26 @@
                   %tbody.tbody_facturas_pendientes
                     - if !@facturas_x_pagar.blank?
                       - @facturas_x_pagar.each do |facturas|
-                        %tr
-                          - @id_fact = facturas[:factura].id
-                          %td
-                            = facturas[:factura].fecha.strftime("%d-%m-%Y")
-                          %td
-                            = facturas[:cobranza].nro_recibo
-                          %td.monto_factura{id: 'monto_factura_'+@id_fact.to_s, valor_campo: facturas[:monto_aux]}
-                            = number_with_delimiter(facturas[:monto_aux])
-                          %td
-                            = radio_button_tag 'alquiler_pago','total',false, class: 'alquiler_pago', campo: @id_fact.to_s
-                          %td
-                            = radio_button_tag 'alquiler_pago','abono',false, class: 'alquiler_pago', campo: @id_fact.to_s
-                          %td.monto_pago{id: 'monto_pago_'+@id_fact.to_s, valor: 0, campo: @id_fact.to_s}
-                          = f.fields_for :detalle_pago_alquilers, @pago_alquiler.detalle_pago_alquilers.build do |c|
-                            = c.hidden_field :monto_fact, :value => 0
-                            = c.hidden_field :factura_alquiler_id, :value => facturas[:factura].id
-                            = c.hidden_field :cobranza_alquiler_id, :value => facturas[:cobranza].id
+                        - facturas.each do |factura|
+                          %tr
+                            - @id_fact = factura.id
+                            %td
+                              = factura.fecha.strftime("%d-%m-%Y")
+                            %td
+                              = factura.cobranza_alquiler.nro_recibo
+                            %td.monto_factura{id: 'monto_factura_'+@id_fact.to_s, valor_campo: factura.monto_factura}
+                              = number_with_delimiter(factura.monto_factura)
+                            %td.monto_factura{id: 'monto_factura_'+@id_fact.to_s, valor_campo: factura.saldo_deudor}
+                              = number_with_delimiter(factura.saldo_deudor)
+                            %td
+                              = radio_button_tag 'alquiler_pago_'+@id_fact.to_s,'total',false, class: 'alquiler_pago', campo: @id_fact.to_s
+                            %td
+                              = radio_button_tag 'alquiler_pago_'+@id_fact.to_s,'abono',false, class: 'alquiler_pago', campo: @id_fact.to_s
+                            %td.monto_pago{id: 'monto_pago_'+@id_fact.to_s, valor: 0, campo: @id_fact.to_s}
+                            = f.fields_for :detalle_pago_alquilers, @pago_alquiler.detalle_pago_alquilers.build do |c|
+                              = c.hidden_field :'monto_fact', :value => 0
+                              = c.hidden_field :factura_alquiler_id, :value => factura.id
+                              = c.hidden_field :cobranza_alquiler_id, :value => factura.cobranza_alquiler.id
                     - else
                       %tr
                         %td.text-center{colspan: 6}

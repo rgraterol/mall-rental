@@ -5,8 +5,19 @@ class FacturaAlquiler < ActiveRecord::Base
 
   enum estado_factura: [:Por_Cobrar, :Cobrada, :Nula]
 
+  def self.get_facturas_xcobrar_tienda(tienda)
+    cons =  self.where("estado_factura_id = ?", 'Por_Cobrar')
+    raise cons.inspect
+    return cons
+  end
 
   def self.get_facturas_x_pagar
     return self.where("saldo_deudor > ?", 0)
+  end
+
+  def self.get_total_facturado(tienda)
+    return CobranzaAlquiler.where("tienda_id = ? AND saldo_deudor > ?", tienda, 0).sum(:monto_alquiler)
+
+
   end
 end

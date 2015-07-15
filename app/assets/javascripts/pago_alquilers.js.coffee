@@ -221,8 +221,10 @@ calcular_a_pagar = (campo) ->
   $("#monto_transferido").val(suma)
   $("#monto_cheque").val(suma)
   $('#form_registro_pago_cheque').data('bootstrapValidator').updateStatus('monto_campo', 'VALID', null);
+  $('#form_registro_pago_transferencia').data('bootstrapValidator').updateStatus('monto_campo', 'VALID', null);
   #$('#form_registro_pago_cheque').bootstrapValidator('removeField', 'monto_campo');
-  $("#btn_guardar").prop('disabled',false)
+  if monto.val() > 0
+    $("#btn_guardar").prop('disabled',false)
 
   $("#pago_alquiler_monto").val(suma)
 

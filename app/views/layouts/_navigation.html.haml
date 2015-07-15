@@ -124,7 +124,7 @@
             %i.fa.fa-money
             %span.nav-label Recibir Pago de Alquiler
 
-      - if can? :manage, PagoAlquiler #&& current_user.mall_id.present?
+      - if can? :manage, PagoAlquiler && current_user.mall_id.present?
         %li{class: is_active_controller('pago_alquilers')}
           %a{href: '#'}
             %i.fa.fa-cc-visa

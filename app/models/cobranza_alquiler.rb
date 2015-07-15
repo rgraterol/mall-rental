@@ -13,13 +13,7 @@ class CobranzaAlquiler < ActiveRecord::Base
     if !cobranza_alquiler.blank?
       cobranza_alquiler.each do |cobranza|
         facturas = cobranza.factura_alquilers.get_facturas_x_pagar
-        facturas.each do |factura|
-          hash_stats = Hash.new
-          hash_stats[:cobranza] = cobranza
-          hash_stats[:factura] = factura
-          hash_stats[:monto_aux] = factura.saldo_deudor
-          facturas_array << hash_stats
-        end
+        facturas_array.push(facturas)
       end
       return facturas_array
     else
@@ -82,7 +76,6 @@ class CobranzaAlquiler < ActiveRecord::Base
       mes_fin = 12
     end
     cobranzas = Array.new
-
 
     meses = ['Enero', 'Febrero', 'Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
 

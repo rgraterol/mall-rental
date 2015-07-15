@@ -1,5 +1,6 @@
 class PagoAlquilersController < ApplicationController
   before_action :set_pago_alquiler, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
   before_action :check_user_mall
 
   # GET /pago_alquilers
@@ -30,13 +31,14 @@ class PagoAlquilersController < ApplicationController
 
   # GET /pago_alquilers/new
   def mf_new_transferencia
-    @tienda = current_user.tienda
-    if @tienda.blank?
+    tienda = current_user.tienda
+    if tienda.blank?
       authorize! :index, root_url, :message => "Debe tener una tienda asignada."
     end
-    @local = Local.find(@tienda.local_id)
-    @facturas_x_pagar = CobranzaAlquiler.get_facturas_x_pagar(@tienda.id)
-    @total_x_pagar = CobranzaAlquiler.saldo_deudor_x_tienda(@tienda.id)
+    FacturaAlquiler.get_facturas_xcobrar_tienda(tienda)
+    @facturas_x_pagar = CobranzaAlquiler.get_facturas_x_pagar(tienda.id)
+    @total_facturado = FacturaAlquiler.get_total_facturado(tienda.id)
+    @total_x_pagar = CobranzaAlquiler.saldo_deudor_x_tienda(tienda.id)
     @pago_alquiler = PagoAlquiler.new
     @detalle_pago_alquiler = @pago_alquiler.detalle_pago_alquilers.build
   end
@@ -103,6 +105,7 @@ class PagoAlquilersController < ApplicationController
 
     @facturas_x_pagar = CobranzaAlquiler.get_facturas_x_pagar(@tienda_id)
     @total_x_pagar = CobranzaAlquiler.saldo_deudor_x_tienda(@tienda_id)
+    @total_facturado = FacturaAlquiler.get_total_facturado(@tienda_id)
 
   end
 

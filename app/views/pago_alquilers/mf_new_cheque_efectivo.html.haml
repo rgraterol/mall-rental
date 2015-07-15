@@ -47,6 +47,7 @@
                         %th{width: '15%'} Fecha
                         %th Nro Factura
                         %th Monto Factura
+                        %th Saldo Deudor
                         %th Pago Total
                         %th Abono
                         %th Monto
@@ -57,6 +58,8 @@
                         Por Pagar
                       %td.total_x_pagar
                         = text_field_tag :total_x_pagar, @total_x_pagar_v, class: 'form-control', readonly: 'readonly'
+                      %td.total_facturado
+                        = text_field_tag :@total_facturado, number_with_delimiter(@total_facturado), class: 'form-control', readonly: 'readonly'
                       %td{colspan: 2, style: "text-align: right"}
                         Total a Pagar
                       %td.total_a_pagar
