@@ -35,7 +35,7 @@ class PagoAlquilersController < ApplicationController
     if tienda.blank?
       authorize! :index, root_url, :message => "Debe tener una tienda asignada."
     end
-    FacturaAlquiler.get_facturas_xcobrar_tienda(tienda)
+    
     @facturas_x_pagar = CobranzaAlquiler.get_facturas_x_pagar(tienda.id)
     @total_facturado = FacturaAlquiler.get_total_facturado(tienda.id)
     @total_x_pagar = CobranzaAlquiler.saldo_deudor_x_tienda(tienda.id)

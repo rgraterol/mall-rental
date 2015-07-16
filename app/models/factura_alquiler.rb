@@ -6,9 +6,8 @@ class FacturaAlquiler < ActiveRecord::Base
   enum estado_factura: [:Por_Cobrar, :Cobrada, :Nula]
 
   def self.get_facturas_xcobrar_tienda(tienda)
-    cons =  self.where("estado_factura_id = ?", 'Por_Cobrar')
-    raise cons.inspect
-    return cons
+    return self.where("estado_factura_id = ?", 'Por_Cobrar')
+
   end
 
   def self.get_facturas_x_pagar
