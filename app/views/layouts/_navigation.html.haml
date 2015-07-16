@@ -111,7 +111,6 @@
           = link_to cobranza_alquiler_path do
             %i.fa.fa-money
             %span.nav-label Gestión de Cobranza
-
       - if (can? :mf_new_transferencia, PagoAlquiler) && current_user.mall_id.present?
         %li{class: is_active_controller('mf_new_transferencia')}
           = link_to registrar_pago_transferencia_path do
@@ -123,8 +122,7 @@
           = link_to registrar_pago_cheque_efectivo_path do
             %i.fa.fa-money
             %span.nav-label Recibir Pago de Alquiler
-
-      - if can? :manage, PagoAlquiler && current_user.mall_id.present?
+      - if (can? :index, PagoAlquiler) && (current_user.mall_id.present?)
         %li{class: is_active_controller('pago_alquilers')}
           %a{href: '#'}
             %i.fa.fa-cc-visa
