@@ -23,16 +23,14 @@ class VentaDiariaController < ApplicationController
     end
 
     @tienda = Tienda.find(@tienda_id)
-    @local = Local.find(@tienda.local_id)
     @ventas =  VentaDiarium.where(tienda_id: @tienda.id)
     @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
 
-    if @contrato_alquiler.last.tipo_canon_alquiler == 'fijo' || @contrato_alquiler.last.tipo_canon_alquiler == 'variableVB' ||@contrato_alquiler.last.tipo_canon_alquiler == 'fijo_y_variable_venta_bruta'
+    if @contrato_alquiler.last.tipo_canon_alquiler == 'fijo' || @contrato_alquiler.last.tipo_canon_alquiler == 'variableVB' || @contrato_alquiler.last.tipo_canon_alquiler == 'fijo_y_variable_venta_bruta'
       @render = 'venta_bruta'
     else
       @render = 'venta_neta'
     end
-
   end
 
   def mf_cobranza
@@ -55,16 +53,6 @@ class VentaDiariaController < ApplicationController
     @mall = current_user.mall
   end
 
-
-=begin
-  def mes
-
-    @tienda = current_user.mall.tiendas.first
-
-    @venta_diarias_2 = Venta.where(tienda_id: @tienda_id)
-    @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
-  end
-=end
 
   def show
 
