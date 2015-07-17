@@ -36,4 +36,14 @@ class CalendarioNoLaborable < ActiveRecord::Base
 
     return (@mes-@dias)
   end
+
+  def self.is_no_lab(fecha,mall)
+    return CalendarioNoLaborable.find_by('fecha = ? AND mall_id = ?',fecha,mall)
+
+  end
+
+  def self.cantidad_dias_no_lab(mall,mes,year)
+    return CalendarioNoLaborable.where('extract(year from fecha) = ? AND extract(month from fecha) = ? AND mall_id = ?', year,mes,mall).count()
+  end
+
 end

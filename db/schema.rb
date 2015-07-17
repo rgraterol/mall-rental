@@ -448,7 +448,7 @@ ActiveRecord::Schema.define(version: 20150703082842) do
 
   add_index "venta_diaria", ["venta_mensual_id"], name: "index_venta_diaria_on_venta_mensual_id", using: :btree
 
-  create_table "venta_mensuals", force: true do |t|
+  create_table "venta_mensual", force: true do |t|
     t.integer  "anio"
     t.integer  "mes"
     t.float    "monto"

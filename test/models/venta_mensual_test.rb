@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: venta_mensuals
+# Table name: venta_mensual
 #
 #  id                  :integer          not null, primary key
 #  anio                :integer

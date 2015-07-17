@@ -2,17 +2,19 @@ class VentaDiariaController < ApplicationController
   before_action :set_venta_diarium, only: [:show, :edit, :update, :destroy]
 
   def index
-    @user_tienda = current_user.tienda
-    if @user_tienda.blank?
-      authorize! :index, root_url, :message => "Debe tener una tienda asignada."
-    end
+    # @user_tienda = current_user.tienda
+    # if @user_tienda.blank?
+    #   authorize! :index, root_url, :message => "Debe tener una tienda asignada."
+    # end
 
+    @today = Time.now
+    @year = @today.strftime("%Y")
     @tienda_id = params[:tienda_id]
+
     if !(params[:month].nil?)
       @month = params[:month]
-      @today = Time.now
-      @year == @today.strftime("%Y")
-      @month = Date.new(@year.to_i,@month.to_i,1)
+    else
+      @month = @today.strftime("%m")
     end
 
     if @tienda_id.nil?
@@ -23,9 +25,8 @@ class VentaDiariaController < ApplicationController
     end
 
     @tienda = Tienda.find(@tienda_id)
-    @ventas =  VentaDiarium.where(tienda_id: @tienda.id)
-    @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
 
+    @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
     if @contrato_alquiler.last.tipo_canon_alquiler == 'fijo' || @contrato_alquiler.last.tipo_canon_alquiler == 'variableVB' || @contrato_alquiler.last.tipo_canon_alquiler == 'fijo_y_variable_venta_bruta'
       @render = 'venta_bruta'
     else

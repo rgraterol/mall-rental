@@ -5,6 +5,7 @@ module Dynamic
     def auditoria
       @year = params[:year]
       @month = params[:month]
+      @tienda_id = params[:tienda_id]
 
       @suma_canon_ventas = 0
       @suma_canon_fijo = 0
@@ -18,7 +19,6 @@ module Dynamic
         @tienda_locals = Tienda.where("local_id= ? AND abierta= ?", local.id, true).first
         if !@tienda_locals.blank?
           @contrato_alquiler = ContratoAlquiler.where(tienda_id: (@tienda_locals.id))
-          #raise @contrato_alquiler.first.tipo_canon_alquiler.tipo.inspect
           if @contrato_alquiler.first.tipo_canon_alquiler.tipo != 'exonerado'
             @obj = {
                 'tienda' => @tienda_locals,

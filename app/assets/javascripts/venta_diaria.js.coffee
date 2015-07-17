@@ -12,7 +12,6 @@ jQuery(document).ready ($) ->
 
 
 $(".actualizar_ventas").on "change", ->
-  console.log(".actualizar_ventas")
   $.ajax
     type: "POST"
     url: "/dynamic_venta_diaria/venta"
@@ -46,7 +45,7 @@ $(".actualizar_ventas").on "change", ->
           @clase_3 = ''
           @title = 'Campo no editable'
 
-        if element.id == '-1'
+        if element.id == -1
           @opcion = 'new'
         else
           @opcion = 'update'
@@ -462,12 +461,13 @@ $("#btn_cerrar_mes_venta").on "click", ->
         month: month
         tienda: tienda
       success: (data) ->
-        console.log(data)
         if data[0]['result'] == 1
           mensaje = 'mensaje_cierre'
         else
-          mensaje = 'mensaje_ya_cerro'
-
+          if data[0]['result'] == 2
+            mensaje = 'mensaje_ya_cerro'
+          else
+            mensaje = 'mensaje_no_puede_cerrar'
         $.blockUI({
           message: $('div.growlUI.'+mensaje),
           fadeIn: 700,

@@ -8,8 +8,6 @@ Myapp::Application.routes.draw do
 
   resources :documento_ventas
 
-  resources :venta_mensuals
-
   resources :plantilla_contrato_alquilers
 
   resources :cuenta_bancaria
