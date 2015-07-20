@@ -201,4 +201,25 @@ class Tienda < ActiveRecord::Base
     end
     return estadisticas
   end
+
+  def self.get_ventas_xtienda(mall,anio,mes)
+    ventas = Array.new
+
+    mall.tiendas.each do |tienda|
+      tipo_canon = ContratoAlquiler.get_tipo_canon(tienda)
+      venta_mes = VentaMensual.suma_venta_mes(tienda,anio,mes)
+      canon_fijo = CobranzaAlquiler.get_canon_fijo(tienda,anio,mes)
+      canon_variable = CobranzaAlquiler.get_canon_variable(tienda,anio,mes)
+      hash_stats = Hash.new
+      hash_stats[:tienda] = tienda
+      hash_stats[:tipo_canon] = tipo_canon
+      hash_stats[:venta_mes] = venta_mes
+      hash_stats[:canon_fijo] = canon_fijo
+      hash_stats[:canon_variable] = canon_variable
+      hash_stats[:total_canon] = canon_fijo + canon_variable
+
+      ventas << hash_stats
+    end
+    return ventas
+  end
 end

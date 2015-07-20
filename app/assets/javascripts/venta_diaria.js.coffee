@@ -269,6 +269,7 @@ $("#btn_save_venta").on "click", ->
             else
               console.log(data)
           error: (data)->
+            $.unblockUI()
             console.log(data)
 
   else
@@ -333,6 +334,7 @@ $(".actualizar_auditoria_ventas").on "change", ->
 
       $("#tbody_auditoria_ventas").empty()
       $("#tbody_mall_ventas").empty()
+
       for element, index in data[0]['tiendas']
         @cadena_check = "title='Falta Registrar Ventas'"
         @cadena_recibo =  "title='Falta Enviarle Recibo de Cobro'"
@@ -343,8 +345,8 @@ $(".actualizar_auditoria_ventas").on "change", ->
 
         $("#tbody_auditoria_ventas").append("<tr><td>"+element.tienda+"</td><td>"+element.actividad_economica+"</td>" +
           "<td>"+element.local+"</td>" +
-          "<td>"+element.tipo_canon.tipo+"</td><td class='clase_monto'>"+element.canon_fijo+"</td>" +
-          "<td class='clase_monto'>"+element.ventas_mes+"</td><td class='clase_monto'>"+element.canon_x_ventas+"</td>" +
+          "<td>"+element.tipo_canon+"</td><td class='clase_monto'>"+element.canon_fijo+"</td>" +
+          "<td class='clase_monto'>"+element.ventas_mes+"</td><td class='clase_monto'>"+element.canon_variable+"</td>" +
           "<td class='clase_monto'>"+element.total_canon+"</td>" +
           "<td><input type='checkbox' disabled='disabled' name='ventas_actualizadas' value='"+element.tienda_id+"' "+@cadena_check+" /></td>" +
           "<td><input type='checkbox' name='recibo_cobro_"+element.tienda_id+"' disabled='disabled' "+@cadena_recibo+" /></td>" +
@@ -352,8 +354,8 @@ $(".actualizar_auditoria_ventas").on "change", ->
 
         $("#tbody_mall_ventas").append("<tr><td>"+element.tienda+"</td><td>"+element.actividad_economica+"</td>" +
           "<td>"+element.local+"</td><td>"+element.nivel_ubicacion+"</td>" +
-          "<td>"+element.tipo_canon.tipo+"</td><td class='clase_monto'>"+element.monto_venta_bruto+"</td>" +
-          "<td class='clase_monto'>"+element.canon_fijo+"</td><td class='clase_monto'>"+element.canon_x_ventas+"</td>" +
+          "<td>"+element.tipo_canon+"</td><td class='clase_monto'>"+element.ventas_mes+"</td>" +
+          "<td class='clase_monto'>"+element.canon_fijo+"</td><td class='clase_monto'>"+element.canon_variable+"</td>" +
           "<td class='clase_monto'>"+element.total_canon+"</td>" +
           "<td><a href='/ventas_tiendas/"+element.tienda_id+"/"+data[0]['mes']+"'>Ver Ventas diarias</a></td></tr>")
 
@@ -374,10 +376,10 @@ $(".actualizar_ventas_mes").on "change", ->
     success: (data) ->
       $("#tbody-ventas-mall").empty()
       meses = ['Enero', 'Febrero', 'Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
-      mes_fin = data[0]['mes_actual']-1
-      console.log(data)
+      mes_fin = data[0]['ventas'][0].mes_fin
+      console.log(data[0]['ventas'][0].mes_fin)
       for num in [0..mes_fin]
-        $("#tbody-ventas-mall").append("<tr><th>"+meses[num]+"</th><td>"+data[0]['ventas'][num].venta_mensual+"</td><td>"+data[0]['ventas'][num].canon_fijo+"</td><td>"+data[0]['ventas'][num].canon_x_ventas+"</td><td>"+data[0]['ventas'][num].total_mes_canon+"</td></tr>")
+        $("#tbody-ventas-mall").append("<tr><th>"+ data[0]['ventas'][num].mes+"</th><td>"+data[0]['ventas'][num].suma_venta+"</td><td>"+data[0]['ventas'][num].canon_fijo+"</td><td>"+data[0]['ventas'][num].canon_variable+"</td><td>"+data[0]['ventas'][num].canon+"</td></tr>")
 
       $("#suma_total").text(data[0]['suma_total'])
       $("#total_canon_fijo").text(data[0]['total_canon_fijo'])
@@ -385,6 +387,7 @@ $(".actualizar_ventas_mes").on "change", ->
       $("#total_canons").text(data[0]['total_canons'])
 
     error: (data)->
+      $.unblockUI()
       console.log(data)
     complete: ->
       $.unblockUI()

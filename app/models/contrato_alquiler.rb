@@ -37,7 +37,6 @@ class ContratoAlquiler < ActiveRecord::Base
 
   # enum tipo_canon_alquiler: [:fijo, :variableVB, :variableVN, :fijo_y_variable_venta_bruta, :fijo_y_variable_venta_neta, :exonerado]
 
-
   def clean_canon_alquiler
     if self.tipo_canon_alquiler.tipo == "fijo"
       self.canon_fijo_usd = self.canon_fijo_ml / CambioMoneda.last.cambio_ml_x_usd
@@ -133,4 +132,27 @@ class ContratoAlquiler < ActiveRecord::Base
       }
     return  @obj
   end
+
+  def self.get_contrato_vigente(tienda)
+    return self.where("estado_contrato = ? AND tienda_id = ?",true,tienda)
+  end
+
+  def self.get_tipo_canon(tienda)
+    return self.find_by("estado_contrato = ? AND tienda_id = ?",true,tienda).tipo_canon_alquiler.tipo_nombre
+  end
+
+
+
+=begin
+  def self.get_canons_xmes(mall,year,mes)
+    canon_fijo = 0
+    canon_variable = 0
+    suma_canons = 0
+    canons = Array.new
+    mall.tiendas do |tienda|
+      contrato = ContratoAlquiler.get_contrato_vigente(tienda)
+      canon_fijo = contrato.canon_fijo
+      canon_variable = contrato.monto_canon_variable
+  end
+=end
 end
