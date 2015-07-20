@@ -322,7 +322,7 @@ $(".actualizar_auditoria_ventas").on "change", ->
       month: $("#venta_diaria_select_month").val()
     before_send: $.blockUI({message: 'Por favor espere...'})
     success: (data) ->
-      value = data[0]['total_ventas']
+      value = data[0]['monto_venta']
       $("#total_ventas_mes").val(value)
       $("#total_ventas_mes").number(true,2,',','.')
       value2 = data[0]['total_ventas_bruto']

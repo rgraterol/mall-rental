@@ -204,12 +204,15 @@ class Tienda < ActiveRecord::Base
 
   def self.get_ventas_xtienda(mall,anio,mes)
     ventas = Array.new
-
+    suma_ventas_tiendas = 0
     mall.tiendas.each do |tienda|
       tipo_canon = ContratoAlquiler.get_tipo_canon(tienda)
+      venta_mensual = VentaMensual.get_venta_mes_tienda(tienda,anio,mes)
       venta_mes = VentaMensual.suma_venta_mes(tienda,anio,mes)
+      suma_ventas_tiendas += venta_mes
       canon_fijo = CobranzaAlquiler.get_canon_fijo(tienda,anio,mes)
       canon_variable = CobranzaAlquiler.get_canon_variable(tienda,anio,mes)
+      tiene_cobranza_alquiler = CobranzaAlquiler.tiene_cobranza(tienda,anio,mes)
       hash_stats = Hash.new
       hash_stats[:tienda] = tienda
       hash_stats[:tipo_canon] = tipo_canon
@@ -217,7 +220,8 @@ class Tienda < ActiveRecord::Base
       hash_stats[:canon_fijo] = canon_fijo
       hash_stats[:canon_variable] = canon_variable
       hash_stats[:total_canon] = canon_fijo + canon_variable
-
+      hash_stats[:tiene_cobranza_mes] = tiene_cobranza_alquiler
+      hash_stats[:suma_ventas_tiendas] = suma_ventas_tiendas
       ventas << hash_stats
     end
     return ventas

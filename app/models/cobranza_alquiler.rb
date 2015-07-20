@@ -70,6 +70,15 @@ class CobranzaAlquiler < ActiveRecord::Base
 
   end
 
+  def self.tiene_cobranza(tienda,anio,mes)
+    cobranza = CobranzaAlquiler.find_by('anio_alquiler = ? AND mes_alquiler = ? AND tienda_id = ?', anio,mes,tienda.id)
+    if !cobranza.nil?
+      return true
+    else
+      return false
+    end
+  end
+
   def self.saldo_deudor_x_mes(mall,year,month)
     saldo = 0
     tiendas = mall.tiendas
