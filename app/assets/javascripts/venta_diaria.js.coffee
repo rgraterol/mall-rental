@@ -322,15 +322,15 @@ $(".actualizar_auditoria_ventas").on "change", ->
       month: $("#venta_diaria_select_month").val()
     before_send: $.blockUI({message: 'Por favor espere...'})
     success: (data) ->
-      value = data[0]['monto_venta']
+      value = data[0]['total_ventas']
       $("#total_ventas_mes").val(value)
       $("#total_ventas_mes").number(true,2,',','.')
       value2 = data[0]['total_ventas_bruto']
       $("#total_ventas_mes_bruto").val(value2)
-      $("#total_ventas_mes_bruto").number(true,2,',','.')
+      $("#total_ventas_mes_bruto").number(value2,2,',','.')
       $("#monto_canon_fijo").val(data[0]['suma_canon_fijo'])
-      $("#monto_canon_x_venta").val(data[0]['suma_canon_ventas'])
-      $("#total_canon").val(data[0]['total'])
+      $("#monto_canon_x_venta").val(data[0]['suma_canon_variable'])
+      $("#total_canon").val(data[0]['suma_total_canon'])
 
       $("#tbody_auditoria_ventas").empty()
       $("#tbody_mall_ventas").empty()
@@ -354,7 +354,7 @@ $(".actualizar_auditoria_ventas").on "change", ->
 
         $("#tbody_mall_ventas").append("<tr><td>"+element.tienda+"</td><td>"+element.actividad_economica+"</td>" +
           "<td>"+element.local+"</td><td>"+element.nivel_ubicacion+"</td>" +
-          "<td>"+element.tipo_canon+"</td><td class='clase_monto'>"+element.ventas_mes+"</td>" +
+          "<td>"+element.tipo_canon+"</td><td class='clase_monto'>"+element.ventas_bruto_mes+"</td>" +
           "<td class='clase_monto'>"+element.canon_fijo+"</td><td class='clase_monto'>"+element.canon_variable+"</td>" +
           "<td class='clase_monto'>"+element.total_canon+"</td>" +
           "<td><a href='/ventas_tiendas/"+element.tienda_id+"/"+data[0]['mes']+"'>Ver Ventas diarias</a></td></tr>")

@@ -50,7 +50,7 @@ class CobranzaAlquiler < ActiveRecord::Base
     return CobranzaAlquiler.where(tienda_id: tienda_id).sum(:saldo_deudor)
   end
 
-  def self.get_canon_fijo(tienda,anio, mes)
+  def self.get_canon_fijo(tienda,anio,mes)
     cobranza = CobranzaAlquiler.find_by('anio_alquiler = ? AND mes_alquiler = ? AND tienda_id = ?', anio,mes,tienda.id)
     if !cobranza.nil?
       return cobranza.monto_canon_fijo

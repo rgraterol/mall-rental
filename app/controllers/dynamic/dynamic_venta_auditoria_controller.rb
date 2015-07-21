@@ -7,10 +7,10 @@ module Dynamic
       @month = params[:month]
 
       ventas_mall_tiendas = Tienda.get_ventas_xtienda(current_user.mall,@year,@month)
-
+      obj = obj
       array_tienda = Array.new
-
-      (0 .. ventas_mall_tiendas.count()-1).each do |pos|
+      cant = ventas_mall_tiendas.count()-1
+      (0 .. cant).each do |pos|
         venta = ventas_mall_tiendas[pos][:tienda]
 
         obj = {
@@ -22,7 +22,7 @@ module Dynamic
             'tipo_canon' => ventas_mall_tiendas[pos][:tipo_canon],
             'canon_fijo' => ActionController::Base.helpers.number_to_currency(ventas_mall_tiendas[pos][:canon_fijo], separator: ',', delimiter: '.', format: "%n %u", unit: ""),
             'canon_variable' => ActionController::Base.helpers.number_to_currency(ventas_mall_tiendas[pos][:canon_variable], separator: ',', delimiter: '.', format: "%n %u", unit: ""),
-            'ventas_mes' => ActionController::Base.helpers.number_to_currency(ventas_mall_tiendas[pos][:venta_mes], separator: ',', delimiter: '.', format: "%n %u", unit: ""),
+            'ventas_bruto_mes' => ActionController::Base.helpers.number_to_currency(ventas_mall_tiendas[pos][:ventas_bruto_mes], separator: ',', delimiter: '.', format: "%n %u", unit: ""),
             'total_canon' => ActionController::Base.helpers.number_to_currency(ventas_mall_tiendas[pos][:total_canon], separator: ',', delimiter: '.', format: "%n %u", unit: ""),
             # 'actualizada' => @actualizada,
             'recibos_cobro' => ventas_mall_tiendas[pos][:tiene_cobranza_mes],
@@ -36,11 +36,13 @@ module Dynamic
       end
 
       # @total_s = @suma_canon_fijo + @suma_canon_ventas
-      # @total_t = ActionController::Base.helpers.number_to_currency(@total_s, separator: ',', delimiter: '.', format: "%n %u", unit: "")
-      # @suma_canon_ventas = ActionController::Base.helpers.number_to_currency(@suma_canon_ventas, separator: ',', delimiter: '.', format: "%n %u", unit: "")
-      # @suma_canon_fijo = ActionController::Base.helpers.number_to_currency(@suma_canon_fijo, separator: ',', delimiter: '.', format: "%n %u", unit: "")
+      total_ventas = ActionController::Base.helpers.number_to_currency(ventas_mall_tiendas[cant][:suma_ventas_tiendas], separator: ',', delimiter: '.', format: "%n %u", unit: "")
+      suma_monto_venta_bruto = ActionController::Base.helpers.number_to_currency(ventas_mall_tiendas[cant][:suma_ventas_bruto_tiendas], separator: ',', delimiter: '.', format: "%n %u", unit: "")
+      suma_canon_fijo = ActionController::Base.helpers.number_to_currency(ventas_mall_tiendas[cant][:suma_canon_fijo], separator: ',', delimiter: '.', format: "%n %u", unit: "")
+      suma_canon_variable = ActionController::Base.helpers.number_to_currency(ventas_mall_tiendas[cant][:suma_canon_variable], separator: ',', delimiter: '.', format: "%n %u", unit: "")
+      suma_total_canon = ActionController::Base.helpers.number_to_currency(ventas_mall_tiendas[cant][:suma_total_canon], separator: ',', delimiter: '.', format: "%n %u", unit: "")
 
-      render json: [ result: true, cont: @cantidad_dias_laborables, tiendas: array_tienda, suma_canon_ventas: @suma_canon_ventas, suma_canon_fijo: @suma_canon_fijo, total: @total_t, total_ventas: @total_ventas, tiendas_cont: @contrato_alquiler, mes: @month, total_ventas_bruto: @suma_monto_venta_bruto]
+      render json: [ result: true, cont: @cantidad_dias_laborables, tiendas: array_tienda, suma_canon_variable: suma_canon_variable, suma_canon_fijo: suma_canon_fijo, suma_total_canon: suma_total_canon, total_ventas: total_ventas, tiendas_cont: @contrato_alquiler, mes: @month, total_ventas_bruto: suma_monto_venta_bruto]
     end
   end
 end
