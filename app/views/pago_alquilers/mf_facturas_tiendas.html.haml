@@ -62,7 +62,7 @@
                                 = factura.cobranza_alquiler.nro_recibo
                               %td.monto_factura{id: 'monto_factura_'+id_fact.to_s, valor_campo: factura.monto_factura}
                                 = number_with_delimiter(factura.monto_factura)
-                              %td.monto_factura{id: 'monto_factura_'+id_fact.to_s, valor_campo: factura.saldo_deudor}
+                              %td.monto_deudor{id: 'monto_deudor_'+id_fact.to_s, valor_campo: factura.saldo_deudor}
                                 = number_with_delimiter(factura.saldo_deudor)
                               %td
                                 = radio_button_tag 'alquiler_pago_'+id_fact.to_s,'total',false, class: 'alquiler_pago', campo: id_fact.to_s

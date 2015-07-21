@@ -54,6 +54,25 @@ class VentaMensual < ActiveRecord::Base
     end
   end
 
+  def self.monto_neto_mes(tienda,year,month)
+    venta_mensual = get_venta_mes_tienda(tienda,year,month)
+    if venta_mensual.nil?
+      return 0
+    else
+      return venta_mensual.monto_neto
+    end
+  end
+
+  def self.get_is_editable(tienda,anio,mes)
+    venta_mensual = get_venta_mes_tienda(tienda,anio,mes)
+    if venta_mensual.nil?
+      return true
+    else
+      return venta_mensual.editable
+    end
+  end
+
+
   def self.suma_monto_bruto(mall,year)
     suma = 0
     mall.tiendas.each do |tienda|

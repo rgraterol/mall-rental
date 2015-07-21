@@ -174,9 +174,10 @@ $(".tbody_facturas_pendientes").on
     campo = $(this).attr('campo')
     valor = $(this).val()
     factura = $("#monto_factura_"+campo).text()
-    monto = $("#monto_factura_"+campo).attr('valor_campo')
+    deudor = $("#monto_deudor_"+campo).text()
+    monto = $("#monto_deudor_"+campo).attr('valor_campo')
     if valor == 'total'
-      $("#monto_pago_"+campo).text(factura)
+      $("#monto_pago_"+campo).text(deudor)
       $("#monto_pago_"+campo).attr('valor',monto)
       calcular_a_pagar(campo)
     else
@@ -194,16 +195,18 @@ $(".tbody_facturas_pendientes").on
     elemento = $('#monto_pago_'+campo)
     factura = $("#monto_factura_"+campo).text()
     monto_factura = $("#monto_factura_"+campo).attr('valor_campo')
-    if parseFloat($(this).val()) < parseFloat(monto_factura)
+    deudor = $("#monto_deudor_"+campo).text()
+    monto_deudor = $("#monto_deudor_"+campo).attr('valor_campo')
+    if parseFloat($(this).val()) < parseFloat(monto_deudor)
       elemento.attr('valor',$(this).val())
       $('#pago_alquiler_detalle_pago_alquilers_attributes_0_monto_fact').val($(this).val())
       calcular_a_pagar(campo)
     else
-      if parseFloat($(this).val()) == parseFloat(monto_factura)
-        alert('El monto de abono no debe ser igual al total de la factura')
+      if parseFloat($(this).val()) == parseFloat(monto_deudor)
+        alert('El monto de abono no debe ser igual al total de lo que debe')
       else
-        if parseFloat($(this).val()) > parseFloat(monto_factura)
-          alert('El monto de abono no debe ser mayor al de la factura')
+        if parseFloat($(this).val()) > parseFloat(monto_deudor)
+          alert('El monto de abono no debe ser mayor al monto que debe')
       $(this).val($(this).val().substring(0, $(this).val().length-1))
   ".editar_monto_pago input"
 

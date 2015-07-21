@@ -271,7 +271,6 @@ $("#btn_save_venta").on "click", ->
           error: (data)->
             $.unblockUI()
             console.log(data)
-
   else
     $.blockUI({
       message: $('div.growlUI.mensaje'),
@@ -322,9 +321,12 @@ $(".actualizar_auditoria_ventas").on "change", ->
       month: $("#venta_diaria_select_month").val()
     before_send: $.blockUI({message: 'Por favor espere...'})
     success: (data) ->
-      value = data[0]['total_ventas']
+      value = data[0]['suma_total_ventas']
       $("#total_ventas_mes").val(value)
-      $("#total_ventas_mes").number(true,2,',','.')
+      $("#total_ventas_mes").number(value,2,',','.')
+      value1 = data[0]['total_ventas_neta']
+      $("#total_ventas_neta_mes").val(value)
+      $("#total_ventas_neta_mes").number(value,2,',','.')
       value2 = data[0]['total_ventas_bruto']
       $("#total_ventas_mes_bruto").val(value2)
       $("#total_ventas_mes_bruto").number(value2,2,',','.')
@@ -338,7 +340,7 @@ $(".actualizar_auditoria_ventas").on "change", ->
       for element, index in data[0]['tiendas']
         @cadena_check = "title='Falta Registrar Ventas'"
         @cadena_recibo =  "title='Falta Enviarle Recibo de Cobro'"
-        if element.editable_mensual
+        if !element.editable
           @cadena_check = "checked title='Ventas Actualizadas'"
         if element.recibos_cobro
           @cadena_recibo = "checked title='Recibo Cobro Enviado'"
@@ -346,7 +348,7 @@ $(".actualizar_auditoria_ventas").on "change", ->
         $("#tbody_auditoria_ventas").append("<tr><td>"+element.tienda+"</td><td>"+element.actividad_economica+"</td>" +
           "<td>"+element.local+"</td>" +
           "<td>"+element.tipo_canon+"</td><td class='clase_monto'>"+element.canon_fijo+"</td>" +
-          "<td class='clase_monto'>"+element.ventas_mes+"</td><td class='clase_monto'>"+element.canon_variable+"</td>" +
+          "<td class='clase_monto'>"+element.total_monto_ventas+"</td><td class='clase_monto'>"+element.canon_variable+"</td>" +
           "<td class='clase_monto'>"+element.total_canon+"</td>" +
           "<td><input type='checkbox' disabled='disabled' name='ventas_actualizadas' value='"+element.tienda_id+"' "+@cadena_check+" /></td>" +
           "<td><input type='checkbox' name='recibo_cobro_"+element.tienda_id+"' disabled='disabled' "+@cadena_recibo+" /></td>" +

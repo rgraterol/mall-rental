@@ -28,9 +28,18 @@ module Dynamic
     def guardar_ventas
       fecha = params[:fecha]
       valor = params[:valor]
+      if params[:nota_credito].nil?
+        nota_credito = 0
+      else
+        nota_credito = params[:nota_credito]
+      end
 
-      nota_credito = 0 if params[:nota_credito].nil?
-      costo_venta = 0 if params[:costo_venta].nil?
+      if params[:costo_venta].nil?
+        costo_venta = 0
+      else
+        costo_venta = params[:costo_venta]
+      end
+
       valor_bruto = valor.to_f - nota_credito.to_f
       venta_neta = valor_bruto - costo_venta.to_f
       valor_usd = valor_bruto.to_f / CambioMoneda.last.cambio_ml_x_usd
@@ -52,9 +61,9 @@ module Dynamic
         end
       else
         id_mensual = venta_mensual.id
-        suma_venta = VentaMensual.suma_venta_mes(tienda,year,month)
-        suma_notas_credito = VentaMensual.suma_notas_credito_mes(tienda,year,month)
-        suma_costo_venta = VentaMensual.suma_costo_venta_mes(tienda,year,month)
+        suma_venta = VentaMensual.suma_venta_mes(tienda_id,year,month)
+        suma_notas_credito = VentaMensual.suma_notas_credito_mes(tienda_id,year,month)
+        suma_costo_venta = VentaMensual.suma_costo_venta_mes(tienda_id,year,month)
         monto_bruto = suma_venta - suma_notas_credito
         monto_bruto_usd = monto_bruto / CambioMoneda.last.cambio_ml_x_usd
         suma_venta_neta = monto_bruto - suma_costo_venta
@@ -65,6 +74,7 @@ module Dynamic
         venta = VentaDiarium.new(fecha: fecha, monto: valor, monto_notas_credito: nota_credito, monto_bruto: valor_bruto, monto_bruto_usd: valor_usd, monto_costo_venta: costo_venta, monto_neto: venta_neta, monto_neto_usd: venta_neta_usd, venta_mensual_id: id_mensual)
         respond_to do |format|
           if venta.save
+
             suma_venta = VentaDiarium.suma_ventas_diarias(id_mensual)
             suma_notas_credito = VentaDiarium.suma_notas_credito(id_mensual)
             suma_costo_venta = VentaDiarium.suma_costo_venta(id_mensual)
@@ -153,7 +163,7 @@ module Dynamic
 
           if !ventas_dia.blank?
             monto_notas_c = ventas_dia.monto_notas_credito if !ventas_dia.monto_notas_credito.nil?
-            venta_bruta = ventas_dia.monto - monto_notas_c
+            venta_bruta = ventas_dia.monto - (monto_notas_c || 0)
             ventas_dia.monto_costo_venta = 0 if ventas_dia.monto_costo_venta.nil?
             venta_neta = venta_bruta - ventas_dia.monto_costo_venta
             editable = ventas_dia.editable if venta_mensual.editable

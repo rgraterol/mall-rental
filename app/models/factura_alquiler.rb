@@ -16,7 +16,5 @@ class FacturaAlquiler < ActiveRecord::Base
 
   def self.get_total_facturado(tienda)
     return CobranzaAlquiler.where("tienda_id = ? AND saldo_deudor > ?", tienda, 0).sum(:monto_alquiler)
-
-
   end
 end

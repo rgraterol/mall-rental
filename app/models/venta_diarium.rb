@@ -20,7 +20,7 @@
 class VentaDiarium < ActiveRecord::Base
   belongs_to :venta_mensual
 
-  def self.get_ventas_diarias_tienda(venta_mensual)
+  def self.get_ventas_diaria_tienda(venta_mensual)
     return self.where('venta_mensual_id = ?',venta_mensual) || nil
   end
 
@@ -59,7 +59,7 @@ class VentaDiarium < ActiveRecord::Base
 
   def self.cerrar_mes_ventas(venta_mensual)
     result = 0
-    venta_diaria = get_ventas_diarias_tienda(venta_mensual)
+    venta_diaria = get_ventas_diaria_tienda(venta_mensual)
     if !venta_diaria.blank?
       venta_diaria.each do |venta|
         vent = venta.update(editable: false)
