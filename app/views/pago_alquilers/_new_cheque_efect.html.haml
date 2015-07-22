@@ -1,24 +1,4 @@
-- if !@facturas_array.blank?
-  - @facturas_array.each do |facturas|
-    %tr
-      -# @id_fact = facturas
-      -#%td
-      -#  = facturas.fecha.strftime("%d-%m-%Y")
-      -#%td
-      -#  = facturas['cobranza'].nro_recibo
-      -#%td.monto_factura{id: 'monto_factura_'+@id_fact.to_s, valor_campo: facturas['monto']}
-      -#  = facturas['monto_v']
-      -#%td
-      -#  = radio_button_tag 'alquiler_pago_'+@id_fact.to_s,'total',false, class: 'alquiler_pago', campo: @id_fact.to_s
-      -#%td
-      -#  = radio_button_tag 'alquiler_pago_'+@id_fact.to_s,'abono',false, class: 'alquiler_pago', campo: @id_fact.to_s
-      -#%td.monto_pago{id: 'monto_pago_'+@id_fact.to_s, valor: 0, campo: @id_fact.to_s}
-      -#= f.fields_for :detalle_pago_alquilers, @pago_alquiler.detalle_pago_alquilers.build do |c|
-      -#  = c.hidden_field :'monto_fact', :value => 0
-      -#  = c.hidden_field :factura_alquiler_id, :value => facturas['factura'].id
-      -#  = c.hidden_field :cobranza_alquiler_id, :value => facturas['cobranza'].id
-
-- else
+- if @facturas_array.blank?
   %tr
     %td.text-center{colspan: 7}
       - if @cantidad == 0 && !@tienda_id.nil?

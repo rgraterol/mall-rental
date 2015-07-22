@@ -322,17 +322,15 @@ $(".actualizar_auditoria_ventas").on "change", ->
     before_send: $.blockUI({message: 'Por favor espere...'})
     success: (data) ->
       value = data[0]['suma_total_ventas']
-      $("#total_ventas_mes").val(value)
-      $("#total_ventas_mes").number(value,2,',','.')
+      $("#total_ventas_mes").text(value)
       value1 = data[0]['total_ventas_neta']
       $("#total_ventas_neta_mes").val(value)
       $("#total_ventas_neta_mes").number(value,2,',','.')
       value2 = data[0]['total_ventas_bruto']
-      $("#total_ventas_mes_bruto").val(value2)
-      $("#total_ventas_mes_bruto").number(value2,2,',','.')
-      $("#monto_canon_fijo").val(data[0]['suma_canon_fijo'])
-      $("#monto_canon_x_venta").val(data[0]['suma_canon_variable'])
-      $("#total_canon").val(data[0]['suma_total_canon'])
+      $("#total_ventas_mes_bruto").text(value2)
+      $("#monto_canon_fijo").text(data[0]['suma_canon_fijo'])
+      $("#monto_canon_x_venta").text(data[0]['suma_canon_variable'])
+      $("#total_canon").text(data[0]['suma_total_canon'])
 
       $("#tbody_auditoria_ventas").empty()
       $("#tbody_mall_ventas").empty()
@@ -367,7 +365,6 @@ $(".actualizar_auditoria_ventas").on "change", ->
       $.unblockUI()
 
 $(".actualizar_ventas_mes").on "change", ->
-  console.log(".actualizar_ventas_mes")
   $.ajax
     type: "POST"
     url: "/dynamic_ventas_mes/ventas"
@@ -378,8 +375,8 @@ $(".actualizar_ventas_mes").on "change", ->
     success: (data) ->
       $("#tbody-ventas-mall").empty()
       meses = ['Enero', 'Febrero', 'Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
-      mes_fin = data[0]['ventas'][0].mes_fin
-      console.log(data[0]['ventas'][0].mes_fin)
+      mes_fin = data[0]['mes_fin']
+
       for num in [0..mes_fin]
         $("#tbody-ventas-mall").append("<tr><th>"+ data[0]['ventas'][num].mes+"</th><td>"+data[0]['ventas'][num].suma_venta+"</td><td>"+data[0]['ventas'][num].canon_fijo+"</td><td>"+data[0]['ventas'][num].canon_variable+"</td><td>"+data[0]['ventas'][num].canon+"</td></tr>")
 
@@ -427,15 +424,20 @@ $("#btn-send-recibos").on "click", ->
             month: $("#venta_diaria_select_month").val()
             tiendas: tiendas
           success: (data) ->
+            console.log(data)
             if data[0]['result']
               for element, index in data[0]['tiendas']
                 $('input[name=recibo_cobro_'+element+']').prop('checked',true)
-              $.blockUI({
-                message: 'Recibos de Cobro enviados correctamente',
-                timeout: 3000,
-              });
+            $.blockUI({
+              message: 'Recibos de Cobro enviados correctamente',
+              timeout: 3000,
+            });
+            run = () ->
+              $(".actualizar_auditoria_ventas").change()
+            setTimeout(run, 1000)
+
           error: (data)->
-            #$.unblockUI()
+            $.unblockUI()
             console.log(data)
           complete: ->
             a=1

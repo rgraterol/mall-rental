@@ -113,10 +113,12 @@ class CobranzaAlquiler < ActiveRecord::Base
       canon_fijo = 0
       canon_variable = 0
       facturado = 0
+      total_facturado = 0
       pagado = 0
       pagado_usd = 0
       x_cobrar = 0
-
+      total_x_cobrar = 0
+      total_pagado = 0
       tiendas_mall = mall.tiendas
       tiendas_mall.each do |tienda|
 
@@ -125,23 +127,26 @@ class CobranzaAlquiler < ActiveRecord::Base
         if !cobranza.blank?
           canon_fijo += cobranza.monto_canon_fijo
           canon_variable += cobranza.monto_canon_variable
-          facturado += cobranza.monto_alquiler
-          x_cobrar += cobranza.saldo_deudor
-          pagado += facturado - x_cobrar
+          facturado = cobranza.monto_alquiler
+          total_facturado += cobranza.monto_alquiler
+          x_cobrar = cobranza.saldo_deudor
+          total_x_cobrar += cobranza.saldo_deudor
+          pagado = (facturado - x_cobrar)
+          total_pagado += (facturado - x_cobrar)
           pagado_usd += pagado.to_f / CambioMoneda.last.cambio_ml_x_usd
 
         end
       end
+
       hash_stats[:num_mes] = mes
       hash_stats[:mes] = meses[mes-1]
       hash_stats[:canon_fijo] = ActionController::Base.helpers.number_to_currency(canon_fijo, separator: ',', delimiter: '.', format: "%n %u", unit: "")
       hash_stats[:canon_variable] = ActionController::Base.helpers.number_to_currency(canon_variable, separator: ',', delimiter: '.', format: "%n %u", unit: "")
-      hash_stats[:facturado] = ActionController::Base.helpers.number_to_currency(facturado, separator: ',', delimiter: '.', format: "%n %u", unit: "")
-      hash_stats[:x_cobrar] = ActionController::Base.helpers.number_to_currency(x_cobrar, separator: ',', delimiter: '.', format: "%n %u", unit: "")
-      hash_stats[:pagado] = ActionController::Base.helpers.number_to_currency(pagado, separator: ',', delimiter: '.', format: "%n %u", unit: "")
+      hash_stats[:facturado] = ActionController::Base.helpers.number_to_currency(total_facturado, separator: ',', delimiter: '.', format: "%n %u", unit: "")
+      hash_stats[:x_cobrar] = ActionController::Base.helpers.number_to_currency(total_x_cobrar, separator: ',', delimiter: '.', format: "%n %u", unit: "")
+      hash_stats[:pagado] = ActionController::Base.helpers.number_to_currency(total_pagado, separator: ',', delimiter: '.', format: "%n %u", unit: "")
       hash_stats[:pagado_usd] = ActionController::Base.helpers.number_to_currency(pagado_usd, separator: ',', delimiter: '.', format: "%n %u", unit: "")
       cobranzas << hash_stats
-
     end
     return cobranzas
   end
@@ -162,8 +167,8 @@ class CobranzaAlquiler < ActiveRecord::Base
       total_facturado += CobranzaAlquiler.where('anio_alquiler = ? AND tienda_id = ?', year, tienda.id).sum(:monto_alquiler)
       total_x_cobrar += CobranzaAlquiler.where('anio_alquiler = ? AND tienda_id = ?', year, tienda.id).sum(:saldo_deudor)
     end
-    total_pagado += total_facturado - total_x_cobrar
-    total_pagado_usd += total_pagado.to_f / CambioMoneda.last.cambio_ml_x_usd
+    total_pagado = (total_facturado - total_x_cobrar)
+    total_pagado_usd = total_pagado.to_f / CambioMoneda.last.cambio_ml_x_usd
 
     if total_canon_fijo != 0 || total_canon_variable != 0 || total_facturado != 0
       result = true
@@ -178,5 +183,4 @@ class CobranzaAlquiler < ActiveRecord::Base
     hash_totales[:result] = result
     return hash_totales
   end
-
 end

@@ -9,7 +9,7 @@ class VentaDiariaController < ApplicationController
 
     @today = Time.now
     @year = @today.strftime("%Y")
-    @tienda_id = params[:tienda_id]
+    tienda_id = params[:tienda_id]
 
     if !(params[:month].nil?)
       @month = params[:month]
@@ -17,14 +17,14 @@ class VentaDiariaController < ApplicationController
       @month = @today.strftime("%m")
     end
 
-    if @tienda_id.nil?
-      @tienda_id = current_user.tienda
+    if tienda_id.nil?
+      tienda_id = current_user.tienda
       @ventas_mall = false
     else
       @ventas_mall = true
     end
 
-    @tienda = Tienda.find(@tienda_id)
+    @tienda = Tienda.find(tienda_id)
 
     @contrato_alquiler = ContratoAlquiler.where(tienda: @tienda)
     if @contrato_alquiler.last.tipo_canon_alquiler == 'fijo' || @contrato_alquiler.last.tipo_canon_alquiler == 'variableVB' || @contrato_alquiler.last.tipo_canon_alquiler == 'fijo_y_variable_venta_bruta'

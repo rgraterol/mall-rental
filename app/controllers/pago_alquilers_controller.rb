@@ -21,8 +21,21 @@ class PagoAlquilersController < ApplicationController
     @suma_monto_x_cobrar = CobranzaAlquiler.saldo_deudor_x_mes(current_user.mall,year,month)
     @suma_monto_alquiler = CobranzaAlquiler.monto_alquiler_x_mes(current_user.mall,year,month)
     @suma_monto_pagado = @suma_monto_alquiler - @suma_monto_x_cobrar
-    @month = month.to_i
 
+    if @suma_monto_pagado > 0
+      @month = month.to_i
+    elsif
+      if params[:month].nil?
+        month -= 1
+        @month = month.to_i
+        @cobranza_alquilers = CobranzaAlquiler.get_cobranza_mes_xtienda(current_user.mall,year,month)
+        @suma_monto_x_cobrar = CobranzaAlquiler.saldo_deudor_x_mes(current_user.mall,year,month)
+        @suma_monto_alquiler = CobranzaAlquiler.monto_alquiler_x_mes(current_user.mall,year,month)
+        @suma_monto_pagado = @suma_monto_alquiler - @suma_monto_x_cobrar
+      else
+        @month = params[:month].to_i
+      end
+    end
   end
 
   # GET /pago_alquilers/1
@@ -59,31 +72,31 @@ class PagoAlquilersController < ApplicationController
     @pago_alquiler = PagoAlquiler.new(pago_alquiler_params)
     respond_to do |format|
       if @pago_alquiler.save
-        @cant_fact = params[:pago_alquiler][:detalle_pago_alquilers_attributes].length
-        for i in (0..@cant_fact-1)
-          @num = i.to_s
-          @monto = params[:pago_alquiler][:detalle_pago_alquilers_attributes][@num]['monto_fact']
-          @factura_id = params[:pago_alquiler][:detalle_pago_alquilers_attributes][@num]['factura_alquiler_id']
-          @cobranza_id = params[:pago_alquiler][:detalle_pago_alquilers_attributes][@num]['cobranza_alquiler_id']
+        cant_fact = params[:pago_alquiler][:detalle_pago_alquilers_attributes].length
+        for i in (0..cant_fact-1)
+          num = i.to_s
+          monto = params[:pago_alquiler][:detalle_pago_alquilers_attributes][num]['monto_fact']
+          factura_id = params[:pago_alquiler][:detalle_pago_alquilers_attributes][num]['factura_alquiler_id']
+          cobranza_id = params[:pago_alquiler][:detalle_pago_alquilers_attributes][num]['cobranza_alquiler_id']
 
-          @pago_id = @pago_alquiler.id
-          @detalle =  DetallePagoAlquiler.new(monto: @monto, pago_alquiler_id: @pago_id, factura_alquiler_id: @factura_id)
-          @cobranza_alquiler = CobranzaAlquiler.find(@cobranza_id)
+          pago_id = @pago_alquiler.id
+          detalle =  DetallePagoAlquiler.new(monto: monto, pago_alquiler_id: pago_id, factura_alquiler_id: factura_id)
+          cobranza_alquiler = CobranzaAlquiler.find(cobranza_id)
 
-          @factura = FacturaAlquiler.find(@factura_id)
-          @monto_abonado = @factura.monto_abono.to_f
-          @monto_abono = @monto_abonado + @monto.to_f
-          @monto_factura = @factura.monto_factura
-          @saldo_deudor = @monto_factura - @monto_abono
-          @obj = {
-              :monto_abono => @monto_abono,
-              :saldo_deudor => @saldo_deudor,
+          factura = FacturaAlquiler.find(factura_id)
+          monto_abonado = factura.monto_abono.to_f
+          monto_abono = monto_abonado + monto.to_f
+          monto_factura = factura.monto_factura
+          saldo_deudor = monto_factura - monto_abono
+          obj = {
+              :monto_abono => monto_abono,
+              :saldo_deudor => saldo_deudor,
           }
-          @fact_alquiler = @obj
+          fact_alquiler = obj
 
-          if @detalle.save
-            @factura.update(@fact_alquiler)
-            @cobranza_alquiler.update(saldo_deudor: @saldo_deudor)
+          if detalle.save
+            factura.update(fact_alquiler)
+            cobranza_alquiler.update(saldo_deudor: saldo_deudor)
             format.html { redirect_to pago_alquilers_path, notice: 'Pago Alquiler guardado existosamente.' }
             format.json { render :index, status: :created, location: @pago_alquiler }
           else

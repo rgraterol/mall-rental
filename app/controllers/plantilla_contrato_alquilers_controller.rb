@@ -10,7 +10,7 @@ class PlantillaContratoAlquilersController < ApplicationController
 
   def show
 
-    @nombre_arrendatario = 'LERY PICON'
+    @nombre_arrendatario = 'ARRENDATARIO'
 
   end
 

@@ -224,7 +224,7 @@ class Tienda < ActiveRecord::Base
       tiene_cobranza_alquiler = CobranzaAlquiler.tiene_cobranza(tienda,anio,mes)
       editable = VentaMensual.get_is_editable(tienda,anio,mes)
       total_canon = canon_fijo + canon_variable
-      if tipo_canon == 'VariableVN' || tipo_canon == 'Fijo&VariableVN'
+      if tipo_canon == 'VariableVN' || tipo_canon == 'Fijo&VariableVN' #REVISAR LOS VALORES DEL TIPO CANON, COM ESTAN EN BD
         total_monto_ventas = venta_neta_mes
       else
         total_monto_ventas = ventas_bruto_mes
@@ -254,7 +254,6 @@ class Tienda < ActiveRecord::Base
       hash_stats[:suma_canon_variable] = suma_canon_variable
       hash_stats[:suma_total_canon] = suma_total_canon
       hash_stats[:suma_total_ventas] = suma_total_ventas
-
 
       ventas << hash_stats
     end
