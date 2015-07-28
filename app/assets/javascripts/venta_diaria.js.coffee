@@ -12,7 +12,6 @@ jQuery(document).ready ($) ->
 
 
 $(".actualizar_ventas").on "change", ->
-  console.log(".actualizar_ventas")
   $.ajax
     type: "POST"
     url: "/dynamic_venta_diaria/venta"
@@ -46,7 +45,7 @@ $(".actualizar_ventas").on "change", ->
           @clase_3 = ''
           @title = 'Campo no editable'
 
-        if element.id == '-1'
+        if element.id == -1
           @opcion = 'new'
         else
           @opcion = 'update'
@@ -270,8 +269,8 @@ $("#btn_save_venta").on "click", ->
             else
               console.log(data)
           error: (data)->
+            $.unblockUI()
             console.log(data)
-
   else
     $.blockUI({
       message: $('div.growlUI.mensaje'),
@@ -322,30 +321,32 @@ $(".actualizar_auditoria_ventas").on "change", ->
       month: $("#venta_diaria_select_month").val()
     before_send: $.blockUI({message: 'Por favor espere...'})
     success: (data) ->
-      value = data[0]['total_ventas']
-      $("#total_ventas_mes").val(value)
-      $("#total_ventas_mes").number(true,2,',','.')
+      value = data[0]['suma_total_ventas']
+      $("#total_ventas_mes").text(value)
+      value1 = data[0]['total_ventas_neta']
+      $("#total_ventas_neta_mes").val(value)
+      $("#total_ventas_neta_mes").number(value,2,',','.')
       value2 = data[0]['total_ventas_bruto']
-      $("#total_ventas_mes_bruto").val(value2)
-      $("#total_ventas_mes_bruto").number(true,2,',','.')
-      $("#monto_canon_fijo").val(data[0]['suma_canon_fijo'])
-      $("#monto_canon_x_venta").val(data[0]['suma_canon_ventas'])
-      $("#total_canon").val(data[0]['total'])
+      $("#total_ventas_mes_bruto").text(value2)
+      $("#monto_canon_fijo").text(data[0]['suma_canon_fijo'])
+      $("#monto_canon_x_venta").text(data[0]['suma_canon_variable'])
+      $("#total_canon").text(data[0]['suma_total_canon'])
 
       $("#tbody_auditoria_ventas").empty()
       $("#tbody_mall_ventas").empty()
+
       for element, index in data[0]['tiendas']
         @cadena_check = "title='Falta Registrar Ventas'"
         @cadena_recibo =  "title='Falta Enviarle Recibo de Cobro'"
-        if element.editable_mensual
+        if !element.editable
           @cadena_check = "checked title='Ventas Actualizadas'"
         if element.recibos_cobro
           @cadena_recibo = "checked title='Recibo Cobro Enviado'"
 
         $("#tbody_auditoria_ventas").append("<tr><td>"+element.tienda+"</td><td>"+element.actividad_economica+"</td>" +
           "<td>"+element.local+"</td>" +
-          "<td>"+element.tipo_canon.tipo+"</td><td class='clase_monto'>"+element.canon_fijo+"</td>" +
-          "<td class='clase_monto'>"+element.ventas_mes+"</td><td class='clase_monto'>"+element.canon_x_ventas+"</td>" +
+          "<td>"+element.tipo_canon+"</td><td class='clase_monto'>"+element.canon_fijo+"</td>" +
+          "<td class='clase_monto'>"+element.total_monto_ventas+"</td><td class='clase_monto'>"+element.canon_variable+"</td>" +
           "<td class='clase_monto'>"+element.total_canon+"</td>" +
           "<td><input type='checkbox' disabled='disabled' name='ventas_actualizadas' value='"+element.tienda_id+"' "+@cadena_check+" /></td>" +
           "<td><input type='checkbox' name='recibo_cobro_"+element.tienda_id+"' disabled='disabled' "+@cadena_recibo+" /></td>" +
@@ -353,8 +354,8 @@ $(".actualizar_auditoria_ventas").on "change", ->
 
         $("#tbody_mall_ventas").append("<tr><td>"+element.tienda+"</td><td>"+element.actividad_economica+"</td>" +
           "<td>"+element.local+"</td><td>"+element.nivel_ubicacion+"</td>" +
-          "<td>"+element.tipo_canon.tipo+"</td><td class='clase_monto'>"+element.monto_venta_bruto+"</td>" +
-          "<td class='clase_monto'>"+element.canon_fijo+"</td><td class='clase_monto'>"+element.canon_x_ventas+"</td>" +
+          "<td>"+element.tipo_canon+"</td><td class='clase_monto'>"+element.ventas_bruto_mes+"</td>" +
+          "<td class='clase_monto'>"+element.canon_fijo+"</td><td class='clase_monto'>"+element.canon_variable+"</td>" +
           "<td class='clase_monto'>"+element.total_canon+"</td>" +
           "<td><a href='/ventas_tiendas/"+element.tienda_id+"/"+data[0]['mes']+"'>Ver Ventas diarias</a></td></tr>")
 
@@ -364,7 +365,6 @@ $(".actualizar_auditoria_ventas").on "change", ->
       $.unblockUI()
 
 $(".actualizar_ventas_mes").on "change", ->
-  console.log(".actualizar_ventas_mes")
   $.ajax
     type: "POST"
     url: "/dynamic_ventas_mes/ventas"
@@ -375,10 +375,10 @@ $(".actualizar_ventas_mes").on "change", ->
     success: (data) ->
       $("#tbody-ventas-mall").empty()
       meses = ['Enero', 'Febrero', 'Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
-      mes_fin = data[0]['mes_actual']-1
-      console.log(data)
+      mes_fin = data[0]['mes_fin']
+
       for num in [0..mes_fin]
-        $("#tbody-ventas-mall").append("<tr><th>"+meses[num]+"</th><td>"+data[0]['ventas'][num].venta_mensual+"</td><td>"+data[0]['ventas'][num].canon_fijo+"</td><td>"+data[0]['ventas'][num].canon_x_ventas+"</td><td>"+data[0]['ventas'][num].total_mes_canon+"</td></tr>")
+        $("#tbody-ventas-mall").append("<tr><th>"+ data[0]['ventas'][num].mes+"</th><td>"+data[0]['ventas'][num].suma_venta+"</td><td>"+data[0]['ventas'][num].canon_fijo+"</td><td>"+data[0]['ventas'][num].canon_variable+"</td><td>"+data[0]['ventas'][num].canon+"</td></tr>")
 
       $("#suma_total").text(data[0]['suma_total'])
       $("#total_canon_fijo").text(data[0]['total_canon_fijo'])
@@ -386,6 +386,7 @@ $(".actualizar_ventas_mes").on "change", ->
       $("#total_canons").text(data[0]['total_canons'])
 
     error: (data)->
+      $.unblockUI()
       console.log(data)
     complete: ->
       $.unblockUI()
@@ -423,15 +424,20 @@ $("#btn-send-recibos").on "click", ->
             month: $("#venta_diaria_select_month").val()
             tiendas: tiendas
           success: (data) ->
+            console.log(data)
             if data[0]['result']
               for element, index in data[0]['tiendas']
                 $('input[name=recibo_cobro_'+element+']').prop('checked',true)
-              $.blockUI({
-                message: 'Recibos de Cobro enviados correctamente',
-                timeout: 3000,
-              });
+            $.blockUI({
+              message: 'Recibos de Cobro enviados correctamente',
+              timeout: 3000,
+            });
+            run = () ->
+              $(".actualizar_auditoria_ventas").change()
+            setTimeout(run, 1000)
+
           error: (data)->
-            #$.unblockUI()
+            $.unblockUI()
             console.log(data)
           complete: ->
             a=1
@@ -462,12 +468,13 @@ $("#btn_cerrar_mes_venta").on "click", ->
         month: month
         tienda: tienda
       success: (data) ->
-        console.log(data)
         if data[0]['result'] == 1
           mensaje = 'mensaje_cierre'
         else
-          mensaje = 'mensaje_ya_cerro'
-
+          if data[0]['result'] == 2
+            mensaje = 'mensaje_ya_cerro'
+          else
+            mensaje = 'mensaje_no_puede_cerrar'
         $.blockUI({
           message: $('div.growlUI.'+mensaje),
           fadeIn: 700,

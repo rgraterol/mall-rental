@@ -111,21 +111,28 @@
           = link_to cobranza_alquiler_path do
             %i.fa.fa-money
             %span.nav-label Gestión de Cobranza
-      - if can? :index, PagoAlquiler && current_user.mall_id.present?
+      - if (can? :mf_new_transferencia, PagoAlquiler) && current_user.mall_id.present?
+        %li{class: is_active_controller('mf_new_transferencia')}
+          = link_to registrar_pago_transferencia_path do
+            %i.fa.fa-money
+            %span.nav-label Registrar Pago de Alquiler
+
+      - if (can? :mf_new_cheque_efectivo, PagoAlquiler) && current_user.mall_id.present?
+        %li{class: is_active_controller('mf_new_cheque_efectivo')}
+          = link_to registrar_pago_cheque_efectivo_path do
+            %i.fa.fa-money
+            %span.nav-label Recibir Pago de Alquiler
+      - if (can? :index, PagoAlquiler) && (current_user.mall_id.present?)
         %li{class: is_active_controller('pago_alquilers')}
           %a{href: '#'}
             %i.fa.fa-cc-visa
-            %span.nav-label Pago Alquiler
+            %span.nav-label Pagos Alquiler
             %span.fa.arrow
           %ul{:class => "nav nav-second-level #{is_active_controller('pago_alquilers')}"}
             - if can? :index, PagoAlquiler
               %li{class: is_active_action('index')}= link_to 'Pago de Alquiler x Tienda', pago_alquilers_path
-            - if can? :registrar_pago, PagoAlquiler
-              %li{class: is_active_action('new_transferencia')}= link_to 'Registrar Pago Transferencia', registrar_pago_transferencia_path
-            - if can? :registrar_pago_cheque, PagoAlquiler
-              %li{class: is_active_action('new_cheque_efectivo')}= link_to 'Registrar Pago x Cheque o Efectivo', registrar_pago_cheque_efectivo_path
-            - if can? :pagos_mensuales, PagoAlquiler
-              %li{class: is_active_action('pagos_mensuales')}= link_to 'Reporte de Pagos Mensuales', pagos_mensuales_mall_path
+            - if can? :mf_pagos_mensuales, PagoAlquiler
+              %li{class: is_active_action('mf_pagos_mensuales')}= link_to 'Reporte de Pagos Mensuales', pagos_mensuales_mall_path
 
       - if (can? :manage, :estadisticas) && current_user.mall_id.present?
         %li{class: is_active_controller('estadisticas')}

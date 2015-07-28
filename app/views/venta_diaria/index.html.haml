@@ -27,6 +27,11 @@
   =image_tag 'btn-warning.png', class: 'img-circle', width: '20px'
   Esta Tienda ya tiene el cierre de ventas para este mes
 
+.div.growlUI.mensaje_no_puede_cerrar
+  =image_tag 'btn-warning.png', class: 'img-circle', width: '20px'
+  No puede cerrar las ventas de este mes porque no tiene ventas guardadas
+
+
 
 .wrapper.wrapper-content.animated.fadeInRight
   .row
@@ -40,7 +45,7 @@
                   = select_year(Date.today, options = { :start_year => Time.now.year, :end_year => Time.now.year - 5, :field_name => 'lapso_year'}, :class => 'actualizar_ventas')
               .col-md-5
                 = form_tag(@lapso_month, :html => { :class => "form-horizontal" } ) do |f|
-                  = select_month(@month || Date.today, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'select_month', :prefix => 'venta_diaria'}, :class => 'actualizar_ventas')
+                  = select_month(@month.to_i || Date.today, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'select_month', :prefix => 'venta_diaria'}, :class => 'actualizar_ventas')
 
             .col-md-4
               .form-group
@@ -56,7 +61,7 @@
                   = label_tag :nro_local do
                     Nro. de Local:
                 .col-md-8
-                  = text_field_tag :nro_local, @local.nro_local, class: 'form-control', readonly: 'readonly'
+                  = text_field_tag :nro_local, @tienda.local.nro_local, class: 'form-control', readonly: 'readonly'
           .row
             .col-md-4.col-sm-offset-3
               .form-group

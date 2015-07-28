@@ -20,7 +20,7 @@
                   = select_year(Date.today, options = { :start_year => Time.now.year, :end_year => Time.now.year - 5, :field_name => 'lapso_year'}, :class => 'actualizar_pagos_alquiler')
               .col-md-5
                 = form_tag(@lapso_month, :html => { :class => "form-horizontal" } ) do |f|
-                  = select_month(Date.today, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'select_month', :prefix => 'pagos_alquiler'}, :class => 'actualizar_pagos_alquiler')
+                  = select_month(@month || Date.today, options = { use_month_names: %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre), :field_name => 'select_month', :prefix => 'pagos_alquiler'}, :class => 'actualizar_pagos_alquiler')
           %br
           .row
             .col-md-12
@@ -54,38 +54,34 @@
                   - if !@cobranza_alquilers.blank?
                     - @cobranza_alquilers.each do |cobranzas|
                       -cobranzas.each do |cobranza|
-                        -
-                        - @monto_alquiler = cobranza.monto_alquiler
-
-                        - @monto = ActionController::Base.helpers.number_to_currency(@monto, separator: ',', delimiter: '.', format: "%n %u", unit: "")
-                        - @monto_alquiler = ActionController::Base.helpers.number_to_currency(@monto_alquiler, separator: ',', delimiter: '.', format: "%n %u", unit: "")
                         - if cobranza.saldo_deudor == 0
                           - @pagado = true
                           - @abonado = false
-                          - @monto = cobranza.monto_alquiler
-                          - @monto_pagado = @monto
-                          - @monto_x_cobrar = 0
+                          - monto = cobranza.monto_alquiler
+                          - monto_pagado = monto
+                          - monto_x_cobrar = 0
                         - else
                           - @pagado = false
                           - @abonado = true
-                          - @monto = cobranza.monto_alquiler
-                          - @monto_x_cobrar = cobranza.saldo_deudor
-                          - @monto_pagado = @monto - @monto_x_cobrar
+                          - monto = cobranza.monto_alquiler
+                          - monto_x_cobrar = cobranza.saldo_deudor
+                          - monto_pagado = monto - monto_x_cobrar
                         %tr
                           %td= cobranza.tienda.nombre
                           %td{ :class => 'text-center' }
                             = cobranza.nro_recibo
-                          %td= cobranza.fecha_recibo_cobro
+                          %td= cobranza.fecha_recibo_cobro.strftime("%d/%m/%Y")
                           %td{ :class => 'text-right' }
-                            = @monto
+                            = ActionController::Base.helpers.number_to_currency(monto, separator: ',', delimiter: '.', format: "%n %u", unit: "")
                           %td{ :class => 'text-center' }
                             = check_box_tag 'alquiler_pago', 'Pago Realizado', @pagado, disabled: true
                           %td{ :class => 'text-center' }
                             = check_box_tag 'alquiler_pago', 'Pago Realizado', @abonado, disabled: true
                           %td{ :class => 'text-right' }
-                            = ActionController::Base.helpers.number_to_currency(@monto_pagado, separator: ',', delimiter: '.', format: "%n %u", unit: "")
+                            = ActionController::Base.helpers.number_to_currency(monto_pagado, separator: ',', delimiter: '.', format: "%n %u", unit: "")
                           %td{ :class => 'text-right' }
-                            = ActionController::Base.helpers.number_to_currency(@monto_x_cobrar, separator: ',', delimiter: '.', format: "%n %u", unit: "")
+                            = ActionController::Base.helpers.number_to_currency(monto_x_cobrar, separator: ',', delimiter: '.', format: "%n %u", unit: "")
+
                   - else
                     %tr
                       %td.text-center{colspan: 8}= 'No existen registros de pago para este periodo'
@@ -96,10 +92,10 @@
                       %th
                         Total:
                       %td#td_suma_monto_alquiler
-                        = text_field_tag :input_suma_monto_alquiler, @suma_monto_alq, class: 'form-control', readonly: 'readonly'
+                        = text_field_tag :input_suma_monto_alquiler,ActionController::Base.helpers.number_to_currency(@suma_monto_alquiler, separator: ',', delimiter: '.', format: "%n %u", unit: ""), class: 'form-control', readonly: 'readonly'
                       %td{colspan: 2}
                       %td#td_suma_monto_pagado
-                        = text_field_tag :input_suma_monto_pagado, @suma_monto_pag, class: 'form-control', readonly: 'readonly'
+                        = text_field_tag :input_suma_monto_pagado, ActionController::Base.helpers.number_to_currency(@suma_monto_pagado, separator: ',', delimiter: '.', format: "%n %u", unit: ""), class: 'form-control', readonly: 'readonly'
                       %td#td_suma_monto_x_cobrar
-                        = text_field_tag :input_suma_monto_x_cobrar, @suma_x_cobrar, class: 'form-control', readonly: 'readonly'
+                        = text_field_tag :input_suma_monto_x_cobrar, ActionController::Base.helpers.number_to_currency(@suma_monto_x_cobrar, separator: ',', delimiter: '.', format: "%n %u", unit: ""), class: 'form-control', readonly: 'readonly'
 

@@ -47,4 +47,5 @@ class PagoAlquiler < ActiveRecord::Base
     self.nro_recibo = NroRecibo.get_numero_recibo
     self.monto_usd = self.monto / CambioMoneda.last.cambio_ml_x_usd
   end
+
 end

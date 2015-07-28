@@ -41,7 +41,6 @@ module Dynamic
         render partial: 'locals/table_filter_locals_nil'
       end
 
-      #render json: [data: @locals, tipo: @tipo, nivel: @ubicacion, aux: @aux]
     end
   end
 end

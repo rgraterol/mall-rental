@@ -4,10 +4,9 @@
 #= require jquery.blockUI.js
 #= require jquery.number.js
 
-
 jQuery(document).ready ($) ->
 
-  $(".actualizar_pagos_mensuales").change()
+  #$(".actualizar_pagos_mensuales").change()
 
   $(".monto_numerico").number(true,2,',','.')
 
@@ -25,13 +24,16 @@ jQuery(document).ready ($) ->
       validating: 'fa fa-refresh'
     live: 'submitted'
     fields:
-      "pago_alquiler[monto_alquiler_ml]":
+      "monto_campo":
         validators:
-          notEmpty:
-            message: 'Debe ingresar el monto de la transferencia'
-          numeric:
-            message: 'El valor debe ser numerico'
-      "pago_alquiler[fecha_pago]":
+          callback:
+            message: 'Debe seleccionar el monto del pago'
+            callback: (value, validator, $field) ->
+              if $("#pago_alquiler_monto").val() == '' || $("#pago_alquiler_monto").val() <= 0
+                false
+              else
+                true
+      "pago_alquiler[fecha]":
         validators:
           notEmpty:
             message: 'Debe ingresar la fecha de pago'
@@ -109,84 +111,34 @@ $("#pago_alquiler_tipo_pago").on "change", ->
 $(".actualizar_pagos_alquiler").on "change", ->
   $.ajax
     type: "POST"
-    url: "/dynamic_pago_alquilers/actualizar_pagos"
-    dataType: "JSON"
+    url: "/pago_alquilers/actualizar_pagos"
+    dataType: "HTML"
     data:
       year: $("#date_lapso_year").val()
       month: $("#pagos_alquiler_select_month").val()
+    before_send: $.blockUI({message: 'Por favor espere...'})
     success: (data) ->
-      $("#tbody_pagos_alquiler").empty()
-
-      if data[0]['cont'] > 0
-        for element, index in data[0]['cobranza_alquilers']
-
-          @cadena_check = ''
-          @cadena_check_2 = ''
-          console.log(element)
-          if element.monto_x_cobrar == 0
-            @cadena_check = "checked title='Pago Realizado Completo'"
-            @cancelado = true
-            @abonado = false
-          else
-            @cadena_check_2 = "checked title='Pago Abonado'"
-            @cancelado = false
-            @abonado = true
-
-          nro = element.nro_recibo
-          fecha = element.fecha
-          monto = element.monto_pagado
-
-          $("#monto_cobrar").val(data[0].suma_x_cobrar)
-          $("#input_suma_monto_alquiler").val(data[0].suma)
-          $("#input_suma_monto_pagado").val(data[0].suma_monto_pagado)
-
-          $("#tbody_pagos_alquiler").append("<tr>" +
-            "<td>"+element.tienda+"</td>"+
-            "<td class='text-center'>"+nro+"</td>"+
-            "<td>"+fecha+"</td>"+
-            "<td class='text-right'>"+element.monto_alquiler+"</td>"+
-            "<td class='text-center'><input type='checkbox' disabled='disabled' name='alquiler_pagado_completo' value='"+@cancelado+"' "+@cadena_check+" /></td>"+
-            "<td class='text-center'><input type='checkbox' disabled='disabled' name='alquiler_pagado_abonado' value='"+@abonado+"' "+@cadena_check_2+" /></td>"+
-            "<td class='text-right'>"+monto+"</td>"+
-            "<td class='text-right'>"+element.saldo_deudor+"</td>"+
-            "</tr>")
-          $("#tfoot_pagos_alquiler").show()
-      else
-        $("#monto_cobrar").val('0,00')
-        $("#tfoot_pagos_alquiler").hide()
-        $("#tbody_pagos_alquiler").append("<tr><td colspan=8 class='text-center'>No existen registros de pago para este periodo</td></tr>")
-
+      html = $('#wrapper')
+      html.empty()
+      html.append(data)
     error: (data)->
       console.log(data)
     complete: ->
-      a=1
+      $.unblockUI()
 
 $(".actualizar_pagos_mensuales").on "change", ->
   $.ajax
     type: "POST"
-    url: "/dynamic_pago_alquilers_mensuales/pagos"
-    dataType: "JSON"
+    url: "/pago_alquilers/pagos"
+    dataType: "HTML"
     data:
       year: $("#date_lapso_year").val()
     before_send: $.blockUI({message: 'Por favor espere...'})
     success: (data) ->
-      if !data[0]['result']
-        $(".texto_cargando").html('No se encontraron datos')
-      else
-        $("#tbody_pagos_mensuales_mall").empty()
-        meses = ['Enero', 'Febrero', 'Marzo', 'Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
-        mes_fin = data[0]['mes_actual']-1
-
-        for num in [0..mes_fin]
-          $("#tbody_pagos_mensuales_mall").append("<tr><th>"+meses[num]+"</th><td>"+data[0]['pagos'][num].pagado_canon_fijo+"</td><td>"+data[0]['pagos'][num].pagado_canon_variable+"</td><td>"+data[0]['pagos'][num].total_facturado+"</td><td>"+data[0]['pagos'][num].total_pagado+"</td><td>"+data[0]['pagos'][num].total_pagado_usd+"</td><td>"+data[0]['pagos'][num].monto_cobrar+"</td><td><a href='/ventas_mall_tiendas/2/"+(num+1)+"'>Ver Detalles de Pagos</a></td></tr>")
-
-        $("#suma_total_facturado").text(data[0]['totales']['suma_total_facturado'])
-        $("#suma_pagado_canon_fijo").text(data[0]['totales']['suma_pagado_canon_fijo'])
-        $("#suma_pagado_canon_variable").text(data[0]['totales']['suma_pagado_canon_variable'])
-        $("#suma_total_pagado").text(data[0]['totales']['suma_total_pagado'])
-        $("#suma_total_pagado_usd").text(data[0]['totales']['suma_total_pagado_usd'])
-        $("#suma_monto_x_cobrar").text(data[0]['totales']['suma_monto_x_cobrar'])
-
+      $("#tbody_pagos_mensuales_mall").empty()
+      html = $("#tbody_pagos_mensuales_mall")
+      html.empty()
+      html.append(data)
     error: (data)->
       console.log(data)
     complete: ->
@@ -222,9 +174,10 @@ $(".tbody_facturas_pendientes").on
     campo = $(this).attr('campo')
     valor = $(this).val()
     factura = $("#monto_factura_"+campo).text()
-    monto = $("#monto_factura_"+campo).attr('valor_campo')
+    deudor = $("#monto_deudor_"+campo).text()
+    monto = $("#monto_deudor_"+campo).attr('valor_campo')
     if valor == 'total'
-      $("#monto_pago_"+campo).text(factura)
+      $("#monto_pago_"+campo).text(deudor)
       $("#monto_pago_"+campo).attr('valor',monto)
       calcular_a_pagar(campo)
     else
@@ -242,16 +195,18 @@ $(".tbody_facturas_pendientes").on
     elemento = $('#monto_pago_'+campo)
     factura = $("#monto_factura_"+campo).text()
     monto_factura = $("#monto_factura_"+campo).attr('valor_campo')
-    if parseFloat($(this).val()) < parseFloat(monto_factura)
+    deudor = $("#monto_deudor_"+campo).text()
+    monto_deudor = $("#monto_deudor_"+campo).attr('valor_campo')
+    if parseFloat($(this).val()) < parseFloat(monto_deudor)
       elemento.attr('valor',$(this).val())
       $('#pago_alquiler_detalle_pago_alquilers_attributes_0_monto_fact').val($(this).val())
       calcular_a_pagar(campo)
     else
-      if parseFloat($(this).val()) == parseFloat(monto_factura)
-        alert('El monto de abono no debe ser igual al total de la factura')
+      if parseFloat($(this).val()) == parseFloat(monto_deudor)
+        alert('El monto de abono no debe ser igual al total de lo que debe')
       else
-        if parseFloat($(this).val()) > parseFloat(monto_factura)
-          alert('El monto de abono no debe ser mayor al de la factura')
+        if parseFloat($(this).val()) > parseFloat(monto_deudor)
+          alert('El monto de abono no debe ser mayor al monto que debe')
       $(this).val($(this).val().substring(0, $(this).val().length-1))
   ".editar_monto_pago input"
 
@@ -268,27 +223,32 @@ calcular_a_pagar = (campo) ->
   $("#total_a_pagar").number(monto.val(),2,',','.')
   $("#monto_transferido").val(suma)
   $("#monto_cheque").val(suma)
-  console.log( $("#btn_guardar").val())
   $('#form_registro_pago_cheque').data('bootstrapValidator').updateStatus('monto_campo', 'VALID', null);
+  $('#form_registro_pago_transferencia').data('bootstrapValidator').updateStatus('monto_campo', 'VALID', null);
   #$('#form_registro_pago_cheque').bootstrapValidator('removeField', 'monto_campo');
-  #$("#btn_guardar").prop('disabled',false)
+  if monto.val() > 0
+    $("#btn_guardar").prop('disabled',false)
 
   $("#pago_alquiler_monto").val(suma)
 
-
 $("#form_registro_pago_cheque").on
   change:->
-    #$('#tbody_facturas_pendientes').empty()
+    $('.tbody_facturas_pendientes').empty()
     id = $('.tabla_fact_tienda').val()
     $.ajax
       type: "POST"
-      url: "/dynamic_pago_alquilers/facturas_tiendas"
-      dataType: "JSON"
+      #url: "/dynamic_pago_alquilers/mf_facturas_tiendas"
+      url: "/pago_alquilers/facturas_tiendas"
+      dataType: "HTML"
       data:
-        tienda_id: $('.tabla_fact_tienda').val()
+        tienda_id: id
       before_send: $.blockUI({message: 'Por favor espere...'})
       success: (data) ->
-       window.location.href = '/pago_alquilers/facturas_tiendas/'+id
+        html = $('#wrapper')
+        html.empty()
+        html.append(data)
+      error: (data)->
+        console.log(data)
       complete: ->
         $.unblockUI()
   ".tabla_fact_tienda"

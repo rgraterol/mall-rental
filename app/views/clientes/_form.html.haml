@@ -1,0 +1,166 @@
+= form_for @cliente, html: {id: 'form_cliente'} do |f|
+  = render 'shared/error_messages', object: f.object, model: 'Cliente'
+  .row
+    .col-lg-6
+      .ibox.float-e-margins
+        .ibox-content.form-horizontal
+          .form-group
+            = f.label :mall_id, "Mall: ", class: 'col-sm-2 control-label'
+            .col-sm-10
+              = f.select :mall_id, options_from_collection_for_select(Mall.all, :id, :nombre, selected: f.object.mall_id || nil), {include_blank: 'Seleccione un Mall'}, class: 'form-control mall_required'
+          .form-group
+            = f.label :tipo_servicio_id, "Servicio de Software: ", class: 'col-sm-2 control-label'
+            .col-sm-10
+              = f.select :tipo_servicio_id, options_from_collection_for_select(TipoServicio.all, :id, :tipo, selected: f.object.tipo_servicio_id || nil), {include_blank: 'Seleccione un Tipo de Servicio'}, class: 'form-control tipo_servicio_required'
+
+    .col-lg-6
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            Datos de la Empresa
+        .ibox-content.form-horizontal
+          .form-group
+            = f.label :nombre, class: 'col-sm-2 control-label' do
+              Nombre:
+            .col-sm-10
+              = f.text_field :nombre, class: 'form-control'
+          .form-group
+            = f.label :RIF, class: 'col-sm-2 control-label' do
+              R.I.F:
+            .col-sm-10
+              = f.text_field :RIF, class: 'form-control'
+          .form-group
+            = f.label :direccion, class: 'col-sm-2 control-label' do
+              Dirección:
+            .col-sm-10
+              = f.text_field :direccion, class: 'form-control'
+          .form-group
+            = f.label :telefono, class: 'col-sm-2 control-label' do
+              Teléfonos:
+            .col-sm-10
+              = f.text_field :telefono, class: 'form-control'
+  .row
+    .col-lg-6
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            Datos del Contacto
+        .ibox-content.form-horizontal
+          .form-group
+            = f.label :nombre_contacto, class: 'col-sm-2 control-label' do
+              Nombre:
+            .col-sm-10
+              = f.text_field :nombre_contacto, class: 'form-control'
+          .form-group
+            = f.label :cedula_contacto, class: 'col-sm-2 control-label' do
+              Cédula:
+            .col-sm-10
+              = f.text_field :cedula_contacto, class: 'form-control'
+          .form-group
+            = f.label :email_contacto, class: 'col-sm-2 control-label' do
+              Email:
+            .col-sm-10
+              = f.email_field :email_contacto, class: 'form-control'
+          .form-group
+            = f.label :telefono_contacto, class: 'col-sm-2 control-label' do
+              Teléfonos:
+            .col-sm-10
+              = f.text_field :telefono_contacto, class: 'form-control'
+          .form-group
+            = f.label :profesion_contacto, class: 'col-sm-2 control-label' do
+              Profesion:
+            .col-sm-10
+              = f.text_field :profesion_contacto, class: 'form-control'
+    .col-lg-6
+      .ibox.float-e-margins
+        .ibox-title
+          %h3
+            Datos del Representante Legal
+        .ibox-content.form-horizontal
+          .form-group
+            = f.label :nombre_rl, class: 'col-sm-2 control-label' do
+              Nombre:
+            .col-sm-10
+              = f.text_field :nombre_rl, class: 'form-control'
+          .form-group
+            = f.label :cedula_rl, class: 'col-sm-2 control-label' do
+              Cédula:
+            .col-sm-10
+              = f.text_field :cedula_rl, class: 'form-control'
+          .form-group
+            = f.label :email_rl, class: 'col-sm-2 control-label' do
+              Email:
+            .col-sm-10
+              = f.email_field :email_rl, class: 'form-control'
+          .form-group
+            = f.label :telefono_rl, class: 'col-sm-2 control-label' do
+              Teléfonos:
+            .col-sm-10
+              = f.text_field :telefono_rl, class: 'form-control'
+          .form-group
+            = f.label :profesion_rl, class: 'col-sm-2 control-label' do
+              Profesion:
+            .col-sm-10
+              = f.text_field :profesion_rl, class: 'form-control'
+  -#.row
+  -#  .col-lg-12
+  -#    .ibox-content.border-bottom
+  -#      .row
+  -#        .col-sm-12
+  -#          .form-horizontal
+  -#            = f.label :registro_mercantil, class: 'control-label' do
+  -#              Inscripción en el Registro Mercantil
+  -#            = f.text_area :registro_mercantil, class: 'form-control', rows: 6
+  .row
+    .col-lg-12
+      .ibox-content
+        .row
+          .col-sm-3.col-sm-offset-9
+            = f.submit 'Guardar', class: 'btn btn-mall btn-block', data: { disable_with: 'Guardar'}
+
+
+
+
+  -#.form-group
+  -#  = f.label :fecha_inicio, class: 'col-sm-2 control-label' do
+  -#    Fecha de Inicio del Contrato:
+  -#  .col-sm-3.form-inline
+  -#    = f.date_select :fecha_inicio, {}, { class: 'form-control'}
+  -#  = f.label :fecha_fin, class: 'col-sm-2 control-label' do
+  -#    Fecha de Fin del Contrato:
+  -#  .col-sm-4.form-inline
+  -#    = f.date_select :fecha_fin, {}, { class: 'form-control'}
+  -#.form-group
+  -#  = f.label :representante_legal, class: 'col-sm-2 control-label' do
+  -#    Representante Legal:
+  -#  .col-sm-10
+  -#    = f.text_field :representante_legal, class: 'form-control'
+  -#.form-group
+  -#  = f.label :telefono, class: 'col-sm-2 control-label' do
+  -#    Teléfonos:
+  -#  .col-sm-10
+  -#    = f.text_field :telefono, class: 'form-control'
+  -#.form-group
+  -#  = f.label :actividad_economica_id, class: 'col-sm-2 control-label' do
+  -#    Actividad Económica:
+  -#  .col-sm-10
+  -#    = f.select :actividad_economica_id, options_from_collection_for_select(ActividadEconomica.all, :id, :nombre), {include_blank: 'Seleccione una Actividad Económica'}, {class: 'form-control'}
+  -#-#.form-group
+  -#-#  = f.label :tipo_canon_alquiler, class: 'col-sm-2 control-label' do
+  -#-#    Tipo Canon Alquiler:
+  -#-#  .col-sm-10
+  -#-#    = f.select :tipo_canon_alquiler, Inquilino.tipo_canon_alquilers.keys.to_a.map { |x| [x.humanize.titleize, x]}, {include_blank: 'Seleccione un Tipo de Canon de Alquiler'}, {class: 'form-control'}
+  -#.form-group
+  -#  = f.label :archivo_contrato, class: 'col-sm-2 control-label' do
+  -#    Archivo Digital del Contrato:
+  -#  .col-sm-10
+  -#    = render 'users/shared/file_input',f: f, modelo_campo: @inquilino.archivo_contrato, campo: :archivo_contrato
+  -#.form-group
+  -#  .col-sm-3.col-sm-offset-9
+  -#    = f.submit 'Guardar', class: 'btn btn-mall btn-block', data: {disable_with: 'Guardar'}
+  -#-#.form-group
+  -#-#  = f.label :direccion, class: 'col-sm-2 control-label' do
+  -#-#    Dirección:
+  -#-#  .col-sm-10
+  -#-#    = f.text_area :direccion, class: 'form-control', height:8
+  -#

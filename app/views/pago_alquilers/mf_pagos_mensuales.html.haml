@@ -1,0 +1,39 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      Reporte Mensual de Pagos de Alquiler
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Reporte Mensuales de Pagos de Alquiler
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          %br
+          .row
+            .col-md-3
+              = form_tag(@lapso_year, :html => { :class => "form-horizontal" } ) do |f|
+                = select_year(Date.today, options = { :start_year => Time.now.year, :end_year => Time.now.year - 5, :field_name => 'lapso_year'}, :class => 'actualizar_pagos_mensuales')
+          %br
+          %br
+          .row
+            .col-md-12
+              %table.table.table-striped.table-bordered.table-hover.dataTables-example#table_pagos_mensuales_mall
+                %thead
+                  %tr
+                    %th.text-center Mes
+                    %th.text-center Facturado x Canon Fijo
+                    %th.text-center Facturado x Canon Variable
+                    %th.text-center Total Facturado
+                    %th.text-center Total Pagado
+                    %th.text-center Total Pagado (USD)
+                    %th.text-center Total x Cobrar
+                    %th.text-center Acciones
+                %tbody#tbody_pagos_mensuales_mall
+                  = render 'pagos_mensuales'
+
+

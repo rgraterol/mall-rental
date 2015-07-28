@@ -1,0 +1,16 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      = current_user.mall.nombre
+      \-
+      Precios de Servicios
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        = link_to 'Precios de Servicios', precio_servicios_path
+      %li
+        Editando de Precio de Servicio
+
+.wrapper.wrapper-content.animated.fadeInRight
+  = render 'form'

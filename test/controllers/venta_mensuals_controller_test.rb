@@ -8,7 +8,7 @@ class VentaMensualsControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:venta_mensuals)
+    assert_not_nil assigns(:venta_mensual)
   end
 
   test "should get new" do

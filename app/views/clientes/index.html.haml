@@ -1,0 +1,68 @@
+= provide(:title, "#{current_user.mall.nombre } - Clientes")
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2
+      = current_user.mall.nombre
+      \- Clientes
+    %ol.breadcrumb
+      %li
+        = link_to 'Inicio', root_url
+      %li
+        Clientes
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-content
+          .row
+            .col-sm-3
+              = link_to 'Nuevo Cliente', new_cliente_path, class: 'btn btn-mall btn-block'
+          %br
+          .row
+            .col-md-12
+              .table-responsive
+                %table.table.table-striped.table-bordered.table-hover#table_inquilinos_index
+                  %thead
+                    %tr
+                      %th{colspan: 5, style: 'background: none'}
+                      %th{colspan: 3} Contacto
+                      %th{colspan: 2} Representante Legal
+                      %th{style: 'background: none'}
+                  %thead
+                    %tr
+                      %th Mall
+                      %th Nombre
+                      %th RIF
+                      %th Teléfonos
+                      %th Servicio
+                      %th Nombre
+                      %th Email
+                      %th Telefono
+                      %th Nombre
+                      %th Email
+                      %th Acciones
+                  %tbody
+                    - @clientes.each do |cliente|
+                      %tr
+                        %td= cliente.mall.nombre
+                        %td= cliente.nombre
+                        %td= cliente.RIF
+                        %td= cliente.telefono
+                        %td= cliente.tipo_servicio.tipo
+                        %td= cliente.nombre_contacto
+                        %td= cliente.email_contacto
+                        %td= cliente.telefono_contacto
+                        %td= cliente.nombre_rl
+                        %td= cliente.email_rl
+                        %td
+                          = link_to cliente do
+                            %i.fa.fa-search
+                          &nbsp;
+                          &nbsp;
+                          = link_to edit_cliente_path(cliente) do
+                            %i.fa.fa-edit
+                          &nbsp;
+                          &nbsp;
+                          = link_to cliente_path(cliente), method: :delete, data: { confirm: '¿Esta seguro de eliminar el cliente?' }  do
+                            %i.fa.fa-trash

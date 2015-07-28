@@ -1,0 +1,64 @@
+- if @totales[:result]
+  - @cobranzas.each do |cobranza|
+    %tr
+      %td.text-center
+        = cobranza[:mes]
+      %td.text-center
+        = cobranza[:canon_fijo]
+      %td.text-center
+        = cobranza[:canon_variable]
+      %td.text-center
+        = cobranza[:facturado]
+      %td.text-center
+        = cobranza[:pagado]
+      %td.text-center
+        = cobranza[:pagado_usd]
+      %td.text-center
+        = cobranza[:x_cobrar]
+      %td.text-center
+        = link_to ventas_mes_tienda_path(month: cobranza[:num_mes]) do
+          %i.fa.fa-search
+          Ver Detalles de Pagos
+  %tr#tfoot-ventas-mensuales-mall
+    %td.text-center TOTAL
+    %td#suma_pagado_canon_fijo
+      = @totales[:total_canon_fijo]
+    %td#suma_pagado_canon_variable
+      = @totales[:total_canon_variable]
+    %td#suma_total_facturado
+      = @totales[:total_facturado]
+    %td#suma_total_pagado
+      = @totales[:total_pagado]
+    %td#suma_total_pagado_usd
+      = @totales[:total_pagado_usd]
+    %td#suma_monto_x_cobrar
+      = @totales[:total_x_cobrar]
+- else
+  %tr
+    %td.text-center Enero
+    %td.text-center{rowspan: 12, colspan: 7,style: "vertical-align: middle"}
+      %span.text-center.texto_cargando{style: "vertical-align: middle"}
+        No se encontraron Datos...
+  %tr
+    %td.text-center Febrero
+    %tr
+      %td.text-center Marzo
+    %tr
+      %td.text-center Abril
+    %tr
+      %td.text-center Mayo
+    %tr
+      %td.text-center Junio
+    %tr
+      %td.text-center Julio
+    %tr
+      %td.text-center Agosto
+    %tr
+      %td.text-center Septiembre
+    %tr
+      %td.text-center Octubre
+    %tr
+      %td.text-center Noviembre
+    %tr
+      %td.text-center Diciembre
+

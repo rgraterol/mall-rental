@@ -36,6 +36,7 @@ class Mall < ActiveRecord::Base
   accepts_nested_attributes_for :roles
 
   has_many :plantilla_contrato_alquilers
+  has_many :clientes
 
 
   validates :nombre, :abreviado, :rif, :direccion_fiscal, :telefono, :cuenta_bancarium, presence: true
